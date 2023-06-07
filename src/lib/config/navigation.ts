@@ -11,6 +11,11 @@ export const navConfig = {
       disabled: false,
     },
     {
+      title: "TempAuth",
+      href: "/auth",
+      disabled: false,
+    },
+    {
       title: "Features",
       href: "/#features",
       disabled: false,
