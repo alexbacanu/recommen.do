@@ -2,6 +2,7 @@ import { createHmac } from "crypto";
 
 import { headers } from "next/headers";
 
+import { sdkDatabases } from "~/lib/clients/appwrite-server";
 import { stripe } from "~/lib/clients/stripe";
 import { appwriteWebhookKey, appwriteWebhookUrl } from "~/lib/envServer";
 
@@ -18,9 +19,15 @@ export async function POST(request: Request) {
     });
   }
 
+  // Create a new customer in stripe
   const customer = await stripe.customers.create({
     email: body.email,
     name: body.name,
+  });
+
+  // Update the newly created customer in appwrite
+  await sdkDatabases.updateDocument("main", "profile", body.$id, {
+    stripeCustomerId: customer.id,
   });
 
   return new Response(`Customer created: ${customer.id}`, {

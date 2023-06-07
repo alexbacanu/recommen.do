@@ -2,7 +2,7 @@ import { useSetAtom } from "jotai";
 import { cache } from "react";
 
 import { accountAtom } from "~/lib/atoms/appwrite";
-import { account } from "~/lib/clients/appwrite";
+import { account } from "~/lib/clients/appwrite-client";
 
 export const useAppwrite = () => {
   const setAccount = useSetAtom(accountAtom);
