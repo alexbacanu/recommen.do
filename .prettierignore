@@ -37,3 +37,6 @@ next-env.d.ts
 
 # plasmo
 /.plasmo
+
+# pnpm
+pnpm-lock.yaml
