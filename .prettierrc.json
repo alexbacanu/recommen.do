@@ -9,9 +9,17 @@
   "tabWidth": 2,
   "trailingComma": "all",
 
-  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["prettier-plugin-tailwindcss", "@ianvs/prettier-plugin-sort-imports"],
 
-  "importOrder": ["^lib/(.*)$", "^styles/(.*)$", "^components/(.*)$", "^[~/]"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrder": [
+    "<TYPES>",
+    "",
+    "<BUILT_IN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^(lib|styles|components)(/.*)$",
+    "",
+    "^[.]"
+  ],
+  "importOrderTypeScriptVersion": "5.1.3"
 }

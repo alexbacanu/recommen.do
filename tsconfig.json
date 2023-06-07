@@ -1,4 +1,6 @@
 {
+  "extends": "plasmo/templates/tsconfig.base",
+
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -27,6 +29,7 @@
 
     "paths": {
       "~/*": ["./src/*"],
+      "api/*": ["./src/app/api/*"],
       "components/*": ["./src/components/*"],
       "lib/*": ["./src/lib/*"],
       "styles/*": ["./src/styles/*"]

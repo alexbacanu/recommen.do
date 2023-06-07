@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .placeholder {
+    @apply min-h-[1rem] min-w-[10rem] rounded-lg border border-dashed border-gray-300 bg-gray-100 p-2;
+  }
+}
