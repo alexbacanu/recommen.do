@@ -17,7 +17,9 @@
     "<BUILT_IN_MODULES>",
     "<THIRD_PARTY_MODULES>",
     "",
-    "^(lib|styles|components)(/.*)$",
+    "^(~/api)(/.*)$",
+    "",
+    "^(~/lib|~/styles|~/components)(/.*)$",
     "",
     "^[.]"
   ],
