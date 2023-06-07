@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,15 +14,34 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+
+    "checkJs": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+
     "plugins": [
       {
         "name": "next"
       }
     ],
+
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "components/*": ["./src/components/*"],
+      "lib/*": ["./src/lib/*"],
+      "styles/*": ["./src/styles/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    ".next/types/**/*.ts",
+    ".plasmo/index.d.ts",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "postcss.config.js",
+    "tailwind.config.js"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,73 @@
+{
+  // TypeScript
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  // Editor / ESLint
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.minimap.renderCharacters": false,
+  "editor.stickyScroll.enabled": true,
+  "editor.rulers": [120],
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  // "editor.formatOnPaste": true,
+
+  "files.trimTrailingWhitespace": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+    //   "source.fixAll": true,
+  },
+
+  "prettier.endOfLine": "auto",
+  "prettier.printWidth": 120,
+  "prettier.semi": true,
+
+  // Extensions
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "npm.packageManager": "pnpm",
+  // "mdx.experimentalLanguageServer": true,
+  // "tailwindCSS.classAttributes": ["class", "className", "ngClass", "tw"],
+
+  // Explorer
+  "explorer.confirmDragAndDrop": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.sortOrder": "type",
+
+  // Hide files fron explorer
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.git": true,
+    "**/.mypy_cache/**": true,
+    "**/.next": true,
+    "**/.plasmo": true,
+    "**/.venv": true,
+    "**/*.pyc": true,
+    "**/build": true,
+    "**/node_modules/": true
+  },
+
+  // Exclude files from search
+  "search.exclude": {
+    "**/__pycache__": true,
+    "**/.git": true,
+    "**/.mypy_cache/**": true,
+    "**/.next": true,
+    "**/.plasmo": true,
+    "**/.venv": true,
+    "**/*.pyc": true,
+    "**/build": true,
+    "**/node_modules": true
+  },
+
+  // Exlude fies & folders for watcher service
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.venv/**": true,
+    "**/node_modules/**": true
+  }
+}
