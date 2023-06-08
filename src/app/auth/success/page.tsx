@@ -1,7 +1,7 @@
 export default async function AuthSuccessPage() {
   return (
     <>
-      <p>Success</p>
+      <p>Auth Success</p>
     </>
   );
 }

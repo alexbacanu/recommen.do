@@ -12,7 +12,7 @@ async function getPlans() {
       const product = await stripe.products.retrieve(price.product as string);
 
       return {
-        id: price.id,
+        priceId: price.id,
         name: product.name,
         price: price.unit_amount! / 100,
         interval: price.recurring?.interval,

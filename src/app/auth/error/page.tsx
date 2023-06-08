@@ -1,7 +1,7 @@
 export default async function AuthErrorPage() {
   return (
     <>
-      <p>Error</p>
+      <p>Auth Error</p>
     </>
   );
 }

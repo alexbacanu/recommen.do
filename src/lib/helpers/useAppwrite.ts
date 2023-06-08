@@ -1,3 +1,5 @@
+"use client";
+
 import { useSetAtom } from "jotai";
 
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
@@ -29,16 +31,27 @@ export const useAppwrite = () => {
     }
   };
 
+  const createJWT = async () => {
+    try {
+      const jwt = await account.createJWT();
+      console.log("createJWTSuccess:", jwt);
+      return jwt;
+    } catch (error) {
+      console.log("createJWTError", error);
+      return { jwt: "" };
+    }
+  };
+
   const signOut = async () => {
     try {
       await account.deleteSession("current");
       setAccount(null);
       setProfile(null);
-      console.log("signOutSuccess:");
+      console.log("signOutSuccess");
     } catch (error) {
       console.log("signOutError:", error);
     }
   };
 
-  return { getAccount, getProfile, signOut };
+  return { getAccount, getProfile, createJWT, signOut };
 };
