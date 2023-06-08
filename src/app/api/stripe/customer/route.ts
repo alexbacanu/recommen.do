@@ -3,10 +3,12 @@ import { createHmac } from "crypto";
 import { headers } from "next/headers";
 
 import { sdkDatabases } from "~/lib/clients/appwrite-server";
-import { stripe } from "~/lib/clients/stripe";
+import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteWebhookKey, appwriteWebhookUrl } from "~/lib/envServer";
 
 export async function POST(request: Request) {
+  const stripe = getStripeInstance();
+
   const body = await request.json();
   const payload = `${appwriteWebhookUrl}${JSON.stringify(body)}`;
 

@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 export function Init() {
-  const { getAccount } = useAppwrite();
+  const { getAccount, getProfile } = useAppwrite();
 
   useEffect(() => {
     getAccount();
+    getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
