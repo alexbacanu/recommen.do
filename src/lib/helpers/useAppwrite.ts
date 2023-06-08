@@ -1,5 +1,4 @@
 import { useSetAtom } from "jotai";
-import { cache } from "react";
 
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { account, databases } from "~/lib/clients/appwrite-client";
@@ -8,7 +7,7 @@ export const useAppwrite = () => {
   const setAccount = useSetAtom(accountAtom);
   const setProfile = useSetAtom(profileAtom);
 
-  const getAccount = cache(async () => {
+  const getAccount = async () => {
     try {
       const response = await account.get();
       if (response) setAccount(response);
@@ -17,9 +16,9 @@ export const useAppwrite = () => {
       setAccount(null);
       console.log("getAccountError:", error);
     }
-  });
+  };
 
-  const getProfile = cache(async () => {
+  const getProfile = async () => {
     try {
       const { documents } = await databases.listDocuments("main", "profile");
       if (documents.length !== 0 && documents[0]) setProfile(documents[0]);
@@ -28,9 +27,9 @@ export const useAppwrite = () => {
       setProfile(null);
       console.log("getProfileError:", error);
     }
-  });
+  };
 
-  const signOut = cache(async () => {
+  const signOut = async () => {
     try {
       await account.deleteSession("current");
       setAccount(null);
@@ -38,7 +37,7 @@ export const useAppwrite = () => {
     } catch (error) {
       console.log("signOutError:", error);
     }
-  });
+  };
 
   return { getAccount, getProfile, signOut };
 };
