@@ -33,6 +33,7 @@ export const useAppwrite = () => {
     try {
       await account.deleteSession("current");
       setAccount(null);
+      setProfile(null);
       console.log("signOutSuccess:");
     } catch (error) {
       console.log("signOutError:", error);
