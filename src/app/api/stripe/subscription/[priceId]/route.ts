@@ -30,18 +30,45 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   // Get user profile based on JWT
   const { sdkDatabases } = createAppwriteClient(token);
   const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
+  const profile = profiles[0];
 
-  if (!profiles[0]) {
+  if (!profile) {
     console.log("stripe.subscription:", "Profile missing");
     return new Response("Cannot find profile for this token", {
       status: 404,
     });
   }
 
-  // Create Stripe checkout session
+  const isSubscribed = profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now();
+  console.log("isSubscribed:", isSubscribed);
+
   const stripe = getStripeInstance();
+
+  // User is on paid plan
+  if (isSubscribed && profile.stripeCustomerId) {
+    const session = await stripe.billingPortal.sessions.create({
+      customer: profile.stripeCustomerId,
+      return_url: `${appwriteUrl}/profile`,
+    });
+
+    console.log("stripe.subscription:", "isSubscribed OK");
+    return NextResponse.json(
+      { url: session.url },
+      {
+        headers: {
+          // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      },
+    );
+  }
+
+  // User is on free plan
+  // Create Stripe checkout session
   const session = await stripe.checkout.sessions.create({
-    customer: profiles[0]?.stripeCustomerId,
+    customer: profile.stripeCustomerId,
 
     mode: "subscription",
     payment_method_types: ["card"],
@@ -56,8 +83,6 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     success_url: `${appwriteUrl}/payment/success`,
     cancel_url: `${appwriteUrl}/payment/cancel`,
   });
-
-  console.log(session.url);
 
   console.log("stripe.subscription:", "OK");
   return NextResponse.json({ url: session.url });

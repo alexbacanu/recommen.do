@@ -67,7 +67,11 @@ export function Pricing({ plans }: PricingProps) {
                 Subscribe
               </button>
             )}
-            {showManageSubscriptionButton && <div className="bg-red-500 rounded-md">Manage Subscription</div>}
+            {showManageSubscriptionButton && (
+              <button onClick={() => handleSubscribe(plan.priceId)} className="bg-red-500 rounded-md">
+                Manage subscription
+              </button>
+            )}
           </div>
         ))}
       </div>
