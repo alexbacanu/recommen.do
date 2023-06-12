@@ -21,7 +21,7 @@ module.exports = {
         input: colors.indigo[600],
         ring: colors.indigo[600],
         background: colors.gray[100],
-        foreground: colors.gray[900],
+        foreground: colors.gray[800],
         primary: {
           DEFAULT: colors.indigo[600],
           foreground: colors.gray[100],

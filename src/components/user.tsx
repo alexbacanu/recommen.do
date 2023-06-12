@@ -1,11 +1,85 @@
 "use client";
 
 import { useAtomValue } from "jotai";
+import { CreditCard, LifeBuoy, LogIn, LogOut, User } from "lucide-react";
+import Link from "next/link";
 
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { accountAtom } from "~/lib/atoms/appwrite";
+import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
-export function User() {
+export function Dashboard() {
   const account = useAtomValue(accountAtom);
+  const { signOut } = useAppwrite();
 
-  return <section className="placeholder">{account ? `Hello ${account.name}` : `Not logged in`}</section>;
+  return (
+    <>
+      {account ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="secondary">{account.name ? account.name : "Account"}</Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            <DropdownMenuLabel className="text-xs">{account?.email}</DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Link className="space-x-2" href="/profile">
+                  <User className="h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
+                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild disabled>
+                <Link className="space-x-2" href="#">
+                  <CreditCard className="h-4 w-4" />
+                  <span>Billing</span>
+                </Link>
+                {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem asChild disabled>
+              <Link className="space-x-2" href="#">
+                <LifeBuoy className="h-4 w-4" />
+                <span>Support</span>
+              </Link>
+              {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={() => signOut()} asChild>
+              <Link className="space-x-2" href="#">
+                <LogOut className="h-4 w-4" />
+                <span>Log out</span>
+              </Link>
+              {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Button variant="secondary" asChild>
+          <Link className="space-x-2" href="https://pickassistant.authui.site/">
+            <LogIn className="h-4 w-4" />
+            <span>Login</span>
+          </Link>
+        </Button>
+      )}
+    </>
+  );
 }

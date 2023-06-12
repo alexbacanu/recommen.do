@@ -82,19 +82,19 @@ export function Pricing({ plans }: PricingProps) {
             <p>
               ${plan.price} / {plan.interval}
             </p>
-            {showCreateAccountButton && <div className="bg-red-500 rounded-md">Create Account</div>}
+            {showCreateAccountButton && <div className="rounded-md bg-red-500">Create Account</div>}
             {showSubscribeButton && (
-              <button onClick={() => handleSubscribe(plan.priceId)} className="bg-red-500 rounded-md">
+              <button onClick={() => handleSubscribe(plan.priceId)} className="rounded-md bg-red-500">
                 Subscribe
               </button>
             )}
             {showManageSubscriptionButton && (
-              <button onClick={() => handleSubscribe(plan.priceId)} className="bg-red-500 rounded-md">
+              <button onClick={() => handleSubscribe(plan.priceId)} className="rounded-md bg-red-500">
                 Manage subscription
               </button>
             )}
             {showManageSubscriptionButton && (
-              <button onClick={() => handleRefill()} className="bg-red-500 rounded-md">
+              <button onClick={() => handleRefill()} className="rounded-md bg-red-500">
                 Add 50 credits
               </button>
             )}
