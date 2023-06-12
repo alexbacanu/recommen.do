@@ -31,6 +31,9 @@
   "npm.packageManager": "pnpm",
   // "mdx.experimentalLanguageServer": true,
   // "tailwindCSS.classAttributes": ["class", "className", "ngClass", "tw"],
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
 
   // Explorer
   "explorer.confirmDragAndDrop": false,
@@ -69,8 +72,5 @@
     "**/.git/subtree-cache/**": true,
     "**/.venv/**": true,
     "**/node_modules/**": true
-  },
-  "[svg]": {
-    "editor.defaultFormatter": "jock.svg"
   }
 }
