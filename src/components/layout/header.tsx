@@ -23,7 +23,7 @@ export function Header() {
       <div
         className={cn(
           "mx-auto flex max-w-7xl transition-all duration-300 justify-between px-4 py-6",
-          isProfile && "bg-white rounded-md px-4 py-2",
+          isProfile && "bg-white rounded-lg py-2",
         )}
       >
         <div className="flex items-center gap-x-8">

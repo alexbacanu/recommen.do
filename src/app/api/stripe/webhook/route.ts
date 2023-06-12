@@ -96,6 +96,7 @@ export async function POST(request: Request) {
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeSubscriptionId: sessionLines.subscription,
+        stripeSubscriptionName: sessionLines.plan?.metadata?.name,
         stripePriceId: sessionLines.price?.id,
 
         credits: singleProfile.credits + assignCredits(sessionLines.price?.id),
@@ -145,8 +146,8 @@ export async function POST(request: Request) {
       console.log("customer.subscription.created", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
-        status: session.status,
-        statusLastUpdated: new Date(event.created * 1000),
+        stripeStatus: session.status,
+        stripeStatusLastUpdated: new Date(event.created * 1000),
       });
     }
   }
@@ -207,8 +208,8 @@ export async function POST(request: Request) {
       console.log("customer.subscription.updated", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
-        status: session.status,
-        statusLastUpdated: new Date(event.created * 1000),
+        stripeStatus: session.status,
+        stripeStatusLastUpdated: new Date(event.created * 1000),
       });
     }
   }
@@ -253,8 +254,8 @@ export async function POST(request: Request) {
       console.log("customer.subscription.deleted", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
-        status: session.status,
-        statusLastUpdated: new Date(event.created * 1000),
+        stripeStatus: session.status,
+        stripeStatusLastUpdated: new Date(event.created * 1000),
 
         credits: 0,
         stripeCurrentPeriodEnd: new Date(session.current_period_end * 1000),

@@ -45,7 +45,7 @@ export function Dashboard() {
               <DropdownMenuItem asChild disabled>
                 <Link className="space-x-2" href="#">
                   <CreditCard className="h-4 w-4" />
-                  <span>Billing</span>
+                  <span>Subscription</span>
                 </Link>
                 {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
               </DropdownMenuItem>

@@ -94,27 +94,6 @@ export function Pricing({ plans }: PricingProps) {
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
-  const handleRefill = async () => {
-    if (!jwt) {
-      const jwtToken = await createJWT();
-      jwt = jwtToken.jwt;
-    }
-
-    console.log("jwt:", jwt);
-
-    const getCheckoutURL = await fetch(`/api/stripe/refill`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-
-    const checkoutUrl = await getCheckoutURL.json();
-
-    console.log("getCheckoutURL:", checkoutUrl);
-    window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <>
       {/* <section className="placeholder py-24">

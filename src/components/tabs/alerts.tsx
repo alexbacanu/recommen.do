@@ -12,7 +12,7 @@ export function Alerts() {
   const { signOut } = useAppwrite();
 
   return (
-    <>
+    <section className="flex flex-col gap-2">
       <Alert variant="default">
         <div className="flex items-center gap-2">
           <Terminal className="h-4 w-4" />
@@ -34,6 +34,6 @@ export function Alerts() {
         </div>
         <AlertDescription>You can add components to your app using the cli.</AlertDescription>
       </Alert>
-    </>
+    </section>
   );
 }

@@ -50,6 +50,11 @@ export const navConfig = {
       disabled: false,
     },
     {
+      title: "Cookies",
+      href: "/cookies",
+      disabled: false,
+    },
+    {
       title: "Contact",
       href: "/contact",
       disabled: false,

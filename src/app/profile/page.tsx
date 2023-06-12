@@ -8,7 +8,7 @@ export default function ProfilePage() {
   return (
     <>
       <section id="profile_page" className="overflow-hidden">
-        <div className="mx-auto max-w-7xl py-5">
+        <div className="mx-auto flex max-w-7xl flex-col gap-y-5 py-5">
           <Alerts />
           <Subscription />
           <Account />
