@@ -59,7 +59,7 @@ export function Subscription() {
   };
 
   return (
-    <section className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
+    <section id="subscription" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
       <Card>
         <CardHeader>
           <CardTitle className="">Usage</CardTitle>
@@ -112,7 +112,7 @@ export function Subscription() {
               : "No subscription"}
           </div> */}
         </CardContent>
-        <CardFooter className="justify-between">
+        <CardFooter className="grid grid-cols-2 gap-4">
           <Button variant="outline" onClick={() => handleRefill()} disabled={!canRefill}>
             Buy 50 extra credits
           </Button>
