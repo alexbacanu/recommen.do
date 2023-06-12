@@ -1,20 +1,5 @@
 export const navConfig = {
   header: [
-    // {
-    //   title: "TempHome",
-    //   href: "/",
-    //   disabled: false,
-    // },
-    // {
-    //   title: "TempProfile",
-    //   href: "/profile",
-    //   disabled: false,
-    // },
-    // {
-    //   title: "TempAuth",
-    //   href: "/auth",
-    //   disabled: false,
-    // },
     {
       title: "Features",
       href: "/#features",
@@ -32,6 +17,11 @@ export const navConfig = {
     },
   ],
   footer: [
+    {
+      title: "About",
+      href: "/about",
+      disabled: false,
+    },
     {
       title: "Terms",
       href: "/terms",

@@ -21,15 +21,13 @@ export function Hero() {
               Your <span className="heading-accent">AI-Powered</span> Shopping Companion
             </h1>
 
-            <p className="mt-4 text-base text-foreground/80 lg:mt-6 lg:text-lg">
-              Get personalized shopping recommendations with GPT-4
-            </p>
+            <p className="mt-4 text-base lg:mt-6 lg:text-lg">Get personalized shopping recommendations with GPT-4</p>
 
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
               <Button variant="default" className="px-4 py-6 text-base">
                 Download extension
               </Button>
-              <Button variant="secondary" className="px-4 py-6 text-base">
+              <Button variant="outline" className="px-4 py-6 text-base text-primary">
                 See features
               </Button>
             </div>

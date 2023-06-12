@@ -1,65 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg id="svg253482" viewBox="0 0 250.69048 196.58937" height="196.58937" width="250.69048" version="1.1"
-  sodipodi:docname="logo.svg" inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
-  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <sodipodi:namedview id="namedview35" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25"
-    inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"
-    showgrid="false" inkscape:zoom="1.0794271" inkscape:cx="22.697226" inkscape:cy="99.126659"
-    inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="-8" inkscape:window-y="-8"
-    inkscape:window-maximized="1" inkscape:current-layer="svg253482" />
-  <metadata id="metadata253488">
-    <rdf:rdf>
-      <cc:work rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:work>
-    </rdf:rdf>
-  </metadata>
-  <defs id="defs253486" />
-  <linearGradient spreadMethod="pad" y2="0.30000001" x2="-0.1" y1="1.2" x1="0.30000001"
-    id="3d_gradient2-logo-863795e2-3fc0-48ae-b377-14464f3d0a1f">
-    <stop id="stop253463" stop-opacity="1" stop-color="#ffffff" offset="0%" />
-    <stop id="stop253465" stop-opacity="1" stop-color="#000000" offset="100%" />
-  </linearGradient>
-  <linearGradient gradientTransform="rotate(-30)" spreadMethod="pad" y2="0.30000001" x2="-0.1" y1="1.2" x1="0.30000001"
-    id="3d_gradient3-logo-863795e2-3fc0-48ae-b377-14464f3d0a1f">
-    <stop id="stop253468" stop-opacity="1" stop-color="#ffffff" offset="0%" />
-    <stop id="stop253470" stop-opacity="1" stop-color="#cccccc" offset="50%" />
-    <stop id="stop253472" stop-opacity="1" stop-color="#000000" offset="100%" />
-  </linearGradient>
-  <g id="title" transform="translate(-386.57233,-285.5796)">
-    <g id="path253491" aria-label="P" transform="matrix(3.9,0,0,3.9,-1482.0249,482.1396)">
-      <path class="c1"
-        d="m 101.8923,74.8435 5e-4,5e-4 H 87.6929 c 0.0078,0 0.0154,0.0012 0.0232,0.0012 -0.0073,0 -0.0154,-3e-4 -0.02271,-3e-4 v -5e-4 h -4.3539 v 8.698 5e-4 h 3.7856 v 12.1079 h -5e-4 v 8.69849 h 0.0013 l -8e-4,5e-4 v 20.8067 h 8.7071 v -20.80719 -5e-4 h 6.0601 c 8.1562,0 14.7682,-6.6052 14.7682,-14.7526 1e-5,-8.1477 -6.61199,-14.7527 -14.76819,-14.7527 z m 0,20.8069 H 95.8322 V 83.5429 l 0.002,-9e-4 h 6.05811 c 3.3471,0 6.06049,2.7106 6.06049,6.0542 0,3.3435 -2.7134,6.0542 -6.0605,6.0542 z"
-        transform="translate(395.78801,-125.2435)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#312e81" stroke="#312e81" id="path14" />
-      <path class="c3"
-        d="m 101.8923,74.8435 5e-4,5e-4 -18.5533,4e-4 v 8.6985 l 18.5528,-9e-4 c 3.3471,0 6.06049,2.7106 6.06049,6.0542 0,3.3435 -2.71339,6.0542 -6.06049,6.0542 l -14.7677,4e-4 v 8.69849 l 14.7677,-5e-4 c 8.1562,0 14.7682,-6.6052 14.7682,-14.7526 0,-8.14769 -6.612,-14.75269 -14.7682,-14.75269 z"
-        transform="translate(395.78801,-125.2435)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#6366f1" stroke="#6366f1" id="path16" />
-      <path class="c2"
-        d="m 87.6934,74.8445 h -4.3539 v 8.6984 h 12.4927 v -0.5677 c -0.0051,-4.4881 -3.646,-8.1251 -8.1388,-8.1302"
-        transform="translate(395.78801,-125.2435)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#4f46e5" stroke="#4f46e5" id="path18" />
-      <polyline class="c2" points="95.8322,95.6507 87.1246,95.6507 87.1246,104.3493 95.8322,104.3493 95.8322,95.6507 "
-        transform="translate(395.78801,-125.2435)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#3730a3" stroke="#3730a3" id="polyline20" />
-    </g>
-    <g id="path253493" aria-label="a" transform="matrix(3.9,0,0,3.9,-1482.0249,482.1396)">
-      <rect x="107.1382" y="84.156303" class="c3" width="8.7075996" height="31.687201"
-        transform="translate(427.5612,-115.83629)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#a21caf" stroke="#a21caf" id="rect23" />
-      <path class="c1"
-        d="m 107.1382,85.8562 c -2.2117,-1.1206 -4.6566,-1.7029 -7.136,-1.6999 -6.5526,-0.0017 -12.4301,4.03069 -14.787,10.1447 -2.3569,6.1143 -0.7069,13.0484 4.15141,17.44559 4.8582,4.3972 11.922,5.3499 17.7716,2.397 5.3363,-2.6966 8.7029,-8.1648 8.7077,-14.1438 C 115.841,94.021 112.4744,88.553 107.1382,85.8562 Z m -4.40531,20.7373 c -2.66669,1.1045 -5.7363,0.4942 -7.7773,-1.5468 -2.0411,-2.0411 -2.6516,-5.1109 -1.5469,-7.7774 1.1046,-2.667 3.7071,-4.4055 6.5935,-4.4053 3.9392,0.0044 7.1315,3.1968 7.136,7.1358 1.1e-4,2.8867 -1.73849,5.489 -4.4053,6.5937 z"
-        transform="translate(427.5612,-115.83629)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#d946ef" stroke="#d946ef" id="path25" />
-      <path class="c2"
-        d="m 107.1382,85.8562 v 28.2874 c 5.3363,-2.6966 8.7029,-8.1648 8.7077,-14.1438 -0.005,-5.9788 -3.3715,-11.4468 -8.7077,-14.1436 z"
-        transform="translate(427.5612,-115.83629)" stroke-width="0" stroke-linejoin="miter" stroke-miterlimit="2"
-        fill="#c026d3" stroke="#c026d3" id="path27" />
-    </g>
+<svg height="196.589" width="250.69" xmlns="http://www.w3.org/2000/svg">
+  <g aria-label="P">
+    <path class="prefix__c1"
+      d="M72.356 0l.002.002h-55.38c.03 0 .06.005.09.005L16.98.005V.004H0v33.924h14.764v47.22h-.002v33.925h.005l-.003.002v81.146h33.958V115.07h23.634c31.81 0 57.596-25.76 57.596-57.535C129.952 25.76 104.165 0 72.356 0zm0 81.147H48.722v-47.22l.007-.003h23.627c13.054 0 23.636 10.571 23.636 23.612 0 13.04-10.582 23.61-23.636 23.61z"
+      fill="#4e49cd" />
+    <path class="prefix__c3"
+      d="M72.356 0l.002.002L0 .004v33.924l72.356-.004c13.054 0 23.636 10.571 23.636 23.612 0 13.04-10.582 23.61-23.636 23.61l-57.594.002v33.925l57.594-.002c31.81 0 57.596-25.76 57.596-57.536S104.165 0 72.356 0z"
+      fill="#6366f1" />
+    <path class="prefix__c2" d="M16.98.004H0v33.924h48.722v-2.214C48.702 14.21 34.502.026 16.98.006" fill="#4f46e5" />
+    <path class="prefix__c2" fill="#6366f1" d="M48.72 81.15H14.765v33.921H48.72V81.15" />
+  </g>
+  <g aria-label="a">
+    <path class="prefix__c3" fill="#a21caf" d="M216.73 73.007h33.96v123.58h-33.96z" />
+    <path class="prefix__c1"
+      d="M216.73 79.638a61.41 61.41 0 00-27.83-6.63c-25.555-.007-48.477 15.72-57.67 39.564-9.191 23.846-2.756 50.89 16.191 68.038 18.947 17.15 46.496 20.865 69.31 9.348a61.86 61.86 0 0033.96-55.16 61.862 61.862 0 00-33.96-55.16zm-17.18 80.875a27.833 27.833 0 11-10.65-53.545c15.363.017 27.813 12.468 27.83 27.83a27.832 27.832 0 01-17.18 25.715z"
+      fill="#d946ef" />
+    <path class="prefix__c2" d="M216.73 79.638v110.32a61.86 61.86 0 0033.96-55.16 61.862 61.862 0 00-33.96-55.16z"
+      fill="#c026d3" />
   </g>
 </svg>

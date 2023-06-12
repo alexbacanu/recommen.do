@@ -69,5 +69,8 @@
     "**/.git/subtree-cache/**": true,
     "**/.venv/**": true,
     "**/node_modules/**": true
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
   }
 }
