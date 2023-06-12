@@ -9,6 +9,7 @@ async function getPlans() {
 
   const plans = await Promise.all(
     prices.map(async (price) => {
+      if (price.type !== "recurring") return;
       const product = await stripe.products.retrieve(price.product as string);
 
       return {
@@ -18,6 +19,7 @@ async function getPlans() {
         interval: price.recurring?.interval,
         currency: price.currency,
         description: product.description,
+        metadata: product.metadata,
       };
     }),
   );
