@@ -21,7 +21,6 @@ async function getPlans() {
       };
     }),
   );
-
   const sortedPlans = plans.sort((a, b) => a.price - b.price);
 
   return sortedPlans;
