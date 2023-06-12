@@ -36,6 +36,37 @@ export async function POST(request: Request) {
     });
   }
 
+  if (event.type === "checkout.session.completed") {
+    const { sdkDatabases } = createAppwriteClient();
+    const session = event.data.object as Stripe.Checkout.Session;
+
+    // Get user profile based on customerId
+    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+      Query.equal("stripeCustomerId", session.customer as string),
+    ]);
+
+    const singleProfile = profiles[0];
+
+    if (!singleProfile) {
+      return new Response(`No document found with customerId: ${session.customer}`, {
+        status: 404,
+      });
+    }
+
+    const paymentStatus = session.payment_status;
+
+    if (paymentStatus !== "paid") {
+      return new Response(`Payment status not paid`, {
+        status: 404,
+      });
+    }
+
+    // Update profile from stripe event
+    await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      credits: singleProfile.credits + 50,
+    });
+  }
+
   if (event.type === "invoice.payment_succeeded") {
     const { sdkDatabases } = createAppwriteClient();
     const session = event.data.object as Stripe.Invoice;
@@ -71,17 +102,6 @@ export async function POST(request: Request) {
         stripeCurrentPeriodEnd: new Date(sessionLines.period.end * 1000),
       });
     }
-
-    // if (session.billing_reason === "subscription_cycle") {
-    //   // Update profile from stripe event
-    //   await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
-    //     stripeSubscriptionId: sessionLines.subscription,
-    //     stripePriceId: sessionLines.price?.id,
-
-    //     credits: assignCredits(sessionLines.price?.id),
-    //     stripeCurrentPeriodEnd: new Date(sessionLines.period.end * 1000),
-    //   });
-    // }
   }
 
   if (event.type === "customer.subscription.created") {
@@ -116,20 +136,6 @@ export async function POST(request: Request) {
     console.log("start:", currentPeriodStartDebug);
     const currentPeriodEndDebug = new Date(session.current_period_end * 1000).toLocaleString();
     console.log("end:", currentPeriodEndDebug);
-
-    // const currentPeriodEnd = session.current_period_end;
-    // const databaseCurrentPeriodEnd = new Date(singleProfile.stripeCurrentPeriodEnd).getTime() / 1000;
-
-    // if (currentPeriodEnd > databaseCurrentPeriodEnd) {
-    //   // Update profile from stripe event
-    //   await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
-    //     stripeSubscriptionId: session.id,
-    //     stripePriceId: sessionItems.price.id,
-
-    //     credits: singleProfile.credits + assignCredits(sessionItems.price.id),
-    //     stripeCurrentPeriodEnd: new Date(currentPeriodEnd * 1000),
-    //   });
-    // }
 
     const sessionCreated = event.created;
     const statusLastUpdated = new Date(singleProfile.statusLastUpdated).getTime() / 1000;

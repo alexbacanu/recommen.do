@@ -51,6 +51,27 @@ export function Pricing({ plans }: PricingProps) {
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
+  const handleRefill = async () => {
+    if (!jwt) {
+      const jwtToken = await createJWT();
+      jwt = jwtToken.jwt;
+    }
+
+    console.log("jwt:", jwt);
+
+    const getCheckoutURL = await fetch(`/api/stripe/refill`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
+    const checkoutUrl = await getCheckoutURL.json();
+
+    console.log("getCheckoutURL:", checkoutUrl);
+    window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section className="placeholder py-24">
       <h2 className="text-2xl">Plans</h2>
@@ -70,6 +91,11 @@ export function Pricing({ plans }: PricingProps) {
             {showManageSubscriptionButton && (
               <button onClick={() => handleSubscribe(plan.priceId)} className="bg-red-500 rounded-md">
                 Manage subscription
+              </button>
+            )}
+            {showManageSubscriptionButton && (
+              <button onClick={() => handleRefill()} className="bg-red-500 rounded-md">
+                Add 50 credits
               </button>
             )}
           </div>

@@ -9,6 +9,7 @@ export const appwriteUrl = process.env.APPWRITE_URL ?? "";
 export const stripeSecretKey = process.env.STRIPE_SECRET_KEY ?? "";
 export const stripeWebhookKey = process.env.STRIPE_WEBHOOK_KEY ?? "";
 
+export const stripeRefillPrice = process.env.STRIPE_REFILL_PRICE ?? "";
 export const stripeBasicPlan = process.env.STRIPE_BASIC_PLAN ?? "";
 export const stripePremiumPlan = process.env.STRIPE_PREMIUM_PLAN ?? "";
 export const stripeUltimatePlan = process.env.STRIPE_ULTIMATE_PLAN ?? "";

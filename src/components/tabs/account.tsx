@@ -15,7 +15,7 @@ export function Account() {
       <p>{account ? account.name : "Username"}</p>
       <p>{account ? account.email : "Email"}</p>
       <button className="bg-red-500">Delete account</button>
-      <button className="bg-red-300" onClick={() => signOut()}>
+      <button className="bg-blue-300" onClick={() => signOut()}>
         Logout
       </button>
     </section>
