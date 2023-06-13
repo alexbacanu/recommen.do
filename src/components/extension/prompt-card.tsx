@@ -3,6 +3,7 @@ import type { ChangeEvent } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import SuperJSON from "superjson";
@@ -12,6 +13,7 @@ import { Alert, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
+import { profileAtom } from "~/lib/atoms/appwrite";
 import { filterMessage } from "~/lib/helpers/filterMessage";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
@@ -26,6 +28,7 @@ const initialProduct = { identifier: "" };
 
 export default function PromptCard({ products }: PromptCardProps) {
   const { createJWT } = useAppwrite();
+  const profile = useAtomValue(profileAtom);
 
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
   const [product, setSelectedProduct] = useState<Product>(initialProduct);
@@ -57,10 +60,11 @@ export default function PromptCard({ products }: PromptCardProps) {
       mode: "cors",
     });
 
-    console.log("response:", response);
+    console.warn("response:", response);
 
     if (!response.ok) {
       const errorMessage = await response.text();
+      console.log("errorMessage:", errorMessage);
       setErrorText(errorMessage);
       const errorCode = response.status;
       throw new Error(`${errorCode}: ${errorMessage}`);
@@ -116,10 +120,16 @@ export default function PromptCard({ products }: PromptCardProps) {
     }
   };
 
-  const { mutate, isLoading, isSuccess, isError, reset } = useMutation({
+  const { mutate, isLoading, isSuccess, isError, reset, error, failureReason, status } = useMutation({
     mutationKey: ["submit"],
     mutationFn: aiRequest,
   });
+
+  useEffect(() => {
+    console.log("mutate_error", error);
+    console.log("failureReason", failureReason);
+    console.log("status", status);
+  }, [error, failureReason, status]);
 
   const handleReset = async () => {
     reset();
@@ -136,11 +146,16 @@ export default function PromptCard({ products }: PromptCardProps) {
       {showForm && (
         <>
           <div className="group relative">
-            <div className="absolute -inset-[0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
-            <div className="relative flex flex-col gap-6 p-6 rounded-lg bg-white leading-none ring-1 ring-muted-foreground/20">
-              <div>
-                <h3 className="text-xl font-semibold text-fuchsia-600">PickAssistant AI</h3>
-                <p className="text-muted-foreground">AI assistant to help you pick the best product for you</p>
+            <div className="absolute inset-[-0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
+            <div className="relative flex flex-col gap-6 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="text-xl font-semibold text-fuchsia-600">recommen.do</h3>
+                  <p className="text-muted-foreground">AI assistant to help you pick the best product for you</p>
+                </div>
+                <div>
+                  {profile && <h3 className="text-muted-foreground">{profile.credits} recommendations available</h3>}
+                </div>
               </div>
 
               <form
@@ -173,7 +188,9 @@ export default function PromptCard({ products }: PromptCardProps) {
           <div className="flex items-center gap-2">
             <AlertCircle className="h-4 w-4" />
             {/* <AlertTitle>Heads up!</AlertTitle> */}
-            <AlertDescription>You have 0 recommendations left!</AlertDescription>
+            <AlertDescription>
+              An error occurred while processing your request. Please check browser console.
+            </AlertDescription>
           </div>
         </Alert>
       )}
@@ -181,8 +198,8 @@ export default function PromptCard({ products }: PromptCardProps) {
       {(isLoading || isSuccess) && (
         <>
           <div className="group relative">
-            <div className="absolute -inset-[0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
-            <div className="relative flex flex-col gap-4 p-6 rounded-lg bg-white leading-none ring-1 ring-muted-foreground/20">
+            <div className="absolute inset-[-0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
+            <div className="relative flex flex-col gap-4 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
               <div className="grid grid-cols-[144px_1fr] gap-x-4">
                 <div className="w-full pb-2">
                   {showSkeleton ? (

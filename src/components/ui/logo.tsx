@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <div>
       <Link href="/">
-        <Image src="/logo.svg" width={32} height={27} alt="Logo for PickAssistant" />
+        <Image src="/relogo.svg" width={48} height={27} alt="Logo for recommen.do" />
       </Link>
     </div>
   );

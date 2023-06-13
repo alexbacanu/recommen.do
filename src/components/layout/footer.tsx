@@ -13,7 +13,7 @@ export function Footer() {
             <Logo />
             <Navigation navigation={navConfig.footer} />
           </div>
-          <p className="text-sm">Copyright &copy; {new Date().getFullYear()} PickAssistant</p>
+          <p className="text-sm">Copyright &copy; {new Date().getFullYear()} recommen.do</p>
         </div>
         <div className="flex items-center justify-center gap-x-5 px-4 pb-6">
           <Image src="/vercel.svg" alt="Vercel logo" width={88} height={20} className="h-5 w-auto" />

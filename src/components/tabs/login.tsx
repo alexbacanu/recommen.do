@@ -6,7 +6,6 @@ export function Login() {
     <Card>
       <CardHeader>
         <div className="flex items-center gap-x-6">
-          {/* <img src={logoSrc} alt="Pickassistant" className="object-contain h-6" /> */}
           <CardTitle className="">Dashboard</CardTitle>
         </div>
       </CardHeader>
@@ -15,7 +14,9 @@ export function Login() {
       </CardContent>
       <CardFooter className="grid grid-cols-1 gap-4">
         <Button variant="outline" asChild>
-          <a href="https://pickassistant.authui.site/">Log in</a>
+          <a href="https://pickassistant.authui.site/" target="_blank">
+            Log in
+          </a>
         </Button>
       </CardFooter>
     </Card>

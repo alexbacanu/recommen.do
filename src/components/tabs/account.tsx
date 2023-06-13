@@ -93,7 +93,7 @@ export function Account({ account, profile }: AccountProps) {
       <Card>
         <CardHeader>
           <CardTitle>
-            API key <span className="text-muted-foreground/50">(not detected)</span>
+            API key <span className="text-muted-foreground/50">{apiKeyDetected ? "(detected)" : "(not detected)"}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -108,7 +108,7 @@ export function Account({ account, profile }: AccountProps) {
                       <Input
                         disabled={apiKeyDetected}
                         variant={apiKeyDetected ? "valid" : "default"}
-                        placeholder={apiKeyDetected ? "API key detected" : "API key"}
+                        placeholder={apiKeyDetected ? "OpenAI API key detected" : "Insert your OpenAI API key"}
                         {...field}
                       />
                     </FormControl>
@@ -129,7 +129,7 @@ export function Account({ account, profile }: AccountProps) {
                 )}
               /> */}
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="destructive" onClick={() => remove()}>
+                <Button variant="destructive" onClick={() => remove()} disabled={!apiKeyDetected}>
                   Clear key
                 </Button>
                 <Button variant="outline" type="submit" disabled={apiKeyDetected}>

@@ -1,11 +1,14 @@
 "use client";
 
+import type { OpenAISettings } from "~/lib/types";
 import type { Models } from "appwrite";
 
+import { useStorage } from "@plasmohq/storage/hook";
 import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { cn } from "~/lib/helpers/cn";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 interface SubscriptionProps {
@@ -18,6 +21,13 @@ export function Subscription({ profile }: SubscriptionProps) {
 
   const hasSubscription = profile && profile.stripeSubscriptionName;
   const canRefill = profile;
+
+  const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
+    apiKey: undefined,
+    orgName: undefined,
+  });
+
+  const apiKeyDetected = !!openaiSettings?.apiKey;
 
   const { createJWT } = useAppwrite();
 
@@ -66,27 +76,23 @@ export function Subscription({ profile }: SubscriptionProps) {
   };
 
   return (
-    <section id="subscription" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
+    <section
+      id="subscription"
+      className={cn("grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8", apiKeyDetected && "opacity-30")}
+    >
       <Card>
         <CardHeader>
           <CardTitle className="">Usage</CardTitle>
-          {/* <CardDescription>Check your recommendations usage</CardDescription> */}
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">{profile ? profile.credits : 0}</div>
           <div className="text-sm text-muted-foreground">Recommendations remaining</div>
         </CardContent>
-        <CardFooter className="text-sm text-muted-foreground">
-          {/* <Button onClick={() => handleRefill()} disabled={!!profile}>
-            Buy 50 extra credits
-          </Button> */}
-          Only successful recommendations are processed
-        </CardFooter>
+        <CardFooter className="text-sm text-muted-foreground">Only successful recommendations are processed</CardFooter>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle className="">Details</CardTitle>
-          {/* <CardDescription>Check your recommendations usage</CardDescription> */}
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">
@@ -98,36 +104,30 @@ export function Subscription({ profile }: SubscriptionProps) {
               : "No subscription"}
           </div>
         </CardContent>
-        <CardFooter className="text-sm text-muted-foreground">
-          {/* <Button onClick={() => handleRefill()} disabled={!!profile}>
-            Buy 50 extra credits
-          </Button> */}
-          Will automatically renew every month
-        </CardFooter>
+        <CardFooter className="text-sm text-muted-foreground">Will automatically renew every month</CardFooter>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle className="">Subscription</CardTitle>
-          {/* <CardDescription>Check your recommendations usage</CardDescription> */}
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">{hasSubscription && profile.name}</div>
           <div className="text-sm text-muted-foreground">Owner: {hasSubscription && profile.email}</div>
-          {/* <div className="text-sm text-muted-foreground">
-            {hasSubscription
-              ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`
-              : "No subscription"}
-          </div> */}
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
-          <Button size="lg" variant="outline" onClick={() => handleRefill()} disabled={refillLoading || !canRefill}>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => handleRefill()}
+            disabled={refillLoading || !canRefill || apiKeyDetected}
+          >
             {refillLoading ? "Loading..." : "Add 50 extra recommendations"}
           </Button>
           <Button
             size="lg"
             variant="outline"
             onClick={() => handleSubscribe(profile.stripePriceId)}
-            disabled={manageLoading || !canRefill}
+            disabled={manageLoading || !canRefill || apiKeyDetected}
           >
             {manageLoading ? "Loading..." : "Manage plan"}
           </Button>

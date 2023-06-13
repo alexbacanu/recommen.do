@@ -9,8 +9,8 @@ import "~/styles/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "🤖 Pick Assistant",
-  description: "🛍️ Shop smarter and faster with Pick Assistant, your ultimate shopping companion!",
+  title: "recommen.do",
+  description: "🛍️ Shop smarter and faster with recommen.do, your ultimate shopping companion!",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

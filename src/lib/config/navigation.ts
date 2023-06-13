@@ -56,7 +56,7 @@ export const navConfig = {
     },
     {
       title: "Contact",
-      href: "/contact",
+      href: "mailto:hi.recommen.do@gmail.com",
       disabled: false,
     },
   ],

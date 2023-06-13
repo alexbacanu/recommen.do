@@ -50,7 +50,7 @@ export function Hero() {
               src="/hero.png"
               height={1440}
               width={900}
-              alt="Screenshot with PickAssistant extension displayed"
+              alt="Screenshot with recommen.do extension displayed"
             />
           </div>
         </div>
