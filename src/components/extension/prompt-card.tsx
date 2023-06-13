@@ -27,7 +27,7 @@ const initialMessage: ChatGPTMessage[] = [
 const initialProduct = { identifier: "" };
 
 export default function PromptCard({ products }: PromptCardProps) {
-  const { createJWT } = useAppwrite();
+  const { createJWT, getProfile } = useAppwrite();
   const profile = useAtomValue(profileAtom);
 
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
@@ -133,6 +133,7 @@ export default function PromptCard({ products }: PromptCardProps) {
 
   const handleReset = async () => {
     reset();
+    getProfile();
     setSelectedProduct(initialProduct);
     setMessages(initialMessage);
   };

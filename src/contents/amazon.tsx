@@ -40,7 +40,6 @@ export const getStyle: PlasmoGetStyle = () => {
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
   const searchResultsContainer = document.querySelector("div.s-result-item[data-index]");
-  console.log("searchResultsContainer:", !!searchResultsContainer);
   if (!searchResultsContainer) {
     throw new Error("No search results container found");
   }
@@ -71,7 +70,7 @@ const amazonProductData = () => {
         image: imageEl.getAttribute("src") || "",
         link: linkEl.getAttribute("href") || "",
         name: nameEl.textContent?.trim(),
-        price: priceEl ? priceEl.textContent?.trim() : "unknown",
+        price: priceEl?.textContent?.trim() || "unknown",
         reviews: reviewsEl.textContent?.trim(),
         stars: starsEl.textContent?.trim(),
       };
