@@ -1,6 +1,7 @@
 "use client";
 
 import { useAtomValue } from "jotai";
+import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
@@ -9,6 +10,8 @@ import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 export function Subscription() {
   const profile = useAtomValue(profileAtom);
+  const [refillLoading, setRefillLoading] = useState(false);
+  const [manageLoading, setManageLoading] = useState(false);
   const { createJWT } = useAppwrite();
 
   const hasSubscription = profile && profile.stripeSubscriptionName;
@@ -17,6 +20,7 @@ export function Subscription() {
   let jwt: string;
 
   const handleSubscribe = async (priceId: string) => {
+    setManageLoading(true);
     if (!jwt) {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
@@ -34,10 +38,12 @@ export function Subscription() {
     const checkoutUrl = await getCheckoutURL.json();
 
     console.log("getCheckoutURL:", checkoutUrl);
+    setManageLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
   const handleRefill = async () => {
+    setRefillLoading(true);
     if (!jwt) {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
@@ -55,6 +61,7 @@ export function Subscription() {
     const checkoutUrl = await getCheckoutURL.json();
 
     console.log("getCheckoutURL:", checkoutUrl);
+    setRefillLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
@@ -113,11 +120,16 @@ export function Subscription() {
           </div> */}
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
-          <Button variant="outline" onClick={() => handleRefill()} disabled={!canRefill}>
-            Buy 50 extra credits
+          <Button size="lg" variant="outline" onClick={() => handleRefill()} disabled={refillLoading || !canRefill}>
+            {refillLoading ? "Loading..." : "Add 50 extra recommendations"}
           </Button>
-          <Button variant="outline" onClick={() => handleSubscribe(profile.stripePriceId)} disabled={!canRefill}>
-            Manage plan
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => handleSubscribe(profile.stripePriceId)}
+            disabled={manageLoading || !canRefill}
+          >
+            {manageLoading ? "Loading..." : "Manage plan"}
           </Button>
         </CardFooter>
       </Card>

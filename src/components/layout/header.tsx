@@ -17,7 +17,7 @@ export function Header() {
     <header
       className={cn(
         "top-0 z-10 border-b transition-all duration-300 border-border bg-card/80 backdrop-blur-xl",
-        isProfile && "bg-primary py-5",
+        isProfile && "bg-primary py-5 px-2",
       )}
     >
       <div
@@ -29,7 +29,7 @@ export function Header() {
         <div className="flex items-center gap-x-8">
           {!isProfile && <Logo />}
           {isProfile ? (
-            <Navigation navigation={navConfig.dashboard} hideOnMobile={true} />
+            <Navigation navigation={navConfig.dashboard} hideOnMobile={false} />
           ) : (
             <Navigation navigation={navConfig.header} hideOnMobile={true} />
           )}

@@ -2,54 +2,72 @@
 
 import { useSetAtom } from "jotai";
 
-import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
+import { accountAtom, isLoadingAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { account, databases } from "~/lib/clients/appwrite-client";
 
 export const useAppwrite = () => {
   const setAccount = useSetAtom(accountAtom);
   const setProfile = useSetAtom(profileAtom);
 
+  const setLoading = useSetAtom(isLoadingAtom);
+
   const getAccount = async () => {
     try {
+      setLoading(true);
       const response = await account.get();
-      if (response) setAccount(response);
+      if (response) {
+        setAccount(response);
+      }
       console.log("getAccountSuccess:", response);
     } catch (error) {
       setAccount(null);
       console.log("getAccountError:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const getProfile = async () => {
     try {
+      setLoading(true);
       const { documents } = await databases.listDocuments("main", "profile");
-      if (documents.length !== 0 && documents[0]) setProfile(documents[0]);
+      if (documents.length !== 0 && documents[0]) {
+        setProfile(documents[0]);
+      }
       console.log("getProfileSuccess:", documents[0]);
     } catch (error) {
       setProfile(null);
       console.log("getProfileError:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const createJWT = async () => {
     try {
+      setLoading(true);
       const jwt = await account.createJWT();
       console.log("createJWTSuccess:", jwt);
       return jwt;
     } catch (error) {
       console.log("createJWTError", error);
       return { jwt: "" };
+    } finally {
+      setLoading(false);
     }
   };
 
   const signOut = async () => {
     try {
+      setLoading(true);
       await account.deleteSession("current");
       setAccount(null);
       setProfile(null);
       console.log("signOutSuccess");
     } catch (error) {
       console.log("signOutError:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
