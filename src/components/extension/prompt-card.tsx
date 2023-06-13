@@ -8,9 +8,8 @@ import { useEffect, useState } from "react";
 import SuperJSON from "superjson";
 
 import { Init } from "~/components/layout/init";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { Alert, AlertDescription } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
 import { filterMessage } from "~/lib/helpers/filterMessage";
@@ -132,122 +131,135 @@ export default function PromptCard({ products }: PromptCardProps) {
   const showSkeleton = product.identifier === "";
 
   return (
-    <section id="prompt_card" className="w-full p-4">
+    <section id="prompt_card" className="m-4 min-w-[620px]">
       <Init />
       {showForm && (
-        <Card className="mx-auto">
-          <CardHeader>
-            <CardTitle>PickAssistant AI</CardTitle>
-            <CardDescription>AI assistant to help you pick the best product for you.</CardDescription>
-          </CardHeader>
+        <>
+          <div className="group relative">
+            <div className="absolute -inset-[0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
+            <div className="relative flex flex-col gap-6 p-6 rounded-lg bg-white leading-none ring-1 ring-muted-foreground/20">
+              <div>
+                <h3 className="text-xl font-semibold text-fuchsia-600">PickAssistant AI</h3>
+                <p className="text-muted-foreground">AI assistant to help you pick the best product for you</p>
+              </div>
 
-          <CardFooter>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                mutate({ products, prompt });
-              }}
-              className="flex gap-x-2"
-            >
-              <Input
-                value={prompt}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  setPrompt(e.target.value);
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  mutate({ products, prompt });
                 }}
-                type="text"
-                placeholder="Best budget iPhone"
-              />
-              <Button type="submit" className="shrink-0" disabled={!hasRead}>
-                {hasRead ? "Send" : "Response still generating..."}
-              </Button>
-            </form>
-          </CardFooter>
-        </Card>
+                className="flex gap-x-2"
+              >
+                <Input
+                  value={prompt}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setPrompt(e.target.value);
+                  }}
+                  type="text"
+                  placeholder="best price per performance"
+                  className="border-muted-foreground/40 placeholder:opacity-50"
+                />
+                <Button variant="secondary" type="submit" className="shrink-0" disabled={!hasRead}>
+                  {hasRead ? "Send" : "Response still generating..."}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </>
       )}
 
       {isError && (
         <Alert variant="destructive">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Heads up!</AlertTitle>
+            {/* <AlertTitle>Heads up!</AlertTitle> */}
+            <AlertDescription>You have 0 recommendations left!</AlertDescription>
           </div>
-          <AlertDescription>You have no more recommendations!</AlertDescription>
         </Alert>
       )}
 
       {(isLoading || isSuccess) && (
-        <Card>
-          <div className="grid grid-cols-[192px_1fr] gap-x-4">
-            <div className="p-6 pr-0 pb-2 w-full">
-              {showSkeleton ? (
-                <Skeleton className="mx-auto h-full w-36" />
-              ) : (
-                <img className="mx-auto h-auto rounded-lg object-cover" src={product.image} alt={product.name} />
-              )}
-            </div>
-            <div className="p-6 pl-0 pb-2 space-y-3">
-              <div className="space-y-1">
-                {showSkeleton ? <Skeleton className="h-8 w-1/2" /> : <div className="space-y-1">{product.name}</div>}
-              </div>
-              <div className="space-y-1">
-                {showSkeleton ? (
-                  <>
-                    <Skeleton className="h-4 w-1/4" />
-                    <Skeleton className="h-4 w-1/4" />
-                  </>
-                ) : (
-                  <>
-                    <p>Price: {product.price}</p>
-                    <p>
-                      Reviews: {product.stars} from {product.reviews} reviews
-                    </p>
-                  </>
-                )}
-              </div>
-              <div className="space-y-1">
-                {showSkeleton ? (
-                  <>
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </>
-                ) : (
-                  <>
-                    {messages.map(({ content }, index) => (
-                      <div key={index} className="text-muted-foreground">
-                        {filterMessage(content)}
-                      </div>
-                    ))}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-[192px_1fr] gap-x-4">
-            <div className="p-6 pr-0 pt-2 w-full">
-              {showSkeleton ? (
-                <Skeleton className="mx-auto h-10 w-36" />
-              ) : (
-                <div className="mx-auto w-full text-center">
-                  <Button asChild>
-                    <a href={product.link} className="w-full">
-                      See product
-                    </a>
-                  </Button>
+        <>
+          <div className="group relative">
+            <div className="absolute -inset-[0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
+            <div className="relative flex flex-col gap-4 p-6 rounded-lg bg-white leading-none ring-1 ring-muted-foreground/20">
+              <div className="grid grid-cols-[144px_1fr] gap-x-4">
+                <div className="w-full pb-2">
+                  {showSkeleton ? (
+                    <Skeleton className="mx-auto h-full w-36" />
+                  ) : (
+                    <img className="mx-auto h-auto rounded-lg object-cover" src={product.image} alt={product.name} />
+                  )}
                 </div>
-              )}
-            </div>
-            <div className="p-6 pl-0 pt-2">
-              {showSkeleton ? (
-                <Skeleton className="h-10 w-36" />
-              ) : (
-                <Button variant="outline" onClick={() => handleReset()} className="w-36">
-                  Return to search
-                </Button>
-              )}
+                <div className="space-y-3 pb-2">
+                  <div className="space-y-1">
+                    {showSkeleton ? (
+                      <Skeleton className="h-8 w-1/2" />
+                    ) : (
+                      <div className="space-y-1 text-xl font-semibold text-fuchsia-600">{product.name}</div>
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    {showSkeleton ? (
+                      <>
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-4 w-1/4" />
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm text-primary">Price: {product.price}</p>
+                        <p className="text-sm text-primary">
+                          Reviews: {product.stars} from {product.reviews} reviews
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    {showSkeleton ? (
+                      <>
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-1/2" />
+                      </>
+                    ) : (
+                      <>
+                        {messages.map(({ content }, index) => (
+                          <div key={index} className="text-muted-foreground">
+                            {filterMessage(content)}
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-[144px_1fr] gap-x-4">
+                <div className="w-full pt-2">
+                  {showSkeleton ? (
+                    <Skeleton className="mx-auto h-10 w-36" />
+                  ) : (
+                    <div className="mx-auto w-full text-center">
+                      <Button variant="secondary" asChild>
+                        <a href={product.link} className="w-full">
+                          See product
+                        </a>
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <div className="pt-2">
+                  {showSkeleton ? (
+                    <Skeleton className="h-10 w-36" />
+                  ) : (
+                    <Button variant="outline" onClick={() => handleReset()} className="w-36 text-primary">
+                      Return to search
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </Card>
+        </>
       )}
     </section>
   );
