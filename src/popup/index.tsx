@@ -5,7 +5,7 @@ import "~/styles/globals.css";
 
 export default function IndexPopup() {
   return (
-    <section id="popup_page">
+    <section id="popup_page" className="min-w-[420px]">
       <Init />
       <Dashboard />
     </section>

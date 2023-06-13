@@ -1,12 +1,11 @@
 const filterMessage = (text: string) => {
-  console.log(text);
-  const reasonStartIndex = text.indexOf('"reason": "');
+  const reasonStartIndex = text.indexOf('"reason":');
 
   if (reasonStartIndex === -1) {
     return "";
   }
 
-  const startIndex = reasonStartIndex + 11;
+  const startIndex = reasonStartIndex + 10;
   let result = text.slice(startIndex);
   result = result.replace(/["}\s]+$/, "");
 

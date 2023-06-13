@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next start",
     "dev": "run-p dev:*",
-    "dev:plasmo": "plasmo dev --target=firefox-mv3 --verbose",
+    "dev:plasmo": "plasmo dev --verbose",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
     "build:plasmo": "plasmo build",
