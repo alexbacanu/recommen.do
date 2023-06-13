@@ -1,21 +1,25 @@
 "use client";
 
-import { useAtomValue } from "jotai";
+import type { Models } from "appwrite";
+
 import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { profileAtom } from "~/lib/atoms/appwrite";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
-export function Subscription() {
-  const profile = useAtomValue(profileAtom);
+interface SubscriptionProps {
+  profile: Models.Document;
+}
+
+export function Subscription({ profile }: SubscriptionProps) {
   const [refillLoading, setRefillLoading] = useState(false);
   const [manageLoading, setManageLoading] = useState(false);
-  const { createJWT } = useAppwrite();
 
   const hasSubscription = profile && profile.stripeSubscriptionName;
   const canRefill = profile;
+
+  const { createJWT } = useAppwrite();
 
   let jwt: string;
 
@@ -25,8 +29,6 @@ export function Subscription() {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
     }
-
-    console.log("jwt:", jwt);
 
     const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
       method: "GET",
@@ -48,8 +50,6 @@ export function Subscription() {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
     }
-
-    console.log("jwt:", jwt);
 
     const getCheckoutURL = await fetch(`/api/stripe/refill`, {
       method: "GET",
@@ -92,13 +92,13 @@ export function Subscription() {
           <div className="text-xl font-semibold text-muted-foreground">
             {hasSubscription ? profile.stripeSubscriptionName : "Free"}
           </div>
-          <div className="text-sm text-muted-foreground/80">
+          <div className="text-sm text-muted-foreground">
             {hasSubscription
               ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`
               : "No subscription"}
           </div>
         </CardContent>
-        <CardFooter className="text-sm text-muted-foreground/80">
+        <CardFooter className="text-sm text-muted-foreground">
           {/* <Button onClick={() => handleRefill()} disabled={!!profile}>
             Buy 50 extra credits
           </Button> */}
@@ -112,7 +112,7 @@ export function Subscription() {
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">{hasSubscription && profile.name}</div>
-          <div className="text-sm text-muted-foreground/80">Owner: {hasSubscription && profile.email}</div>
+          <div className="text-sm text-muted-foreground">Owner: {hasSubscription && profile.email}</div>
           {/* <div className="text-sm text-muted-foreground">
             {hasSubscription
               ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`

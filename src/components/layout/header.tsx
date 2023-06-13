@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Download from "~/components/download";
 import { Navigation } from "~/components/navigation";
 import Logo from "~/components/ui/logo";
-import { Dashboard } from "~/components/user";
+import { Profile } from "~/components/user";
 import { navConfig } from "~/lib/config/navigation";
 import { cn } from "~/lib/helpers/cn";
 
@@ -37,7 +37,7 @@ export function Header() {
 
         <div className="flex items-center gap-x-4">
           {!isProfile && <Download />}
-          <Dashboard />
+          <Profile />
         </div>
       </div>
     </header>

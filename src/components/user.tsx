@@ -14,11 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { accountAtom } from "~/lib/atoms/appwrite";
+import LoadingSpinner from "~/components/ui/loading";
+import { accountAtom, isLoadingAtom } from "~/lib/atoms/appwrite";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
-export function Dashboard() {
+export function Profile() {
   const account = useAtomValue(accountAtom);
+  const isLoading = useAtomValue(isLoadingAtom);
   const { signOut } = useAppwrite();
 
   return (
@@ -75,8 +77,14 @@ export function Dashboard() {
       ) : (
         <Button variant="secondary" asChild>
           <Link className="space-x-2" href="https://pickassistant.authui.site/">
-            <LogIn className="h-4 w-4" />
-            <span>Login</span>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                <LogIn className="h-4 w-4" />
+                <span>"Login"</span>
+              </>
+            )}
           </Link>
         </Button>
       )}

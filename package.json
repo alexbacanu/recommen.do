@@ -65,6 +65,13 @@
     "permissions": [
       "storage",
       "cookies"
-    ]
+    ],
+    "key": "$CRX_PUBLIC_KEY",
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "$FIREFOX_EXT_ID",
+        "strict_min_version": "70.0"
+      }
+    }
   }
 }

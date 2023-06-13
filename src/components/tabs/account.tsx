@@ -1,23 +1,25 @@
 "use client";
 
 import type { OpenAISettings } from "~/lib/types";
+import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
-import { useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 import { openAiSchema } from "~/lib/schema";
 
-export function Account() {
-  const account = useAtomValue(accountAtom);
-  const profile = useAtomValue(profileAtom);
+interface AccountProps {
+  account: Models.User<Models.Preferences>;
+  profile: Models.Document;
+}
+
+export function Account({ account, profile }: AccountProps) {
   const { signOut } = useAppwrite();
   const { createJWT } = useAppwrite();
 
@@ -79,13 +81,13 @@ export function Account() {
           <div className="text-xl font-semibold text-muted-foreground">
             {hasSubscription ? profile.stripeSubscriptionName : "Free"}
           </div>
-          <div className="text-sm text-muted-foreground/80">
+          <div className="text-sm text-muted-foreground">
             {hasSubscription
               ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`
               : "No subscription"}
           </div>
         </CardContent>
-        <CardFooter className="text-sm text-muted-foreground/80">Will automatically renew every month</CardFooter>
+        <CardFooter className="text-sm text-muted-foreground">Will automatically renew every month</CardFooter>
       </Card> */}
 
       <Card>
@@ -145,7 +147,7 @@ export function Account() {
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">{account && account.name}</div>
-          <div className="text-sm text-muted-foreground/80">Owner: {account && account.email}</div>
+          <div className="text-sm text-muted-foreground">Owner: {account && account.email}</div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
           <Button variant="destructive" disabled={true} className="whitespace-nowrap">
