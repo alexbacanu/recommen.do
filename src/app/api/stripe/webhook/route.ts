@@ -177,14 +177,6 @@ export async function POST(request: Request) {
       });
     }
 
-    console.log("event.type:", event.type);
-    const currentPriceIdDebug = sessionItems.price.id;
-    console.log("id:", currentPriceIdDebug);
-    const currentPeriodStartDebug = new Date(session.current_period_start * 1000).toLocaleString();
-    console.log("start:", currentPeriodStartDebug);
-    const currentPeriodEndDebug = new Date(session.current_period_end * 1000).toLocaleString();
-    console.log("end:", currentPeriodEndDebug);
-
     const currentPeriodEnd = session.current_period_end;
     const databaseCurrentPeriodEnd = new Date(singleProfile.stripeCurrentPeriodEnd).getTime() / 1000;
 
@@ -238,13 +230,6 @@ export async function POST(request: Request) {
         status: 404,
       });
     }
-
-    const currentPriceId = sessionItems.price.id;
-    console.log("id:", currentPriceId);
-    const currentPeriodStart = new Date(session.current_period_start * 1000).toLocaleString();
-    console.log("start:", currentPeriodStart);
-    const currentPeriodEnd = new Date(session.current_period_end * 1000).toLocaleString();
-    console.log("end:", currentPeriodEnd);
 
     const sessionCreated = event.created;
     const statusLastUpdated = new Date(singleProfile.statusLastUpdated).getTime() / 1000;

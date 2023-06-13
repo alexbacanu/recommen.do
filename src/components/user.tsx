@@ -82,7 +82,7 @@ export function Profile() {
             ) : (
               <>
                 <LogIn className="h-4 w-4" />
-                <span>"Login"</span>
+                <span>Login</span>
               </>
             )}
           </Link>
