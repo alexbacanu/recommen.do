@@ -1,7 +1,13 @@
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { useAtomValue } from "jotai";
+
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { accountAtom } from "~/lib/atoms/appwrite";
 
 export function Login() {
+  const account = useAtomValue(accountAtom);
+
+  if (account && !account?.emailVerification) return;
+
   return (
     <Card>
       <CardHeader>
@@ -12,13 +18,6 @@ export function Login() {
       <CardContent>
         <div className="text-xl font-semibold text-muted-foreground">Please login to view dashboard</div>
       </CardContent>
-      <CardFooter className="grid grid-cols-1 gap-4">
-        <Button variant="outline" asChild>
-          <a href="https://pickassistant.authui.site/" target="_blank">
-            Log in
-          </a>
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

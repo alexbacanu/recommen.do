@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { createAppwriteClient } from "~/lib/clients/appwrite-server";
+import { appwriteClientService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 import { stripeRefillPrice } from "~/lib/envServer";
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   }
 
   // Get user profile based on JWT
-  const { sdkDatabases } = createAppwriteClient(token);
+  const { sdkDatabases } = appwriteClientService(token);
   const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
   const profile = profiles[0];
 

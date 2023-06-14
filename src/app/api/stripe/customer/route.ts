@@ -3,7 +3,7 @@ import { createHmac } from "crypto";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { createAppwriteClient } from "~/lib/clients/appwrite-server";
+import { appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 import { appwriteWebhookKey } from "~/lib/envServer";
@@ -14,6 +14,8 @@ export async function POST(request: Request) {
 
   const signature = headers().get("X-Appwrite-Webhook-Signature");
   const token = createHmac("sha1", appwriteWebhookKey).update(payload).digest("base64");
+  console.log("stripe.customer.signature:", signature);
+  console.log("stripe.customer.token:", token);
 
   if (signature !== token) {
     console.log("stripe.customer:", "Webhook signature is invalid");
@@ -30,8 +32,8 @@ export async function POST(request: Request) {
   });
 
   // Update the newly created customer in appwrite
-  const { sdkDatabases } = createAppwriteClient();
-  await sdkDatabases.updateDocument("main", "profile", body.$id, {
+  const { sdkServerDatabases } = appwriteServerService();
+  await sdkServerDatabases.updateDocument("main", "profile", body.$id, {
     stripeCustomerId: customer.id,
   });
 

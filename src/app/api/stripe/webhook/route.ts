@@ -4,7 +4,7 @@ import { Query } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { createAppwriteClient } from "~/lib/clients/appwrite-server";
+import { appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { stripeWebhookKey } from "~/lib/envServer";
 import { assignCredits } from "~/lib/helpers/assignCredits";
@@ -37,11 +37,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    const { sdkDatabases } = createAppwriteClient();
+    const { sdkServerDatabases } = appwriteServerService();
     const session = event.data.object as Stripe.Checkout.Session;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -62,17 +62,17 @@ export async function POST(request: Request) {
     }
 
     // Update profile from stripe event
-    await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+    await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
       credits: singleProfile.credits + 50,
     });
   }
 
   if (event.type === "invoice.payment_succeeded") {
-    const { sdkDatabases } = createAppwriteClient();
+    const { sdkServerDatabases } = appwriteServerService();
     const session = event.data.object as Stripe.Invoice;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
 
     if (session.billing_reason === "subscription_create") {
       // Update profile from stripe event
-      await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeSubscriptionId: sessionLines.subscription,
         stripeSubscriptionName: sessionLines.plan?.metadata?.name,
         stripePriceId: sessionLines.price?.id,
@@ -106,11 +106,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.created") {
-    const { sdkDatabases } = createAppwriteClient();
+    const { sdkServerDatabases } = appwriteServerService();
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -137,7 +137,7 @@ export async function POST(request: Request) {
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
       // console.log("customer.subscription.created", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
-      await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
         stripeStatusLastUpdated: new Date(event.created * 1000),
       });
@@ -145,11 +145,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.updated") {
-    const { sdkDatabases } = createAppwriteClient();
+    const { sdkServerDatabases } = appwriteServerService();
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -175,7 +175,7 @@ export async function POST(request: Request) {
     if (currentPeriodEnd > databaseCurrentPeriodEnd) {
       // console.log("customer.subscription.updated", "currentPeriodEnd > databaseCurrentPeriodEnd");
       // Update profile from stripe event
-      await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeSubscriptionId: session.id,
         stripePriceId: sessionItems.price.id,
 
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
       // console.log("customer.subscription.updated", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
-      await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
         stripeStatusLastUpdated: new Date(event.created * 1000),
       });
@@ -199,11 +199,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.deleted") {
-    const { sdkDatabases } = createAppwriteClient();
+    const { sdkServerDatabases } = appwriteServerService();
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -230,7 +230,7 @@ export async function POST(request: Request) {
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
       // console.log("customer.subscription.deleted", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
-      await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
         stripeStatusLastUpdated: new Date(event.created * 1000),
 

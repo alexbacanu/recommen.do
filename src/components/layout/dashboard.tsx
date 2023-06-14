@@ -18,7 +18,7 @@ export function Dashboard() {
     <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
       {account && profile && (
         <>
-          <Alerts profile={profile} />
+          <Alerts account={account} profile={profile} />
           <Subscription profile={profile} />
           <Account account={account} profile={profile} />
         </>
@@ -29,7 +29,7 @@ export function Dashboard() {
             <LoadingSpinner />
           ) : (
             <>
-              <Alerts profile={profile} />
+              <Alerts account={account} profile={profile} />
               <Login />
             </>
           )}

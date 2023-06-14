@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next start",
     "dev": "run-p dev:*",
-    "dev:plasmo": "plasmo dev",
+    "dev:plasmo": "plasmo dev --verbose",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
     "build:plasmo": "plasmo build",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
     "@plasmohq/storage": "^1.6.1",
+    "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",

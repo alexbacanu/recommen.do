@@ -55,29 +55,25 @@ export const useAppwrite = () => {
 
   const createJWT = async () => {
     try {
-      setLoading(true);
       const jwt = await account.createJWT();
       console.log("createJWTSuccess:", jwt);
       return jwt;
     } catch (error) {
       console.log("createJWTError", error);
       return { jwt: "" };
-    } finally {
-      setLoading(false);
     }
   };
 
   const signOut = async () => {
     try {
-      setLoading(true);
       await account.deleteSession("current");
       setAccount(null);
       setProfile(null);
       console.log("signOutSuccess");
     } catch (error) {
+      setAccount(null);
+      setProfile(null);
       console.log("signOutError:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

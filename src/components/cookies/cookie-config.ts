@@ -21,6 +21,18 @@ const pluginConfig: CookieConsentConfig = {
       readOnly: true,
       enabled: true,
     },
+    authentication: {
+      readOnly: true,
+      enabled: true,
+      autoClear: {
+        cookies: [
+          {
+            name: /^(a_session_)/,
+          },
+        ],
+        reloadPage: false,
+      },
+    },
     analytics: {
       readOnly: false,
       enabled: true,
@@ -71,7 +83,7 @@ const pluginConfig: CookieConsentConfig = {
               cookieTable: {
                 headers: {
                   name: "Name",
-                  domain: "Service",
+                  domain: "Local",
                   description: "Description",
                   expiration: "Expiration",
                 },
@@ -86,6 +98,28 @@ const pluginConfig: CookieConsentConfig = {
               },
             },
             {
+              title: "Authentication cookies",
+              description:
+                "We use Appwrite Cloud for user authentication. We use cookies to identify you when you visit our website and as you navigate our website, to help us determine if you are logged into our website and to keep your website session alive.",
+              linkedCategory: "authentication",
+              cookieTable: {
+                headers: {
+                  name: "Name",
+                  domain: "Service",
+                  description: "Description",
+                  expiration: "Expiration",
+                },
+                body: [
+                  {
+                    name: "_a_session_*, _a_session_*_legacy",
+                    domain: "appwrite.cloud.io",
+                    description: 'Cookie set by <a href="https://appwrite.io/policy/privacy">Appwrite Cloud</a>.',
+                    expiration: "Expires after 12 months",
+                  },
+                ],
+              },
+            },
+            {
               title: "Performance and analytics cookies",
               description:
                 "Performance and analytics cookies are used to track website visitors and their user behavior. This data is then used to improve the way the website works and in turn, used to improve user experience.",
@@ -93,7 +127,7 @@ const pluginConfig: CookieConsentConfig = {
               cookieTable: {
                 headers: {
                   name: "Name",
-                  domain: "Service",
+                  domain: "Local",
                   description: "Description",
                   expiration: "Expiration",
                 },

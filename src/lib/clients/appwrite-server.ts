@@ -1,24 +1,34 @@
-import { Account, Client, Databases } from "node-appwrite";
+import { Account, Client, Databases, Users } from "node-appwrite";
 
 import "server-only";
 
 import { appwriteEndpoint, appwriteProject } from "~/lib/envClient";
 import { appwriteApiKey } from "~/lib/envServer";
 
-const createAppwriteClient = (jwt?: string) => {
+const appwriteClientService = (jwt: string) => {
   const client = new Client();
 
   client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);
-
-  if (jwt) {
-    client.setJWT(jwt);
-  } else {
-    client.setKey(appwriteApiKey);
-  }
+  client.setJWT(jwt);
 
   const sdkDatabases = new Databases(client);
   const sdkAccount = new Account(client);
-  return { sdkDatabases, sdkAccount };
+  const sdkUsers = new Users(client);
+
+  return { sdkDatabases, sdkAccount, sdkUsers };
 };
 
-export { createAppwriteClient };
+const appwriteServerService = () => {
+  const client = new Client();
+
+  client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);
+  client.setKey(appwriteApiKey);
+
+  const sdkServerDatabases = new Databases(client);
+  const sdkServerAccount = new Account(client);
+  const sdkServerUsers = new Users(client);
+
+  return { sdkServerDatabases, sdkServerAccount, sdkServerUsers };
+};
+
+export { appwriteClientService, appwriteServerService };

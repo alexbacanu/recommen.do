@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { createAppwriteClient } from "~/lib/clients/appwrite-server";
+import { appwriteClientService } from "~/lib/clients/appwrite-server";
 
 // export async function GET() {
 //   return NextResponse.json(
@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   }
 
   // Update user verification
-  const { sdkAccount } = createAppwriteClient(token);
+  const { sdkAccount } = appwriteClientService(token);
   const promise = await sdkAccount.updateVerification(userId, secret);
   console.log("appwrite.promise:", promise);
 
