@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 
+import CookieButton from "~/components/cookies/cookie-button";
 import { Footer } from "~/components/layout/footer";
+import GoogleAnalytics from "~/components/layout/google-analytics";
 import { Header } from "~/components/layout/header";
 import { Init } from "~/components/layout/init";
 
@@ -16,6 +18,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <GoogleAnalytics />
+      <CookieButton />
       <body className={inter.className}>
         <Init />
         <Header />

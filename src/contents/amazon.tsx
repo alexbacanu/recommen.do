@@ -47,36 +47,43 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 };
 
 const amazonProductData = () => {
+  const currentUrl = window.location.origin;
+
   const productNodes = document.querySelectorAll("div.s-result-item");
   const products = [];
 
   for (const el of productNodes) {
-    if (el.classList.contains("AdHolder") || !el.classList.contains("s-asin")) {
+    const identifier = el.getAttribute("data-asin");
+
+    if (!identifier) {
       continue; // skip this element
     }
 
-    const identifier = el.getAttribute("data-asin");
-
     const imageEl = el.querySelector(".s-image");
     const linkEl = el.querySelector(".a-link-normal.s-underline-link-text.s-link-style");
+
+    if (linkEl?.getAttribute("href") === "#") {
+      continue; // skip this element
+    }
+
     const nameEl = el.querySelector(".a-color-base.a-text-normal");
     const priceEl = el.querySelector(".a-price .a-offscreen");
     const reviewsEl = el.querySelector(".a-size-base.s-underline-text");
     const starsEl = el.querySelector(".a-icon-alt");
 
-    if (identifier && imageEl && linkEl && nameEl && reviewsEl && starsEl) {
-      const product = {
-        identifier,
-        image: imageEl.getAttribute("src") || "",
-        link: linkEl.getAttribute("href") || "",
-        name: nameEl.textContent?.trim(),
-        price: priceEl?.textContent?.trim() || "unknown",
-        reviews: reviewsEl.textContent?.trim(),
-        stars: starsEl.textContent?.trim(),
-      };
+    const product = {
+      identifier: identifier || "none",
+      image: imageEl?.getAttribute("src") || "none",
+      link: `${currentUrl}/${linkEl?.getAttribute("href")}` || "none",
 
-      products.push(product);
-    }
+      name: nameEl?.textContent?.trim() || "unknown",
+      price: priceEl?.textContent?.trim() || "unknown",
+
+      reviews: reviewsEl?.textContent?.trim() || "0",
+      stars: starsEl?.textContent?.trim() || "0",
+    };
+
+    products.push(product);
   }
 
   return products;

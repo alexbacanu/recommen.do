@@ -7,3 +7,6 @@ export const appwriteProject =
 // Stripe
 export const stripePublishableKey =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? process.env.PLASMO_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
+
+// Google
+export const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? "";

@@ -14,11 +14,13 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
 import { profileAtom } from "~/lib/atoms/appwrite";
+import { cn } from "~/lib/helpers/cn";
 import { filterMessage } from "~/lib/helpers/filterMessage";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 interface PromptCardProps {
   products: Product[];
+  size: "md" | "xl";
 }
 
 const initialMessage: ChatGPTMessage[] = [
@@ -26,7 +28,7 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 const initialProduct = { identifier: "" };
 
-export default function PromptCard({ products }: PromptCardProps) {
+export default function PromptCard({ products, size }: PromptCardProps) {
   const { createJWT, getProfile } = useAppwrite();
   const profile = useAtomValue(profileAtom);
 
@@ -142,20 +144,24 @@ export default function PromptCard({ products }: PromptCardProps) {
   const showSkeleton = product.identifier === "";
 
   return (
-    <section id="prompt_card" className="m-4 min-w-[620px]">
+    <section id="prompt_card" className={cn("m-4 w-full min-w-[30%] max-w-[75%]", size === "xl" && "text-lg")}>
       <Init />
       {showForm && (
         <>
           <div className="group relative">
             <div className="absolute inset-[-0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
-            <div className="relative flex flex-col gap-6 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
-              <div className="flex justify-between">
+            <div className="relative flex flex-row gap-6 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
+              <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-fuchsia-600">recommen.do</h3>
-                  <p className="text-muted-foreground">AI assistant to help you pick the best product for you</p>
-                </div>
-                <div>
-                  {profile && <h3 className="text-muted-foreground">{profile.credits} recommendations available</h3>}
+                  <h3
+                    className={cn(
+                      "mb-2 text-xl font-semibold leading-none text-fuchsia-600",
+                      size === "xl" && "text-3xl",
+                    )}
+                  >
+                    recommen.do
+                  </h3>
+                  <p className="text-muted-foreground">Make choosing easier - with your personal AI assistant</p>
                 </div>
               </div>
 
@@ -164,7 +170,7 @@ export default function PromptCard({ products }: PromptCardProps) {
                   e.preventDefault();
                   mutate({ products, prompt });
                 }}
-                className="flex gap-x-2"
+                className="flex grow items-center gap-x-2"
               >
                 <Input
                   value={prompt}
@@ -172,13 +178,16 @@ export default function PromptCard({ products }: PromptCardProps) {
                     setPrompt(e.target.value);
                   }}
                   type="text"
-                  placeholder="best price per performance"
+                  placeholder={`${profile ? profile.credits : "?"} recommendations available`}
                   className="border-muted-foreground/40 placeholder:opacity-50"
                 />
                 <Button variant="secondary" type="submit" className="shrink-0" disabled={!hasRead}>
                   {hasRead ? "Send" : "Response still generating..."}
                 </Button>
               </form>
+              {/* {profile && (
+                  <h3 className="text-muted-foreground mt-1 text-right">{profile.credits} recommendations available</h3>
+                )} */}
             </div>
           </div>
         </>
@@ -214,7 +223,11 @@ export default function PromptCard({ products }: PromptCardProps) {
                     {showSkeleton ? (
                       <Skeleton className="h-8 w-1/2" />
                     ) : (
-                      <div className="space-y-1 text-xl font-semibold text-fuchsia-600">{product.name}</div>
+                      <div
+                        className={cn("space-y-1 text-xl font-semibold text-fuchsia-600", size === "xl" && "text-3xl")}
+                      >
+                        {product.name}
+                      </div>
                     )}
                   </div>
                   <div className="space-y-1">
@@ -225,8 +238,8 @@ export default function PromptCard({ products }: PromptCardProps) {
                       </>
                     ) : (
                       <>
-                        <p className="text-sm text-primary">Price: {product.price}</p>
-                        <p className="text-sm text-primary">
+                        <p className="text-primary">Price: {product.price}</p>
+                        <p className="text-primary">
                           Reviews: {product.stars} from {product.reviews} reviews
                         </p>
                       </>

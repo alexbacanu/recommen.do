@@ -39,6 +39,7 @@
     "server-only": "^0.0.1",
     "stripe": "^12.9.0",
     "superjson": "^1.12.3",
+    "vanilla-cookieconsent": "3.0.0-rc.14",
     "zod": "^3.21.4"
   },
   "devDependencies": {

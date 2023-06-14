@@ -77,6 +77,9 @@ dependencies:
   superjson:
     specifier: ^1.12.3
     version: 1.12.3
+  vanilla-cookieconsent:
+    specifier: 3.0.0-rc.14
+    version: 3.0.0-rc.14
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -7994,6 +7997,11 @@ packages:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
     dev: true
+
+  /vanilla-cookieconsent@3.0.0-rc.14:
+    resolution: {integrity: sha512-rYqY5Xb2SaY6w7BEoaTUJ/ICKKDCQlkCEnF3DtensMj3WZyVW3BE0Lygi9SwjgjHKDVHlme5baztPG2UqR8ymQ==}
+    requiresBuild: true
+    dev: false
 
   /watchpack@2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}

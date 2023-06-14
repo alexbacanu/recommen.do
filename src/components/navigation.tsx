@@ -26,6 +26,13 @@ export function Navigation({ navigation, hideOnMobile = false }: NavigationProps
           {item.title}
         </Link>
       ))}
+      <Link
+        className="text-base font-medium transition-colors hover:text-indigo-500"
+        href="#"
+        data-cc="show-preferencesModal"
+      >
+        Cookies 🍪
+      </Link>
     </nav>
   );
 }
