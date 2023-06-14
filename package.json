@@ -2,6 +2,7 @@
   "name": "recommen.do_saas",
   "displayName": "recommen.do",
   "description": "🛍️ Shop smarter and faster with recommen.do, your ultimate shopping companion!",
+  "author": "bachi312",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +11,7 @@
     "dev:plasmo": "plasmo dev --verbose",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
-    "build:plasmo": "plasmo build",
+    "build:plasmo": "plasmo build --target=firefox-mv2 --zip",
     "build:next": "next build",
     "lint": "next lint",
     "prettier": "prettier --check .",
@@ -79,13 +80,6 @@
         "id": "$PLASMO_PUBLIC_FIREFOX_EXT_ID",
         "strict_min_version": "90.0"
       }
-    },
-    "options_ui": {
-      "browser_style": true,
-      "open_in_tab": false
-    },
-    "background": {
-      "service_worker": "~/src/contents/amazon.tsx"
     },
     "permissions": [
       "cookies",

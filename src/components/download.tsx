@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { browserName } from "react-device-detect";
 
@@ -26,9 +25,9 @@ export default function Download() {
         />
       )}
       <Button variant="default" className={browser ? "pl-9" : ""}>
-        <Link href="#">
+        <a href={browser === "Firefox" ? "/firefox.zip" : "/chrome.zip"}>
           Download <span className="hidden lg:inline-flex">extension for free</span>
-        </Link>
+        </a>
       </Button>
     </div>
   );
