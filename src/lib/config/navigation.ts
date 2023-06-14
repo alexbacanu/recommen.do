@@ -59,5 +59,11 @@ export const navConfig = {
       href: "mailto:hi.recommen.do@gmail.com",
       disabled: false,
     },
+    {
+      title: "Cookie settings 🍪",
+      href: "#",
+      disabled: false,
+      "data-cc": "show-preferencesModal",
+    },
   ],
 };

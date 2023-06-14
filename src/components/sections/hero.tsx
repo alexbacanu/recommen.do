@@ -44,7 +44,14 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl shadow-lg md:shadow-xl lg:w-[65rem]">
+          <div className="relative overflow-hidden rounded-2xl shadow-lg md:shadow-xl lg:w-[65rem]">
+            <Image
+              className="absolute left-[260px] top-[190px] w-full animate-pulse"
+              src="/extensie.png"
+              height={1440}
+              width={900}
+              alt="Screenshot with recommen.do extension displayed"
+            />
             <Image
               className="w-full"
               src="/hero.png"

@@ -134,8 +134,8 @@ export function Features() {
               <div className="ml-5 sm:ml-8">
                 <h3 className="text-base font-semibold sm:text-lg">Private and Secure</h3>
                 <p className="mt-1">
-                  Our extension adheres to strict data protection practices and does not store any sensitive information
-                  in the cloud. If you provide your own API key, it will be stored locally.
+                  Our extension adheres to strict data protection practices. If you provide your own API key, it will be
+                  stored locally.
                 </p>
               </div>
             </motion.div>

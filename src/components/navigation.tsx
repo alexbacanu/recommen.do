@@ -7,6 +7,7 @@ interface NavigationProps {
     title: string;
     href: string;
     disabled?: boolean;
+    "data-cc"?: string;
   }[];
   hideOnMobile?: boolean;
 }
@@ -22,17 +23,11 @@ export function Navigation({ navigation, hideOnMobile = false }: NavigationProps
             "text-base font-medium transition-colors hover:text-indigo-500",
             item.disabled && "cursor-not-allowed opacity-80",
           )}
+          data-cc={item["data-cc"]}
         >
           {item.title}
         </Link>
       ))}
-      <Link
-        className="text-base font-medium transition-colors hover:text-indigo-500"
-        href="#"
-        data-cc="show-preferencesModal"
-      >
-        Cookies 🍪
-      </Link>
     </nav>
   );
 }

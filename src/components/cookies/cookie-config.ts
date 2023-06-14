@@ -48,11 +48,11 @@ const pluginConfig: CookieConsentConfig = {
             'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie preferences</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
           acceptAllBtn: "Accept",
           // acceptNecessaryBtn: "Accept only necesary",
-          showPreferencesBtn: "Cookie preferences",
+          showPreferencesBtn: "Cookie settings",
           footer: `<a href="/en/privacy">Privacy Policy</a>`,
         },
         preferencesModal: {
-          title: "Cookie preferences",
+          title: "Cookie settings 🍪",
           acceptNecessaryBtn: "Accept only necessary",
           acceptAllBtn: "Accept all",
           savePreferencesBtn: "Accept selected",
