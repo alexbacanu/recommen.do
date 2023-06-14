@@ -52,9 +52,9 @@ export function Features() {
                 <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2V1.866ZM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5Z" />
               </svg>
               <div className="ml-5 sm:ml-8">
-                <h3 className="text-base font-semibold sm:text-lg">GPT-4 AI-Powered</h3>
+                <h3 className="text-base font-semibold sm:text-lg">OpenAI GPT AI-Powered</h3>
                 <p className="mt-1">
-                  Our browser extension utilizes GPT-4 AI to analyze your preferences and provide personalized product
+                  Our browser extension utilizes OpenAI GPT to analyze your preferences and provide personalized product
                   recommendations based on your input.
                 </p>
               </div>
@@ -93,7 +93,7 @@ export function Features() {
               </svg>
               <div className="ml-5 sm:ml-8">
                 <h3 className="text-base font-semibold sm:text-lg">Use Your API Key</h3>
-                <p className="mt-1">You can leverage the power of GPT-4 for free with your own API key.</p>
+                <p className="mt-1">You can leverage the power of OpenAI GPT for free with your own API key.</p>
               </div>
             </motion.div>
 

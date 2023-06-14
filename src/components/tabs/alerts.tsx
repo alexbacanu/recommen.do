@@ -76,7 +76,7 @@ export function Alerts({ account, profile }: AlertsProps) {
     if (verifyEmail.status === 200) {
       setButtonDisabled(true);
       signOut().then(() => {
-        window.location.href = "https://pickassistant.authui.site/";
+        window.location.href = "https://recommendo.authui.site/";
       });
     }
 

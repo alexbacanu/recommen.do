@@ -1,12 +1,12 @@
 "use client";
 
-import Privacy from "./privacy.mdx";
+import Cookies from "./cookies.mdx";
 
-export default function PrivacyPage() {
+export default function CookiesPage() {
   return (
-    <section id="privacy_page">
+    <section id="cookies_page">
       <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
-        <Privacy />
+        <Cookies />
       </div>
     </section>
   );

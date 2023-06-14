@@ -163,7 +163,7 @@ export function Pricing({ plans }: PricingProps) {
                     <CardContent className="grid">
                       {!account ? (
                         <Button asChild variant={index === 1 ? "default" : "outline"}>
-                          <Link href="https://pickassistant.authui.site/">Get started</Link>
+                          <Link href="https://recommendo.authui.site/">Get started</Link>
                         </Button>
                       ) : (
                         <Button

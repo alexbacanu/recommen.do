@@ -83,15 +83,15 @@ const pluginConfig: CookieConsentConfig = {
               cookieTable: {
                 headers: {
                   name: "Name",
-                  domain: "Local",
+                  domain: "Domain",
                   description: "Description",
                   expiration: "Expiration",
                 },
                 body: [
                   {
                     name: "cc_cookie",
-                    domain: "Cookie Consent",
-                    description: 'Cookie set by <a href="https://cookieconsent.orestbida.com/">Cookie Consent v3</a>.',
+                    domain: "local",
+                    description: 'Cookie set by <a href="https://cookieconsent.orestbida.com/">Cookie Consent v3</a>',
                     expiration: "Expires after 12 months",
                   },
                 ],
@@ -105,15 +105,21 @@ const pluginConfig: CookieConsentConfig = {
               cookieTable: {
                 headers: {
                   name: "Name",
-                  domain: "Service",
+                  domain: "Domain",
                   description: "Description",
                   expiration: "Expiration",
                 },
                 body: [
                   {
-                    name: "_a_session_*, _a_session_*_legacy",
+                    name: "_a_session_*",
                     domain: "appwrite.cloud.io",
-                    description: 'Cookie set by <a href="https://appwrite.io/policy/privacy">Appwrite Cloud</a>.',
+                    description: 'Cookie set by <a href="https://appwrite.io/policy/privacy">Appwrite Cloud</a>',
+                    expiration: "Expires after 12 months",
+                  },
+                  {
+                    name: "_a_session_*_legacy",
+                    domain: "appwrite.cloud.io",
+                    description: 'Cookie set by <a href="https://appwrite.io/policy/privacy">Appwrite Cloud</a>',
                     expiration: "Expires after 12 months",
                   },
                 ],
@@ -127,16 +133,16 @@ const pluginConfig: CookieConsentConfig = {
               cookieTable: {
                 headers: {
                   name: "Name",
-                  domain: "Local",
+                  domain: "Domain",
                   description: "Description",
                   expiration: "Expiration",
                 },
                 body: [
                   {
                     name: "_ga, _ga_*",
-                    domain: "Google Analytics",
+                    domain: "local",
                     description:
-                      'Cookie set by <a href="https://www.google.com/intl/analytics/policies/privacy/">Google Analytics</a>.',
+                      'Cookie set by <a href="https://www.google.com/intl/analytics/policies/privacy/">Google Analytics</a>',
                     expiration: "Expires after 12 months",
                   },
                 ],

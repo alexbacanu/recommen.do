@@ -76,7 +76,7 @@ export function Profile() {
         </DropdownMenu>
       ) : (
         <Button variant="secondary" asChild>
-          <Link className="space-x-2" href="https://pickassistant.authui.site/">
+          <Link className="space-x-2" href="https://recommendo.authui.site/">
             {isLoading ? (
               <LoadingSpinner />
             ) : (

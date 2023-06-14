@@ -5,20 +5,20 @@ import type { ParsedEvent, ReconnectInterval } from "eventsource-parser";
 
 import { createParser } from "eventsource-parser";
 
-import { createAppwriteClient } from "~/lib/clients/appwrite-server";
+import { appwriteClientService, appwriteServerService } from "~/lib/clients/appwrite-server";
 import { openaiKey, openaiOrg } from "~/lib/envServer";
 
 const getProfile = async (token: string) => {
   // Get user profile based on JWT
-  const { sdkDatabases } = createAppwriteClient(token);
+  const { sdkDatabases } = appwriteClientService(token);
   const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
   return profiles[0];
 };
 
 const updateCredits = async (profileId: string, profileCredits: number, usage: number) => {
-  const { sdkDatabases } = createAppwriteClient();
+  const { sdkServerDatabases } = appwriteServerService();
 
-  await sdkDatabases.updateDocument("main", "profile", profileId, {
+  await sdkServerDatabases.updateDocument("main", "profile", profileId, {
     credits: profileCredits - 1,
     usage: usage + 1,
   });

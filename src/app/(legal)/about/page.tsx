@@ -1,12 +1,12 @@
 "use client";
 
-import Privacy from "./privacy.mdx";
+import About from "./about.mdx";
 
-export default function PrivacyPage() {
+export default function AboutPage() {
   return (
-    <section id="privacy_page">
+    <section id="about_page">
       <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
-        <Privacy />
+        <About />
       </div>
     </section>
   );

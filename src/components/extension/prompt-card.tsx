@@ -14,6 +14,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
 import { profileAtom } from "~/lib/atoms/appwrite";
+import { appwriteUrl } from "~/lib/envClient";
 import { cn } from "~/lib/helpers/cn";
 import { filterMessage } from "~/lib/helpers/filterMessage";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
@@ -52,7 +53,7 @@ export default function PromptCard({ products, size }: PromptCardProps) {
     }
     // console.log(jwt);
 
-    const response = await fetch("http://localhost:1947/api/openai", {
+    const response = await fetch(`${appwriteUrl}/api/openai`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
