@@ -186,9 +186,6 @@ export default function PromptCard({ products, size }: PromptCardProps) {
                   {hasRead ? "Send" : "Response still generating..."}
                 </Button>
               </form>
-              {/* {profile && (
-                  <h3 className="text-muted-foreground mt-1 text-right">{profile.credits} recommendations available</h3>
-                )} */}
             </div>
           </div>
         </>
@@ -216,6 +213,7 @@ export default function PromptCard({ products, size }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="mx-auto h-full w-36" />
                   ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img className="mx-auto h-auto rounded-lg object-cover" src={product.image} alt={product.name} />
                   )}
                 </div>

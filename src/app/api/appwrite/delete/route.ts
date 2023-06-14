@@ -1,8 +1,14 @@
+import type { Profile } from "~/lib/types";
+
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { appwriteClientService, appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
+
+type Customer = {
+  test: string;
+};
 
 export async function GET(request: Request) {
   // // Get searchParams from URL
@@ -43,7 +49,7 @@ export async function GET(request: Request) {
 
   // Get current profile
   const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
+  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
   const profile = profiles[0];
   console.log(profile);
 

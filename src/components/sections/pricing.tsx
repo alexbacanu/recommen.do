@@ -1,5 +1,6 @@
 "use client";
 
+import type { PricingPlan } from "~/lib/types";
 import type { Variants } from "framer-motion";
 
 import { motion } from "framer-motion";
@@ -14,17 +15,7 @@ import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 interface PricingProps {
-  plans: {
-    priceId: string;
-    name: string;
-    price: number;
-    interval: string | undefined;
-    currency: string;
-    description: string | null;
-    metadata: {
-      features: string;
-    };
-  }[];
+  plans: PricingPlan[];
 }
 
 export function Pricing({ plans }: PricingProps) {

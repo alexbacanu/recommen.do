@@ -1,5 +1,7 @@
 "use client";
 
+import type { Profile } from "~/lib/types";
+
 import { useSetAtom } from "jotai";
 
 import { accountAtom, isLoadingAtom, profileAtom } from "~/lib/atoms/appwrite";
@@ -40,7 +42,7 @@ export const useAppwrite = () => {
   const getProfile = async () => {
     try {
       setLoading(true);
-      const { documents } = await databases.listDocuments("main", "profile");
+      const { documents } = await databases.listDocuments<Profile>("main", "profile");
       if (documents.length !== 0 && documents[0]) {
         setProfile(documents[0]);
       }

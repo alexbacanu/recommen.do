@@ -38,15 +38,6 @@ export function Alerts({ account, profile }: AlertsProps) {
 
   const ableToVerify = userId && secret;
 
-  useEffect(() => {
-    if (ableToVerify && !loading) {
-      setTitle("Just one more step!");
-      setMessage("You will be redirected to the login page in a few seconds.");
-      setButtonMessage("Click here to complete the verification");
-      handleVerification();
-    }
-  }, []);
-
   let jwt: string;
   const handleVerification = async () => {
     if (!userId || !secret) {
@@ -79,10 +70,17 @@ export function Alerts({ account, profile }: AlertsProps) {
         window.location.href = "https://recommendo.authui.site/";
       });
     }
-
-    // setLoading(false);
-    // window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
+
+  useEffect(() => {
+    if (ableToVerify && !loading) {
+      setTitle("Just one more step!");
+      setMessage("You will be redirected to the login page in a few seconds.");
+      setButtonMessage("Click here to complete the verification");
+      handleVerification();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ableToVerify, loading]);
 
   const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
@@ -129,34 +127,8 @@ export function Alerts({ account, profile }: AlertsProps) {
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>You are running low on recommendations!</AlertTitle>
           </div>
-          {/* <AlertDescription>You are running low on recommendations!</AlertDescription> */}
         </Alert>
       )}
-
-      {/* {!profile && (
-        <Alert className="flex items-center justify-between gap-x-4" variant="warning">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Activation needed!</AlertTitle>
-            </div>
-            <AlertDescription>{message}</AlertDescription>
-          </div>
-          <Button onClick={() => handleVerification()} disabled={buttonDisabled || loading}>
-            {buttonMessage}
-          </Button>
-        </Alert>
-      )} */}
-
-      {/* {profile && profile.credits < 10 && (
-        <Alert variant="warning">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Heads up!</AlertTitle>
-          </div>
-          <AlertDescription>You are running low on recommendations!</AlertDescription>
-        </Alert>
-      )} */}
     </>
   );
 }

@@ -1,3 +1,5 @@
+import type { Profile } from "~/lib/types";
+
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -20,7 +22,7 @@ export async function GET(request: Request) {
 
   // Get user profile based on JWT
   const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
+  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
   const profile = profiles[0];
 
   if (!profile) {

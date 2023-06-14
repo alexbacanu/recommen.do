@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
   // Create stream response
   let stream;
   try {
-    stream = await OpenAIStream(payload, token, openaiSettings?.apiKey, openaiSettings?.orgName);
+    stream = (await OpenAIStream(payload, token, openaiSettings?.apiKey, openaiSettings?.orgName)) as ReadableStream;
   } catch (error) {
     const errorMessage = (error as Error).message;
     const errorCodeMatch = errorMessage.match(/^\d+/);

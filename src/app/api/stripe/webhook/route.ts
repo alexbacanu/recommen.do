@@ -1,3 +1,4 @@
+import type { Profile } from "~/lib/types";
 import type Stripe from "stripe";
 
 import { Query } from "appwrite";
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -72,7 +73,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Invoice;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -110,7 +111,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -149,7 +150,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -203,7 +204,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Subscription;
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments("main", "profile", [
+    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 

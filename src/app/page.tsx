@@ -1,3 +1,5 @@
+import type { PricingPlan } from "~/lib/types";
+
 import { Features } from "~/components/sections/features";
 import { Hero } from "~/components/sections/hero";
 import { Pricing } from "~/components/sections/pricing";
@@ -23,13 +25,13 @@ async function getPlans() {
       };
     }),
   );
-  const sortedPlans = plans.sort((a, b) => a.price - b.price);
+  const sortedPlans = plans.sort((a, b) => (a?.price || 0) - (b?.price || 0));
 
   return sortedPlans;
 }
 
 export default async function HomePage() {
-  const plans = await getPlans();
+  const plans = (await getPlans()) as PricingPlan[];
 
   return (
     <>

@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { OpenAIStreamPayload } from "~/lib/types";
+import type { OpenAIStreamPayload, Profile } from "~/lib/types";
 import type { ParsedEvent, ReconnectInterval } from "eventsource-parser";
 
 import { createParser } from "eventsource-parser";
@@ -11,7 +11,7 @@ import { openaiKey, openaiOrg } from "~/lib/envServer";
 const getProfile = async (token: string) => {
   // Get user profile based on JWT
   const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments("main", "profile");
+  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
   return profiles[0];
 };
 

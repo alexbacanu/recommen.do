@@ -30,6 +30,11 @@ interface AccountProps {
   profile: Models.Document;
 }
 
+interface CustomWindow extends Window {
+  next: any;
+}
+declare const window: CustomWindow;
+
 export function Account({ account, profile }: AccountProps) {
   const { signOut } = useAppwrite();
   const { createJWT } = useAppwrite();
