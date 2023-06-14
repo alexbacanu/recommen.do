@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { createAppwriteClient } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
-import { appwriteUrl } from "~/lib/envServer";
+import { appwriteUrl } from "~/lib/envClient";
 
 export async function GET(request: Request, { params }: { params: { priceId: string } }) {
   // Get priceId from slug
@@ -40,7 +40,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   }
 
   const isSubscribed = profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now();
-  console.log("isSubscribed:", isSubscribed);
+  // console.log("isSubscribed:", isSubscribed);
 
   const stripe = getStripeInstance();
 

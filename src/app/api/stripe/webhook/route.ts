@@ -130,20 +130,12 @@ export async function POST(request: Request) {
       });
     }
 
-    console.log("event.type:", event.type);
-    const currentPriceIdDebug = sessionItems.price.id;
-    console.log("id:", currentPriceIdDebug);
-    const currentPeriodStartDebug = new Date(session.current_period_start * 1000).toLocaleString();
-    console.log("start:", currentPeriodStartDebug);
-    const currentPeriodEndDebug = new Date(session.current_period_end * 1000).toLocaleString();
-    console.log("end:", currentPeriodEndDebug);
-
     const sessionCreated = event.created;
     const statusLastUpdated = new Date(singleProfile.statusLastUpdated).getTime() / 1000;
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      console.log("customer.subscription.created", "sessionCreated > statusLastUpdated");
+      // console.log("customer.subscription.created", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
@@ -181,7 +173,7 @@ export async function POST(request: Request) {
     const databaseCurrentPeriodEnd = new Date(singleProfile.stripeCurrentPeriodEnd).getTime() / 1000;
 
     if (currentPeriodEnd > databaseCurrentPeriodEnd) {
-      console.log("customer.subscription.updated", "currentPeriodEnd > databaseCurrentPeriodEnd");
+      // console.log("customer.subscription.updated", "currentPeriodEnd > databaseCurrentPeriodEnd");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeSubscriptionId: session.id,
@@ -197,7 +189,7 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      console.log("customer.subscription.updated", "sessionCreated > statusLastUpdated");
+      // console.log("customer.subscription.updated", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
@@ -236,7 +228,7 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      console.log("customer.subscription.deleted", "sessionCreated > statusLastUpdated");
+      // console.log("customer.subscription.deleted", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,

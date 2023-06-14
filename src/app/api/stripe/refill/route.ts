@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 import { createAppwriteClient } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
-import { appwriteUrl, stripeRefillPrice } from "~/lib/envServer";
+import { appwriteUrl } from "~/lib/envClient";
+import { stripeRefillPrice } from "~/lib/envServer";
 
 export async function GET(request: Request) {
   // Read JWT from Authorization header

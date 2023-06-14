@@ -1,4 +1,4 @@
-import { Client, Databases } from "node-appwrite";
+import { Account, Client, Databases } from "node-appwrite";
 
 import "server-only";
 
@@ -17,7 +17,8 @@ const createAppwriteClient = (jwt?: string) => {
   }
 
   const sdkDatabases = new Databases(client);
-  return { sdkDatabases };
+  const sdkAccount = new Account(client);
+  return { sdkDatabases, sdkAccount };
 };
 
 export { createAppwriteClient };

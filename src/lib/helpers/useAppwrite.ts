@@ -4,6 +4,7 @@ import { useSetAtom } from "jotai";
 
 import { accountAtom, isLoadingAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { account, databases } from "~/lib/clients/appwrite-client";
+import { appwriteUrl } from "~/lib/envClient";
 
 export const useAppwrite = () => {
   const setAccount = useSetAtom(accountAtom);
@@ -24,6 +25,15 @@ export const useAppwrite = () => {
       console.log("getAccountError:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const verifyAccount = async () => {
+    try {
+      const response = await account.createVerification(`${appwriteUrl}/profile`);
+      console.log("verifyAccountSuccess:", response);
+    } catch (error) {
+      console.log("verifyAccountError:", error);
     }
   };
 
@@ -71,5 +81,5 @@ export const useAppwrite = () => {
     }
   };
 
-  return { getAccount, getProfile, createJWT, signOut };
+  return { getAccount, verifyAccount, getProfile, createJWT, signOut };
 };

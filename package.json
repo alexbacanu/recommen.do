@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next start",
     "dev": "run-p dev:*",
-    "dev:plasmo": "plasmo dev --verbose",
+    "dev:plasmo": "plasmo dev",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
     "build:plasmo": "plasmo build",
@@ -31,7 +31,7 @@
     "lucide-react": "^0.244.0",
     "next": "^13.4.5",
     "node-appwrite": "^9.0.0",
-    "plasmo": "^0.76.0",
+    "plasmo": "^0.76.1",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
@@ -39,7 +39,7 @@
     "server-only": "^0.0.1",
     "stripe": "^12.9.0",
     "superjson": "^1.12.3",
-    "vanilla-cookieconsent": "3.0.0-rc.14",
+    "vanilla-cookieconsent": "next",
     "zod": "^3.21.4"
   },
   "devDependencies": {

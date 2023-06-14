@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 
 import { createAppwriteClient } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
-import { appwriteUrl, appwriteWebhookKey } from "~/lib/envServer";
+import { appwriteUrl } from "~/lib/envClient";
+import { appwriteWebhookKey } from "~/lib/envServer";
 
 export async function POST(request: Request) {
   const body = await request.json();

@@ -49,7 +49,7 @@ export function Subscription({ profile }: SubscriptionProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    console.log("getCheckoutURL:", checkoutUrl);
+    // console.log("getCheckoutURL:", checkoutUrl);
     setManageLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
@@ -70,7 +70,7 @@ export function Subscription({ profile }: SubscriptionProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    console.log("getCheckoutURL:", checkoutUrl);
+    // console.log("getCheckoutURL:", checkoutUrl);
     setRefillLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
@@ -104,22 +104,24 @@ export function Subscription({ profile }: SubscriptionProps) {
               : "No subscription"}
           </div>
         </CardContent>
-        <CardFooter className="text-sm text-muted-foreground">Will automatically renew every month</CardFooter>
+        <CardFooter className="text-sm text-muted-foreground">
+          {hasSubscription ? "Will automatically renew every month" : ""}
+        </CardFooter>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle className="">Subscription</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-xl font-semibold text-muted-foreground">{hasSubscription && profile.name}</div>
-          <div className="text-sm text-muted-foreground">Owner: {hasSubscription && profile.email}</div>
+          <div className="text-xl font-semibold text-muted-foreground">{hasSubscription ? "Active" : "Not active"}</div>
+          <div className="text-sm text-muted-foreground">{hasSubscription ? `Owner: ${profile.email}` : ""}</div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
           <Button
             size="lg"
             variant="outline"
             onClick={() => handleRefill()}
-            disabled={refillLoading || !canRefill || apiKeyDetected}
+            disabled={refillLoading || !hasSubscription || apiKeyDetected}
           >
             {refillLoading ? "Loading..." : "Add 50 extra recommendations"}
           </Button>
@@ -127,7 +129,7 @@ export function Subscription({ profile }: SubscriptionProps) {
             size="lg"
             variant="outline"
             onClick={() => handleSubscribe(profile.stripePriceId)}
-            disabled={manageLoading || !canRefill || apiKeyDetected}
+            disabled={manageLoading || !hasSubscription || apiKeyDetected}
           >
             {manageLoading ? "Loading..." : "Manage plan"}
           </Button>

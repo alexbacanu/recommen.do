@@ -5,7 +5,7 @@ import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { AlertCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SuperJSON from "superjson";
 
 import { Init } from "~/components/layout/init";
@@ -40,9 +40,9 @@ export default function PromptCard({ products, size }: PromptCardProps) {
   const [prompt, setPrompt] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages]);
 
   let jwt: string;
   const aiRequest = async (openaiRequest: OpenAIRequest) => {
@@ -50,7 +50,7 @@ export default function PromptCard({ products, size }: PromptCardProps) {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
     }
-    console.log(jwt);
+    // console.log(jwt);
 
     const response = await fetch("http://localhost:1947/api/openai", {
       method: "POST",
@@ -66,14 +66,14 @@ export default function PromptCard({ products, size }: PromptCardProps) {
 
     if (!response.ok) {
       const errorMessage = await response.text();
-      console.log("errorMessage:", errorMessage);
+      // console.log("errorMessage:", errorMessage);
       setErrorText(errorMessage);
       const errorCode = response.status;
       throw new Error(`${errorCode}: ${errorMessage}`);
     }
 
     const { body } = response;
-    console.log("body:", body);
+    // console.log("body:", body);
     if (!body) {
       return;
     }
@@ -101,21 +101,21 @@ export default function PromptCard({ products, size }: PromptCardProps) {
       const regex = /"identifier":\s*"([^"]+)"/;
       const match = lastMessage.match(regex);
 
-      console.log("match:", match);
+      // console.log("match:", match);
 
       if (!match || typeof match[1] === "undefined") {
         continue;
       }
 
       const identifier = match[1];
-      console.log("identifier:", identifier);
+      // console.log("identifier:", identifier);
       const chosenProduct = openaiRequest.products.find((product) => product.identifier === identifier);
 
       if (typeof chosenProduct === "undefined") {
         continue;
       }
 
-      console.log("chosenProduct:", chosenProduct);
+      // console.log("chosenProduct:", chosenProduct);
 
       setSelectedProduct(chosenProduct);
       productFound = true;
@@ -127,11 +127,11 @@ export default function PromptCard({ products, size }: PromptCardProps) {
     mutationFn: aiRequest,
   });
 
-  useEffect(() => {
-    console.log("mutate_error", error);
-    console.log("failureReason", failureReason);
-    console.log("status", status);
-  }, [error, failureReason, status]);
+  // useEffect(() => {
+  //   console.log("mutate_error", error);
+  //   console.log("failureReason", failureReason);
+  //   console.log("status", status);
+  // }, [error, failureReason, status]);
 
   const handleReset = async () => {
     reset();

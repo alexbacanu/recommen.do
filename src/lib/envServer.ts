@@ -3,7 +3,6 @@ import "server-only";
 // Appwrite
 export const appwriteApiKey = process.env.APPWRITE_API_KEY ?? "";
 export const appwriteWebhookKey = process.env.APPWRITE_WEBHOOK_KEY ?? "";
-export const appwriteUrl = process.env.APPWRITE_URL ?? "";
 
 // Stripe
 export const stripeSecretKey = process.env.STRIPE_SECRET_KEY ?? "";

@@ -65,8 +65,8 @@ export function Pricing({ plans }: PricingProps) {
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
 
-  console.log("account:", account);
-  console.log("profile:", profile);
+  // console.log("account:", account);
+  // console.log("profile:", profile);
 
   const showSubscribe = profile && !profile.stripeSubscriptionId;
   const showManage = profile && profile.stripeSubscriptionId;
@@ -79,7 +79,7 @@ export function Pricing({ plans }: PricingProps) {
       jwt = jwtToken.jwt;
     }
 
-    console.log("jwt:", jwt);
+    // console.log("jwt:", jwt);
 
     const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
       method: "GET",
@@ -90,7 +90,7 @@ export function Pricing({ plans }: PricingProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    console.log("getCheckoutURL:", checkoutUrl);
+    // console.log("getCheckoutURL:", checkoutUrl);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 

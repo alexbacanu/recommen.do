@@ -113,7 +113,7 @@ export default function EbayContent() {
 
   return (
     <ReactQueryContext>
-      <PromptCard products={products} />
+      <PromptCard products={products} size="md" />
     </ReactQueryContext>
   );
 }

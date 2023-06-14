@@ -16,15 +16,26 @@ export function Dashboard() {
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
-      {account && profile ? (
+      {account && profile && (
         <>
           <Alerts profile={profile} />
           <Subscription profile={profile} />
           <Account account={account} profile={profile} />
         </>
-      ) : (
-        <>{isLoading ? <LoadingSpinner /> : <Login />}</>
       )}
+      {account && !profile && (
+        <>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <Alerts profile={profile} />
+              <Login />
+            </>
+          )}
+        </>
+      )}
+      {!account && <>{isLoading ? <LoadingSpinner /> : <Login />}</>}
     </div>
   );
 }

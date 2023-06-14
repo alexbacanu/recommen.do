@@ -46,7 +46,7 @@ export function Account({ account, profile }: AccountProps) {
       jwt = jwtToken.jwt;
     }
 
-    console.log("jwt:", jwt);
+    // console.log("jwt:", jwt);
 
     const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
       method: "GET",
@@ -57,7 +57,7 @@ export function Account({ account, profile }: AccountProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    console.log("getCheckoutURL:", checkoutUrl);
+    // console.log("getCheckoutURL:", checkoutUrl);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
@@ -147,7 +147,7 @@ export function Account({ account, profile }: AccountProps) {
         </CardHeader>
         <CardContent>
           <div className="text-xl font-semibold text-muted-foreground">{account && account.name}</div>
-          <div className="text-sm text-muted-foreground">Owner: {account && account.email}</div>
+          <div className="text-sm text-muted-foreground">Email: {account && account.email}</div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4">
           <Button variant="destructive" disabled={true} className="whitespace-nowrap">

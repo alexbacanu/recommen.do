@@ -95,7 +95,7 @@ export default function AmazonContent() {
 
   return (
     <ReactQueryContext>
-      <PromptCard products={products} />
+      <PromptCard products={products} size="md" />
     </ReactQueryContext>
   );
 }
