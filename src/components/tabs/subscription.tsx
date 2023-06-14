@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { appwriteUrl } from "~/lib/envClient";
 import { cn } from "~/lib/helpers/cn";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
@@ -110,30 +111,43 @@ export function Subscription({ profile }: SubscriptionProps) {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="">Subscription</CardTitle>
+          <CardTitle>Subscription</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-xl font-semibold text-muted-foreground">{hasSubscription ? "Active" : "Not active"}</div>
+          <div className="text-xl font-semibold text-muted-foreground">{hasSubscription ? "Active" : "Inactive"}</div>
           <div className="text-sm text-muted-foreground">{hasSubscription ? `Owner: ${profile.email}` : ""}</div>
         </CardContent>
-        <CardFooter className="grid grid-cols-2 gap-4">
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => handleRefill()}
-            disabled={refillLoading || !hasSubscription || apiKeyDetected}
-          >
-            {refillLoading ? "Loading..." : "Add 50 extra recommendations"}
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => handleSubscribe(profile.stripePriceId)}
-            disabled={manageLoading || !hasSubscription || apiKeyDetected}
-          >
-            {manageLoading ? "Loading..." : "Manage plan"}
-          </Button>
-        </CardFooter>
+        {hasSubscription ? (
+          <CardFooter className="grid grid-cols-2 gap-4">
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => handleRefill()}
+              disabled={refillLoading || !hasSubscription || apiKeyDetected}
+            >
+              {refillLoading ? "Loading..." : "Add 50 extra recommendations"}
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => handleSubscribe(profile.stripePriceId)}
+              disabled={manageLoading || !hasSubscription || apiKeyDetected}
+            >
+              {manageLoading ? "Loading..." : "Manage plan"}
+            </Button>
+          </CardFooter>
+        ) : (
+          <CardFooter className="grid grid-cols-1">
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => (window.location.href = `${appwriteUrl}/#pricing`)}
+              disabled={manageLoading || apiKeyDetected}
+            >
+              {manageLoading ? "Loading..." : "View subscription options"}
+            </Button>
+          </CardFooter>
+        )}
       </Card>
     </section>
   );

@@ -45,20 +45,12 @@ export function Hero() {
               <Image src="/Vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
             </div>
           </div>
-
-          <div className="relative overflow-hidden rounded-2xl shadow-lg md:shadow-xl lg:w-[65rem]">
+          <div className="w-auto">
             <Image
-              className="absolute left-[260px] top-[190px] w-full animate-pulse"
-              src="/extensie.png"
-              height={1440}
-              width={900}
-              alt="Screenshot with recommen.do extension displayed"
-            />
-            <Image
-              className="w-full"
-              src="/hero.png"
-              height={1440}
-              width={900}
+              className="rounded-2xl shadow-xl"
+              src="/hero-img.png"
+              height={1478}
+              width={1060}
               alt="Screenshot with recommen.do extension displayed"
             />
           </div>

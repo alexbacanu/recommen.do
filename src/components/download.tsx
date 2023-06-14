@@ -27,7 +27,7 @@ export default function Download() {
       )}
       <Button variant="default" className={browser ? "pl-9" : ""}>
         <Link href="#">
-          Download <span className="hidden lg:inline-flex">extension</span> for free
+          Download <span className="hidden lg:inline-flex">extension for free</span>
         </Link>
       </Button>
     </div>
