@@ -40,7 +40,7 @@ export function Hero() {
                 {unsupportedBrowser ? (
                   <a href="#">Not yet supported</a>
                 ) : (
-                  <a href="/chrome.zip">
+                  <a href="/chrome-1.0.0.zip">
                     Download <span className="hidden lg:inline-flex">extension for free</span>
                   </a>
                 )}
@@ -51,7 +51,7 @@ export function Hero() {
             </div>
 
             <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">
-              <a href="/chrome.zip">
+              <a href="/chrome-1.0.0.zip">
                 <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
               </a>
               <Image
