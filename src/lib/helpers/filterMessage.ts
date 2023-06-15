@@ -5,7 +5,7 @@ const filterMessage = (text: string) => {
     return "";
   }
 
-  const startIndex = reasonStartIndex + 10;
+  const startIndex = reasonStartIndex + 11;
   let result = text.slice(startIndex);
   result = result.replace(/["}\s]+$/, "");
 
