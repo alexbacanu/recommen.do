@@ -90,6 +90,12 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Demo
 
+I made a demo account that you can use for Hackathon:
+
+`username: hey@appwrite.hackathon`
+
+`password: 4U2yrpFD3Q`
+
 Check out the live demo of recommen.do at [recommen.do](recommendo.vercel.app/)
 
 ## Video
