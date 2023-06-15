@@ -22,53 +22,46 @@ recommen.do is a web application and browser extension developed for the Appwrit
 
 ## Prerequisites
 
+Before getting started, make sure you have the following:
+
 1. Stripe account (you need secret_key and webhook_key)
 2. Appwrite Cloud account with 1 Project:
-
-- 2 Web Platforms (AuthUI and Extension)
-- Auth methods enabled: Email/Password, Phone, Magic URL, JWT, GitHub
-- Database:
-
-```
-database: "main",
-collection: "profile"
-```
-
-- Attributes:
-
-```
-userId: string,
-name: string,
-email: string,
-credits: integer,
-usage: integer,
-stripeCurrentPeriodEnd: datetime,
-stripeCustomerId: string,
-stripePriceId: string,
-stripeStatus: string,
-stripeStatusLastUpdated: datetime,
-stripeSubscriptionId: string,
-stripeSubscriptionName: string
-```
-
-- Indexes:
-
-```
-userId_1: unique ASC
-credits_1: key ASC
-stripCustomerId_1: key ASC
-```
-
-- Document security ON
-
-3. Functions: check https://github.com/alexbacanu/recommen.do-functions
+    - 2 Web Platforms (AuthUI and Extension)
+    - Auth methods enabled: Email/Password, Phone, Magic URL, JWT, GitHub
+    - Database:
+        ```
+        database: "main",
+        collection: "profile"
+        ```
+    - Attributes:
+        ```
+        userId: string,
+        name: string,
+        email: string,
+        credits: integer,
+        usage: integer,
+        stripeCurrentPeriodEnd: datetime,
+        stripeCustomerId: string,
+        stripePriceId: string,
+        stripeStatus: string,
+        stripeStatusLastUpdated: datetime,
+        stripeSubscriptionId: string,
+        stripeSubscriptionName: string
+        ```
+    - Indexes:
+        ```
+        userId_1: unique ASC
+        credits_1: key ASC
+        stripCustomerId_1: key ASC
+        ```
+    - Document security ON
+3. Functions: check [recommen.do-functions](https://github.com/alexbacanu/recommen.do-functions) repository
 4. Webhooks:
-
-```
-name: create-user
-update-events: databases.main.collections.profile.documents.*.create
-post-url: /api/stripe/customer
-```
+    ```
+    name: create-user
+    update-events: databases.main.collections.profile.documents.*.create
+    post-url: /api/stripe/customer
+    ```
 
 ## Getting Started
 
@@ -78,7 +71,7 @@ To get started with recommen.do, follow these steps:
 2. Install the dependencies using pnpm: `pnpm i`
 3. Configure the necessary environment variables. You can check `.env.example` for inspiration.
 4. Run the development server: `pnpm dev`
-5. Open the web application in your browser: `http://localhost:1947`
+5. Open the web application in your browser: [http://localhost:1947](http://localhost:1947)
 
 ## Contributing
 
@@ -90,11 +83,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Demo
 
-I made a demo account that you can use for Hackathon:
+I made a demo account that you can use for the Hackathon:
 
-`username: hey@appwrite.hackathon`
-
-`password: 4U2yrpFD3Q`
+- Username: `hey@appwrite.hackathon`
+- Password: `4U2yrpFD3Q`
 
 Check out the live demo of recommen.do at [recommen.do](recommendo.vercel.app/)
 
