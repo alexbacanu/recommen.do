@@ -10,6 +10,7 @@ import { Button } from "~/components/ui/button";
 
 export function Hero() {
   const [browser, setBrowser] = useState("");
+  const unsupportedBrowser = browser !== "Chrome";
 
   useEffect(() => {
     setBrowser(browserName);
@@ -35,10 +36,14 @@ export function Hero() {
             </p>
 
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
-              <Button variant="default" className="px-4 py-6 text-base">
-                <a href={browser === "Firefox" ? "/firefox.zip" : "/chrome.zip"}>
-                  Download <span className="hidden lg:inline-flex">extension for free</span>
-                </a>
+              <Button variant="default" className="px-4 py-6 text-base" disabled={unsupportedBrowser}>
+                {unsupportedBrowser ? (
+                  <a href="#">Not yet supported</a>
+                ) : (
+                  <a href="/chrome.zip">
+                    Download <span className="hidden lg:inline-flex">extension for free</span>
+                  </a>
+                )}
               </Button>
               <Button variant="outline" className="px-4 py-6 text-base text-primary" asChild>
                 <Link href="/#features">See features</Link>
@@ -46,14 +51,58 @@ export function Hero() {
             </div>
 
             <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">
-              <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
-              <Image src="/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
-              <Image src="/Firefox.svg" width={64} height={64} alt="Download extension for Firefox browser" />
-              <Image src="/Safari.svg" width={64} height={64} alt="Download extension for Safari browser" />
-              <Image src="/Brave.svg" width={64} height={64} alt="Download extension for Brave browser" />
-              <Image src="/Opera.svg" width={64} height={64} alt="Download extension for Opera browser" />
-              <Image src="/Duck.svg" width={64} height={64} alt="Download extension for DuckDuckGo browser" />
-              <Image src="/Vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
+              <a href="/chrome.zip">
+                <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
+              </a>
+              <Image
+                src="/Edge.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Edge browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Firefox.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Firefox browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Safari.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Safari browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Brave.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Brave browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Opera.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Opera browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Duck.svg"
+                width={64}
+                height={64}
+                alt="Download extension for DuckDuckGo browser"
+                className="opacity-50"
+              />
+              <Image
+                src="/Vivaldi.svg"
+                width={64}
+                height={64}
+                alt="Download extension for Vivaldi browser"
+                className="opacity-50"
+              />
             </div>
           </div>
           <div className="w-auto">

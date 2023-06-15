@@ -8,10 +8,10 @@
   "scripts": {
     "start": "next start",
     "dev": "run-p dev:*",
-    "dev:plasmo": "plasmo dev --verbose",
+    "dev:plasmo": "plasmo dev",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
-    "build:plasmo": "plasmo build --target=firefox-mv2 --zip",
+    "build:plasmo": "plasmo build --zip",
     "build:next": "next build",
     "lint": "next lint",
     "prettier": "prettier --check .",

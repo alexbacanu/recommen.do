@@ -107,7 +107,7 @@ export function Pricing({ plans }: PricingProps) {
                   <CardHeader>
                     <CardTitle className="flex items-start justify-between">
                       {plan.name}
-                      <Badge variant="outline">Free in beta</Badge>
+                      <Badge variant="outline">Beta</Badge>
                     </CardTitle>
                     <CardDescription>{plan.price}$ / month</CardDescription>
                   </CardHeader>
