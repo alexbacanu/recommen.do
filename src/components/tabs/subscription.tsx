@@ -41,7 +41,7 @@ export function Subscription({ profile }: SubscriptionProps) {
       jwt = jwtToken.jwt;
     }
 
-    const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
+    const getCheckoutURL = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -61,7 +61,7 @@ export function Subscription({ profile }: SubscriptionProps) {
       jwt = jwtToken.jwt;
     }
 
-    const getCheckoutURL = await fetch(`/api/stripe/refill`, {
+    const getCheckoutURL = await fetch(`${appwriteUrl}/api/stripe/refill`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -139,7 +139,9 @@ export function Subscription({ profile }: SubscriptionProps) {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => (window.location.href = `${appwriteUrl}/#pricing`)}
+              onClick={() => {
+                return window.open(`${appwriteUrl}/#pricing`, "_blank", "noopener,noreferrer");
+              }}
               disabled={manageLoading || apiKeyDetected}
             >
               {manageLoading ? "Loading..." : "View subscription options"}

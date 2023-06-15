@@ -22,6 +22,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { appwriteUrl } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 import { openAiSchema } from "~/lib/schema";
 
@@ -65,7 +66,7 @@ export function Account({ account, profile }: AccountProps) {
       jwt = jwtToken.jwt;
     }
 
-    const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
+    const getCheckoutURL = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -85,7 +86,7 @@ export function Account({ account, profile }: AccountProps) {
       jwt = jwtToken.jwt;
     }
 
-    const deleteAccounts = await fetch(`/api/appwrite/delete`, {
+    const deleteAccounts = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -94,7 +95,7 @@ export function Account({ account, profile }: AccountProps) {
 
     if (deleteAccounts.status === 200) {
       signOut().then(() => {
-        window.location.href = "/";
+        window.open(`${appwriteUrl}`, "_blank", "noopener,noreferrer");
       });
     }
 
@@ -209,9 +210,17 @@ export function Account({ account, profile }: AccountProps) {
           <div className="text-xl font-semibold">Enhance your plan for more recommendations</div>
         </CardContent>
         <CardFooter className="grid grid-cols-1">
-          <Button variant="secondary" onClick={() => handleSubscribe(profile.stripePriceId)}>
-            Upgrade
-          </Button>
+          {!!profile.stripePriceId ? (
+            <Button variant="secondary" onClick={() => handleSubscribe(profile.stripePriceId)}>
+              Upgrade
+            </Button>
+          ) : (
+            <Button variant="secondary" asChild>
+              <a href={`${appwriteUrl}/#pricing`} target="_blank">
+                Check available plans
+              </a>
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </section>

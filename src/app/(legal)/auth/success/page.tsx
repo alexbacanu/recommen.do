@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/componen
 
 export default function AuthSuccessPage() {
   useEffect(() => {
-    window.location.href = "/profile";
+    window.open("/profile", "_self", "noopener,noreferrer");
   }, []);
 
   return (

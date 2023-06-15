@@ -13,6 +13,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
+import { appwriteUrl } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 interface PricingProps {
@@ -62,7 +63,7 @@ export function Pricing({ plans }: PricingProps) {
       jwt = jwtToken.jwt;
     }
 
-    const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
+    const getCheckoutURL = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,

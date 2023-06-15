@@ -12,6 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import LoadingSpinner from "~/components/ui/loading";
 import { isLoadingAtom } from "~/lib/atoms/appwrite";
+import { appwriteUrl } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/useAppwrite";
 
 interface AlertsProps {
@@ -57,7 +58,7 @@ export function Alerts({ account, profile }: AlertsProps) {
       jwt = jwtToken.jwt;
     }
 
-    const verifyEmail = await fetch(`/api/appwrite/verify?userId=${userId}&secret=${secret}`, {
+    const verifyEmail = await fetch(`${appwriteUrl}/api/appwrite/verify?userId=${userId}&secret=${secret}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -67,7 +68,7 @@ export function Alerts({ account, profile }: AlertsProps) {
     if (verifyEmail.status === 200) {
       setButtonDisabled(true);
       signOut().then(() => {
-        window.location.href = "https://recommendo.authui.site/";
+        window.open("https://recommendo.authui.site/", "_blank", "noopener,noreferrer");
       });
     }
   };
