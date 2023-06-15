@@ -10,7 +10,7 @@ import { Button } from "~/components/ui/button";
 
 export function Hero() {
   const [browser, setBrowser] = useState("");
-  const unsupportedBrowser = browser !== "Chrome";
+  const unsupportedBrowser = browser !== "Chrome" && browser !== "Edge";
 
   useEffect(() => {
     setBrowser(browserName);
@@ -54,13 +54,10 @@ export function Hero() {
               <a href="/chrome-1.0.0.zip">
                 <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
               </a>
-              <Image
-                src="/Edge.svg"
-                width={64}
-                height={64}
-                alt="Download extension for Edge browser"
-                className="opacity-50"
-              />
+              <a href="/chrome-1.0.0.zip">
+                <Image src="/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
+              </a>
+
               <Image
                 src="/Firefox.svg"
                 width={64}

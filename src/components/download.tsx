@@ -8,7 +8,7 @@ import { Button } from "~/components/ui/button";
 
 export default function Download() {
   const [browser, setBrowser] = useState("");
-  const unsupportedBrowser = browser !== "Chrome";
+  const unsupportedBrowser = browser !== "Chrome" && browser !== "Edge";
 
   useEffect(() => {
     setBrowser(browserName);
