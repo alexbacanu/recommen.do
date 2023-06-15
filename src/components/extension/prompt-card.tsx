@@ -164,8 +164,8 @@ export default function PromptCard({ products, size }: PromptCardProps) {
                   placeholder={`${profile ? profile.credits : "?"} recommendations available`}
                   className="border-muted-foreground/40 placeholder:opacity-50"
                 />
-                <Button variant="secondary" type="submit" className="shrink-0" disabled={!hasRead}>
-                  {hasRead ? "Send" : "Response still generating..."}
+                <Button variant="secondary" type="submit" className="shrink-0" disabled={!hasRead || !profile}>
+                  {hasRead ? (profile ? "Send" : "Please login first") : "Response still generating..."}
                 </Button>
               </form>
             </div>

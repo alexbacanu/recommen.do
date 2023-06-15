@@ -6,9 +6,19 @@ import { NextResponse } from "next/server";
 import { appwriteClientService, appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 
-type Customer = {
-  test: string;
-};
+export async function OPTIONS() {
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: {
+        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    },
+  );
+}
 
 export async function GET(request: Request) {
   // Read JWT from Authorization header
@@ -79,5 +89,15 @@ export async function GET(request: Request) {
   }
 
   console.log("appwrite:", "Delete account success");
-  return NextResponse.json({ status: "OK" });
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: {
+        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    },
+  );
 }

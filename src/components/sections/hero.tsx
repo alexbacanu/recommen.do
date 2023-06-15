@@ -102,9 +102,9 @@ export function Hero() {
               />
             </div>
           </div>
-          <div className="w-auto">
+          <div className="w-[60rem]">
             <Image
-              className="rounded-2xl shadow-xl"
+              className="w-full rounded-2xl shadow-xl"
               src="/hero-img.png"
               height={1478}
               width={1060}

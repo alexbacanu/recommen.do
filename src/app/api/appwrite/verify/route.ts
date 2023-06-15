@@ -3,6 +3,20 @@ import { NextResponse } from "next/server";
 
 import { appwriteClientService } from "~/lib/clients/appwrite-server";
 
+export async function OPTIONS() {
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: {
+        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    },
+  );
+}
+
 export async function GET(request: Request) {
   // Get searchParams from URL
   const { searchParams } = new URL(request.url);
@@ -40,5 +54,15 @@ export async function GET(request: Request) {
   }
 
   console.log("appwrite:", "Update verification success");
-  return NextResponse.json({ status: "OK" });
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: {
+        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    },
+  );
 }
