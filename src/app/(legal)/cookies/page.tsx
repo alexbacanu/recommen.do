@@ -1,5 +1,3 @@
-"use client";
-
 import Cookies from "./cookies.mdx";
 
 export default function CookiesPage() {

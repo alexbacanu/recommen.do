@@ -7,9 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/componen
 
 export default function PaymentSuccessPage() {
   useEffect(() => {
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2000);
+    window.location.href = "/profile";
   }, []);
 
   return (

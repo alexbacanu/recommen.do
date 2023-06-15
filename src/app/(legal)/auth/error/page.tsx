@@ -7,9 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/componen
 
 export default function AuthErrorPage() {
   useEffect(() => {
-    setTimeout(() => {
-      window.location.href = "/profile";
-    }, 2000);
+    window.location.href = "/profile";
   }, []);
 
   return (

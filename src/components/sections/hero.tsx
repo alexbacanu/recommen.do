@@ -2,10 +2,19 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { browserName } from "react-device-detect";
 
 import { Button } from "~/components/ui/button";
 
 export function Hero() {
+  const [browser, setBrowser] = useState("");
+
+  useEffect(() => {
+    setBrowser(browserName);
+  }, []);
+
   return (
     <section id="home" className="overflow-hidden">
       <motion.div
@@ -27,10 +36,12 @@ export function Hero() {
 
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
               <Button variant="default" className="px-4 py-6 text-base">
-                Download extension
+                <a href={browser === "Firefox" ? "/firefox.zip" : "/chrome.zip"}>
+                  Download <span className="hidden lg:inline-flex">extension for free</span>
+                </a>
               </Button>
-              <Button variant="outline" className="px-4 py-6 text-base text-primary">
-                See features
+              <Button variant="outline" className="px-4 py-6 text-base text-primary" asChild>
+                <Link href="/#features">See features</Link>
               </Button>
             </div>
 

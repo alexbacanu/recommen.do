@@ -1,5 +1,3 @@
-"use client";
-
 import Contact from "./contact.mdx";
 
 export default function ContactPage() {

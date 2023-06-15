@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai";
 
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { accountAtom } from "~/lib/atoms/appwrite";
 
 export function Login() {
@@ -18,6 +19,13 @@ export function Login() {
       <CardContent>
         <div className="text-xl font-semibold text-muted-foreground">Please login to view dashboard</div>
       </CardContent>
+      <CardFooter className="grid grid-cols-1 gap-4">
+        <Button variant="outline" asChild>
+          <a href="https://recommendo.authui.site/" target="_blank">
+            Log in
+          </a>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

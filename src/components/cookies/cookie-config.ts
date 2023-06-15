@@ -57,7 +57,7 @@ const pluginConfig: CookieConsentConfig = {
         consentModal: {
           title: "We care that your personal data remains confidential!",
           description:
-            'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie preferences</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
+            'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie settings</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
           acceptAllBtn: "Accept",
           // acceptNecessaryBtn: "Accept only necesary",
           showPreferencesBtn: "Cookie settings",
@@ -73,7 +73,7 @@ const pluginConfig: CookieConsentConfig = {
             {
               title: "Cookie Usage",
               description:
-                'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie preferences</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
+                'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie settings</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
             },
             {
               title: "Strictly necessary cookies",

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Navigation } from "~/components/navigation";
 import Logo from "~/components/ui/logo";
@@ -16,9 +17,13 @@ export function Footer() {
           <p className="text-sm">Copyright &copy; {new Date().getFullYear()} recommen.do</p>
         </div>
         <div className="flex items-center justify-center gap-x-5 px-4 pb-6">
-          <Image src="/vercel.svg" alt="Vercel logo" width={88} height={20} className="h-5 w-auto" />
+          <Link href="https://vercel.com/">
+            <Image src="/vercel.svg" alt="Vercel logo" width={88} height={20} className="h-5 w-auto" />
+          </Link>
           +
-          <Image src="/appwrite.svg" alt="Appwrite logo" width={112} height={20} className="h-5 w-auto" />
+          <Link href="https://cloud.appwrite.io/">
+            <Image src="/appwrite.svg" alt="Appwrite logo" width={112} height={20} className="h-5 w-auto" />
+          </Link>
         </div>
       </div>
     </footer>
