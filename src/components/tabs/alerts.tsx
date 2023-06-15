@@ -68,7 +68,7 @@ export function Alerts({ account, profile }: AlertsProps) {
     if (verifyEmail.status === 200) {
       setButtonDisabled(true);
       signOut().then(() => {
-        window.open("https://recommendo.authui.site/", "_blank", "noopener,noreferrer");
+        window.open("https://recommendo.authui.site/", "_self", "noopener,noreferrer");
       });
     }
   };
