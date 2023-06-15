@@ -65,8 +65,6 @@ export function Account({ account, profile }: AccountProps) {
       jwt = jwtToken.jwt;
     }
 
-    // console.log("jwt:", jwt);
-
     const getCheckoutURL = await fetch(`/api/stripe/subscription/${priceId}`, {
       method: "GET",
       headers: {
@@ -76,7 +74,6 @@ export function Account({ account, profile }: AccountProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    // console.log("getCheckoutURL:", checkoutUrl);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
 
@@ -106,33 +103,6 @@ export function Account({ account, profile }: AccountProps) {
 
   return (
     <section id="account" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
-      {/* <Card>
-        <CardHeader>
-          <CardTitle className="">Account</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-xl font-semibold text-muted-foreground">{profile ? profile.credits : 0}</div>
-          <div className="text-sm text-muted-foreground">Recommendations remaining</div>
-        </CardContent>
-        <CardFooter className="text-sm text-muted-foreground">Only successful recommendations are processed</CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="">Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-xl font-semibold text-muted-foreground">
-            {hasSubscription ? profile.stripeSubscriptionName : "Free"}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            {hasSubscription
-              ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`
-              : "No subscription"}
-          </div>
-        </CardContent>
-        <CardFooter className="text-sm text-muted-foreground">Will automatically renew every month</CardFooter>
-      </Card> */}
-
       <Card>
         <CardHeader>
           <CardTitle>

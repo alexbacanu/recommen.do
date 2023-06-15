@@ -53,11 +53,7 @@ export async function POST(request: NextRequest) {
   const { json }: APIRequest = await request.json();
   const { openaiSettings, openaiRequest } = json;
 
-  // console.log(openaiRequest);
-
   const isBodyValid = productSchema.safeParse(openaiRequest.products);
-
-  // console.log(isBodyValid);
 
   if (!isBodyValid.success) {
     const errorMessage = "Invalid request body";

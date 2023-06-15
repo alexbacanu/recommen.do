@@ -63,7 +63,6 @@ const neweggProductData = () => {
 
 export default function NeweggContent() {
   const products = neweggProductData();
-  console.log("products:", products);
 
   return (
     <ReactQueryContext>

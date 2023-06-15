@@ -50,7 +50,6 @@ export function Subscription({ profile }: SubscriptionProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    // console.log("getCheckoutURL:", checkoutUrl);
     setManageLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };
@@ -71,7 +70,6 @@ export function Subscription({ profile }: SubscriptionProps) {
 
     const checkoutUrl = await getCheckoutURL.json();
 
-    // console.log("getCheckoutURL:", checkoutUrl);
     setRefillLoading(false);
     window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
   };

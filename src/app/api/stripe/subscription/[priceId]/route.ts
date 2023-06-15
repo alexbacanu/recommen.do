@@ -42,8 +42,6 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   }
 
   const isSubscribed = profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now();
-  // console.log("isSubscribed:", isSubscribed);
-
   const stripe = getStripeInstance();
 
   // User is on paid plan

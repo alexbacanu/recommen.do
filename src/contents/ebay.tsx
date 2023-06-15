@@ -109,7 +109,6 @@ const ebayProductData = () => {
 
 export default function EbayContent() {
   const products = ebayProductData();
-  console.log("products:", products);
 
   return (
     <ReactQueryContext>

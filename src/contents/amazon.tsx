@@ -91,7 +91,6 @@ const amazonProductData = () => {
 
 export default function AmazonContent() {
   const products = amazonProductData();
-  console.log("products:", products);
 
   return (
     <ReactQueryContext>

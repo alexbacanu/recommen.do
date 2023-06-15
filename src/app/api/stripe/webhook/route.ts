@@ -136,7 +136,6 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      // console.log("customer.subscription.created", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
@@ -174,7 +173,6 @@ export async function POST(request: Request) {
     const databaseCurrentPeriodEnd = new Date(singleProfile.stripeCurrentPeriodEnd).getTime() / 1000;
 
     if (currentPeriodEnd > databaseCurrentPeriodEnd) {
-      // console.log("customer.subscription.updated", "currentPeriodEnd > databaseCurrentPeriodEnd");
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeSubscriptionId: session.id,
@@ -190,7 +188,6 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      // console.log("customer.subscription.updated", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
@@ -229,7 +226,6 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      // console.log("customer.subscription.deleted", "sessionCreated > statusLastUpdated");
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,

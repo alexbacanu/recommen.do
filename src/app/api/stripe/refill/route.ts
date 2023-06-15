@@ -32,9 +32,6 @@ export async function GET(request: Request) {
     });
   }
 
-  const isSubscribed = profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now();
-  console.log("isSubscribed:", isSubscribed);
-
   const stripe = getStripeInstance();
 
   // User needs refill
