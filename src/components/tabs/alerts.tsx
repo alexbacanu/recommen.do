@@ -1,6 +1,6 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/types";
+import type { OpenAISettings } from "~/lib/schema";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -13,7 +13,7 @@ import { Button } from "~/components/ui/button";
 import LoadingSpinner from "~/components/ui/loading";
 import { isLoadingAtom } from "~/lib/atoms/appwrite";
 import { appwriteUrl } from "~/lib/envClient";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface AlertsProps {
   account: Models.User<Models.Preferences>;

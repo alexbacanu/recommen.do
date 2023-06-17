@@ -9,12 +9,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
 import { appwriteUrl } from "~/lib/envClient";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface PricingProps {
   plans: PricingPlan[];
@@ -88,9 +88,12 @@ export function Pricing({ plans }: PricingProps) {
               <Label className="text-center text-sm md:text-base">10 free recommendations on account creation</Label>
             </div>
             <div className="flex items-center gap-x-2 md:gap-x-6">
-              <Button asChild variant="outline" className="whitespace-nowrap">
-                <Link href="https://recommendo.authui.site/">Get started</Link>
-              </Button>
+              <Link
+                className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
+                href="https://recommendo.authui.site/"
+              >
+                Get started
+              </Link>
               <Label className="text-base">0$ / month</Label>
             </div>
           </Card>
@@ -114,9 +117,12 @@ export function Pricing({ plans }: PricingProps) {
                   </CardHeader>
                   <CardContent className="grid">
                     {!account ? (
-                      <Button asChild variant={index === 1 ? "default" : "outline"} disabled={loading}>
-                        <Link href="https://recommendo.authui.site/">Get started</Link>
-                      </Button>
+                      <Link
+                        className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}
+                        href="https://recommendo.authui.site/"
+                      >
+                        Get started
+                      </Link>
                     ) : (
                       <Button
                         variant={index === 1 ? "default" : "outline"}

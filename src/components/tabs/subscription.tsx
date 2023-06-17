@@ -1,6 +1,6 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/types";
+import type { OpenAISettings } from "~/lib/schema";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -10,7 +10,7 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { appwriteUrl } from "~/lib/envClient";
 import { cn } from "~/lib/helpers/cn";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface SubscriptionProps {
   profile: Models.Document;

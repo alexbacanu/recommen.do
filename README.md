@@ -26,42 +26,42 @@ Before getting started, make sure you have the following:
 
 1. Stripe account (you need secret_key and webhook_key)
 2. Appwrite Cloud account with 1 Project:
-    - 2 Web Platforms (AuthUI and Extension)
-    - Auth methods enabled: Email/Password, Phone, Magic URL, JWT, GitHub
-    - Database:
-        ```
-        database: "main",
-        collection: "profile"
-        ```
-    - Attributes:
-        ```
-        userId: string,
-        name: string,
-        email: string,
-        credits: integer,
-        usage: integer,
-        stripeCurrentPeriodEnd: datetime,
-        stripeCustomerId: string,
-        stripePriceId: string,
-        stripeStatus: string,
-        stripeStatusLastUpdated: datetime,
-        stripeSubscriptionId: string,
-        stripeSubscriptionName: string
-        ```
-    - Indexes:
-        ```
-        userId_1: unique ASC
-        credits_1: key ASC
-        stripCustomerId_1: key ASC
-        ```
-    - Document security ON
+   - 2 Web Platforms (AuthUI and Extension)
+   - Auth methods enabled: Email/Password, Phone, Magic URL, JWT, GitHub
+   - Database:
+     ```
+     database: "main",
+     collection: "profile"
+     ```
+   - Attributes:
+     ```
+     userId: string,
+     name: string,
+     email: string,
+     credits: integer,
+     usage: integer,
+     stripeCurrentPeriodEnd: datetime,
+     stripeCustomerId: string,
+     stripePriceId: string,
+     stripeStatus: string,
+     stripeStatusLastUpdated: datetime,
+     stripeSubscriptionId: string,
+     stripeSubscriptionName: string
+     ```
+   - Indexes:
+     ```
+     userId_1: unique ASC
+     credits_1: key ASC
+     stripCustomerId_1: key ASC
+     ```
+   - Document security ON
 3. Functions: check [recommen.do-functions](https://github.com/alexbacanu/recommen.do-functions) repository
 4. Webhooks:
-    ```
-    name: create-user
-    update-events: databases.main.collections.profile.documents.*.create
-    post-url: /api/stripe/customer
-    ```
+   ```
+   name: create-user
+   update-events: databases.main.collections.profile.documents.*.create
+   post-url: /api/stripe/customer
+   ```
 
 ## Getting Started
 

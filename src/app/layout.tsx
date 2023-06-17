@@ -5,6 +5,9 @@ import { Footer } from "~/components/layout/footer";
 import GoogleAnalytics from "~/components/layout/google-analytics";
 import { Header } from "~/components/layout/header";
 import { Init } from "~/components/layout/init";
+import { Toaster } from "~/components/ui/toaster";
+import { cn } from "~/lib/helpers/cn";
+import ReactQueryProvider from "~/lib/providers/react-query";
 
 import "~/styles/globals.css";
 
@@ -17,14 +20,17 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("subpixel-antialiased", inter.className)}>
       <GoogleAnalytics />
-      <CookieButton />
-      <body className={inter.className}>
-        <Init />
-        <Header />
-        <main className="min-h-[91.25vh]">{children}</main>
-        <Footer />
+      <body className="subpixel-antialiased">
+        <ReactQueryProvider>
+          <Init />
+          <Header />
+          <main className="min-h-[76.75vh]">{children}</main>
+          <Footer />
+        </ReactQueryProvider>
+        <CookieButton />
+        <Toaster />
       </body>
     </html>
   );

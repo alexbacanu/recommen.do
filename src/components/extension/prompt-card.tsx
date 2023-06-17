@@ -1,52 +1,63 @@
-import type { ChatGPTMessage, OpenAIRequest, OpenAISettings, Product } from "~/lib/types";
-import type { ChangeEvent } from "react";
+import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "~/lib/schema";
+import type { Product } from "~/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { AlertCircle } from "lucide-react";
 import { useState } from "react";
-import SuperJSON from "superjson";
 
 import { Init } from "~/components/layout/init";
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
 import { profileAtom } from "~/lib/atoms/appwrite";
 import { appwriteUrl } from "~/lib/envClient";
 import { cn } from "~/lib/helpers/cn";
 import { filterMessage } from "~/lib/helpers/filterMessage";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
+import { toast } from "~/lib/helpers/use-toast";
 
 interface PromptCardProps {
   products: Product[];
-  size: "md" | "xl";
 }
+
+const initialProduct = {
+  identifier: "none",
+  image: "none",
+  link: "none",
+  name: "unknown",
+  price: "unknown",
+  reviews: "0",
+  stars: "0",
+};
 
 const initialMessage: ChatGPTMessage[] = [
   { role: "system", content: "You are ShopAssistantGPT, an advisor on what to buy given some products" },
 ];
-const initialProduct = { identifier: "" };
 
-export default function PromptCard({ products, size }: PromptCardProps) {
+export default function PromptCard({ products }: PromptCardProps) {
   const { createJWT, getProfile } = useAppwrite();
+  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
+
+  const [prompt, setPrompt] = useState("");
+  const [hasRead, setHasRead] = useState(true);
   const profile = useAtomValue(profileAtom);
 
-  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
   const [product, setSelectedProduct] = useState<Product>(initialProduct);
-  const [hasRead, setHasRead] = useState(true);
 
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessage);
-  const [prompt, setPrompt] = useState("");
-  const [errorText, setErrorText] = useState("");
 
   let jwt: string;
-  const aiRequest = async (openaiRequest: OpenAIRequest) => {
+  const getRecommendationFn = async (request: OpenAIRequest) => {
     if (!jwt) {
       const jwtToken = await createJWT();
       jwt = jwtToken.jwt;
     }
+
+    const payload: OpenAIPayload = {
+      settings: openaiSettings,
+      request: request,
+    };
 
     const response = await fetch(`${appwriteUrl}/api/openai`, {
       method: "POST",
@@ -54,22 +65,12 @@ export default function PromptCard({ products, size }: PromptCardProps) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
       },
-      body: SuperJSON.stringify({ openaiSettings, openaiRequest }),
-      mode: "cors",
+      body: JSON.stringify(payload),
     });
-
-    console.warn("response:", response);
-
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      setErrorText(errorMessage);
-      const errorCode = response.status;
-      throw new Error(`${errorCode}: ${errorMessage}`);
-    }
 
     const { body } = response;
     if (!body) {
-      return;
+      throw new Error("Failed to retrieve response from the server.");
     }
 
     const reader = body.getReader();
@@ -85,6 +86,11 @@ export default function PromptCard({ products, size }: PromptCardProps) {
       setHasRead(done);
 
       const chunkValue = decoder.decode(value);
+
+      if (response.status !== 200) {
+        throw new Error(chunkValue);
+      }
+
       lastMessage = lastMessage + chunkValue;
       setMessages([{ role: "assistant", content: lastMessage }]);
 
@@ -100,7 +106,7 @@ export default function PromptCard({ products, size }: PromptCardProps) {
       }
 
       const identifier = match[1];
-      const chosenProduct = openaiRequest.products.find((product) => product.identifier === identifier);
+      const chosenProduct = products.find((product) => product.identifier === identifier);
 
       if (typeof chosenProduct === "undefined") {
         continue;
@@ -111,9 +117,25 @@ export default function PromptCard({ products, size }: PromptCardProps) {
     }
   };
 
-  const { mutate, isLoading, isSuccess, isError, reset, error, failureReason, status } = useMutation({
-    mutationKey: ["submit"],
-    mutationFn: aiRequest,
+  const handleError = (error: Error | unknown) => {
+    const description = error instanceof Error ? error.message : JSON.stringify(error);
+
+    toast({
+      title: "Error",
+      description,
+      variant: "destructive",
+    });
+  };
+
+  const {
+    mutate: getRecommendation,
+    isLoading,
+    isSuccess,
+    isError,
+    reset,
+  } = useMutation({
+    mutationFn: getRecommendationFn,
+    onError: handleError,
   });
 
   const handleReset = async () => {
@@ -124,65 +146,44 @@ export default function PromptCard({ products, size }: PromptCardProps) {
   };
 
   const showForm = !isLoading && !isSuccess && !isError;
-  const showSkeleton = product.identifier === "";
+  const showSkeleton = product.identifier === "none";
 
   return (
-    <section id="prompt_card" className={cn("m-4 w-full min-w-[30%] max-w-[75%]", size === "xl" && "text-lg")}>
+    <section id="prompt_card" className={cn("m-4 min-w-[400px]")}>
       <Init />
       {showForm && (
-        <>
-          <div className="group relative">
-            <div className="absolute inset-[-0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
-            <div className="relative flex flex-row gap-6 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3
-                    className={cn(
-                      "mb-2 text-xl font-semibold leading-none text-fuchsia-600",
-                      size === "xl" && "text-3xl",
-                    )}
-                  >
-                    recommen.do
-                  </h3>
-                  <p className="text-muted-foreground">Make choosing easier - with your personal AI assistant</p>
-                </div>
+        <div className="group relative">
+          <div className="absolute inset-[-0.005rem] rounded-xl bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
+          <div className="relative flex flex-row gap-6 rounded-lg bg-white p-6 leading-none ring-1 ring-muted-foreground/20">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className={cn("mb-2 text-xl font-semibold leading-none text-fuchsia-600")}>recommen.do</h3>
+                <p className="text-muted-foreground">Make choosing easier - with your personal AI assistant</p>
               </div>
-
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  mutate({ products, prompt });
-                }}
-                className="flex grow items-center gap-x-2"
-              >
-                <Input
-                  value={prompt}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    setPrompt(e.target.value);
-                  }}
-                  type="text"
-                  placeholder={`${profile ? profile.credits : "?"} recommendations available`}
-                  className="border-muted-foreground/40 placeholder:opacity-50"
-                />
-                <Button variant="secondary" type="submit" className="shrink-0" disabled={!hasRead || !profile}>
-                  {hasRead ? (profile ? "Send" : "Please login first") : "Response still generating..."}
-                </Button>
-              </form>
             </div>
-          </div>
-        </>
-      )}
 
-      {isError && (
-        <Alert variant="destructive">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4" />
-            {/* <AlertTitle>Heads up!</AlertTitle> */}
-            <AlertDescription>
-              An error occurred while processing your request. Please check browser console.
-            </AlertDescription>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                getRecommendation({ products, prompt });
+              }}
+              className="flex grow items-center gap-x-2"
+            >
+              <Input
+                value={prompt}
+                onChange={(e) => {
+                  setPrompt(e.target.value);
+                }}
+                type="text"
+                placeholder={`${profile ? profile.credits : "?"} recommendations available`}
+                className="border-muted-foreground/40 placeholder:opacity-50"
+              />
+              <Button isLoading={isLoading} variant="secondary" type="submit" className="shrink-0">
+                Send
+              </Button>
+            </form>
           </div>
-        </Alert>
+        </div>
       )}
 
       {(isLoading || isSuccess) && (
@@ -204,11 +205,7 @@ export default function PromptCard({ products, size }: PromptCardProps) {
                     {showSkeleton ? (
                       <Skeleton className="h-8 w-1/2" />
                     ) : (
-                      <div
-                        className={cn("space-y-1 text-xl font-semibold text-fuchsia-600", size === "xl" && "text-3xl")}
-                      >
-                        {product.name}
-                      </div>
+                      <div className={cn("space-y-1 text-xl font-semibold text-fuchsia-600")}>{product.name}</div>
                     )}
                   </div>
                   <div className="space-y-1">
@@ -251,11 +248,15 @@ export default function PromptCard({ products, size }: PromptCardProps) {
                     <Skeleton className="mx-auto h-10 w-36" />
                   ) : (
                     <div className="mx-auto w-full text-center">
-                      <Button variant="secondary" asChild>
-                        <a href={product.link} className="w-full">
-                          See product
-                        </a>
-                      </Button>
+                      <a
+                        href={product.link}
+                        className={buttonVariants({
+                          variant: "secondary",
+                          className: "w-full",
+                        })}
+                      >
+                        See product
+                      </a>
                     </div>
                   )}
                 </div>

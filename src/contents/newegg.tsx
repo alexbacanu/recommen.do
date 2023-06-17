@@ -3,7 +3,7 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import cssText from "data-text:~/styles/globals.css";
 
 import PromptCard from "~/components/extension/prompt-card";
-import ReactQueryContext from "~/lib/providers/react-query";
+import ReactQueryProvider from "~/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://www.newegg.com/p*", "https://www.newegg.ca/p*", "https://www.newegg.com/global/*/p*"],
@@ -46,10 +46,8 @@ const neweggProductData = () => {
         identifier: identifier?.getAttribute("id") || "none",
         image: imageEl?.getAttribute("src") || "none",
         link: linkEl?.getAttribute("href") || "none",
-
         name: nameEl?.textContent?.trim() || "unknown",
         price: priceEl?.textContent?.trim() || "unknown",
-
         reviews: reviewsEl?.textContent?.trim() || "0",
         stars: starsEl?.getAttribute("aria-label") || "0",
       };
@@ -65,8 +63,8 @@ export default function NeweggContent() {
   const products = neweggProductData();
 
   return (
-    <ReactQueryContext>
-      <PromptCard products={products} size={"xl"} />
-    </ReactQueryContext>
+    <ReactQueryProvider>
+      <PromptCard products={products} />
+    </ReactQueryProvider>
   );
 }

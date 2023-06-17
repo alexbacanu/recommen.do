@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 export function Init() {
   const { getAccount, getProfile } = useAppwrite();

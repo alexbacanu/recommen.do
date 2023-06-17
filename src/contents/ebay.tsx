@@ -3,7 +3,7 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import cssText from "data-text:~/styles/globals.css";
 
 import PromptCard from "~/components/extension/prompt-card";
-import ReactQueryContext from "~/lib/providers/react-query";
+import ReactQueryProvider from "~/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: [
@@ -93,10 +93,8 @@ const ebayProductData = () => {
       identifier: identifier || "none",
       image: imageEl?.getAttribute("src") || "none",
       link: linkEl?.getAttribute("href") || "none",
-
       name: nameEl?.textContent?.trim() || "unknown",
       price: priceEl?.textContent?.trim() || "unknown",
-
       reviews: "0",
       stars: "0",
     };
@@ -111,8 +109,8 @@ export default function EbayContent() {
   const products = ebayProductData();
 
   return (
-    <ReactQueryContext>
-      <PromptCard products={products} size="md" />
-    </ReactQueryContext>
+    <ReactQueryProvider>
+      <PromptCard products={products} />
+    </ReactQueryProvider>
   );
 }

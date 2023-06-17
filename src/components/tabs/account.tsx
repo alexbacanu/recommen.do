@@ -1,6 +1,6 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/types";
+import type { OpenAISettings } from "~/lib/schema";
 import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,13 +18,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { appwriteUrl } from "~/lib/envClient";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
-import { openAiSchema } from "~/lib/schema";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
+import { OpenAISettingsValidator } from "~/lib/schema";
 
 interface AccountProps {
   account: Models.User<Models.Preferences>;
@@ -51,10 +51,10 @@ export function Account({ account, profile }: AccountProps) {
   const extensionDetected = !window.next;
 
   const form = useForm<OpenAISettings>({
-    resolver: zodResolver(openAiSchema),
+    resolver: zodResolver(OpenAISettingsValidator),
     defaultValues: {
-      apiKey: "",
-      orgName: "",
+      apiKey: undefined,
+      orgName: undefined,
     },
   });
 
@@ -215,11 +215,9 @@ export function Account({ account, profile }: AccountProps) {
               Upgrade
             </Button>
           ) : (
-            <Button variant="secondary" asChild>
-              <a href={`${appwriteUrl}/#pricing`} target="_blank">
-                Check available plans
-              </a>
-            </Button>
+            <a href={`${appwriteUrl}/#pricing`} target="_blank" className={buttonVariants({ variant: "secondary" })}>
+              Check available plans
+            </a>
           )}
         </CardFooter>
       </Card>

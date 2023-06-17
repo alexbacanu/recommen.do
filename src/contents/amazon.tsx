@@ -3,7 +3,8 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import cssText from "data-text:~/styles/globals.css";
 
 import PromptCard from "~/components/extension/prompt-card";
-import ReactQueryContext from "~/lib/providers/react-query";
+import { Toaster } from "~/components/ui/toaster";
+import ReactQueryProvider from "~/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: [
@@ -75,10 +76,8 @@ const amazonProductData = () => {
       identifier: identifier || "none",
       image: imageEl?.getAttribute("src") || "none",
       link: `${currentUrl}/${linkEl?.getAttribute("href")}` || "none",
-
       name: nameEl?.textContent?.trim() || "unknown",
       price: priceEl?.textContent?.trim() || "unknown",
-
       reviews: reviewsEl?.textContent?.trim() || "0",
       stars: starsEl?.textContent?.trim() || "0",
     };
@@ -93,8 +92,11 @@ export default function AmazonContent() {
   const products = amazonProductData();
 
   return (
-    <ReactQueryContext>
-      <PromptCard products={products} size="md" />
-    </ReactQueryContext>
+    <>
+      <ReactQueryProvider>
+        <PromptCard products={products} />
+      </ReactQueryProvider>
+      <Toaster />
+    </>
   );
 }

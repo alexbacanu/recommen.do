@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { Button } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 
 export default function AuthErrorPage() {
@@ -26,9 +26,9 @@ export default function AuthErrorPage() {
             </div>
           </CardContent>
           <CardFooter className="grid grid-cols-1 gap-4">
-            <Button variant="outline" asChild>
-              <a href="/profile">Go to home now</a>
-            </Button>
+            <a href="/profile" className={buttonVariants({ variant: "outline" })}>
+              Go to home now
+            </a>
           </CardFooter>
         </Card>
       </div>

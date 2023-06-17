@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { browserName } from "react-device-detect";
 
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 
 export function Hero() {
   const [browser, setBrowser] = useState("");
@@ -45,9 +45,12 @@ export function Hero() {
                   </a>
                 )}
               </Button>
-              <Button variant="outline" className="px-4 py-6 text-base text-primary" asChild>
-                <Link href="/#features">See features</Link>
-              </Button>
+              <Link
+                href="/#features"
+                className={buttonVariants({ variant: "outline", className: "px-4 py-6 text-base text-primary" })}
+              >
+                See features
+              </Link>
             </div>
 
             <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">

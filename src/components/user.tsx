@@ -4,7 +4,7 @@ import { useAtomValue } from "jotai";
 import { CreditCard, LifeBuoy, LogIn, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import LoadingSpinner from "~/components/ui/loading";
 import { accountAtom, isLoadingAtom } from "~/lib/atoms/appwrite";
-import { useAppwrite } from "~/lib/helpers/useAppwrite";
+import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 export function Profile() {
   const account = useAtomValue(accountAtom);
@@ -75,18 +75,19 @@ export function Profile() {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button variant="secondary" asChild>
-          <Link className="space-x-2" href="https://recommendo.authui.site/">
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : (
-              <>
-                <LogIn className="h-4 w-4" />
-                <span>Login</span>
-              </>
-            )}
-          </Link>
-        </Button>
+        <Link
+          className={buttonVariants({ variant: "secondary", className: "space-x-2" })}
+          href="https://recommendo.authui.site/"
+        >
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <LogIn className="h-4 w-4" />
+              <span>Login</span>
+            </>
+          )}
+        </Link>
       )}
     </>
   );

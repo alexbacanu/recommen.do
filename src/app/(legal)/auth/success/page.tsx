@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { Button } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 
 export default function AuthSuccessPage() {
@@ -25,9 +25,9 @@ export default function AuthSuccessPage() {
             </div>
           </CardContent>
           <CardFooter className="grid grid-cols-1 gap-4">
-            <Button variant="outline" asChild>
-              <a href="/profile">Go to profile now</a>
-            </Button>
+            <a href="/profile" className={buttonVariants({ variant: "outline" })}>
+              Go to profile now
+            </a>
           </CardFooter>
         </Card>
       </div>
