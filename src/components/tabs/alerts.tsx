@@ -83,7 +83,7 @@ export function Alerts({ account, profile }: AlertsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ableToVerify, loading]);
 
-  const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
+  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
   });

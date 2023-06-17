@@ -1,8 +1,12 @@
 {
   "extends": [
     "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "plugin:@tanstack/eslint-plugin-query/recommended",
     "prettier"
-  ]
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "root": true
 }

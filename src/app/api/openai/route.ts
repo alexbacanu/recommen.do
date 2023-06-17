@@ -99,7 +99,7 @@ export async function POST(req: Request) {
 
     const pattern = /^{\s*"(identifier)/;
 
-    let accumulatedTokens: string[] = [];
+    const accumulatedTokens: string[] = [];
     let stopTesting = false;
 
     // Convert the response into a friendly text-stream

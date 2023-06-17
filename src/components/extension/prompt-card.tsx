@@ -178,7 +178,7 @@ export default function PromptCard({ products }: PromptCardProps) {
                 placeholder={`${profile ? profile.credits : "?"} recommendations available`}
                 className="border-muted-foreground/40 placeholder:opacity-50"
               />
-              <Button isLoading={isLoading} variant="secondary" type="submit" className="shrink-0">
+              <Button isLoading={isLoading || !hasRead} variant="secondary" type="submit" className="shrink-0">
                 Send
               </Button>
             </form>

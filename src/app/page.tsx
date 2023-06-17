@@ -17,7 +17,7 @@ async function getPlans() {
       return {
         priceId: price.id,
         name: product.name,
-        price: price.unit_amount! / 100,
+        price: price.unit_amount / 100,
         interval: price.recurring?.interval,
         currency: price.currency,
         description: product.description,

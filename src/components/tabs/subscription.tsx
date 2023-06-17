@@ -21,9 +21,8 @@ export function Subscription({ profile }: SubscriptionProps) {
   const [manageLoading, setManageLoading] = useState(false);
 
   const hasSubscription = profile && profile.stripeSubscriptionName;
-  const canRefill = profile;
 
-  const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
+  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
   });

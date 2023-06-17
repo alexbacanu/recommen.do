@@ -32,7 +32,7 @@ interface AccountProps {
 }
 
 interface CustomWindow extends Window {
-  next: any;
+  next: unknown;
 }
 declare const window: CustomWindow;
 
