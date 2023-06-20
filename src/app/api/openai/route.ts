@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     // Check for user credits
     if (typeof settings?.apiKey === "undefined") {
       if (profile.credits < 1) {
-        return new Response("Insufficient recommendations. You need at least 1 recommendation credit to proceed.", {
+        return new Response("Insufficient recommendations. You need at least 1 recommendation to proceed.", {
           status: 401,
           headers: corsHeaders,
         });
