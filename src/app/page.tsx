@@ -17,7 +17,8 @@ async function getPlans() {
       return {
         priceId: price.id,
         name: product.name,
-        price: price.unit_amount / 100,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        price: price.unit_amount! / 100,
         interval: price.recurring?.interval,
         currency: price.currency,
         description: product.description,

@@ -84,6 +84,7 @@ export default function PromptCard({ products }: PromptCardProps) {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       setHasRead(done);
+      console.log(hasRead);
 
       const chunkValue = decoder.decode(value);
 
@@ -131,8 +132,6 @@ export default function PromptCard({ products }: PromptCardProps) {
     mutate: getRecommendation,
     isLoading,
     isSuccess,
-    isIdle,
-    isError,
     reset,
   } = useMutation({
     mutationFn: getRecommendationFn,

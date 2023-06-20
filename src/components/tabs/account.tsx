@@ -50,7 +50,7 @@ export function Account({ account, profile }: AccountProps) {
   const apiKeyDetected = !!openaiSettings?.apiKey;
   const extensionDetected = !window.next;
 
-  const form = useForm<OpenAISettings>({
+  const form = useForm({
     resolver: zodResolver(OpenAISettingsValidator),
     defaultValues: {
       apiKey: undefined,
