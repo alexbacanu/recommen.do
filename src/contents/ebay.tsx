@@ -3,6 +3,7 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import cssText from "data-text:~/styles/globals.css";
 
 import PromptCard from "~/components/extension/prompt-card";
+import { Toaster } from "~/components/ui/toaster";
 import ReactQueryProvider from "~/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
@@ -109,8 +110,11 @@ export default function EbayContent() {
   const products = ebayProductData();
 
   return (
-    <ReactQueryProvider>
-      <PromptCard products={products} />
-    </ReactQueryProvider>
+    <>
+      <ReactQueryProvider>
+        <PromptCard products={products} />
+      </ReactQueryProvider>
+      <Toaster />
+    </>
   );
 }
