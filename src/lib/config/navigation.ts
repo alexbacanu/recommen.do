@@ -11,7 +11,7 @@ export const navConfig = {
       disabled: false,
     },
     {
-      title: "How to install",
+      title: "Installation",
       href: "/installation",
       disabled: false,
     },
