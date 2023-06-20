@@ -10,6 +10,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+export const dynamic = "force-dynamic";
+
 export async function OPTIONS() {
   return NextResponse.json(
     { status: "OK" },

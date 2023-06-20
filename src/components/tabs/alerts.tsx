@@ -12,7 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";
 import LoadingSpinner from "~/components/ui/loading";
 import { isLoadingAtom } from "~/lib/atoms/appwrite";
-import { appwriteUrl } from "~/lib/envClient";
+import { appwriteUrl, authuiSite } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface AlertsProps {
@@ -68,7 +68,7 @@ export function Alerts({ account, profile }: AlertsProps) {
     if (verifyEmail.status === 200) {
       setButtonDisabled(true);
       signOut().then(() => {
-        window.open("https://recommendo.authui.site/", "_self", "noopener,noreferrer");
+        window.open(authuiSite, "_self", "noopener,noreferrer");
       });
     }
   };

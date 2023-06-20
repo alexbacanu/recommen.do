@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { accountAtom } from "~/lib/atoms/appwrite";
+import { authuiSite } from "~/lib/envClient";
 
 export function Login() {
   const account = useAtomValue(accountAtom);
@@ -20,7 +21,7 @@ export function Login() {
         <div className="text-xl font-semibold text-muted-foreground">Please login to view dashboard</div>
       </CardContent>
       <CardFooter className="grid grid-cols-1 gap-4">
-        <a href="https://recommendo.authui.site/" target="_blank" className={buttonVariants({ variant: "outline" })}>
+        <a href={authuiSite} target="_blank" className={buttonVariants({ variant: "outline" })}>
           Log in
         </a>
       </CardFooter>

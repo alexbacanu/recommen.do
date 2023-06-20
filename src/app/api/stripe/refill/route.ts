@@ -8,6 +8,8 @@ import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 import { stripeRefillPrice } from "~/lib/envServer";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   // Read JWT from Authorization header
   const authHeader = headers().get("Authorization");

@@ -116,6 +116,11 @@ export async function POST(req: Request) {
 
             // Subtract 1 credit from the user
             const { sdkServerDatabases } = appwriteServerService();
+
+            console.log("-----------------------------------------------------------------------");
+            console.log("singleProfile:", profile);
+            console.log("-----------------------------------------------------------------------");
+
             await sdkServerDatabases.updateDocument("main", "profile", profile.$id, {
               credits: profile.credits - 1,
               usage: profile.usage + 1,

@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReactQueryProvider>
           <Init />
           <Header />
-          <main className="min-h-[76.75vh]">{children}</main>
+          <main className="min-h-[76.95vh]">{children}</main>
           <Footer />
         </ReactQueryProvider>
         <CookieButton />

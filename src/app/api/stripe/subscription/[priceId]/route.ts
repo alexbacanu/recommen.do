@@ -14,6 +14,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request, { params }: { params: { priceId: string } }) {
   // Get priceId from slug
   const { priceId } = params;

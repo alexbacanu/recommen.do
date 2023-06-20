@@ -11,3 +11,6 @@ export const stripePublishableKey =
 
 // Google
 export const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? "";
+
+// AuthUI
+export const authuiSite = process.env.NEXT_PUBLIC_AUTHUI_SITE ?? process.env.PLASMO_PUBLIC_AUTHUI_SITE ?? "";

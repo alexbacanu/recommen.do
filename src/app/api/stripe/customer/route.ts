@@ -1,4 +1,5 @@
 import { createHmac } from "crypto";
+import type { Profile } from "~/lib/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -7,6 +8,8 @@ import { appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 import { appwriteWebhookKey } from "~/lib/envServer";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -33,6 +36,16 @@ export async function POST(request: Request) {
 
   // Update the newly created customer in appwrite
   const { sdkServerDatabases } = appwriteServerService();
+
+  // Get user profile based on customerId
+  const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", body.$id);
+
+  const singleProfile = profiles[0];
+
+  console.log("-----------------------------------------------------------------------");
+  console.log("singleProfile:", singleProfile);
+  console.log("-----------------------------------------------------------------------");
+
   await sdkServerDatabases.updateDocument("main", "profile", body.$id, {
     stripeCustomerId: customer.id,
   });

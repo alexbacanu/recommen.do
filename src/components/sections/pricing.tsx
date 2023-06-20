@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
-import { appwriteUrl } from "~/lib/envClient";
+import { appwriteUrl, authuiSite } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface PricingProps {
@@ -90,7 +90,7 @@ export function Pricing({ plans }: PricingProps) {
             <div className="flex items-center gap-x-2 md:gap-x-6">
               <Link
                 className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
-                href="https://recommendo.authui.site/"
+                href={authuiSite}
               >
                 Get started
               </Link>
@@ -119,7 +119,7 @@ export function Pricing({ plans }: PricingProps) {
                     {!account ? (
                       <Link
                         className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}
-                        href="https://recommendo.authui.site/"
+                        href={authuiSite}
                       >
                         Get started
                       </Link>

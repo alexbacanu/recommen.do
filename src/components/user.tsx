@@ -16,6 +16,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import LoadingSpinner from "~/components/ui/loading";
 import { accountAtom, isLoadingAtom } from "~/lib/atoms/appwrite";
+import { authuiSite } from "~/lib/envClient";
 import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 export function Profile() {
@@ -75,10 +76,7 @@ export function Profile() {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Link
-          className={buttonVariants({ variant: "secondary", className: "space-x-2" })}
-          href="https://recommendo.authui.site/"
-        >
+        <Link className={buttonVariants({ variant: "secondary", className: "space-x-2" })} href={authuiSite}>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
