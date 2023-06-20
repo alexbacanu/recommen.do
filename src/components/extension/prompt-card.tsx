@@ -4,12 +4,14 @@ import type { Product } from "~/lib/types";
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
+import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 
 import { Init } from "~/components/layout/init";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Skeleton } from "~/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import { profileAtom } from "~/lib/atoms/appwrite";
 import { appwriteUrl } from "~/lib/envClient";
 import { cn } from "~/lib/helpers/cn";
@@ -42,6 +44,8 @@ export default function PromptCard({ products }: PromptCardProps) {
   const [prompt, setPrompt] = useState("");
   const [hasRead, setHasRead] = useState(true);
   const profile = useAtomValue(profileAtom);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const [product, setSelectedProduct] = useState<Product>(initialProduct);
 
@@ -138,6 +142,23 @@ export default function PromptCard({ products }: PromptCardProps) {
     onError: handleError,
   });
 
+  const handleRefresh = async () => {
+    if (isRefreshing) {
+      return;
+    }
+
+    console.log("refreshed");
+
+    setIsRefreshing(true);
+
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1500);
+
+    setPrompt("");
+    getProfile();
+  };
+
   const handleReset = async () => {
     reset();
     getProfile();
@@ -171,15 +192,39 @@ export default function PromptCard({ products }: PromptCardProps) {
               }}
               className="flex grow items-center gap-x-[8px]"
             >
-              <Input
-                value={prompt}
-                onChange={(e) => {
-                  setPrompt(e.target.value);
-                }}
-                type="text"
-                placeholder={`${profile ? profile.credits : "?"} recommendations available`}
-                className="h-[40px] rounded-[12px] border-muted-foreground/40 px-[12px] py-[8px] text-[14px] placeholder:opacity-50"
-              />
+              <div className="relative flex grow items-center">
+                <Input
+                  value={prompt}
+                  onChange={(e) => {
+                    setPrompt(e.target.value);
+                  }}
+                  type="text"
+                  placeholder={`${profile ? profile.credits : "?"} recommendations available`}
+                  className="h-[40px] rounded-[12px] border-muted-foreground/40 px-[12px] py-[8px] pl-[36px] text-[14px] placeholder:opacity-50"
+                />
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        type="button"
+                        className="absolute left-0 m-[6px] h-auto px-[8px] py-[6px] text-muted-foreground/50"
+                        onClick={() => handleRefresh()}
+                        disabled={isRefreshing}
+                      >
+                        <RefreshCw className={cn("h-[14px] w-[14px]", isRefreshing && "animate-spin")} />
+                        <span className="sr-only">Refresh recommendations</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Refresh recommendations</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                {/* <RefreshCw className="absolute right-0 mr-[8px] h-[18px] w-[18px] hover:animate-[spin_1s_ease-out_0s] text-muted-foreground/50" /> */}
+              </div>
               <Button
                 isLoading={isLoading}
                 variant="secondary"
