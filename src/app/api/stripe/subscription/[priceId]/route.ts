@@ -7,6 +7,13 @@ import { appwriteClientService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 
+const corsHeaders = {
+  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function GET(request: Request, { params }: { params: { priceId: string } }) {
   // Get priceId from slug
   const { priceId } = params;
@@ -15,6 +22,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     console.log("stripe.subscription:", "PriceID missing");
     return new Response("PriceID missing", {
       status: 400,
+      headers: corsHeaders,
     });
   }
 
@@ -26,6 +34,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     console.log("stripe.subscription:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
+      headers: corsHeaders,
     });
   }
 
@@ -38,6 +47,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     console.log("stripe.subscription:", "Profile missing");
     return new Response("Cannot find profile for this token", {
       status: 404,
+      headers: corsHeaders,
     });
   }
 
@@ -55,12 +65,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     return NextResponse.json(
       { url: session.url },
       {
-        headers: {
-          // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET",
-          "Access-Control-Allow-Headers": "Content-Type",
-        },
+        headers: corsHeaders,
       },
     );
   }
@@ -85,5 +90,5 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   });
 
   console.log("stripe.subscription:", "OK");
-  return NextResponse.json({ url: session.url });
+  return NextResponse.json({ url: session.url }, { headers: corsHeaders });
 }

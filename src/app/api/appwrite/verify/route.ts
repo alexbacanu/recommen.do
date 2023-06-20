@@ -3,16 +3,18 @@ import { NextResponse } from "next/server";
 
 import { appwriteClientService } from "~/lib/clients/appwrite-server";
 
+const corsHeaders = {
+  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function OPTIONS() {
   return NextResponse.json(
     { status: "OK" },
     {
-      headers: {
-        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
+      headers: corsHeaders,
     },
   );
 }
@@ -28,6 +30,7 @@ export async function GET(request: Request) {
     console.log("appwrite:", "Search params userId or secret missing");
     return new Response("Search params userId or secret missing", {
       status: 400,
+      headers: corsHeaders,
     });
   }
 
@@ -39,6 +42,7 @@ export async function GET(request: Request) {
     console.log("stripe.subscription:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
+      headers: corsHeaders,
     });
   }
 
@@ -50,6 +54,7 @@ export async function GET(request: Request) {
     console.log("appwrite:", "Update verification failed");
     return new Response("Update verification failed", {
       status: 500,
+      headers: corsHeaders,
     });
   }
 
@@ -57,12 +62,7 @@ export async function GET(request: Request) {
   return NextResponse.json(
     { status: "OK" },
     {
-      headers: {
-        // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
+      headers: corsHeaders,
     },
   );
 }
