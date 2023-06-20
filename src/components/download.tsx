@@ -29,7 +29,7 @@ export default function Download() {
         {unsupportedBrowser ? (
           <a href="#">Not yet supported</a>
         ) : (
-          <a href="/chrome-1.0.0.zip">
+          <a href="/chrome-1.1.0.zip">
             Download <span className="hidden lg:inline-flex">extension for free</span>
           </a>
         )}
