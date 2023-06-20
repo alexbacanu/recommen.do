@@ -1,9 +1,9 @@
 import type { Profile } from "~/lib/types";
 import type Stripe from "stripe";
 
-import { Query } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { Query } from "node-appwrite";
 
 import { appwriteServerService } from "~/lib/clients/appwrite-server";
 import { getStripeInstance } from "~/lib/clients/stripe-server";

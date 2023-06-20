@@ -38,12 +38,10 @@ export async function POST(request: Request) {
   const { sdkServerDatabases } = appwriteServerService();
 
   // Get user profile based on customerId
-  const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", body.$id);
-
-  const singleProfile = profiles[0];
+  const profile = await sdkServerDatabases.getDocument<Profile>("main", "profile", body.$id);
 
   console.log("-----------------------------------------------------------------------");
-  console.log("singleProfile:", singleProfile);
+  console.log("singleProfile:", profile);
   console.log("-----------------------------------------------------------------------");
 
   await sdkServerDatabases.updateDocument("main", "profile", body.$id, {
