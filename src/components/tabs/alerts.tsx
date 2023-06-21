@@ -18,7 +18,7 @@ import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface AlertsProps {
   account: Models.User<Models.Preferences>;
-  profile: Profile;
+  profile: Profile | null;
 }
 
 export function Alerts({ account, profile }: AlertsProps) {
