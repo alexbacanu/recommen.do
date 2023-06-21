@@ -1,7 +1,7 @@
 "use client";
 
 import type { OpenAISettings } from "~/lib/schema";
-import type { Models } from "appwrite";
+import type { Profile } from "~/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import { cn } from "~/lib/helpers/cn";
 import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface SubscriptionProps {
-  profile: Models.Document;
+  profile: Profile;
 }
 
 export function Subscription({ profile }: SubscriptionProps) {

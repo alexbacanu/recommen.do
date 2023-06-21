@@ -1,6 +1,7 @@
 "use client";
 
 import type { OpenAISettings } from "~/lib/schema";
+import type { Profile } from "~/lib/types";
 import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,12 +29,13 @@ import { OpenAISettingsValidator } from "~/lib/schema";
 
 interface AccountProps {
   account: Models.User<Models.Preferences>;
-  profile: Models.Document;
+  profile: Profile;
 }
 
 interface CustomWindow extends Window {
   next: unknown;
 }
+
 declare const window: CustomWindow;
 
 export function Account({ account, profile }: AccountProps) {

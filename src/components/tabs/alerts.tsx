@@ -1,6 +1,7 @@
 "use client";
 
 import type { OpenAISettings } from "~/lib/schema";
+import type { Profile } from "~/lib/types";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -17,7 +18,7 @@ import { useAppwrite } from "~/lib/helpers/use-appwrite";
 
 interface AlertsProps {
   account: Models.User<Models.Preferences>;
-  profile: Models.Document | null;
+  profile: Profile;
 }
 
 export function Alerts({ account, profile }: AlertsProps) {
