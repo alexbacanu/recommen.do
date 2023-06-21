@@ -135,15 +135,16 @@ export async function POST(req: Request) {
       },
     });
 
+    console.log("-----------------------------------------------------------------------");
+    console.log("stream:", stream);
+    console.log("-----------------------------------------------------------------------");
+
     // Respond with the stream
     return new NextResponse(stream, {
       status: 200,
       headers: corsHeaders,
     });
   } catch (error) {
-    // console.log(error);
-    // console.log(typeof error);
-
     if (error instanceof z.ZodError) {
       return new Response(error.message, {
         status: 422,
