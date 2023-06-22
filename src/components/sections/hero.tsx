@@ -54,12 +54,8 @@ export function Hero() {
             </div>
 
             <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">
-              <a href="/chrome-1.1.0.zip">
-                <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
-              </a>
-              <a href="/chrome-1.1.0.zip">
-                <Image src="/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
-              </a>
+              <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
+              <Image src="/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
 
               <Image
                 src="/Firefox.svg"
