@@ -35,7 +35,6 @@ async function getCheckoutURL(priceId: string) {
   });
 
   const checkoutURL = await response.json();
-
   return checkoutURL;
 }
 
@@ -120,6 +119,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 60 * 24, // 24 hours
     retry: false,
+    enabled: !!profile,
   });
 
   const checkoutURL = data ? data.url : "";
@@ -144,6 +144,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
           </CardTitle>
           <CardDescription>{plan.price}$ / month</CardDescription>
         </CardHeader>
+
         <CardContent className="grid">
           {showGetStarted && (
             <Link href={authuiSite} className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}>
@@ -166,6 +167,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
             </Link>
           )}
         </CardContent>
+
         <CardFooter>
           <div className="flex flex-col gap-y-4">
             {plan.metadata.features &&
