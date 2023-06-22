@@ -21,12 +21,8 @@ interface CustomWindow extends Window {
 }
 declare const window: CustomWindow;
 
-let jwt: string;
 async function getCheckoutURL(priceId?: string | null) {
-  if (!jwt) {
-    const jwtObject = await AppwriteService.createJWT();
-    jwt = jwtObject.jwt;
-  }
+  const jwt = await AppwriteService.createJWT();
 
   const fetchUrl = priceId ? `${appwriteUrl}/api/stripe/subscription/${priceId}` : `${appwriteUrl}/api/stripe/refill`;
 

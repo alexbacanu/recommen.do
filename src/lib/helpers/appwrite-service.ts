@@ -10,6 +10,7 @@ client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);
 const account = new Account(client);
 const databases = new Databases(client);
 
+let jwt: string;
 export const AppwriteService = {
   getAccount: async () => {
     const user = await account.get();
@@ -32,8 +33,11 @@ export const AppwriteService = {
   },
 
   createJWT: async () => {
-    const jwt = await account.createJWT();
-    console.log("createJWT:", jwt);
+    if (!jwt) {
+      const jwtObject = await account.createJWT();
+      jwt = jwtObject.jwt;
+      console.log("createJWT:", jwt);
+    }
 
     return jwt;
   },

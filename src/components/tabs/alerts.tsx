@@ -29,14 +29,10 @@ async function createVerification() {
   return response;
 }
 
-let jwt: string;
 async function resolveVerification(userId?: string, secret?: string) {
   if (!userId || !secret) return;
 
-  if (!jwt) {
-    const jwtObject = await AppwriteService.createJWT();
-    jwt = jwtObject.jwt;
-  }
+  const jwt = await AppwriteService.createJWT();
 
   const response = await fetch(`${appwriteUrl}/api/appwrite/verify?userId=${userId}&secret=${secret}`, {
     method: "GET",

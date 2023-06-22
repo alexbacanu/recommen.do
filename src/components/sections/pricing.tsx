@@ -20,12 +20,8 @@ interface PricingProps {
   plans: PricingPlan[];
 }
 
-let jwt: string;
 async function getCheckoutURL(priceId: string) {
-  if (!jwt) {
-    const jwtObject = await AppwriteService.createJWT();
-    jwt = jwtObject.jwt;
-  }
+  const jwt = await AppwriteService.createJWT();
 
   const response = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
     method: "GET",
