@@ -34,7 +34,7 @@ async function getCheckoutURL(priceId: string) {
     },
   });
 
-  const checkoutURL = await response.json();
+  const checkoutURL: { url: string } = await response.json();
   return checkoutURL;
 }
 
@@ -111,18 +111,13 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
 
   const needsVerification = account && !profile;
 
-  const { data, isLoading } = useQuery<{ url: string }>({
+  const { data, isLoading } = useQuery({
     queryKey: ["getCheckoutURL", plan.priceId],
     queryFn: () => getCheckoutURL(plan.priceId),
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-    retry: false,
     enabled: !!profile,
   });
 
-  const checkoutURL = data ? data.url : "";
+  const checkoutURL = data ? data.url : "#";
 
   const zoom: Variants = {
     hidden: { scale: 0.95 },
