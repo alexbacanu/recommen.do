@@ -9,7 +9,7 @@ import { useAtomValue } from "jotai";
 import Link from "next/link";
 
 import { Badge } from "~/components/ui/badge";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
@@ -148,18 +148,15 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
           )}
 
           {showSubscribe && (
-            <Link
-              href={needsVerification ? "/profile" : checkoutURL}
-              className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}
-            >
-              {isLoading ? "Loading..." : "Subscribe now"}
-            </Link>
+            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading}>
+              <Link href={needsVerification ? "/profile" : checkoutURL}>Subscribe now</Link>
+            </Button>
           )}
 
           {showManageSubscription && (
-            <Link href={checkoutURL} className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}>
-              {isLoading ? "Loading..." : "Manage subscription"}
-            </Link>
+            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading}>
+              <Link href={checkoutURL}>Manage subscription</Link>
+            </Button>
           )}
         </CardContent>
 
