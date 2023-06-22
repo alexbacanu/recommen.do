@@ -38,15 +38,15 @@ export const AppwriteService = {
     return jwt;
   },
 
-  setOAuth2: async (provider: string) => {
-    const user = account.createOAuth2Session(provider, "http://localhost:1947/api/appwrite/auth");
-    console.log("setOAuth2:", user);
+  // setOAuth2: async (provider: string) => {
+  //   const user = account.createOAuth2Session(provider, "http://localhost:1947/api/appwrite/auth");
+  //   console.log("setOAuth2:", user);
 
-    if (user) {
-      return user;
-    }
-    return null;
-  },
+  //   if (user) {
+  //     return user;
+  //   }
+  //   return null;
+  // },
 
   setSession: async (hash: string) => {
     const authCookies: Record<string, string> = {};
