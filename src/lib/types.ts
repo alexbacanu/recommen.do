@@ -18,13 +18,16 @@ export interface Profile extends Models.Document {
   email: string;
   credits: number;
   usage: number | null;
-  stripeCurrentPeriodEnd: Date | null;
+
   stripeCustomerId: string | null;
+
+  stripeSubscriptionId: string | "none";
+  stripeSubscriptionName: string | null;
   stripePriceId: string | null;
+  stripeCurrentPeriodEnd: Date | null;
+
   stripeStatus: string | null;
   stripeStatusLastUpdated: Date | null;
-  stripeSubscriptionId: string | null;
-  stripeSubscriptionName: string | null;
 }
 
 // Stripe

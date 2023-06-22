@@ -118,11 +118,11 @@ export async function POST(request: Request) {
 
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+        credits: singleProfile.credits + assignCredits(sessionLines.price?.id),
+
         stripeSubscriptionId: sessionLines.subscription,
         stripeSubscriptionName: sessionLines.plan?.metadata?.name,
         stripePriceId: sessionLines.price?.id,
-
-        credits: singleProfile.credits + assignCredits(sessionLines.price?.id),
         stripeCurrentPeriodEnd: new Date(sessionLines.period.end * 1000),
       });
     }
@@ -134,11 +134,11 @@ export async function POST(request: Request) {
 
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+        credits: assignCredits(sessionLines.price?.id),
+
         stripeSubscriptionId: sessionLines.subscription,
         stripeSubscriptionName: sessionLines.plan?.metadata?.name,
         stripePriceId: sessionLines.price?.id,
-
-        credits: assignCredits(sessionLines.price?.id),
         stripeCurrentPeriodEnd: new Date(sessionLines.period.end * 1000),
       });
     }
@@ -244,15 +244,15 @@ export async function POST(request: Request) {
 
       // Update profile from stripe event
       await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
-        stripeStatus: session.status,
-        stripeStatusLastUpdated: new Date(event.created * 1000),
+        credits: 0,
 
-        stripeSubscriptionId: null,
+        stripeSubscriptionId: "none",
         stripeSubscriptionName: null,
         stripePriceId: null,
-
-        credits: 0,
         stripeCurrentPeriodEnd: new Date(session.current_period_end * 1000),
+
+        stripeStatus: session.status,
+        stripeStatusLastUpdated: new Date(event.created * 1000),
       });
     }
   }

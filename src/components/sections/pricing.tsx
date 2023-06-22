@@ -106,8 +106,8 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
   const profile = useAtomValue(profileAtom);
 
   const showGetStarted = !account;
-  const showSubscribe = profile && !profile.stripeSubscriptionId;
-  const showManageSubscription = profile && profile.stripeSubscriptionId;
+  const showSubscribe = profile && profile.stripeSubscriptionId === "none";
+  const showManageSubscription = profile && profile.stripeSubscriptionId !== "none";
 
   const needsVerification = account && !account.emailVerification;
 
