@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import { Navigation } from "~/components/navigation";
 import Logo from "~/components/ui/logo";
 import { navConfig } from "~/lib/config/navigation";
@@ -16,7 +13,7 @@ export function Footer() {
           </div>
           <p className="text-sm">Copyright &copy; {new Date().getFullYear()} recommen.do</p>
         </div>
-        <div className="flex items-center justify-center gap-x-5 px-4 pb-6">
+        {/* <div className="flex items-center justify-center gap-x-5 px-4 pb-6">
           <Link href="https://vercel.com/">
             <Image src="/vercel.svg" alt="Vercel logo" width={88} height={20} className="h-5 w-auto" />
           </Link>
@@ -24,7 +21,7 @@ export function Footer() {
           <Link href="https://cloud.appwrite.io/">
             <Image src="/appwrite.svg" alt="Appwrite logo" width={112} height={20} className="h-5 w-auto" />
           </Link>
-        </div>
+        </div> */}
       </div>
     </footer>
 
