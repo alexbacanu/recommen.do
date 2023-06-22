@@ -199,7 +199,13 @@ export default function PromptCard({ products }: PromptCardProps) {
                     setPrompt(e.target.value);
                   }}
                   type="text"
-                  placeholder={`${profile ? profile.credits : "?"} recommendations available`}
+                  placeholder={
+                    !!openaiSettings
+                      ? "looking for any specific features?"
+                      : profile
+                      ? `${profile?.credits ?? 0} recommendations available`
+                      : "please login to get recommendations"
+                  }
                   className="h-[40px] rounded-[12px] border-muted-foreground/40 px-[12px] py-[8px] pl-[36px] text-[14px] placeholder:opacity-50"
                 />
 
@@ -226,7 +232,7 @@ export default function PromptCard({ products }: PromptCardProps) {
                 {/* <RefreshCw className="absolute right-0 mr-[8px] h-[18px] w-[18px] hover:animate-[spin_1s_ease-out_0s] text-muted-foreground/50" /> */}
               </div>
               <Button
-                disabled={isLoading}
+                disabled={isLoading || !profile}
                 variant="secondary"
                 type="submit"
                 className="h-[40px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px]"

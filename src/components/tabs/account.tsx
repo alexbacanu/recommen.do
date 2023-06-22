@@ -143,7 +143,7 @@ export function Account({ account, profile }: AccountProps) {
           <>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">Delete</Button>
+                <Button variant="outline">Delete</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
