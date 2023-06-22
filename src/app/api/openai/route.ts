@@ -120,7 +120,7 @@ export async function POST(req: Request) {
 
             await sdkServerDatabases.updateDocument("main", "profile", profile.$id, {
               credits: profile.credits - 1,
-              usage: profile.usage + 1,
+              usage: (profile.usage ?? 0) + 1,
             });
           } else if (accumulatedTokens.length > 20) {
             stopTesting = true;

@@ -8,6 +8,13 @@ import { getStripeInstance } from "~/lib/clients/stripe-server";
 import { appwriteUrl } from "~/lib/envClient";
 import { stripeRefillPrice } from "~/lib/envServer";
 
+const corsHeaders = {
+  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export const dynamic = "force-dynamic";
 
 export async function GET() {
@@ -16,9 +23,10 @@ export async function GET() {
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    console.log("stripe.subscription:", "JWT token missing");
+    console.log("stripe.refill:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
+      headers: corsHeaders,
     });
   }
 
@@ -28,33 +36,42 @@ export async function GET() {
   const profile = profiles[0];
 
   if (!profile) {
-    console.log("stripe.subscription:", "Profile missing");
+    console.log("stripe.refill:", "Profile missing");
     return new Response("Cannot find profile for this token", {
       status: 404,
+      headers: corsHeaders,
     });
   }
 
-  const stripe = getStripeInstance();
+  if (profile.stripeCustomerId) {
+    const stripe = getStripeInstance();
 
-  // User needs refill
-  // Create Stripe checkout session
-  const session = await stripe.checkout.sessions.create({
-    customer: profile.stripeCustomerId,
+    // User needs refill
+    // Create Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      customer: profile.stripeCustomerId,
 
-    mode: "payment",
-    payment_method_types: ["card"],
+      mode: "payment",
+      payment_method_types: ["card"],
 
-    line_items: [
-      {
-        price: stripeRefillPrice,
-        quantity: 1,
-      },
-    ],
+      line_items: [
+        {
+          price: stripeRefillPrice,
+          quantity: 1,
+        },
+      ],
 
-    success_url: `${appwriteUrl}/payment/success`,
-    cancel_url: `${appwriteUrl}/payment/cancel`,
+      success_url: `${appwriteUrl}/payment/success`,
+      cancel_url: `${appwriteUrl}/payment/cancel`,
+    });
+
+    console.log("stripe.refill:", "URL Created");
+    return NextResponse.json({ url: session.url }, { headers: corsHeaders });
+  }
+
+  console.log("stripe.refill:", "Something went wrong");
+  return new Response("Something went wrong", {
+    status: 500,
+    headers: corsHeaders,
   });
-
-  console.log("stripe.subscription:", "OK");
-  return NextResponse.json({ url: session.url });
 }

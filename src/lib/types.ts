@@ -17,14 +17,14 @@ export interface Profile extends Models.Document {
   name: string;
   email: string;
   credits: number;
-  usage: number;
-  stripeCurrentPeriodEnd: Date;
-  stripeCustomerId: string;
-  stripePriceId: string;
-  stripeStatus: string;
-  stripeStatusLastUpdated: Date;
-  stripeSubscriptionId: string;
-  stripeSubscriptionName: string;
+  usage: number | null;
+  stripeCurrentPeriodEnd: Date | null;
+  stripeCustomerId: string | null;
+  stripePriceId: string | null;
+  stripeStatus: string | null;
+  stripeStatusLastUpdated: Date | null;
+  stripeSubscriptionId: string | null;
+  stripeSubscriptionName: string | null;
 }
 
 // Stripe

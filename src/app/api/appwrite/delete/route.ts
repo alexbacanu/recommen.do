@@ -58,14 +58,9 @@ export async function GET() {
   }
 
   // Delete stripe customer
-  const stripe = getStripeInstance();
-  const customer = await stripe.customers.del(profile.stripeCustomerId);
-
-  if (!customer) {
-    console.log("appwrite:", "Delete stripe customer failed");
-    // return new Response("Delete stripe customer failed", {
-    //   status: 500,
-    // });
+  if (profile.stripeCustomerId) {
+    const stripe = getStripeInstance();
+    await stripe.customers.del(profile.stripeCustomerId);
   }
 
   // Delete profile in database

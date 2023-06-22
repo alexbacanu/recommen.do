@@ -22,7 +22,7 @@ interface CustomWindow extends Window {
 declare const window: CustomWindow;
 
 let jwt: string;
-async function getCheckoutURL(priceId?: string) {
+async function getCheckoutURL(priceId?: string | null) {
   if (!jwt) {
     const jwtObject = await AppwriteService.createJWT();
     jwt = jwtObject.jwt;
@@ -93,7 +93,9 @@ export function Subscription({ profile }: SubscriptionProps) {
           </div>
           <div className="text-sm text-muted-foreground">
             {hasSubscription
-              ? `Renew date: ${new Date(profile.stripeCurrentPeriodEnd).toUTCString()}`
+              ? `Renew date: ${
+                  profile.stripeCurrentPeriodEnd ? new Date(profile.stripeCurrentPeriodEnd).toUTCString() : "Unknown"
+                }`
               : "No subscription"}
           </div>
         </CardContent>

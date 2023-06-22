@@ -53,7 +53,9 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     });
   }
 
-  const isSubscribed = profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now();
+  const isSubscribed = profile.stripeCurrentPeriodEnd
+    ? profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now()
+    : false;
   const stripe = getStripeInstance();
 
   // User is on paid plan
@@ -74,23 +76,31 @@ export async function GET(request: Request, { params }: { params: { priceId: str
 
   // User is on free plan
   // Create Stripe checkout session
-  const session = await stripe.checkout.sessions.create({
-    customer: profile.stripeCustomerId,
+  if (profile.stripeCustomerId) {
+    const session = await stripe.checkout.sessions.create({
+      customer: profile.stripeCustomerId,
 
-    mode: "subscription",
-    payment_method_types: ["card"],
+      mode: "subscription",
+      payment_method_types: ["card"],
 
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
 
-    success_url: `${appwriteUrl}/payment/success`,
-    cancel_url: `${appwriteUrl}/payment/cancel`,
+      success_url: `${appwriteUrl}/payment/success`,
+      cancel_url: `${appwriteUrl}/payment/cancel`,
+    });
+
+    console.log("stripe.subscription:", "OK");
+    return NextResponse.json({ url: session.url }, { headers: corsHeaders });
+  }
+
+  console.log("stripe.subscription:", "Something went wrong");
+  return new Response("Something went wrong", {
+    status: 500,
+    headers: corsHeaders,
   });
-
-  console.log("stripe.subscription:", "OK");
-  return NextResponse.json({ url: session.url }, { headers: corsHeaders });
 }
