@@ -226,7 +226,7 @@ export default function PromptCard({ products }: PromptCardProps) {
                 {/* <RefreshCw className="absolute right-0 mr-[8px] h-[18px] w-[18px] hover:animate-[spin_1s_ease-out_0s] text-muted-foreground/50" /> */}
               </div>
               <Button
-                isLoading={isLoading}
+                disabled={isLoading}
                 variant="secondary"
                 type="submit"
                 className="h-[40px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px]"
