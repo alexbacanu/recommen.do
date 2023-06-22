@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
@@ -73,5 +74,6 @@ module.exports = {
     },
   },
 
+  // @ts-expect-error: missing types
   plugins: [require("tailwindcss-animate")],
 };
