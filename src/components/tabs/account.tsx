@@ -51,7 +51,7 @@ async function deleteAccount() {
   return account;
 }
 
-export function Account({ account, profile }: AccountProps) {
+export function Account({ account }: AccountProps) {
   const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
