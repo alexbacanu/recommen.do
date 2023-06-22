@@ -6,7 +6,7 @@ import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import {
@@ -19,12 +19,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { appwriteUrl } from "~/lib/envClient";
-import { useAppwrite } from "~/lib/helpers/use-appwrite";
+import { AppwriteService } from "~/lib/helpers/appwrite-service";
 import { OpenAISettingsValidator } from "~/lib/schema";
 
 interface AccountProps {
@@ -35,22 +35,44 @@ interface AccountProps {
 interface CustomWindow extends Window {
   next: unknown;
 }
-
 declare const window: CustomWindow;
 
+let jwt: string;
+async function handleDelete() {
+  if (!jwt) {
+    const jwtObject = await AppwriteService.createJWT();
+    jwt = jwtObject.jwt;
+  }
+
+  const response = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+
+  const account = response.json();
+  return account;
+}
+
 export function Account({ account, profile }: AccountProps) {
-  const { signOut } = useAppwrite();
-  const { createJWT } = useAppwrite();
-
-  const [loading, setLoading] = useState(false);
-
   const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
   });
 
-  const apiKeyDetected = !!openaiSettings?.apiKey;
   const extensionDetected = !window.next;
+  const target = extensionDetected ? "_blank" : "_self";
+
+  const apiKeyDetected = !!openaiSettings?.apiKey;
+
+  const { mutate, isLoading } = useMutation({
+    mutationKey: ["handleDelete"],
+    mutationFn: handleDelete,
+    onSuccess: () => {
+      window.open(`${appwriteUrl}`, target, "noopener,noreferrer");
+    },
+  });
 
   const form = useForm({
     resolver: zodResolver(OpenAISettingsValidator),
@@ -59,50 +81,6 @@ export function Account({ account, profile }: AccountProps) {
       orgName: undefined,
     },
   });
-
-  let jwt: string;
-
-  const handleSubscribe = async (priceId: string) => {
-    if (!jwt) {
-      const jwtToken = await createJWT();
-      jwt = jwtToken.jwt;
-    }
-
-    const getCheckoutURL = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-
-    const checkoutUrl = await getCheckoutURL.json();
-
-    window.open(checkoutUrl.url, "_blank", "noopener,noreferrer");
-  };
-
-  const handleDelete = async () => {
-    setLoading(true);
-
-    if (!jwt) {
-      const jwtToken = await createJWT();
-      jwt = jwtToken.jwt;
-    }
-
-    const deleteAccounts = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-
-    if (deleteAccounts.status === 200) {
-      signOut().then(() => {
-        window.open(`${appwriteUrl}`, "_blank", "noopener,noreferrer");
-      });
-    }
-
-    setLoading(false);
-  };
 
   return (
     <section id="account" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
@@ -186,8 +164,10 @@ export function Account({ account, profile }: AccountProps) {
                   {/* <AlertDialogAction> */}
                   <Button
                     variant="destructive"
-                    disabled={loading}
-                    onClick={() => handleDelete()}
+                    disabled={isLoading}
+                    onClick={() => {
+                      mutate();
+                    }}
                     className="whitespace-nowrap"
                   >
                     Yes, delete my account
@@ -198,13 +178,13 @@ export function Account({ account, profile }: AccountProps) {
             </AlertDialog>
           </>
 
-          <Button variant="outline" onClick={() => signOut()} disabled={!account}>
+          <Button variant="outline" onClick={() => AppwriteService.signOut()} disabled={!account}>
             Log out
           </Button>
         </CardFooter>
       </Card>
 
-      <Card className="bg-primary text-muted">
+      {/* <Card className="bg-primary text-muted">
         <CardHeader>
           <CardTitle>Upgrade</CardTitle>
         </CardHeader>
@@ -222,7 +202,7 @@ export function Account({ account, profile }: AccountProps) {
             </a>
           )}
         </CardFooter>
-      </Card>
+      </Card> */}
     </section>
   );
 }
