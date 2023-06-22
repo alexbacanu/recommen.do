@@ -47,7 +47,7 @@ export function Subscription({ profile }: SubscriptionProps) {
   const target = extensionDetected ? "_blank" : "_self";
 
   const apiKeyDetected = !!openaiSettings?.apiKey;
-  const hasSubscription = profile.stripeSubscriptionName !== null;
+  const hasSubscription = profile && profile.stripeSubscriptionId !== "none";
 
   const subQuery = useQuery({
     queryKey: ["subscriptonQuery", profile.stripePriceId],
