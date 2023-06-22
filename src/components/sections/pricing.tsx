@@ -109,7 +109,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
   const showSubscribe = profile && !profile.stripeSubscriptionId;
   const showManageSubscription = profile && profile.stripeSubscriptionId;
 
-  const needsVerification = account && !profile;
+  const needsVerification = account && !account.emailVerification;
 
   const { data, isLoading } = useQuery({
     queryKey: ["getCheckoutURL", plan.priceId],

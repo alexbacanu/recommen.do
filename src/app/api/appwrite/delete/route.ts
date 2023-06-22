@@ -16,12 +16,7 @@ const corsHeaders = {
 export const dynamic = "force-dynamic";
 
 export async function OPTIONS() {
-  return NextResponse.json(
-    { status: "OK" },
-    {
-      headers: corsHeaders,
-    },
-  );
+  return NextResponse.json({ message: "OK" }, { headers: corsHeaders });
 }
 
 export async function GET() {

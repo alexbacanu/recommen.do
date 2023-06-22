@@ -20,10 +20,7 @@ const corsHeaders = {
 };
 
 export async function OPTIONS() {
-  return new Response("OK", {
-    status: 200,
-    headers: corsHeaders,
-  });
+  return NextResponse.json({ message: "OK" }, { headers: corsHeaders });
 }
 
 // export const runtime = "edge";

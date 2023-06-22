@@ -38,7 +38,7 @@ interface CustomWindow extends Window {
 declare const window: CustomWindow;
 
 let jwt: string;
-async function handleDelete() {
+async function deleteAccount() {
   if (!jwt) {
     const jwtObject = await AppwriteService.createJWT();
     jwt = jwtObject.jwt;
@@ -67,8 +67,8 @@ export function Account({ account, profile }: AccountProps) {
   const apiKeyDetected = !!openaiSettings?.apiKey;
 
   const { mutate, isLoading } = useMutation({
-    mutationKey: ["handleDelete"],
-    mutationFn: handleDelete,
+    mutationKey: ["deleteAccount"],
+    mutationFn: deleteAccount,
     onSuccess: () => {
       window.open(`${appwriteUrl}`, target, "noopener,noreferrer");
     },

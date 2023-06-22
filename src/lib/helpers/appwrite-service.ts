@@ -2,7 +2,7 @@ import type { Profile } from "~/lib/types";
 
 import { Account, Client, Databases, Query } from "appwrite";
 
-import { appwriteEndpoint, appwriteProject } from "~/lib/envClient";
+import { appwriteEndpoint, appwriteProject, appwriteUrl } from "~/lib/envClient";
 
 const client = new Client();
 client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);
@@ -36,6 +36,16 @@ export const AppwriteService = {
     console.log("createJWT:", jwt);
 
     return jwt;
+  },
+
+  createVerification: async () => {
+    const user = await account.createVerification(`${appwriteUrl}/profile`);
+    console.log("createVerification:", user);
+
+    if (user) {
+      return user;
+    }
+    return null;
   },
 
   // setOAuth2: async (provider: string) => {
