@@ -101,7 +101,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
 
-  const showGetStarted = !account;
+  const showGetStarted = !account || (account && !profile);
   const showSubscribe = profile && profile.stripeSubscriptionId === "none";
   const showManageSubscription = profile && profile.stripeSubscriptionId !== "none";
 
@@ -138,7 +138,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
 
         <CardContent className="grid">
           {showGetStarted && (
-            <Link href={authuiSite} className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}>
+            <Link href="/profile" className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}>
               Get started
             </Link>
           )}
