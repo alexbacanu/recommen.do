@@ -171,16 +171,26 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
 
   return (
     <section id="prompt_card" className="relative m-4 w-full min-w-[700px]">
-      <Button
-        variant="ghost"
-        type="button"
-        onClick={onClose}
-        disabled={isRefreshing}
-        className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/70"
-      >
-        <Minimize2 className={"h-[12px] w-[12px]"} />
-        <span className="sr-only">Minimize app</span>
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={onClose}
+              disabled={isRefreshing}
+              className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/70"
+            >
+              <Minimize2 className={"h-[12px] w-[12px]"} />
+              <span className="sr-only">Minimize prompt card</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>Minimize</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       {showForm && (
         <div className="group relative">
           <div className="absolute inset-[-0.125px] rounded-[12px] bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
@@ -227,7 +237,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                         type="button"
                         // className="absolute left-0 m-[6px] h-auto px-[8px] py-[6px] text-muted-foreground/50"
                         onClick={() => handleRefresh()}
-                        disabled={isRefreshing}
+                        disabled={isRefreshing || !profile}
                         className="absolute left-0 top-1/2 ml-[6px] h-auto -translate-y-1/2 p-[6px] text-muted-foreground/70"
                       >
                         <RefreshCw className={cn("h-[14px] w-[14px]", isRefreshing && "animate-spin")} />
@@ -235,7 +245,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent side="top">
-                      <p>Refresh recommendations</p>
+                      <p>Refresh</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
