@@ -4,7 +4,7 @@ import { navConfig } from "@/lib/config/navigation";
 
 export function Footer() {
   return (
-    <footer className="flex lg:h-20 items-center border-t border-border bg-foreground/90 text-background">
+    <footer className="flex items-center border-t border-border bg-foreground/90 text-background lg:h-20">
       <div className="mx-auto w-full max-w-7xl">
         <div className="flex flex-col items-center justify-between gap-y-6 px-4 py-6 lg:flex-row">
           <div className="flex items-center gap-x-8">
