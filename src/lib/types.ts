@@ -12,6 +12,8 @@ export interface Product {
 }
 
 // Appwrite
+export type Account = Models.User<Models.Preferences>;
+
 export interface Profile extends Models.Document {
   userId: string;
   name: string;
