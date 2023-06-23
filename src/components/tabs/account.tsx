@@ -98,7 +98,7 @@ export function Account() {
           <>
             <CardContent>
               <div className="text-xl font-semibold text-muted-foreground">Available only in extension</div>
-              <div className="text-sm text-muted-foreground">Manage your API key using the extension popup</div>
+              <div className="text-sm text-muted-foreground">Manage your OpenAI API key using the extension popup</div>
             </CardContent>
           </>
         )}
@@ -148,7 +148,7 @@ export function Account() {
           <>
             <CardContent>
               <div className="text-xl font-semibold text-muted-foreground">Available only in extension</div>
-              <div className="text-sm text-muted-foreground">Manage your API key using the extension popup</div>
+              <div className="text-sm text-muted-foreground">Manage your OpenAI API key using the extension popup</div>
             </CardContent>
           </>
         )}

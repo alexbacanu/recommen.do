@@ -106,7 +106,7 @@ export function Alerts() {
         <Alert variant="default">
           <div className="flex items-center gap-2">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>You are in API Key mode!</AlertTitle>
+            <AlertTitle>You are in OpenAI API Key mode!</AlertTitle>
           </div>
           <AlertDescription>Your recommendations will not be counted towards your usage</AlertDescription>
         </Alert>
