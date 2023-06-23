@@ -1,12 +1,12 @@
 "use client";
 
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 
 import { useSetAtom } from "jotai";
 
-import { accountAtom, isLoadingAtom, profileAtom } from "~/lib/atoms/appwrite";
-import { account, databases } from "~/lib/clients/appwrite-client";
-import { appwriteUrl } from "~/lib/envClient";
+import { accountAtom, isLoadingAtom, profileAtom } from "@/lib/atoms/appwrite";
+import { account, databases } from "@/lib/clients/appwrite-client";
+import { appwriteUrl } from "@/lib/envClient";
 
 export const useAppwrite = () => {
   const setAccount = useSetAtom(accountAtom);

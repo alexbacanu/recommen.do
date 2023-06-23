@@ -2,7 +2,7 @@ import "server-only";
 
 import Stripe from "stripe";
 
-import { stripeSecretKey } from "~/lib/envServer";
+import { stripeSecretKey } from "@/lib/envServer";
 
 let stripeInstance: Stripe | null = null;
 const getStripeInstance = (): Stripe => {

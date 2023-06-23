@@ -2,8 +2,8 @@ import { Account, Client, Databases, Users } from "node-appwrite";
 
 import "server-only";
 
-import { appwriteEndpoint, appwriteProject } from "~/lib/envClient";
-import { appwriteApiKey } from "~/lib/envServer";
+import { appwriteEndpoint, appwriteProject } from "@/lib/envClient";
+import { appwriteApiKey } from "@/lib/envServer";
 
 const appwriteClientService = (jwt: string) => {
   const client = new Client();

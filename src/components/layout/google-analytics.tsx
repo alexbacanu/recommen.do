@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-import { gtagId } from "~/lib/envClient";
+import { gtagId } from "@/lib/envClient";
 
 export default function GoogleAnalytics() {
   return (

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { browserName } from "react-device-detect";
 
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export function Hero() {
   const [browser, setBrowser] = useState("");
@@ -36,21 +36,18 @@ export function Hero() {
             </p>
 
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
-              <Button variant="default" className="px-4 py-6 text-base" disabled={unsupportedBrowser}>
+              <Button variant="default" size="lg" disabled={unsupportedBrowser} asChild>
                 {unsupportedBrowser ? (
                   <a href="#">Not yet supported</a>
                 ) : (
                   <a href="/chrome-1.1.0.zip">
-                    Download <span className="hidden lg:inline-flex">extension for free</span>
+                    Download <span className="ml-1 hidden lg:inline-flex">extension for free</span>
                   </a>
                 )}
               </Button>
-              <Link
-                href="/#features"
-                className={buttonVariants({ variant: "outline", className: "px-4 py-6 text-base text-primary" })}
-              >
-                See features
-              </Link>
+              <Button variant="outline" size="lg" disabled={unsupportedBrowser} asChild>
+                <Link href="/#features">See features</Link>
+              </Button>
             </div>
 
             <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">
@@ -103,7 +100,7 @@ export function Hero() {
           </div>
           <div className="w-[60rem]">
             <Image
-              className="w-full rounded-2xl shadow-xl"
+              className="w-full rounded-xl shadow-xl"
               src="/hero-img.png"
               height={1478}
               width={1060}

@@ -1,15 +1,15 @@
 import { Inter } from "next/font/google";
 
-import CookieButton from "~/components/cookies/cookie-button";
-import { Footer } from "~/components/layout/footer";
-import GoogleAnalytics from "~/components/layout/google-analytics";
-import { Header } from "~/components/layout/header";
-import { Init } from "~/components/layout/init";
-import { Toaster } from "~/components/ui/toaster";
-import { cn } from "~/lib/helpers/cn";
-import ReactQueryProvider from "~/lib/providers/react-query";
+import CookieButton from "@/components/cookies/cookie-button";
+import { Footer } from "@/components/layout/footer";
+import GoogleAnalytics from "@/components/layout/google-analytics";
+import { Header } from "@/components/layout/header";
+import { Init } from "@/components/layout/init";
+import { Toaster } from "@/components/ui/toaster";
+import ReactQueryProvider from "@/lib/providers/react-query";
+import { cn } from "@/lib/utils";
 
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

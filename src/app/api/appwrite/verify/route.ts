@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteClientService } from "~/lib/clients/appwrite-server";
+import { appwriteClientService } from "@/lib/clients/appwrite-server";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",

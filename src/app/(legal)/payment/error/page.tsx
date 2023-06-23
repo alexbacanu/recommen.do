@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 
-import { buttonVariants } from "~/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PaymentErrorPage() {
   useEffect(() => {

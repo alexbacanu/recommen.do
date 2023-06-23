@@ -1,7 +1,7 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/schema";
-import type { Profile } from "~/lib/types";
+import type { OpenAISettings } from "@/lib/schema";
+import type { Profile } from "@/lib/types";
 import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,16 +18,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { Switch } from "~/components/ui/switch";
-import { appwriteUrl } from "~/lib/envClient";
-import { AppwriteService } from "~/lib/helpers/appwrite-service";
-import { OpenAISettingsValidator } from "~/lib/schema";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { appwriteUrl } from "@/lib/envClient";
+import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { OpenAISettingsValidator } from "@/lib/schema";
 
 interface AccountProps {
   account: Models.User<Models.Preferences>;
@@ -111,7 +111,7 @@ export function Account({ account }: AccountProps) {
       <Card>
         <CardHeader>
           <CardTitle>
-            API key{" "}
+            OpenAI API key{" "}
             {extensionDetected && (
               <span className="text-muted-foreground/50">{apiKeyDetected ? "(detected)" : "(not detected)"}</span>
             )}
@@ -129,7 +129,6 @@ export function Account({ account }: AccountProps) {
                       <FormControl>
                         <Input
                           disabled={apiKeyDetected}
-                          variant={apiKeyDetected ? "valid" : "default"}
                           placeholder={apiKeyDetected ? "OpenAI API key detected" : "Insert your OpenAI API key"}
                           {...field}
                         />
@@ -139,10 +138,10 @@ export function Account({ account }: AccountProps) {
                   )}
                 />
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="destructive" onClick={() => remove()} disabled={!apiKeyDetected}>
+                  <Button variant="destructive" disabled={!apiKeyDetected} onClick={() => remove()}>
                     Clear key
                   </Button>
-                  <Button variant="outline" type="submit" disabled={apiKeyDetected}>
+                  <Button variant="outline" disabled={apiKeyDetected} type="submit">
                     Submit
                   </Button>
                 </div>
@@ -177,9 +176,9 @@ export function Account({ account }: AccountProps) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    By clicking <span className="font-semibold">Yes, delete my account</span> you hereby cancel your
-                    subscription and forfeit all your remaining recommendations. These changes will take immediate
-                    effect and are irreversible. If you wish to keep your account active use the{" "}
+                    By clicking <span className="font-semibold">Yes, delete my account</span> you hereby forfeit all
+                    your remaining recommendations and cancel your subscription if one is active These changes will take
+                    immediate effect and are irreversible. If you wish to keep your account active use the{" "}
                     <span className="font-semibold">Keep my account active</span> button below.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
@@ -188,10 +187,10 @@ export function Account({ account }: AccountProps) {
                   {/* <AlertDialogAction> */}
                   <Button
                     variant="destructive"
-                    disabled={isLoading}
                     onClick={() => {
                       mutate();
                     }}
+                    disabled={isLoading}
                     className="whitespace-nowrap"
                   >
                     Yes, delete my account

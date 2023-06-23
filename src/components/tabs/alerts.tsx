@@ -1,7 +1,7 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/schema";
-import type { Profile } from "~/lib/types";
+import type { OpenAISettings } from "@/lib/schema";
+import type { Profile } from "@/lib/types";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -9,10 +9,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
-import { appwriteUrl } from "~/lib/envClient";
-import { AppwriteService } from "~/lib/helpers/appwrite-service";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { appwriteUrl } from "@/lib/envClient";
+import { AppwriteService } from "@/lib/helpers/appwrite-service";
 
 interface AlertsProps {
   account: Models.User<Models.Preferences>;

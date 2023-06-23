@@ -1,8 +1,8 @@
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 
 import { Account, Client, Databases, Query } from "appwrite";
 
-import { appwriteEndpoint, appwriteProject, appwriteUrl } from "~/lib/envClient";
+import { appwriteEndpoint, appwriteProject, appwriteUrl } from "@/lib/envClient";
 
 const client = new Client();
 client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);

@@ -4,7 +4,7 @@ import { useAtomValue } from "jotai";
 import { CreditCard, LifeBuoy, LogIn, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,15 +13,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import LoadingSpinner from "~/components/ui/loading";
-import { accountAtom, isLoadingAtom } from "~/lib/atoms/appwrite";
-import { authuiSite } from "~/lib/envClient";
-import { useAppwrite } from "~/lib/helpers/use-appwrite";
+} from "@/components/ui/dropdown-menu";
+import { accountAtom } from "@/lib/atoms/appwrite";
+import { authuiSite } from "@/lib/envClient";
+import { useAppwrite } from "@/lib/helpers/use-appwrite";
 
 export function Profile() {
   const account = useAtomValue(accountAtom);
-  const isLoading = useAtomValue(isLoadingAtom);
   const { signOut } = useAppwrite();
 
   return (
@@ -29,7 +27,7 @@ export function Profile() {
       {account ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary">{account.name ? account.name : "Account"}</Button>
+            <Button variant="outline">{account.name ? account.name : "Account"}</Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent>
@@ -77,14 +75,8 @@ export function Profile() {
         </DropdownMenu>
       ) : (
         <Link className={buttonVariants({ variant: "secondary", className: "space-x-2" })} href={authuiSite}>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
-              <LogIn className="h-4 w-4" />
-              <span>Login</span>
-            </>
-          )}
+          <LogIn className="h-4 w-4" />
+          <span>Login</span>
         </Link>
       )}
     </>

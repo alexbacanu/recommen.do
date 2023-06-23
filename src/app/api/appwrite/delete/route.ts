@@ -1,10 +1,10 @@
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteClientService, appwriteServerService } from "~/lib/clients/appwrite-server";
-import { getStripeInstance } from "~/lib/clients/stripe-server";
+import { appwriteClientService, appwriteServerService } from "@/lib/clients/appwrite-server";
+import { getStripeInstance } from "@/lib/clients/stripe-server";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",

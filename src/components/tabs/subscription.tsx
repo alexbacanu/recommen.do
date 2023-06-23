@@ -1,16 +1,16 @@
 "use client";
 
-import type { OpenAISettings } from "~/lib/schema";
-import type { Profile } from "~/lib/types";
+import type { OpenAISettings } from "@/lib/schema";
+import type { Profile } from "@/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useQuery } from "@tanstack/react-query";
 
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { appwriteUrl } from "~/lib/envClient";
-import { AppwriteService } from "~/lib/helpers/appwrite-service";
-import { cn } from "~/lib/helpers/cn";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { appwriteUrl } from "@/lib/envClient";
+import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { cn } from "@/lib/utils";
 
 interface SubscriptionProps {
   profile: Profile;
@@ -110,12 +110,12 @@ export function Subscription({ profile }: SubscriptionProps) {
         </CardContent>
         {hasSubscription ? (
           <CardFooter className="grid grid-cols-2 gap-4">
-            <Button variant="outline" className="text-center" size="lg" disabled={refillQuery.isLoading}>
+            <Button variant="outline" className="text-center" disabled={refillQuery.isLoading} asChild>
               <a href={refillURL} target={target}>
                 Add 50 more recommendations
               </a>
             </Button>
-            <Button variant="outline" className="text-center" size="lg" disabled={subQuery.isLoading}>
+            <Button variant="outline" className="text-center" disabled={subQuery.isLoading} asChild>
               <a href={subURL} target={target}>
                 Manage subscription
               </a>
@@ -123,7 +123,7 @@ export function Subscription({ profile }: SubscriptionProps) {
           </CardFooter>
         ) : (
           <CardFooter className="grid grid-cols-1">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" asChild>
               <a href={`${appwriteUrl}/#pricing`} target={target}>
                 View subscription options
               </a>

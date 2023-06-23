@@ -2,12 +2,12 @@
 
 import { usePathname } from "next/navigation";
 
-import Download from "~/components/download";
-import { Navigation } from "~/components/navigation";
-import Logo from "~/components/ui/logo";
-import { Profile } from "~/components/user";
-import { navConfig } from "~/lib/config/navigation";
-import { cn } from "~/lib/helpers/cn";
+import Download from "@/components/download";
+import { Navigation } from "@/components/navigation";
+import Logo from "@/components/ui/logo";
+import { Profile } from "@/components/user";
+import { navConfig } from "@/lib/config/navigation";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
@@ -23,7 +23,7 @@ export function Header() {
       <div
         className={cn(
           "mx-auto flex max-w-7xl transition-all duration-300 justify-between px-4 py-6",
-          isProfile && "bg-white rounded-lg py-2",
+          isProfile && "bg-white rounded-xl py-2",
         )}
       >
         <div className="flex items-center gap-x-8">

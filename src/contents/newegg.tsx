@@ -1,10 +1,12 @@
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plasmo";
 
-import cssText from "data-text:~/styles/globals.css";
+import { useStorage } from "@plasmohq/storage/hook";
+import logo from "data-base64:~assets/icon.png";
+import cssText from "data-text:@/styles/globals.css";
 
-import PromptCard from "~/components/extension/prompt-card";
-import { Toaster } from "~/components/ui/toaster";
-import ReactQueryProvider from "~/lib/providers/react-query";
+import PromptCard from "@/components/extension/prompt-card";
+import { Toaster } from "@/components/ui/toaster";
+import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://www.newegg.com/p*", "https://www.newegg.ca/p*", "https://www.newegg.com/global/*/p*"],
@@ -61,12 +63,22 @@ const neweggProductData = () => {
 };
 
 export default function NeweggContent() {
+  const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus");
   const products = neweggProductData();
 
   return (
     <>
       <ReactQueryProvider>
-        <PromptCard products={products} />
+        {promptStatus ? (
+          <PromptCard products={products} onClose={() => setPromptStatus(false)} />
+        ) : (
+          <button
+            className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-0.5"
+            onClick={() => setPromptStatus((prevState) => !prevState)}
+          >
+            <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
+          </button>
+        )}
       </ReactQueryProvider>
       <Toaster />
     </>

@@ -1,13 +1,13 @@
 import { createHmac } from "crypto";
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteServerService } from "~/lib/clients/appwrite-server";
-import { getStripeInstance } from "~/lib/clients/stripe-server";
-import { appwriteUrl } from "~/lib/envClient";
-import { appwriteWebhookKey } from "~/lib/envServer";
+import { appwriteServerService } from "@/lib/clients/appwrite-server";
+import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteUrl } from "@/lib/envClient";
+import { appwriteWebhookKey } from "@/lib/envServer";
 
 export const dynamic = "force-dynamic";
 

@@ -1,4 +1,4 @@
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 import type { Models } from "appwrite/types/models";
 
 import { atom } from "jotai";

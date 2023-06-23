@@ -1,6 +1,6 @@
 "use client";
 
-import type { PricingPlan } from "~/lib/types";
+import type { PricingPlan } from "@/lib/types";
 import type { Variants } from "framer-motion";
 
 import { useQuery } from "@tanstack/react-query";
@@ -8,13 +8,13 @@ import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 
-import { Badge } from "~/components/ui/badge";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { Label } from "~/components/ui/label";
-import { accountAtom, profileAtom } from "~/lib/atoms/appwrite";
-import { appwriteUrl, authuiSite } from "~/lib/envClient";
-import { AppwriteService } from "~/lib/helpers/appwrite-service";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { accountAtom, profileAtom } from "@/lib/atoms/appwrite";
+import { appwriteUrl, authuiSite } from "@/lib/envClient";
+import { AppwriteService } from "@/lib/helpers/appwrite-service";
 
 interface PricingProps {
   plans: PricingPlan[];
@@ -138,19 +138,19 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
 
         <CardContent className="grid">
           {showGetStarted && (
-            <Link href="/profile" className={buttonVariants({ variant: index === 1 ? "default" : "outline" })}>
-              Get started
-            </Link>
+            <Button variant={index === 1 ? "default" : "outline"} asChild>
+              <Link href="/profile">Get started</Link>
+            </Button>
           )}
 
           {showSubscribe && (
-            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading}>
+            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading} asChild>
               <Link href={needsVerification ? "/profile" : checkoutURL}>Subscribe now</Link>
             </Button>
           )}
 
           {showManageSubscription && (
-            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading}>
+            <Button variant={index === 1 ? "default" : "outline"} disabled={isLoading} asChild>
               <Link href={checkoutURL}>Manage subscription</Link>
             </Button>
           )}
@@ -161,7 +161,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
             {plan.metadata.features &&
               plan.metadata.features.split(",").map((feature, index) => (
                 <div key={index} className="flex items-center gap-x-2 text-muted-foreground first:text-card-foreground">
-                  <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                  <span className="flex h-2 w-2 rounded-full bg-primary/80" />
                   <p className="text-sm font-medium leading-none">{feature}</p>
                 </div>
               ))}

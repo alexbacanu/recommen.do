@@ -28,11 +28,11 @@
     ],
 
     "paths": {
-      "~/*": ["./src/*"],
-      "api/*": ["./src/app/api/*"],
-      "components/*": ["./src/components/*"],
-      "lib/*": ["./src/lib/*"],
-      "styles/*": ["./src/styles/*"]
+      "@/*": ["./src/*"],
+      "@/api/*": ["./src/app/api/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/styles/*": ["./src/styles/*"]
     }
   },
   "include": [

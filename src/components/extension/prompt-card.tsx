@@ -1,5 +1,5 @@
-import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "~/lib/schema";
-import type { Product } from "~/lib/types";
+import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "@/lib/schema";
+import type { Product } from "@/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
@@ -7,17 +7,17 @@ import { useAtomValue } from "jotai";
 import { Minimize2, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
-import { Init } from "~/components/layout/init";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Skeleton } from "~/components/ui/skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
-import { profileAtom } from "~/lib/atoms/appwrite";
-import { appwriteUrl } from "~/lib/envClient";
-import { cn } from "~/lib/helpers/cn";
-import { filterMessage } from "~/lib/helpers/filterMessage";
-import { useAppwrite } from "~/lib/helpers/use-appwrite";
-import { toast } from "~/lib/helpers/use-toast";
+import { Init } from "@/components/layout/init";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { toast } from "@/components/ui/use-toast";
+import { profileAtom } from "@/lib/atoms/appwrite";
+import { appwriteUrl } from "@/lib/envClient";
+import { filterMessage } from "@/lib/helpers/filterMessage";
+import { useAppwrite } from "@/lib/helpers/use-appwrite";
+import { cn } from "@/lib/utils";
 
 interface PromptCardProps {
   products: Product[];
@@ -176,9 +176,9 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
       <Button
         variant="ghost"
         type="button"
-        className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/50"
         onClick={onClose}
         disabled={isRefreshing}
+        className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/70"
       >
         <Minimize2 className={"h-[12px] w-[12px]"} />
         <span className="sr-only">Minimize app</span>
@@ -217,7 +217,8 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       ? `${profile?.credits ?? 0} recommendations available`
                       : "please login to get recommendations"
                   }
-                  className="h-[40px] rounded-[12px] border-muted-foreground/40 px-[12px] py-[8px] pl-[36px] text-[14px] placeholder:opacity-50"
+                  className="pl-[36px]"
+                  // className="h-[40px] rounded-[10px] border-muted-foreground/40 px-[12px] py-[8px] pl-[36px] text-[14px] placeholder:opacity-50"
                 />
 
                 <TooltipProvider>
@@ -226,9 +227,10 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       <Button
                         variant="ghost"
                         type="button"
-                        className="absolute left-0 m-[6px] h-auto px-[8px] py-[6px] text-muted-foreground/50"
+                        // className="absolute left-0 m-[6px] h-auto px-[8px] py-[6px] text-muted-foreground/50"
                         onClick={() => handleRefresh()}
                         disabled={isRefreshing}
+                        className="absolute left-0 top-1/2 ml-[6px] h-auto -translate-y-1/2 p-[6px] text-muted-foreground/70"
                       >
                         <RefreshCw className={cn("h-[14px] w-[14px]", isRefreshing && "animate-spin")} />
                         <span className="sr-only">Refresh recommendations</span>
@@ -243,10 +245,10 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                 {/* <RefreshCw className="absolute right-0 mr-[8px] h-[18px] w-[18px] hover:animate-[spin_1s_ease-out_0s] text-muted-foreground/50" /> */}
               </div>
               <Button
-                disabled={isLoading || !profile}
-                variant="secondary"
+                variant="default"
                 type="submit"
-                className="h-[40px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px]"
+                disabled={isLoading || !profile}
+                // className="h-[40px] shrink-0 rounded-[10px] px-[12px] py-[8px] text-[14px]"
               >
                 Send
               </Button>
@@ -327,7 +329,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Skeleton className="mx-auto h-[40px] w-[144px]" />
                   ) : (
                     <div className="mx-auto text-center">
-                      <a
+                      {/* <a
                         href={product.link}
                         className={cn(
                           buttonVariants({
@@ -337,7 +339,15 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                         )}
                       >
                         See product
-                      </a>
+                      </a> */}
+                      <Button
+                        variant="default"
+                        className="w-full"
+                        asChild
+                        // className="h-[40px] w-[144px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px] text-primary"
+                      >
+                        <a href={product.link}>See product</a>
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -348,7 +358,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Button
                       variant="outline"
                       onClick={() => handleReset()}
-                      className="h-[40px] w-[144px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px] text-primary"
+                      // className="h-[40px] w-[144px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px] text-primary"
                     >
                       Return to search
                     </Button>

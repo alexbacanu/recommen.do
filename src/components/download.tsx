@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { browserName } from "react-device-detect";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function Download() {
   const [browser, setBrowser] = useState("");
@@ -25,12 +25,12 @@ export default function Download() {
           alt={`Download extension for ${browser} browser`}
         />
       )}
-      <Button variant="default" className={browser ? "pl-9" : ""} disabled={unsupportedBrowser}>
+      <Button variant="default" className={browser ? "pl-9" : ""} disabled={unsupportedBrowser} asChild>
         {unsupportedBrowser ? (
           <a href="#">Not yet supported</a>
         ) : (
           <a href="/chrome-1.1.0.zip">
-            Download <span className="hidden lg:inline-flex">extension for free</span>
+            Download <span className="ml-1 hidden lg:inline-flex">extension for free</span>
           </a>
         )}
       </Button>

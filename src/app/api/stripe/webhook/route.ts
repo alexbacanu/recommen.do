@@ -1,14 +1,14 @@
-import type { Profile } from "~/lib/types";
+import type { Profile } from "@/lib/types";
 import type Stripe from "stripe";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Query } from "node-appwrite";
 
-import { appwriteServerService } from "~/lib/clients/appwrite-server";
-import { getStripeInstance } from "~/lib/clients/stripe-server";
-import { stripeWebhookKey } from "~/lib/envServer";
-import { assignCredits } from "~/lib/helpers/assignCredits";
+import { appwriteServerService } from "@/lib/clients/appwrite-server";
+import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { stripeWebhookKey } from "@/lib/envServer";
+import { assignCredits } from "@/lib/helpers/assignCredits";
 
 export const dynamic = "force-dynamic";
 

@@ -1,9 +1,9 @@
 import { useAtomValue } from "jotai";
 
-import { buttonVariants } from "~/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import { accountAtom } from "~/lib/atoms/appwrite";
-import { authuiSite } from "~/lib/envClient";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { accountAtom } from "@/lib/atoms/appwrite";
+import { authuiSite } from "@/lib/envClient";
 
 export function Login() {
   const account = useAtomValue(accountAtom);
