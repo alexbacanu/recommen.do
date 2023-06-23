@@ -1,12 +1,10 @@
-import { useAtomValue } from "jotai";
-
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { accountAtom } from "@/lib/atoms/appwrite";
 import { authuiSite } from "@/lib/envClient";
+import { useAccount } from "@/lib/hooks/use-account";
 
 export function Login() {
-  const account = useAtomValue(accountAtom);
+  const account = useAccount();
 
   if (account && !account?.emailVerification) return;
 

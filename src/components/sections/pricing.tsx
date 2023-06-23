@@ -5,16 +5,16 @@ import type { Variants } from "framer-motion";
 
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { useAtomValue } from "jotai";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { accountAtom, profileAtom } from "@/lib/atoms/appwrite";
 import { appwriteUrl, authuiSite } from "@/lib/envClient";
 import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { useAccount } from "@/lib/hooks/use-account";
+import { useProfile } from "@/lib/hooks/use-profile";
 
 interface PricingProps {
   plans: PricingPlan[];
@@ -35,7 +35,7 @@ async function getCheckoutURL(priceId: string) {
 }
 
 export function Pricing({ plans }: PricingProps) {
-  const profile = useAtomValue(profileAtom);
+  const profile = useProfile();
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -98,8 +98,8 @@ export function Pricing({ plans }: PricingProps) {
 }
 
 function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
-  const account = useAtomValue(accountAtom);
-  const profile = useAtomValue(profileAtom);
+  const account = useAccount();
+  const profile = useProfile();
 
   const showGetStarted = !account || (account && !profile);
   const showSubscribe = profile && profile.stripeSubscriptionId === "none";

@@ -4,7 +4,6 @@ import CookieButton from "@/components/cookies/cookie-button";
 import { Footer } from "@/components/layout/footer";
 import GoogleAnalytics from "@/components/layout/google-analytics";
 import { Header } from "@/components/layout/header";
-import { Init } from "@/components/layout/init";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/lib/providers/react-query";
 import { cn } from "@/lib/utils";
@@ -24,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <GoogleAnalytics />
       <body className="subpixel-antialiased">
         <ReactQueryProvider>
-          <Init />
           <Header />
           <main className="content-area">{children}</main>
           <Footer />

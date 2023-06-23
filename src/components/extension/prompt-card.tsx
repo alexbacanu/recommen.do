@@ -3,20 +3,18 @@ import type { Product } from "@/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
 import { Minimize2, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
-import { Init } from "@/components/layout/init";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "@/components/ui/use-toast";
-import { profileAtom } from "@/lib/atoms/appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 import { filterMessage } from "@/lib/helpers/filterMessage";
 import { useAppwrite } from "@/lib/helpers/use-appwrite";
+import { useProfile } from "@/lib/hooks/use-profile";
 import { cn } from "@/lib/utils";
 
 interface PromptCardProps {
@@ -39,12 +37,13 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 
 export default function PromptCard({ products, onClose }: PromptCardProps) {
+  const profile = useProfile();
+
   const { createJWT, getProfile } = useAppwrite();
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
 
   const [prompt, setPrompt] = useState("");
   const [hasRead, setHasRead] = useState(true);
-  const profile = useAtomValue(profileAtom);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -172,7 +171,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
 
   return (
     <section id="prompt_card" className={cn("m-4 min-w-[700px] w-full relative")}>
-      <Init />
       <Button
         variant="ghost"
         type="button"

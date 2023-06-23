@@ -1,6 +1,5 @@
 "use client";
 
-import { useAtomValue } from "jotai";
 import { LifeBuoy, LogIn, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
@@ -14,12 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { accountAtom } from "@/lib/atoms/appwrite";
 import { authuiSite } from "@/lib/envClient";
 import { useAppwrite } from "@/lib/helpers/use-appwrite";
+import { useAccount } from "@/lib/hooks/use-account";
 
 export function Profile() {
-  const account = useAtomValue(accountAtom);
+  const account = useAccount();
+
   const { signOut } = useAppwrite();
 
   return (

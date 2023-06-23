@@ -44,6 +44,9 @@ dependencies:
   '@radix-ui/react-tooltip':
     specifier: ^1.0.6
     version: 1.0.6(@types/react-dom@18.2.6)(@types/react@18.2.13)(react-dom@18.2.0)(react@18.2.0)
+  '@tanstack/query-core':
+    specifier: ^4.29.15
+    version: 4.29.15
   '@tanstack/react-query':
     specifier: ^4.29.15
     version: 4.29.15(react-dom@18.2.0)(react@18.2.0)
@@ -71,6 +74,9 @@ dependencies:
   jotai:
     specifier: ^2.2.1
     version: 2.2.1(react@18.2.0)
+  jotai-tanstack-query:
+    specifier: ^0.7.1
+    version: 0.7.1(@tanstack/query-core@4.29.15)(jotai@2.2.1)
   lucide-react:
     specifier: ^0.246.0
     version: 0.246.0(react@18.2.0)
@@ -6317,6 +6323,16 @@ packages:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
     dev: true
+
+  /jotai-tanstack-query@0.7.1(@tanstack/query-core@4.29.15)(jotai@2.2.1):
+    resolution: {integrity: sha512-62PDt8s3c1fN/f3AmTMzAFUHZAstUIPUZMFdhERbmTRWiGznVAq6uJMt08FCI3JL53wZj5q5FhuA39LTL5zqRg==}
+    peerDependencies:
+      '@tanstack/query-core': '*'
+      jotai: '>=1.11.0'
+    dependencies:
+      '@tanstack/query-core': 4.29.15
+      jotai: 2.2.1(react@18.2.0)
+    dev: false
 
   /jotai@2.2.1(react@18.2.0):
     resolution: {integrity: sha512-Gz4tpbRQy9OiFgBwF9F7TieDn0UTE3C0IFSDuxHjOIvgn2tACH30UKz6p/wIlfoZROXSTCIxEvYEa7Y25WM+8g==}
