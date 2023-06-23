@@ -16,13 +16,13 @@ export function Header() {
   return (
     <header
       className={cn(
-        "top-0 z-10 border-b transition-all duration-300 border-border bg-card/80 backdrop-blur-xl",
-        isProfile && "bg-primary py-5 px-2",
+        "top-0 z-10 border-b h-20 flex items-center border-border bg-card transition-all duration-300",
+        isProfile && "bg-primary",
       )}
     >
       <div
         className={cn(
-          "mx-auto flex max-w-7xl transition-all duration-300 justify-between px-4 py-6",
+          "flex w-full px-4 max-w-7xl mx-auto items-center justify-between transition-all duration-300",
           isProfile && "bg-white rounded-xl py-2",
         )}
       >

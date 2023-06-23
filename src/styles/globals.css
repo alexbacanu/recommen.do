@@ -27,4 +27,8 @@
   .browser-accent {
     @apply flex h-16 w-16 shrink-0 self-center justify-self-center border-b-2 border-b-transparent object-contain p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-b-ring;
   }
+
+  .content-area {
+    min-height: calc(100vh - theme(height.40));
+  }
 }
