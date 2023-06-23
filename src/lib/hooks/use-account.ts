@@ -23,7 +23,7 @@ export function useAccount() {
   const { mutate: signOut } = useMutation({
     mutationFn: () => signOutFn(),
     onSuccess: () => {
-      window.location.reload();
+      window?.location.reload();
     },
     // enabled: hasSubscription,
   });

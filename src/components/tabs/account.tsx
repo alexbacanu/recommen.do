@@ -56,7 +56,7 @@ export function Account() {
   });
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
-  const extensionDetected = !window.next;
+  const extensionDetected = !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
   const apiKeyDetected = !!openaiSettings?.apiKey;
@@ -65,7 +65,7 @@ export function Account() {
     mutationKey: ["deleteAccount"],
     mutationFn: deleteAccount,
     onSuccess: () => {
-      window.open(`${appwriteUrl}`, target, "noopener,noreferrer");
+      window?.open(`${appwriteUrl}`, target, "noopener,noreferrer");
     },
   });
 

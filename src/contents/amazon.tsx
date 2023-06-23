@@ -50,7 +50,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 };
 
 const amazonProductData = () => {
-  const currentUrl = window.location.origin;
+  const currentUrl = window?.location.origin;
 
   const productNodes = document.querySelectorAll("div.s-result-item");
   const products = [];

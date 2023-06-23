@@ -41,7 +41,7 @@ export function Subscription() {
     orgName: undefined,
   });
 
-  const extensionDetected = !window.next;
+  const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
   const apiKeyDetected = !!openaiSettings?.apiKey;

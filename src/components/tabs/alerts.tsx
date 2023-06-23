@@ -50,7 +50,7 @@ export function Alerts() {
     orgName: undefined,
   });
 
-  const extensionDetected = !window.next;
+  const extensionDetected = !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
   const apiKeyDetected = !!openaiSettings?.apiKey;
@@ -67,7 +67,7 @@ export function Alerts() {
     },
   });
 
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(window?.location.search);
 
   const userId = searchParams.get("userId") || undefined;
   const secret = searchParams.get("secret") || undefined;
@@ -82,7 +82,7 @@ export function Alerts() {
 
   useEffect(() => {
     if (isSuccess) {
-      window.open(`${appwriteUrl}/profile`, target, "noopener,noreferrer");
+      window?.open(`${appwriteUrl}/profile`, target, "noopener,noreferrer");
     }
   }, [isSuccess, target]);
 
