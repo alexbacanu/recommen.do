@@ -247,10 +247,10 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
               <Button
                 variant="default"
                 type="submit"
-                disabled={isLoading || !profile}
+                disabled={isLoading || !profile || !hasRead}
                 // className="h-[40px] shrink-0 rounded-[10px] px-[12px] py-[8px] text-[14px]"
               >
-                Send
+                {hasRead ? "Send" : "Generating..."}
               </Button>
             </form>
           </div>
