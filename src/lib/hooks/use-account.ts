@@ -1,21 +1,33 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { AppwriteService } from "@/lib/helpers/appwrite-service";
 
-async function getAccount() {
+async function getAccountFn() {
   const account = await AppwriteService.getAccount();
   return account;
+}
+
+async function signOutFn() {
+  await AppwriteService.signOut();
 }
 
 export function useAccount() {
   const { data } = useQuery({
     queryKey: ["accountQuery"],
-    queryFn: () => getAccount(),
+    queryFn: () => getAccountFn(),
     // enabled: hasSubscription,
   });
 
-  const account = data ?? null;
-  return account;
+  const { mutate: signOut } = useMutation({
+    mutationFn: () => signOutFn(),
+    onSuccess: () => {
+      window.location.reload();
+    },
+    // enabled: hasSubscription,
+  });
+
+  const account = data ?? undefined;
+  return { account, signOut };
 }

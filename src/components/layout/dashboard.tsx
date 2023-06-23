@@ -8,7 +8,7 @@ import { useAccount } from "@/lib/hooks/use-account";
 import { useProfile } from "@/lib/hooks/use-profile";
 
 export function Dashboard() {
-  const account = useAccount();
+  const { account } = useAccount();
   const profile = useProfile();
   // const account = useAtomValue(accountAtom);
   // const profile = useAtomValue(profileAtom);
@@ -17,14 +17,14 @@ export function Dashboard() {
     <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
       {account && profile && (
         <>
-          <Alerts account={account} profile={profile} />
-          <Subscription profile={profile} />
-          <Account account={account} profile={profile} />
+          <Alerts />
+          <Subscription />
+          <Account />
         </>
       )}
       {account && !profile && (
         <>
-          <Alerts account={account} profile={profile} />
+          <Alerts />
           <Login />
         </>
       )}

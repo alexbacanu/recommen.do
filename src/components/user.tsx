@@ -14,13 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authuiSite } from "@/lib/envClient";
-import { useAppwrite } from "@/lib/helpers/use-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function Profile() {
-  const account = useAccount();
-
-  const { signOut } = useAppwrite();
+  const { account, signOut } = useAccount();
 
   return (
     <>

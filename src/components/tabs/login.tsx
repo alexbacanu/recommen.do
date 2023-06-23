@@ -4,7 +4,7 @@ import { authuiSite } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function Login() {
-  const account = useAccount();
+  const { account } = useAccount();
 
   if (account && !account?.emailVerification) return;
 

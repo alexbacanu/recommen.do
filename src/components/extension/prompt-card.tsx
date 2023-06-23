@@ -170,7 +170,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
   const showSkeleton = !isSuccess && product.identifier === "none";
 
   return (
-    <section id="prompt_card" className={cn("m-4 min-w-[700px] w-full relative")}>
+    <section id="prompt_card" className="relative m-4 w-full min-w-[700px]">
       <Button
         variant="ghost"
         type="button"
@@ -187,7 +187,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
           <div className="relative flex flex-row gap-[24px] rounded-[12px] bg-white p-[24px] leading-none ring-1 ring-muted-foreground/20">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className={cn("mb-[8px] text-[22px] font-semibold leading-none text-fuchsia-600")}>recommen.do</h3>
+                <h3 className="mb-[8px] text-[22px] font-semibold leading-none text-fuchsia-600">recommen.do</h3>
                 <p className="text-[14px] text-muted-foreground">
                   Make choosing easier - with your personal AI assistant
                 </p>
@@ -327,17 +327,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Skeleton className="mx-auto h-[40px] w-[144px]" />
                   ) : (
                     <div className="mx-auto text-center">
-                      {/* <a
-                        href={product.link}
-                        className={cn(
-                          buttonVariants({
-                            variant: "secondary",
-                          }),
-                          "w-full h-[40px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px]",
-                        )}
-                      >
-                        See product
-                      </a> */}
                       <Button
                         variant="default"
                         className="w-full"

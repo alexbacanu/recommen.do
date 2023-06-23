@@ -1,8 +1,6 @@
 "use client";
 
 import type { OpenAISettings } from "@/lib/schema";
-import type { Profile } from "@/lib/types";
-import type { Models } from "appwrite";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
@@ -27,12 +25,8 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { appwriteUrl } from "@/lib/envClient";
 import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { useAccount } from "@/lib/hooks/use-account";
 import { OpenAISettingsValidator } from "@/lib/schema";
-
-interface AccountProps {
-  account: Models.User<Models.Preferences>;
-  profile: Profile;
-}
 
 interface CustomWindow extends Window {
   next: unknown;
@@ -53,7 +47,9 @@ async function deleteAccount() {
   return account;
 }
 
-export function Account({ account }: AccountProps) {
+export function Account() {
+  const { account, signOut } = useAccount();
+
   const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
@@ -201,7 +197,7 @@ export function Account({ account }: AccountProps) {
             </AlertDialog>
           </>
 
-          <Button variant="outline" onClick={() => AppwriteService.signOut()} disabled={!account}>
+          <Button variant="outline" onClick={() => signOut()} disabled={!account}>
             Log out
           </Button>
         </CardFooter>

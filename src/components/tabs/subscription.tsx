@@ -1,7 +1,6 @@
 "use client";
 
 import type { OpenAISettings } from "@/lib/schema";
-import type { Profile } from "@/lib/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useQuery } from "@tanstack/react-query";
@@ -10,11 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { appwriteUrl } from "@/lib/envClient";
 import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { useProfile } from "@/lib/hooks/use-profile";
 import { cn } from "@/lib/utils";
-
-interface SubscriptionProps {
-  profile: Profile;
-}
 
 interface CustomWindow extends Window {
   next: unknown;
@@ -37,7 +33,9 @@ async function getCheckoutURL(priceId?: string | null) {
   return checkoutURL;
 }
 
-export function Subscription({ profile }: SubscriptionProps) {
+export function Subscription() {
+  const profile = useProfile();
+
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
@@ -50,8 +48,8 @@ export function Subscription({ profile }: SubscriptionProps) {
   const hasSubscription = profile && profile.stripeSubscriptionId !== "none";
 
   const subQuery = useQuery({
-    queryKey: ["subscriptonQuery", profile.stripePriceId],
-    queryFn: () => getCheckoutURL(profile.stripePriceId),
+    queryKey: ["subscriptonQuery", profile?.stripePriceId],
+    queryFn: () => getCheckoutURL(profile?.stripePriceId),
     enabled: hasSubscription,
   });
   const subURL = subQuery.data ? subQuery.data.url : "#";
@@ -73,7 +71,7 @@ export function Subscription({ profile }: SubscriptionProps) {
           <CardTitle className="">Usage</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-xl font-semibold text-muted-foreground">{profile.credits}</div>
+          <div className="text-xl font-semibold text-muted-foreground">{profile?.credits}</div>
           <div className="text-sm text-muted-foreground">Recommendations remaining</div>
         </CardContent>
         <CardFooter className="text-sm text-muted-foreground">Only successful recommendations are processed</CardFooter>

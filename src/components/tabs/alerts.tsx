@@ -1,7 +1,6 @@
 "use client";
 
 import type { OpenAISettings } from "@/lib/schema";
-import type { Profile } from "@/lib/types";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -13,11 +12,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { appwriteUrl } from "@/lib/envClient";
 import { AppwriteService } from "@/lib/helpers/appwrite-service";
-
-interface AlertsProps {
-  account: Models.User<Models.Preferences>;
-  profile: Profile | null;
-}
+import { useAccount } from "@/lib/hooks/use-account";
+import { useProfile } from "@/lib/hooks/use-profile";
 
 interface CustomWindow extends Window {
   next: unknown;
@@ -45,7 +41,10 @@ async function resolveVerification(userId?: string, secret?: string) {
   return token;
 }
 
-export function Alerts({ account, profile }: AlertsProps) {
+export function Alerts() {
+  const { account } = useAccount();
+  const profile = useProfile();
+
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
     apiKey: undefined,
     orgName: undefined,
@@ -73,7 +72,7 @@ export function Alerts({ account, profile }: AlertsProps) {
   const userId = searchParams.get("userId") || undefined;
   const secret = searchParams.get("secret") || undefined;
 
-  const ableToVerify = userId && secret && !account.emailVerification;
+  const ableToVerify = userId && secret && !account?.emailVerification;
 
   const { isSuccess } = useQuery({
     queryKey: ["resolveVerification", userId, secret],

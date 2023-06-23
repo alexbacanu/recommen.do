@@ -16,6 +16,6 @@ export function useProfile() {
     // enabled: hasSubscription,
   });
 
-  const profile = data ?? null;
+  const profile = data ?? undefined;
   return profile;
 }

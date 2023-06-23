@@ -98,7 +98,7 @@ export function Pricing({ plans }: PricingProps) {
 }
 
 function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
-  const account = useAccount();
+  const { account } = useAccount();
   const profile = useProfile();
 
   const showGetStarted = !account || (account && !profile);
