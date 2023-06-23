@@ -1,14 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PaymentSuccessPage() {
+  const router = useRouter();
+
   useEffect(() => {
-    window.open("/profile", "_self", "noopener,noreferrer");
+    router.prefetch("/profile");
+
+    const timeout = setTimeout(() => {
+      router.replace("/profile");
+    }, 2500);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
