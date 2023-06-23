@@ -5,6 +5,7 @@ import type { Variants } from "framer-motion";
 
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { Clock } from "lucide-react";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -58,7 +59,10 @@ export function Pricing({ plans }: PricingProps) {
 
           <Card className="flex items-center justify-between gap-x-2 p-6 md:gap-x-6">
             <div className="flex items-center gap-x-2 md:gap-x-6">
-              <Label className="text-lg uppercase">Free</Label>
+              <Badge variant="default" className="rounded-md bg-indigo-500 py-2 px-4 uppercase">
+                <Clock className="mr-2 h-4 w-4" />
+                Limited offer
+              </Badge>
               <Label className="text-center text-sm md:text-base">10 free recommendations on account creation</Label>
             </div>
             <div className="flex items-center gap-x-2 md:gap-x-6">
@@ -74,7 +78,7 @@ export function Pricing({ plans }: PricingProps) {
                   >
                     Get started
                   </Link>
-                  <Label className="text-base">0$ / month</Label>
+                  <Label className="text-lg uppercase">Free</Label>
                 </>
               )}
             </div>
