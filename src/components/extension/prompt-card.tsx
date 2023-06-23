@@ -4,7 +4,7 @@ import type { Product } from "~/lib/types";
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { RefreshCw } from "lucide-react";
+import { Minimize2, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
 import { Init } from "~/components/layout/init";
@@ -21,6 +21,7 @@ import { toast } from "~/lib/helpers/use-toast";
 
 interface PromptCardProps {
   products: Product[];
+  onClose: () => void;
 }
 
 const initialProduct = {
@@ -37,7 +38,7 @@ const initialMessage: ChatGPTMessage[] = [
   { role: "system", content: "You are ShopAssistantGPT, an advisor on what to buy given some products" },
 ];
 
-export default function PromptCard({ products }: PromptCardProps) {
+export default function PromptCard({ products, onClose }: PromptCardProps) {
   const { createJWT, getProfile } = useAppwrite();
   const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
 
@@ -170,8 +171,18 @@ export default function PromptCard({ products }: PromptCardProps) {
   const showSkeleton = !isSuccess && product.identifier === "none";
 
   return (
-    <section id="prompt_card" className={cn("m-4 min-w-[700px] w-full")}>
+    <section id="prompt_card" className={cn("m-4 min-w-[700px] w-full relative")}>
       <Init />
+      <Button
+        variant="ghost"
+        type="button"
+        className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/50"
+        onClick={onClose}
+        disabled={isRefreshing}
+      >
+        <Minimize2 className={"h-[12px] w-[12px]"} />
+        <span className="sr-only">Minimize app</span>
+      </Button>
       {showForm && (
         <div className="group relative">
           <div className="absolute inset-[-0.125px] rounded-[12px] bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>

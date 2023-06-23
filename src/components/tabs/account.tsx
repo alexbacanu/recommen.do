@@ -23,6 +23,8 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
 import { appwriteUrl } from "~/lib/envClient";
 import { AppwriteService } from "~/lib/helpers/appwrite-service";
 import { OpenAISettingsValidator } from "~/lib/schema";
@@ -56,6 +58,7 @@ export function Account({ account }: AccountProps) {
     apiKey: undefined,
     orgName: undefined,
   });
+  const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
   const extensionDetected = !window.next;
   const target = extensionDetected ? "_blank" : "_self";
@@ -80,6 +83,31 @@ export function Account({ account }: AccountProps) {
 
   return (
     <section id="account" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Extension settings</CardTitle>
+        </CardHeader>
+        {extensionDetected ? (
+          <CardContent>
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="show-extension"
+                checked={promptStatus}
+                onClick={() => setPromptStatus((prevState) => !prevState)}
+              />
+              <Label htmlFor="show-extension">Show extension</Label>
+            </div>
+          </CardContent>
+        ) : (
+          <>
+            <CardContent>
+              <div className="text-xl font-semibold text-muted-foreground">Available only in extension</div>
+              <div className="text-sm text-muted-foreground">Manage your API key using the extension popup</div>
+            </CardContent>
+          </>
+        )}
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>

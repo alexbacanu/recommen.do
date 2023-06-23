@@ -49,7 +49,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.0",
     "server-only": "^0.0.1",
-    "stripe": "^12.9.0",
+    "stripe": "^12.10.0",
     "vanilla-cookieconsent": "3.0.0-rc.14",
     "zod": "^3.21.4"
   },
