@@ -17,8 +17,8 @@ export function Navigation({ navigation, hideOnMobile = false }: NavigationProps
     <nav className={cn("flex flex-col md:flex-row gap-y-2 gap-x-6", hideOnMobile && "hidden md:flex sm:flex-row")}>
       {navigation.map((item, index) => (
         <Link
-          key={index}
           href={item.disabled ? "#" : item.href}
+          key={index}
           className={cn(
             "text-base font-medium transition-colors hover:text-indigo-500",
             item.disabled && "cursor-not-allowed opacity-80",

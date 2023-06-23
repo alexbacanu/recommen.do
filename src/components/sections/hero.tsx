@@ -46,7 +46,7 @@ export function Hero() {
                 )}
               </Button>
               <Button variant="outline" size="lg" disabled={unsupportedBrowser} asChild>
-                <Link href="/#features">See features</Link>
+                <Link href="#features">See features</Link>
               </Button>
             </div>
 

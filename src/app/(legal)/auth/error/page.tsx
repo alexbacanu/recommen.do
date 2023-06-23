@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -26,9 +27,9 @@ export default function AuthErrorPage() {
             </div>
           </CardContent>
           <CardFooter className="grid grid-cols-1 gap-4">
-            <a href="/profile" className={buttonVariants({ variant: "outline" })}>
+            <Link href="/profile" className={buttonVariants({ variant: "outline" })}>
               Go to home now
-            </a>
+            </Link>
           </CardFooter>
         </Card>
       </div>

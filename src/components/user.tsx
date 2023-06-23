@@ -62,10 +62,10 @@ export function Profile() {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem onClick={() => signOut()} asChild>
-              <Link className="space-x-2" href="#">
+              <div className="space-x-2">
                 <LogOut className="h-4 w-4" />
                 <span>Log out</span>
-              </Link>
+              </div>
               {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
             </DropdownMenuItem>
           </DropdownMenuContent>

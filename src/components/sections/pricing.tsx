@@ -69,8 +69,8 @@ export function Pricing({ plans }: PricingProps) {
               ) : (
                 <>
                   <Link
-                    className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
                     href={authuiSite}
+                    className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
                   >
                     Get started
                   </Link>
