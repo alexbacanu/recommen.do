@@ -277,7 +277,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      className="mx-auto h-auto rounded-[12px] object-cover"
+                      className="mx-auto max-h-[160px] rounded-[12px] object-cover"
                       src={product.image}
                       alt={product.name}
                     />
