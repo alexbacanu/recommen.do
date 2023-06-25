@@ -43,27 +43,24 @@ export function Pricing({ plans }: PricingProps) {
 
           <Card className="flex items-center justify-between gap-x-2 p-6 md:gap-x-6">
             <div className="flex items-center gap-x-2 md:gap-x-6">
-              <Badge variant="default" className="rounded-md bg-indigo-500 px-4 py-2 uppercase">
+              <Badge variant="outline" className="rounded-md px-4 py-2 uppercase">
                 <Clock className="mr-2 h-4 w-4" />
                 Limited offer
               </Badge>
+
               <Label className="text-center text-sm md:text-base">10 free recommendations on account creation</Label>
             </div>
+
             <div className="flex items-center gap-x-2 md:gap-x-6">
               {profile ? (
-                <>
-                  <Label className="text-base">Already claimed</Label>
-                </>
+                <Label className="text-base">Already claimed</Label>
               ) : (
-                <>
-                  <Link
-                    href={authuiSite}
-                    className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
-                  >
-                    Get started
-                  </Link>
-                  <Label className="text-lg uppercase">Free</Label>
-                </>
+                <Link
+                  href={authuiSite}
+                  className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
+                >
+                  Get started
+                </Link>
               )}
             </div>
           </Card>
