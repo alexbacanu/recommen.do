@@ -67,13 +67,10 @@ export function HeaderUser() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button variant="ghost" className="relative h-8 w-8 rounded-full" asChild>
+    <Button variant="outline" className="relative rounded-lg" asChild>
       <Link href={authuiSite}>
-        <Avatar className="h-8 w-8 border">
-          <AvatarFallback className="bg-transparent">
-            <LogIn className="h-4 w-4" />
-          </AvatarFallback>
-        </Avatar>
+        <LogIn className="mr-1 h-4 w-4" />
+        Sign in
       </Link>
     </Button>
   );

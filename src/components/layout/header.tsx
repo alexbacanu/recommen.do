@@ -13,7 +13,7 @@ export function Header() {
           <div className="flex items-center">
             <HeaderNav />
 
-            <Separator orientation="vertical" className="mx-4 hidden h-5 sm:block" />
+            <Separator orientation="vertical" className="mx-6 hidden h-6 sm:block" />
 
             <HeaderUser />
           </div>
