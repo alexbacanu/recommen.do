@@ -9,9 +9,9 @@ export function FooterNav() {
         {navConfig.footer.map((item, index) => (
           <li
             key={index}
-            className="relative inline-block pr-6 before:absolute before:right-2 before:top-1/2 before:-translate-y-1/2 before:text-gray-300 before:content-['/'] last:pr-0 last-of-type:before:hidden"
+            className="relative inline-block pr-6 before:absolute before:right-2 before:top-1/2 before:-translate-y-1/2 before:text-border/50 before:content-['/'] last:pr-0 last-of-type:before:hidden"
           >
-            <Link href={item.href} className="inline-flex gap-x-2 text-sm transition-colors hover:text-indigo-400">
+            <Link href={item.href} className="inline-flex gap-x-2 text-sm transition-colors hover:text-primary/95">
               {item.title}
             </Link>
           </li>

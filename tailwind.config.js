@@ -18,39 +18,39 @@ module.exports = {
         background: colors.white,
         foreground: colors.slate[950],
 
-        input: colors.zinc[200],
-        border: colors.zinc[200],
-        ring: colors.zinc[400],
+        input: colors.slate[200],
+        border: colors.slate[200],
+        ring: colors.slate[400],
 
         primary: {
           DEFAULT: colors.indigo[600],
-          foreground: colors.zinc[50],
+          foreground: colors.slate[50],
         },
         secondary: {
-          DEFAULT: colors.gray[100],
-          foreground: colors.gray[900],
+          DEFAULT: colors.slate[100],
+          foreground: colors.slate[900],
         },
 
         accent: {
-          DEFAULT: colors.gray[100],
-          foreground: colors.gray[900],
+          DEFAULT: colors.slate[100],
+          foreground: colors.slate[900],
         },
         muted: {
-          DEFAULT: colors.gray[100],
-          foreground: colors.gray[500],
+          DEFAULT: colors.slate[100],
+          foreground: colors.slate[500],
         },
         destructive: {
           DEFAULT: colors.red[500],
-          foreground: colors.gray[50],
+          foreground: colors.slate[50],
         },
 
         card: {
           DEFAULT: colors.white,
-          foreground: colors.gray[950],
+          foreground: colors.slate[900],
         },
         popover: {
           DEFAULT: colors.white,
-          foreground: colors.gray[950],
+          foreground: colors.slate[900],
         },
       },
       borderRadius: {

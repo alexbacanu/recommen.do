@@ -41,7 +41,7 @@ export interface PricingPlan {
   currency: string;
   description: string;
   metadata: {
-    features: string;
+    recommendations: string;
     name: string;
   };
 }

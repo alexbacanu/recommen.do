@@ -6,7 +6,7 @@ export function HeaderNav() {
   return (
     <nav className="hidden gap-x-6 font-medium sm:flex">
       {navConfig.header.map((item, index) => (
-        <Link href={item.disabled ? "#" : item.href} key={index} className="transition-colors hover:text-indigo-500">
+        <Link href={item.disabled ? "#" : item.href} key={index} className="transition-colors hover:text-primary/80">
           {item.title}
         </Link>
       ))}

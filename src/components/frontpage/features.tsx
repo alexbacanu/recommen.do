@@ -29,7 +29,10 @@ export function Features() {
   };
 
   return (
-    <section id="features" className="bg-gradient-to-r from-indigo-900 to-fuchsia-900 text-gray-50 backdrop-blur-none">
+    <section
+      id="features"
+      className="bg-gradient-to-r from-indigo-900 to-fuchsia-900 text-primary-foreground backdrop-blur-none"
+    >
       <div className="mx-auto max-w-7xl overflow-hidden px-4 py-10 lg:py-20">
         <div className="relative">
           <motion.div
