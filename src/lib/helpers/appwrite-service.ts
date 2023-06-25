@@ -1,6 +1,6 @@
 import type { Profile } from "@/lib/types";
 
-import { Account, Client, Databases, Query } from "appwrite";
+import { Account, Avatars, Client, Databases, Query } from "appwrite";
 
 import { appwriteEndpoint, appwriteProject, appwriteUrl } from "@/lib/envClient";
 
@@ -8,6 +8,7 @@ const client = new Client();
 client.setEndpoint(appwriteEndpoint).setProject(appwriteProject);
 
 const account = new Account(client);
+const avatars = new Avatars(client);
 const databases = new Databases(client);
 
 let jwt: string;
@@ -18,6 +19,17 @@ export const AppwriteService = {
 
     if (user) {
       return user;
+    }
+    return null;
+  },
+
+  getAccountInitials: (name: string) => {
+    const defaultBackground = name === "r e" ? "6366f1" : undefined;
+    const avatar = avatars.getInitials(name, 128, 128, defaultBackground);
+    console.log("getAccountInitials:", avatar);
+
+    if (avatar) {
+      return avatar;
     }
     return null;
   },

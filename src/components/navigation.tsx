@@ -14,7 +14,7 @@ interface NavigationProps {
 
 export function Navigation({ navigation, hideOnMobile = false }: NavigationProps) {
   return (
-    <nav className={cn("flex flex-col md:flex-row gap-y-2 gap-x-6", hideOnMobile && "hidden md:flex sm:flex-row")}>
+    <nav className={cn("flex gap-y-2 gap-x-6", hideOnMobile && "hidden md:flex")}>
       {navigation.map((item, index) => (
         <Link
           href={item.disabled ? "#" : item.href}

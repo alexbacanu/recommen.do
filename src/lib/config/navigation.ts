@@ -59,11 +59,11 @@ export const navConfig = {
       href: "/contact",
       disabled: false,
     },
-    {
-      title: "Cookie settings 🍪",
-      href: "#",
-      disabled: false,
-      "data-cc": "show-preferencesModal",
-    },
+    // {
+    //   title: "Cookie settings 🍪",
+    //   href: "#",
+    //   disabled: false,
+    //   "data-cc": "show-preferencesModal",
+    // },
   ],
 };

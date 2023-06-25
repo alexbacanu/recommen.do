@@ -9,15 +9,25 @@ async function getAccountFn() {
   return account;
 }
 
+function getAvatarFn(name = "r e") {
+  const avatar = AppwriteService.getAccountInitials(name);
+  return avatar;
+}
+
 async function signOutFn() {
   await AppwriteService.signOut();
 }
 
 export function useAccount() {
-  const { data } = useQuery({
+  const { data: accountData } = useQuery({
     queryKey: ["accountQuery"],
     queryFn: () => getAccountFn(),
     // enabled: hasSubscription,
+  });
+
+  const { data: avatarData } = useQuery({
+    queryKey: ["avatarQuery", accountData?.name],
+    queryFn: () => getAvatarFn(accountData?.name),
   });
 
   const { mutate: signOut } = useMutation({
@@ -28,6 +38,8 @@ export function useAccount() {
     // enabled: hasSubscription,
   });
 
-  const account = data ?? undefined;
-  return { account, signOut };
+  const account = accountData ?? undefined;
+  const avatar = avatarData ?? undefined;
+
+  return { account, avatar, signOut };
 }

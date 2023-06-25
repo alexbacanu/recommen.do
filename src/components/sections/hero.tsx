@@ -38,7 +38,7 @@ export function Hero() {
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
               <Button variant="default" size="lg" disabled={unsupportedBrowser} asChild>
                 {unsupportedBrowser ? (
-                  <a href="#">Not yet supported</a>
+                  <a href="#">Not yet available</a>
                 ) : (
                   <a href="/chrome-1.1.0.zip">
                     Download <span className="ml-1 hidden lg:inline-flex">extension for free</span>
@@ -98,7 +98,7 @@ export function Hero() {
               />
             </div>
           </div>
-          <div className="w-[60rem]">
+          <div className="lg:w-[60rem]">
             <Image
               className="w-full rounded-xl shadow-xl"
               src="/hero-img.png"
