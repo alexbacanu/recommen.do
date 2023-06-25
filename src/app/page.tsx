@@ -1,8 +1,8 @@
-import type { PricingPlan } from "@/lib/types";
+import type { PricingPlan } from "@/lib/types/types";
 
-import { Features } from "@/components/sections/features";
-import { Hero } from "@/components/sections/hero";
-import { Pricing } from "@/components/sections/pricing";
+import { Features } from "@/components/frontpage/features";
+import { Hero } from "@/components/frontpage/hero";
+import { Pricing } from "@/components/frontpage/pricing";
 import { getStripeInstance } from "@/lib/clients/stripe-server";
 
 async function getPlans() {

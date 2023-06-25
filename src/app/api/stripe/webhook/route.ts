@@ -1,4 +1,4 @@
-import type { Profile } from "@/lib/types";
+import type { Profile } from "@/lib/types/types";
 import type Stripe from "stripe";
 
 import { headers } from "next/headers";

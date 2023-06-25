@@ -1,21 +1,21 @@
 export const navConfig = {
-  dashboard: [
-    {
-      title: "Home",
-      href: "/",
-      disabled: false,
-    },
-    {
-      title: "Profile",
-      href: "/profile",
-      disabled: false,
-    },
-    {
-      title: "Installation",
-      href: "/installation",
-      disabled: false,
-    },
-  ],
+  // dashboard: [
+  //   {
+  //     title: "Home",
+  //     href: "/",
+  //     disabled: false,
+  //   },
+  //   {
+  //     title: "Profile",
+  //     href: "/profile",
+  //     disabled: false,
+  //   },
+  //   {
+  //     title: "Installation",
+  //     href: "/installation",
+  //     disabled: false,
+  //   },
+  // ],
   header: [
     {
       title: "Features",

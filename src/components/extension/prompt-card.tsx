@@ -1,5 +1,5 @@
-import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "@/lib/schema";
-import type { Product } from "@/lib/types";
+import type { Product } from "@/lib/types/types";
+import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "@/lib/validators/schema";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
@@ -13,9 +13,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { toast } from "@/components/ui/use-toast";
 import { appwriteUrl } from "@/lib/envClient";
 import { filterMessage } from "@/lib/helpers/filterMessage";
-import { useAppwrite } from "@/lib/helpers/use-appwrite";
+import { cn } from "@/lib/helpers/utils";
+import { useAppwrite } from "@/lib/hooks/use-appwrite";
 import { useProfile } from "@/lib/hooks/use-profile";
-import { cn } from "@/lib/utils";
 
 interface PromptCardProps {
   products: Product[];

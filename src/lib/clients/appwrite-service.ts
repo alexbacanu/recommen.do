@@ -1,4 +1,4 @@
-import type { Profile } from "@/lib/types";
+import type { Profile } from "@/lib/types/types";
 
 import { Account, Avatars, Client, Databases, Query } from "appwrite";
 

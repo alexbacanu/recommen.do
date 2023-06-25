@@ -4,13 +4,13 @@ import type CookieConsent from "vanilla-cookieconsent";
 
 import { useEffect } from "react";
 
-import pluginConfig from "@/components/cookies/cookie-config";
+import pluginConfig from "@/components/cookie/cookie";
 
 interface Props {
   CookieConsentApi: typeof CookieConsent;
 }
 
-const CookieModal = (props: Props) => {
+export default function CookieModal(props: Props) {
   const { run, setLanguage } = props.CookieConsentApi;
 
   useEffect(() => {
@@ -19,6 +19,4 @@ const CookieModal = (props: Props) => {
   }, [run, setLanguage]);
 
   return null;
-};
-
-export default CookieModal;
+}

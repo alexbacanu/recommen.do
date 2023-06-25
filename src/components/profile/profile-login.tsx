@@ -1,11 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAccount } from "@/lib/hooks/use-account";
 
-// interface CustomWindow extends Window {
-//   next: unknown;
-// }
-// declare const window: CustomWindow;
-
 export function Login() {
   const { account } = useAccount();
 

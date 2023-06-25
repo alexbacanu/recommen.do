@@ -2,7 +2,7 @@
 
 import * as CookieConsentApi from "vanilla-cookieconsent";
 
-import CookieModal from "@/components/cookies/cookie-modal";
+import CookieModal from "@/components/cookie/modal";
 
 import "vanilla-cookieconsent/dist/cookieconsent.css";
 

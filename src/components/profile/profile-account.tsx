@@ -1,6 +1,6 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/schema";
+import type { OpenAISettings } from "@/lib/validators/schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
@@ -23,15 +23,10 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { AppwriteService } from "@/lib/clients/appwrite-service";
 import { appwriteUrl } from "@/lib/envClient";
-import { AppwriteService } from "@/lib/helpers/appwrite-service";
 import { useAccount } from "@/lib/hooks/use-account";
-import { OpenAISettingsValidator } from "@/lib/schema";
-
-interface CustomWindow extends Window {
-  next: unknown;
-}
-declare const window: CustomWindow;
+import { OpenAISettingsValidator } from "@/lib/validators/schema";
 
 async function deleteAccount() {
   const jwt = await AppwriteService.createJWT();

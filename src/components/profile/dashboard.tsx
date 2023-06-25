@@ -1,9 +1,9 @@
 "use client";
 
-import { Account } from "@/components/tabs/account";
-import { Alerts } from "@/components/tabs/alerts";
-import { Login } from "@/components/tabs/login";
-import { Subscription } from "@/components/tabs/subscription";
+import { Account } from "@/components/profile/profile-account";
+import { Alerts } from "@/components/profile/profile-alerts";
+import { Login } from "@/components/profile/profile-login";
+import { Subscription } from "@/components/profile/profile-subscription";
 import { useAccount } from "@/lib/hooks/use-account";
 import { useProfile } from "@/lib/hooks/use-profile";
 

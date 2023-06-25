@@ -1,5 +1,5 @@
-import type { ChatGPTMessage } from "@/lib/schema";
-import type { Profile } from "@/lib/types";
+import type { Profile } from "@/lib/types/types";
+import type { ChatGPTMessage } from "@/lib/validators/schema";
 
 import { OpenAIStream } from "ai";
 import { Query } from "appwrite";
@@ -10,7 +10,7 @@ import { z } from "zod";
 
 import { appwriteClientService, appwriteServerService } from "@/lib/clients/appwrite-server";
 import { openaiKey } from "@/lib/envServer";
-import { OpenAIPayloadValidator } from "@/lib/schema";
+import { OpenAIPayloadValidator } from "@/lib/validators/schema";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",

@@ -1,12 +1,12 @@
 import { Inter } from "next/font/google";
 
-import CookieButton from "@/components/cookies/cookie-button";
+import GoogleAnalytics from "@/components/analytics/google-analytics";
+import CookieButton from "@/components/cookie/button";
 import { Footer } from "@/components/layout/footer";
-import GoogleAnalytics from "@/components/layout/google-analytics";
 import { Header } from "@/components/layout/header";
 import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/helpers/utils";
 import ReactQueryProvider from "@/lib/providers/react-query";
-import { cn } from "@/lib/utils";
 
 import "@/styles/globals.css";
 

@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { AppwriteService } from "@/lib/clients/appwrite-service";
 
 async function getProfile() {
   const profile = await AppwriteService.getProfile();

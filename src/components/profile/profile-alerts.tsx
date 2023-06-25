@@ -1,6 +1,6 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/schema";
+import type { OpenAISettings } from "@/lib/validators/schema";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -10,15 +10,10 @@ import { useEffect, useState } from "react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { AppwriteService } from "@/lib/clients/appwrite-service";
 import { appwriteUrl } from "@/lib/envClient";
-import { AppwriteService } from "@/lib/helpers/appwrite-service";
 import { useAccount } from "@/lib/hooks/use-account";
 import { useProfile } from "@/lib/hooks/use-profile";
-
-interface CustomWindow extends Window {
-  next: unknown;
-}
-declare const window: CustomWindow;
 
 async function createVerification() {
   const response = await AppwriteService.createVerification();

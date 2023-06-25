@@ -7,4 +7,5 @@ declare namespace NodeJS {
 interface Window {
   dataLayer: Array;
   gtag: (a: string, b: unknown, c?: unknown) => void;
+  next: unknown;
 }

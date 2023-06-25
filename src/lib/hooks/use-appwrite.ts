@@ -1,6 +1,6 @@
 "use client";
 
-import type { Profile } from "@/lib/types";
+import type { Profile } from "@/lib/types/types";
 
 import { useSetAtom } from "jotai";
 

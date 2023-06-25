@@ -2,7 +2,8 @@ import type { VariantProps } from "class-variance-authority";
 
 import { cva } from "class-variance-authority";
 import * as React from "react";
-import { cn } from "src/lib/utils";
+
+import { cn } from "@/lib/helpers/utils";
 
 const alertVariants = cva(
   "relative w-full rounded-lg border px-4 py-3 text-sm [&:has(svg)]:pl-11 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",

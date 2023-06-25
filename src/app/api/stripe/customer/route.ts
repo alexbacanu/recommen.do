@@ -1,5 +1,5 @@
 import { createHmac } from "crypto";
-import type { Profile } from "@/lib/types";
+import type { Profile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";

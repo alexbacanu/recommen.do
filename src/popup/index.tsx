@@ -2,7 +2,7 @@ import "https://www.googletagmanager.com/gtag/js?id=$PLASMO_PUBLIC_GTAG_ID";
 
 import { useEffect } from "react";
 
-import { Dashboard } from "@/components/layout/dashboard";
+import { Dashboard } from "@/components/profile/dashboard";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
 import "@/styles/globals.css";

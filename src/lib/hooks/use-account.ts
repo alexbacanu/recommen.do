@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { AppwriteService } from "@/lib/clients/appwrite-service";
 
 async function getAccountFn() {
   const account = await AppwriteService.getAccount();

@@ -1,21 +1,16 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/schema";
+import type { OpenAISettings } from "@/lib/validators/schema";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { AppwriteService } from "@/lib/clients/appwrite-service";
 import { appwriteUrl } from "@/lib/envClient";
-import { AppwriteService } from "@/lib/helpers/appwrite-service";
+import { cn } from "@/lib/helpers/utils";
 import { useProfile } from "@/lib/hooks/use-profile";
-import { cn } from "@/lib/utils";
-
-interface CustomWindow extends Window {
-  next: unknown;
-}
-declare const window: CustomWindow;
 
 async function getCheckoutURL(priceId?: string | null) {
   const jwt = await AppwriteService.createJWT();
