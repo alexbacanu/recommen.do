@@ -38,10 +38,12 @@ export function Hero() {
             <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
               <Button variant="default" size="lg" disabled={unsupportedBrowser} asChild>
                 {unsupportedBrowser ? (
-                  <a href="#">Not yet available</a>
+                  <a href="/firefox-1.1.0.zip">
+                    Download <span className="ml-1 hidden lg:inline-flex">extension for Firefox</span>
+                  </a>
                 ) : (
                   <a href="/chrome-1.1.0.zip">
-                    Download <span className="ml-1 hidden lg:inline-flex">extension for free</span>
+                    Download <span className="ml-1 hidden lg:inline-flex">extension for Chrome</span>
                   </a>
                 )}
               </Button>
