@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     // Get request body
     const body = await req.json();
     console.log("api/openai: Request body", body);
-    const { settings, request } = OpenAIPayloadValidator.parse(body);
+    const { apiKey, request } = OpenAIPayloadValidator.parse(body);
 
     // console.log("api/openai: Request settings", settings);
     // console.log("api/openai: Request request", request);
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     }
 
     // Check for user credits
-    if (typeof settings?.apiKey === "undefined") {
+    if (typeof apiKey === "undefined") {
       if (profile.credits < 1) {
         return new Response("Insufficient recommendations. You need at least 1 recommendation to proceed.", {
           status: 401,
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
 
     // Set OpenAI Settings
     const config = new Configuration({
-      apiKey: settings?.apiKey || openaiKey,
+      apiKey: apiKey || openaiKey,
     });
     const openai = new OpenAIApi(config);
 
@@ -109,7 +109,7 @@ export async function POST(req: Request) {
     const stream = OpenAIStream(response, {
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
-        if (typeof settings?.apiKey === "undefined" && !stopTesting) {
+        if (typeof apiKey === "undefined" && !stopTesting) {
           console.log("tokening");
           // Add the token to the accumulated tokens
           accumulatedTokens.push(token);

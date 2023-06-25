@@ -1,11 +1,10 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/validators/schema";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   AlertDialog,
@@ -26,7 +25,6 @@ import { Switch } from "@/components/ui/switch";
 import { AppwriteService } from "@/lib/clients/appwrite-service";
 import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
-import { OpenAISettingsValidator } from "@/lib/validators/schema";
 
 async function deleteAccount() {
   const jwt = await AppwriteService.createJWT();
@@ -45,16 +43,13 @@ async function deleteAccount() {
 export function Account() {
   const { account, signOut } = useAccount();
 
-  const [openaiSettings, setOpenaiSettings, { remove }] = useStorage<OpenAISettings>("openaiSettings", {
-    apiKey: undefined,
-    orgName: undefined,
-  });
+  const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", undefined);
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
   const extensionDetected = !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
-  const apiKeyDetected = !!openaiSettings?.apiKey;
+  const apiKeyDetected = !!userApiKey;
 
   const { mutate, isLoading } = useMutation({
     mutationKey: ["deleteAccount"],
@@ -64,13 +59,21 @@ export function Account() {
     },
   });
 
-  const form = useForm({
-    resolver: zodResolver(OpenAISettingsValidator),
+  const formSchema = z.object({
+    userApiKey: z.string().optional(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      apiKey: undefined,
-      orgName: undefined,
+      userApiKey: undefined,
     },
   });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    setUserApiKey(values.userApiKey);
+    console.log(values);
+  }
 
   return (
     <section id="account" className="grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-8">
@@ -111,7 +114,38 @@ export function Account() {
         {extensionDetected ? (
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(setOpenaiSettings)} className="grid gap-8">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                  control={form.control}
+                  name="userApiKey"
+                  render={({ field }) => (
+                    <FormItem>
+                      {/* <FormLabel>Username</FormLabel> */}
+                      <FormControl>
+                        <Input
+                          disabled={apiKeyDetected}
+                          placeholder={apiKeyDetected ? "OpenAI API key detected" : "Insert your OpenAI API key"}
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>This is your public display name.</FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <Button variant="destructive" disabled={!apiKeyDetected} onClick={() => remove()} type="button">
+                    Clear key
+                  </Button>
+                  <Button variant="outline" disabled={apiKeyDetected} type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </Form>
+
+            {/* <Form {...form}>
+              <form onSubmit={form.handleSubmit(setUserApiKey)} className="grid gap-8">
                 <FormField
                   control={form.control}
                   name="apiKey"
@@ -137,7 +171,7 @@ export function Account() {
                   </Button>
                 </div>
               </form>
-            </Form>
+            </Form> */}
           </CardContent>
         ) : (
           <>

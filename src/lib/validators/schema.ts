@@ -12,14 +12,6 @@ export const ProductValidator = z.object({
 });
 
 // OpenAI
-export const OpenAISettingsValidator = z
-  .object({
-    apiKey: z.string().optional(),
-    orgName: z.string().optional(),
-  })
-  .optional();
-export type OpenAISettings = z.infer<typeof OpenAISettingsValidator>;
-
 export const OpenAIRequestValidator = z.object({
   products: z.array(ProductValidator),
   prompt: z.string().optional(),
@@ -27,7 +19,7 @@ export const OpenAIRequestValidator = z.object({
 export type OpenAIRequest = z.infer<typeof OpenAIRequestValidator>;
 
 export const OpenAIPayloadValidator = z.object({
-  settings: OpenAISettingsValidator,
+  apiKey: z.string().optional(),
   request: OpenAIRequestValidator,
 });
 export type OpenAIPayload = z.infer<typeof OpenAIPayloadValidator>;

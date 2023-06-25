@@ -1,5 +1,5 @@
 import type { Product } from "@/lib/types/types";
-import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest, OpenAISettings } from "@/lib/validators/schema";
+import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest } from "@/lib/validators/schema";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
@@ -40,7 +40,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
   const profile = useProfile();
 
   const { createJWT, getProfile } = useAppwrite();
-  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings");
+  const [userApiKey] = useStorage<string | undefined>("userApiKey");
 
   const [prompt, setPrompt] = useState("");
   const [hasRead, setHasRead] = useState(true);
@@ -59,7 +59,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
     }
 
     const payload: OpenAIPayload = {
-      settings: openaiSettings,
+      apiKey: userApiKey,
       request: request,
     };
 
@@ -219,7 +219,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   }}
                   type="text"
                   placeholder={
-                    !!openaiSettings
+                    !!userApiKey
                       ? "looking for any specific features?"
                       : profile
                       ? `${profile?.credits ?? 0} recommendations available`

@@ -1,7 +1,5 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/validators/schema";
-
 import { useStorage } from "@plasmohq/storage/hook";
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,15 +29,12 @@ async function getCheckoutURL(priceId?: string | null) {
 export function Subscription() {
   const profile = useProfile();
 
-  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
-    apiKey: undefined,
-    orgName: undefined,
-  });
+  const [userApiKey] = useStorage<string | undefined>("userApiKey");
 
   const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
-  const apiKeyDetected = !!openaiSettings?.apiKey;
+  const apiKeyDetected = !!userApiKey;
   const hasSubscription = profile && profile.stripeSubscriptionId !== "none";
 
   const subQuery = useQuery({

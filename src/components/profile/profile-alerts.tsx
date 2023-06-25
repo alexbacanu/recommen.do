@@ -1,6 +1,5 @@
 "use client";
 
-import type { OpenAISettings } from "@/lib/validators/schema";
 import type { Models } from "appwrite";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -40,15 +39,12 @@ export function Alerts() {
   const { account } = useAccount();
   const profile = useProfile();
 
-  const [openaiSettings] = useStorage<OpenAISettings>("openaiSettings", {
-    apiKey: undefined,
-    orgName: undefined,
-  });
+  const [userApiKey] = useStorage<string | undefined>("userApiKey");
 
   const extensionDetected = !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
-  const apiKeyDetected = !!openaiSettings?.apiKey;
+  const apiKeyDetected = !!userApiKey;
   const needsVerification = account && !account.emailVerification;
   const needsCredits = profile && profile.credits < 10;
 
