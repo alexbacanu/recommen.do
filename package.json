@@ -11,7 +11,7 @@
     "dev:plasmo": "plasmo dev",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
-    "build:plasmo": "plasmo build --zip",
+    "build:plasmo": "plasmo build --zip --target=firefox-mv2",
     "build:next": "next build",
     "lint": "next lint",
     "prettier": "prettier --check .",
