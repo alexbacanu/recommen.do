@@ -49,6 +49,8 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
   return searchResultsContainer;
 };
 
+export const getShadowHostId = () => "plasmo-inline-amazon";
+
 const amazonProductData = () => {
   const currentUrl = window?.location.origin;
 

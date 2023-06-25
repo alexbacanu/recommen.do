@@ -108,6 +108,8 @@ const ebayProductData = () => {
   return products;
 };
 
+export const getShadowHostId = () => "plasmo-inline-ebay";
+
 export default function EbayContent() {
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus");
   const products = ebayProductData();
