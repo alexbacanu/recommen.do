@@ -43,6 +43,10 @@ export async function POST(req: Request) {
     console.log("api/openai: Request body", body);
     const { settings, request } = OpenAIPayloadValidator.parse(body);
 
+    // console.log("api/openai: Request settings", settings);
+    // console.log("api/openai: Request request", request);
+    // console.log("api/openai: Request request.products", request.products);
+
     // Get user profile
     const { sdkDatabases } = appwriteClientService(token);
     const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile", [Query.limit(1)]);
@@ -79,17 +83,19 @@ export async function POST(req: Request) {
       },
       {
         role: "user",
-        content: `Recommend a product from this list that matches these inputs: ${
+        content: `Recommend a product from this list that matches these inputs: '${
           request.prompt
-        }. Make sure to format your response as a JSON object with ONLY two subobjects, 'identifier' and 'reason'. The 'reason' subobject should be between 200-300 words. If you can't find a product with the inputs provided, recommend another product from the list. The product list is: ${JSON.stringify(
+        }'. Make sure to format your response as a JSON object with ONLY two subobjects, 'identifier' and 'reason'. The 'reason' subobject should be between 200-300 words. If you can't find a product with the inputs provided, recommend another product from the list. The product list is: ${JSON.stringify(
           request.products,
         )}.`,
       },
     ];
 
+    console.log("api/openai: messages", JSON.stringify(request.products).length);
+
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo-16k",
       stream: true,
       messages,
     });
@@ -104,6 +110,7 @@ export async function POST(req: Request) {
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
         if (typeof settings?.apiKey === "undefined" && !stopTesting) {
+          console.log("tokening");
           // Add the token to the accumulated tokens
           accumulatedTokens.push(token);
 
