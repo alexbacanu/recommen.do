@@ -1,21 +1,4 @@
 export const navConfig = {
-  // dashboard: [
-  //   {
-  //     title: "Home",
-  //     href: "/",
-  //     disabled: false,
-  //   },
-  //   {
-  //     title: "Profile",
-  //     href: "/profile",
-  //     disabled: false,
-  //   },
-  //   {
-  //     title: "Installation",
-  //     href: "/installation",
-  //     disabled: false,
-  //   },
-  // ],
   header: [
     {
       title: "Features",
@@ -59,11 +42,5 @@ export const navConfig = {
       href: "/contact",
       disabled: false,
     },
-    // {
-    //   title: "Cookie settings 🍪",
-    //   href: "#",
-    //   disabled: false,
-    //   "data-cc": "show-preferencesModal",
-    // },
   ],
 };

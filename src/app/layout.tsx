@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 
-import GoogleAnalytics from "@/components/analytics/google-analytics";
-import CookieButton from "@/components/cookie/button";
+import GoogleAnalytics from "@/components/_analytics/google-analytics";
+import CookieButton from "@/components/_cookies/button";
+import { Init } from "@/components/_init/init-auth";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Toaster } from "@/components/ui/toaster";
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={cn("subpixel-antialiased", inter.className)}>
       <GoogleAnalytics />
+      <Init />
       <body className="subpixel-antialiased">
         <ReactQueryProvider>
           <Header />

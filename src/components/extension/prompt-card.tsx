@@ -1,24 +1,24 @@
-import type { Product } from "@/lib/types/types";
+import type { ScrapedProduct } from "@/lib/types/types";
 import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest } from "@/lib/validators/schema";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
-import { Minimize2, RefreshCw } from "lucide-react";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "@/components/ui/use-toast";
-import { appwriteUrl } from "@/lib/envClient";
-import { filterMessage } from "@/lib/helpers/filterMessage";
-import { cn } from "@/lib/helpers/utils";
-import { useAppwrite } from "@/lib/hooks/use-appwrite";
-import { useProfile } from "@/lib/hooks/use-profile";
+import { profileAtom } from "@/lib/atoms/auth";
+import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { cn, filterMessage } from "@/lib/helpers/utils";
+import { useAccount } from "@/lib/hooks/use-account";
 
 interface PromptCardProps {
-  products: Product[];
+  products: ScrapedProduct[];
   onClose: () => void;
 }
 
@@ -37,33 +37,26 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 
 export default function PromptCard({ products, onClose }: PromptCardProps) {
-  const profile = useProfile();
+  const { fetchProfile } = useAccount();
 
-  const { createJWT, getProfile } = useAppwrite();
+  const profile = useAtomValue(profileAtom);
+
   const [userApiKey] = useStorage<string | undefined>("userApiKey");
-
   const [prompt, setPrompt] = useState("");
   const [hasRead, setHasRead] = useState(true);
-
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const [product, setSelectedProduct] = useState<Product>(initialProduct);
-
+  const [product, setSelectedProduct] = useState<ScrapedProduct>(initialProduct);
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessage);
 
-  let jwt: string;
   const getRecommendationFn = async (request: OpenAIRequest) => {
-    if (!jwt) {
-      const jwtToken = await createJWT();
-      jwt = jwtToken.jwt;
-    }
+    const jwt = await AppwriteService.createJWT();
 
     const payload: OpenAIPayload = {
       apiKey: userApiKey,
       request: request,
     };
 
-    const response = await fetch(`${appwriteUrl}/api/openai`, {
+    const response = await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +81,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       setHasRead(done);
-      console.log(hasRead);
 
       const chunkValue = decoder.decode(value);
 
@@ -147,8 +139,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
       return;
     }
 
-    console.log("refreshed");
-
     setIsRefreshing(true);
 
     setTimeout(() => {
@@ -156,12 +146,12 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
     }, 1500);
 
     setPrompt("");
-    getProfile();
+    fetchProfile();
   };
 
   const handleReset = async () => {
     reset();
-    getProfile();
+    fetchProfile();
     setSelectedProduct(initialProduct);
     setMessages(initialMessage);
   };
@@ -181,7 +171,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
               disabled={isRefreshing}
               className="absolute right-0 z-10 m-[4px] h-auto px-[6px] py-[4px] text-muted-foreground/70"
             >
-              <Minimize2 className={"h-[12px] w-[12px]"} />
+              <Icons.minimize className="h-[16px] w-[16px]" aria-hidden="true" />
               <span className="sr-only">Minimize prompt card</span>
             </Button>
           </TooltipTrigger>
@@ -226,7 +216,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       : "please login to get recommendations"
                   }
                   className="pl-[36px]"
-                  // className="h-[40px] rounded-[10px] border-muted-foreground/40 px-[12px] py-[8px] pl-[36px] text-[14px] placeholder:opacity-50"
                 />
 
                 <TooltipProvider>
@@ -235,12 +224,14 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       <Button
                         variant="ghost"
                         type="button"
-                        // className="absolute left-0 m-[6px] h-auto px-[8px] py-[6px] text-muted-foreground/50"
                         onClick={() => handleRefresh()}
                         disabled={isRefreshing || !profile}
                         className="absolute left-0 top-1/2 ml-[6px] h-auto -translate-y-1/2 p-[6px] text-muted-foreground/70"
                       >
-                        <RefreshCw className={cn("h-[14px] w-[14px]", isRefreshing && "animate-spin")} />
+                        <Icons.refresh
+                          className={cn("h-[14px] w-[14px]", isRefreshing && "animate-spin")}
+                          aria-hidden="true"
+                        />
                         <span className="sr-only">Refresh recommendations</span>
                       </Button>
                     </TooltipTrigger>
@@ -249,15 +240,8 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-
-                {/* <RefreshCw className="absolute right-0 mr-[8px] h-[18px] w-[18px] hover:animate-[spin_1s_ease-out_0s] text-muted-foreground/50" /> */}
               </div>
-              <Button
-                variant="default"
-                type="submit"
-                disabled={isLoading || !profile || !hasRead}
-                // className="h-[40px] shrink-0 rounded-[10px] px-[12px] py-[8px] text-[14px]"
-              >
+              <Button variant="default" type="submit" disabled={isLoading || !profile || !hasRead}>
                 {hasRead ? "Send" : "Generating..."}
               </Button>
             </form>
@@ -337,12 +321,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Skeleton className="mx-auto h-[40px] w-[144px]" />
                   ) : (
                     <div className="mx-auto text-center">
-                      <Button
-                        variant="default"
-                        className="w-full"
-                        asChild
-                        // className="h-[40px] w-[144px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px] text-primary"
-                      >
+                      <Button variant="default" className="w-full" asChild>
                         <a href={product.link}>See product</a>
                       </Button>
                     </div>
@@ -352,11 +331,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="h-[40px] w-[144px]" />
                   ) : (
-                    <Button
-                      variant="outline"
-                      onClick={() => handleReset()}
-                      // className="h-[40px] w-[144px] shrink-0 rounded-[12px] px-[12px] py-[8px] text-[14px] text-primary"
-                    >
+                    <Button variant="outline" onClick={() => handleReset()}>
                       Return to search
                     </Button>
                   )}

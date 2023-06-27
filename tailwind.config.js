@@ -16,7 +16,7 @@ module.exports = {
     extend: {
       colors: {
         background: colors.white,
-        foreground: colors.gray[950],
+        foreground: colors.gray[900],
 
         input: colors.gray[200],
         border: colors.gray[200],

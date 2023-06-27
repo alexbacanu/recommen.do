@@ -1,11 +1,10 @@
 import { createHmac } from "crypto";
-import type { Profile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteServerService } from "@/lib/clients/appwrite-server";
-import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteServer } from "@/lib/clients/server-appwrite";
+import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { appwriteUrl } from "@/lib/envClient";
 import { appwriteWebhookKey } from "@/lib/envServer";
 
@@ -17,11 +16,9 @@ export async function POST(request: Request) {
 
   const signature = headers().get("X-Appwrite-Webhook-Signature");
   const token = createHmac("sha1", appwriteWebhookKey).update(payload).digest("base64");
-  console.log("stripe.customer.signature:", signature);
-  console.log("stripe.customer.token:", token);
 
   if (signature !== token) {
-    console.log("stripe.customer:", "Webhook signature is invalid");
+    console.log("api.stripe.customer:", "Webhook signature is invalid");
     return new Response("Webhook signature is invalid", {
       status: 401,
     });
@@ -35,19 +32,12 @@ export async function POST(request: Request) {
   });
 
   // Update the newly created customer in appwrite
-  const { sdkServerDatabases } = appwriteServerService();
+  const { serverDatabases } = appwriteServer();
 
-  // Get user profile based on customerId
-  const profile = await sdkServerDatabases.getDocument<Profile>("main", "profile", body.$id);
-
-  console.log("-----------------------------------------------------------------------");
-  console.log("singleProfile:", profile);
-  console.log("-----------------------------------------------------------------------");
-
-  await sdkServerDatabases.updateDocument("main", "profile", body.$id, {
+  await serverDatabases.updateDocument("main", "profile", body.$id, {
     stripeCustomerId: customer.id,
   });
 
-  console.log("stripe.customer:", "OK");
+  console.log("api.stripe.customer:", "OK");
   return NextResponse.json({ customerId: customer.id });
 }

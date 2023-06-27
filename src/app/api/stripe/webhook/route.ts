@@ -1,14 +1,14 @@
-import type { Profile } from "@/lib/types/types";
+import type { AppwriteProfile } from "@/lib/types/types";
 import type Stripe from "stripe";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Query } from "node-appwrite";
 
-import { appwriteServerService } from "@/lib/clients/appwrite-server";
-import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteServer } from "@/lib/clients/server-appwrite";
+import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { stripeWebhookKey } from "@/lib/envServer";
-import { assignCredits } from "@/lib/helpers/assignCredits";
+import { assignCredits } from "@/lib/helpers/assign-credits";
 
 export const dynamic = "force-dynamic";
 
@@ -40,17 +40,13 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    console.log("-----------------------------------------------------------------------");
-    console.log("event.type:", event.type);
-    console.log("-----------------------------------------------------------------------");
-
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (session.mode === "payment" && session.payment_status === "paid") {
-      const { sdkServerDatabases } = appwriteServerService();
+      const { serverDatabases } = appwriteServer();
 
       // Get user profile based on customerId
-      const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
+      const { documents: profiles } = await serverDatabases.listDocuments<AppwriteProfile>("main", "profile", [
         Query.equal("stripeCustomerId", session.customer as string),
       ]);
 
@@ -66,27 +62,19 @@ export async function POST(request: Request) {
         );
       }
 
-      console.log("-----------------------------------------------------------------------");
-      console.log("singleProfile:", singleProfile);
-      console.log("-----------------------------------------------------------------------");
-
       // Update profile from stripe event
-      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: singleProfile.credits + 50,
       });
     }
   }
 
   if (event.type === "invoice.payment_succeeded") {
-    console.log("-----------------------------------------------------------------------");
-    console.log("event.type:", event.type);
-    console.log("-----------------------------------------------------------------------");
-
     const session = event.data.object as Stripe.Invoice;
-    const { sdkServerDatabases } = appwriteServerService();
+    const { serverDatabases } = appwriteServer();
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
+    const { documents: profiles } = await serverDatabases.listDocuments<AppwriteProfile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -112,12 +100,8 @@ export async function POST(request: Request) {
     }
 
     if (session.billing_reason === "subscription_create") {
-      console.log("-----------------------------------------------------------------------");
-      console.log("singleProfile:", singleProfile);
-      console.log("-----------------------------------------------------------------------");
-
       // Update profile from stripe event
-      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: singleProfile.credits + assignCredits(sessionLines.price?.id),
 
         stripeSubscriptionId: sessionLines.subscription,
@@ -128,12 +112,8 @@ export async function POST(request: Request) {
     }
 
     if (session.billing_reason === "subscription_cycle") {
-      console.log("-----------------------------------------------------------------------");
-      console.log("singleProfile:", singleProfile);
-      console.log("-----------------------------------------------------------------------");
-
       // Update profile from stripe event
-      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: assignCredits(sessionLines.price?.id),
 
         stripeSubscriptionId: sessionLines.subscription,
@@ -145,15 +125,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") {
-    console.log("-----------------------------------------------------------------------");
-    console.log("event.type:", event.type);
-    console.log("-----------------------------------------------------------------------");
-
     const session = event.data.object as Stripe.Subscription;
-    const { sdkServerDatabases } = appwriteServerService();
+    const { serverDatabases } = appwriteServer();
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
+    const { documents: profiles } = await serverDatabases.listDocuments<AppwriteProfile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -185,12 +161,8 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      console.log("-----------------------------------------------------------------------");
-      console.log("singleProfile:", singleProfile);
-      console.log("-----------------------------------------------------------------------");
-
       // Update profile from stripe event
-      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
         stripeStatusLastUpdated: new Date(event.created * 1000),
       });
@@ -198,15 +170,11 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.deleted") {
-    console.log("-----------------------------------------------------------------------");
-    console.log("event.type:", event.type);
-    console.log("-----------------------------------------------------------------------");
-
     const session = event.data.object as Stripe.Subscription;
-    const { sdkServerDatabases } = appwriteServerService();
+    const { serverDatabases } = appwriteServer();
 
     // Get user profile based on customerId
-    const { documents: profiles } = await sdkServerDatabases.listDocuments<Profile>("main", "profile", [
+    const { documents: profiles } = await serverDatabases.listDocuments<AppwriteProfile>("main", "profile", [
       Query.equal("stripeCustomerId", session.customer as string),
     ]);
 
@@ -238,12 +206,8 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
-      console.log("-----------------------------------------------------------------------");
-      console.log("singleProfile:", singleProfile);
-      console.log("-----------------------------------------------------------------------");
-
       // Update profile from stripe event
-      await sdkServerDatabases.updateDocument("main", "profile", singleProfile.$id, {
+      await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: 0,
 
         stripeSubscriptionId: "none",

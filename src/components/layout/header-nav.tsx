@@ -10,6 +10,7 @@ export function HeaderNav() {
           href={item.disabled ? "#" : item.href}
           key={index}
           className="text-base font-normal tracking-wide transition-colors hover:text-primary/80"
+          aria-label={`Navigate to ${item.title} page`}
         >
           {item.title}
         </Link>

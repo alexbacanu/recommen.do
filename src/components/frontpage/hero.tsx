@@ -27,7 +27,7 @@ export function Hero() {
       >
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14 xl:gap-20">
           <div>
-            <h1 className="text-3xl font-bold md:text-4xl md:leading-tight xl:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tight md:text-4xl xl:text-5xl">
               Your <span className="heading-accent">AI-Powered</span> Shopping Companion
             </h1>
 
@@ -35,64 +35,66 @@ export function Hero() {
               Get personalized shopping recommendations with OpenAI GPT
             </p>
 
-            <div className="mt-10 grid w-full gap-4 md:inline-flex lg:mt-16">
+            <div className="mt-8 grid w-full gap-4 md:inline-flex lg:mt-12">
               <Button variant="default" size="lg" disabled={unsupportedBrowser} asChild>
                 {unsupportedBrowser ? (
-                  <a href="/firefox-1.1.0.zip">
+                  <a href="/download/firefox-1.1.0.zip" aria-label="Download extension for Firefox">
                     Download <span className="ml-1 hidden lg:inline-flex">extension for Firefox</span>
                   </a>
                 ) : (
-                  <a href="/chrome-1.1.0.zip">
+                  <a href="/download/chrome-1.1.0.zip" aria-label="Download extension for Chrome">
                     Download <span className="ml-1 hidden lg:inline-flex">extension for Chrome</span>
                   </a>
                 )}
               </Button>
               <Button variant="outline" size="lg" disabled={unsupportedBrowser} asChild>
-                <Link href="#features">See features</Link>
+                <Link href="#pricing" aria-label="View pricing">
+                  View pricing
+                </Link>
               </Button>
             </div>
 
-            <div className="[&>*]:browser-accent mt-10 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-16 lg:grid-cols-4 xl:grid-cols-8">
-              <Image src="/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
-              <Image src="/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
+            <div className="[&>*]:browser-accent mt-8 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-12 lg:grid-cols-4 xl:grid-cols-8">
+              <Image src="/browsers/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
+              <Image src="/browsers/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
 
               <Image
-                src="/Firefox.svg"
+                src="/browsers/Firefox.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Firefox browser"
                 className="opacity-50"
               />
               <Image
-                src="/Safari.svg"
+                src="/browsers/Safari.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Safari browser"
                 className="opacity-50"
               />
               <Image
-                src="/Brave.svg"
+                src="/browsers/Brave.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Brave browser"
                 className="opacity-50"
               />
               <Image
-                src="/Opera.svg"
+                src="/browsers/Opera.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Opera browser"
                 className="opacity-50"
               />
               <Image
-                src="/Duck.svg"
+                src="/browsers/Duck.svg"
                 width={64}
                 height={64}
                 alt="Download extension for DuckDuckGo browser"
                 className="opacity-50"
               />
               <Image
-                src="/Vivaldi.svg"
+                src="/browsers/Vivaldi.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Vivaldi browser"
@@ -103,7 +105,7 @@ export function Hero() {
           <div className="lg:w-[60rem]">
             <Image
               className="w-full rounded-xl shadow-xl"
-              src="/hero-img.png"
+              src="/frontpage/hero-img.png"
               height={1478}
               width={1060}
               alt="Screenshot with recommen.do extension displayed"

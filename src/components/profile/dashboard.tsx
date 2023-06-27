@@ -1,32 +1,20 @@
 "use client";
 
-import { Account } from "@/components/profile/profile-account";
-import { Alerts } from "@/components/profile/profile-alerts";
-import { Login } from "@/components/profile/profile-login";
-import { Subscription } from "@/components/profile/profile-subscription";
-import { useAccount } from "@/lib/hooks/use-account";
-import { useProfile } from "@/lib/hooks/use-profile";
+import { useAtomValue } from "jotai";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
+
+import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 
 export function Dashboard() {
-  const { account } = useAccount();
-  const profile = useProfile();
+  const account = useAtomValue(accountAtom);
+  const profile = useAtomValue(profileAtom);
 
-  return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
-      {account && profile && (
-        <>
-          <Alerts />
-          <Subscription />
-          <Account />
-        </>
-      )}
-      {account && !profile && (
-        <>
-          <Alerts />
-          <Login />
-        </>
-      )}
-      {!account && <Login />}
-    </div>
-  );
+  useEffect(() => {
+    if (account === false || profile === false) {
+      redirect("/sign-in"); // replace with window.something
+    }
+  }, [account, profile]);
+
+  return <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">Hello</div>;
 }

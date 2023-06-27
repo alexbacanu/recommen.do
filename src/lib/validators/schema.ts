@@ -47,3 +47,14 @@ export const OpenAIStreamPayloadValidator = z.object({
   user: z.string().optional(),
 });
 export type OpenAIStreamPayload = z.infer<typeof OpenAIStreamPayloadValidator>;
+
+// Search Params
+export const SSOCallbackSchema = z.object({
+  searchParams: z
+    .object({
+      userId: z.string().min(1),
+      secret: z.string().min(1),
+    })
+    .optional(),
+});
+export type SSOCallback = z.infer<typeof SSOCallbackSchema>;

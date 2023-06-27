@@ -4,7 +4,7 @@ import type CookieConsent from "vanilla-cookieconsent";
 
 import { useEffect } from "react";
 
-import pluginConfig from "@/components/cookie/cookie";
+import pluginConfig from "@/components/_cookies/cookie";
 
 interface Props {
   CookieConsentApi: typeof CookieConsent;

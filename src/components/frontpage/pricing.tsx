@@ -1,26 +1,26 @@
 "use client";
 
-import type { PricingPlan } from "@/lib/types/types";
+import type { StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
 
 import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
+import { useAtomValue } from "jotai";
 import Link from "next/link";
 
 import PricingCard from "@/components/frontpage/pricing-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
-import { authuiSite } from "@/lib/envClient";
-import { useProfile } from "@/lib/hooks/use-profile";
+import { profileAtom } from "@/lib/atoms/auth";
 
 interface PricingProps {
-  plans: PricingPlan[];
+  plans: StripePlan[];
 }
 
 export function Pricing({ plans }: PricingProps) {
-  const profile = useProfile();
+  const profile = useAtomValue(profileAtom);
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -39,25 +39,25 @@ export function Pricing({ plans }: PricingProps) {
     <section id="pricing" className="overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 py-8 lg:py-16">
         <div className="flex flex-col gap-y-10 lg:gap-y-12 xl:gap-y-14">
-          <h2 className="heading-accent text-center">Simple, transparent pricing</h2>
+          <h2 className="heading-accent text-center tracking-tight">Subscription plans</h2>
 
           <Card className="flex items-center justify-between gap-x-2 p-6 md:gap-x-6">
             <div className="flex items-center gap-x-2 md:gap-x-6">
               <Badge variant="outline" className="rounded-md px-4 py-2 uppercase">
-                <Clock className="mr-2 h-4 w-4" />
+                <Icons.clock className="mr-2 h-4 w-4" aria-hidden="true" />
                 Limited offer
               </Badge>
 
-              <Label className="text-center text-sm md:text-base">10 free recommendations on account creation</Label>
+              <Label className="text-center text-base font-normal">10 free credits on account creation</Label>
             </div>
 
             <div className="flex items-center gap-x-2 md:gap-x-6">
               {profile ? (
-                <Label className="text-base">Already claimed</Label>
+                <Label className="text-sm">Already claimed</Label>
               ) : (
                 <Link
-                  href={authuiSite}
-                  className={buttonVariants({ variant: "outline", className: "whitespace-nowrap" })}
+                  href="/auth/sign-in"
+                  className={buttonVariants({ variant: "outline", className: "whitespace-nowrap text-sm" })}
                 >
                   Get started
                 </Link>

@@ -1,4 +1,4 @@
-import type { Profile } from "@/lib/types/types";
+import type { AppwriteProfile } from "@/lib/types/types";
 import type { ChatGPTMessage } from "@/lib/validators/schema";
 
 import { OpenAIStream } from "ai";
@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai-edge";
 import { z } from "zod";
 
-import { appwriteClientService, appwriteServerService } from "@/lib/clients/appwrite-server";
+import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
 import { openaiKey } from "@/lib/envServer";
 import { OpenAIPayloadValidator } from "@/lib/validators/schema";
 
@@ -40,16 +40,13 @@ export async function POST(req: Request) {
 
     // Get request body
     const body = await req.json();
-    console.log("api/openai: Request body", body);
     const { apiKey, request } = OpenAIPayloadValidator.parse(body);
 
-    // console.log("api/openai: Request settings", settings);
-    // console.log("api/openai: Request request", request);
-    // console.log("api/openai: Request request.products", request.products);
-
     // Get user profile
-    const { sdkDatabases } = appwriteClientService(token);
-    const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile", [Query.limit(1)]);
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile", [
+      Query.limit(1),
+    ]);
     const profile = profiles[0];
 
     if (!profile) {
@@ -91,8 +88,6 @@ export async function POST(req: Request) {
       },
     ];
 
-    console.log("api/openai: messages", JSON.stringify(request.products).length);
-
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo-16k",
@@ -110,7 +105,6 @@ export async function POST(req: Request) {
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
         if (typeof apiKey === "undefined" && !stopTesting) {
-          console.log("tokening");
           // Add the token to the accumulated tokens
           accumulatedTokens.push(token);
 
@@ -119,13 +113,9 @@ export async function POST(req: Request) {
             stopTesting = true;
 
             // Subtract 1 credit from the user
-            const { sdkServerDatabases } = appwriteServerService();
+            const { serverDatabases } = appwriteServer();
 
-            console.log("-----------------------------------------------------------------------");
-            console.log("singleProfile:", profile);
-            console.log("-----------------------------------------------------------------------");
-
-            await sdkServerDatabases.updateDocument("main", "profile", profile.$id, {
+            await serverDatabases.updateDocument("main", "profile", profile.$id, {
               credits: profile.credits - 1,
               usage: (profile.usage ?? 0) + 1,
             });
@@ -138,10 +128,6 @@ export async function POST(req: Request) {
         }
       },
     });
-
-    console.log("-----------------------------------------------------------------------");
-    console.log("stream:", stream);
-    console.log("-----------------------------------------------------------------------");
 
     // Respond with the stream
     return new NextResponse(stream, {

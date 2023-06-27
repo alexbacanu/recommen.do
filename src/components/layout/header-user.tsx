@@ -1,9 +1,9 @@
 "use client";
 
-import { LifeBuoy, LogIn, LogOut, User } from "lucide-react";
+import { useAtomValue } from "jotai";
 import Link from "next/link";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,20 +14,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { authuiSite } from "@/lib/envClient";
+import { Icons } from "@/components/ui/icons";
+import { accountAtom } from "@/lib/atoms/auth";
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function HeaderUser() {
-  const { account, avatar, signOut } = useAccount();
+  const { signOut } = useAccount();
+  const account = useAtomValue(accountAtom);
 
   return account ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full" aria-label="User dropdown menu">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={avatar?.href} alt={account?.name} />
+            {/* <AvatarImage src={avatar?.href} alt={account?.name} /> */}
             <AvatarFallback>
-              <User className="h-5 w-5" />
+              <Icons.account className="h-5 w-5" aria-hidden="true" />
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -44,33 +46,30 @@ export function HeaderUser() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/profile">
-              <User className="mr-2 h-4 w-4" />
+            <Link href="/profile" aria-label="Profile">
+              <Icons.account className="mr-2 h-4 w-4" aria-hidden="true" />
               <span>Profile</span>
-              {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/contact">
-              <LifeBuoy className="mr-2 h-4 w-4" />
+            <Link href="/contact" aria-label="Support">
+              <Icons.support className="mr-2 h-4 w-4" aria-hidden="true" />
               <span>Support</span>
-              {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
-          <LogOut className="mr-2 h-4 w-4" />
+        <DropdownMenuItem onSelect={() => signOut()} aria-label="Log out">
+          <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
           <span>Log out</span>
-          {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <Button variant="outline" className="relative rounded-lg" asChild>
-      <Link href={authuiSite}>
-        <LogIn className="mr-1 h-4 w-4" />
-        Sign in
+    <Button variant="outline" asChild>
+      <Link href="/sign-in" aria-label="Sign in">
+        <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
+        Sign In
       </Link>
     </Button>
   );

@@ -1,7 +1,7 @@
 import type { Models } from "appwrite";
 
 // OpenAI
-export interface Product {
+export type ScrapedProduct = {
   identifier: string;
   image: string;
   link: string;
@@ -9,12 +9,11 @@ export interface Product {
   price: string;
   reviews: string;
   stars: string;
-}
+};
 
 // Appwrite
-export type Account = Models.User<Models.Preferences>;
-
-export interface Profile extends Models.Document {
+export type AppwriteAccount = Models.User<Models.Preferences>;
+export type AppwriteProfile = Models.Document & {
   userId: string;
   name: string;
   email: string;
@@ -30,10 +29,10 @@ export interface Profile extends Models.Document {
 
   stripeStatus: string | null;
   stripeStatusLastUpdated: Date | null;
-}
+};
 
 // Stripe
-export interface PricingPlan {
+export type StripePlan = {
   priceId: string;
   name: string;
   price: number;
@@ -44,4 +43,4 @@ export interface PricingPlan {
     recommendations: string;
     name: string;
   };
-}
+};

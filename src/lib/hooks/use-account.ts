@@ -1,45 +1,54 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
 
-import { AppwriteService } from "@/lib/clients/appwrite-service";
+import { accountAtom, profileAtom } from "@/lib/atoms/auth";
+import { AppwriteService } from "@/lib/clients/client-appwrite";
 
-async function getAccountFn() {
-  const account = await AppwriteService.getAccount();
-  return account;
-}
+export const useAccount = () => {
+  const setAccount = useSetAtom(accountAtom);
+  const setProfile = useSetAtom(profileAtom);
 
-function getAvatarFn(name = "r e") {
-  const avatar = AppwriteService.getAccountInitials(name);
-  return avatar;
-}
+  const fetchAccount = async () => {
+    try {
+      const response = await AppwriteService.getAccount();
+      console.log("use-account.fetchAccount.success:", response);
 
-async function signOutFn() {
-  await AppwriteService.signOut();
-}
+      setAccount(response);
+    } catch (error) {
+      console.log("use-account.fetchAccount.error:", error);
 
-export function useAccount() {
-  const { data: accountData } = useQuery({
-    queryKey: ["accountQuery"],
-    queryFn: () => getAccountFn(),
-    // enabled: hasSubscription,
-  });
+      setAccount(false);
+    }
+  };
 
-  const { data: avatarData } = useQuery({
-    queryKey: ["avatarQuery", accountData?.name],
-    queryFn: () => getAvatarFn(accountData?.name),
-  });
+  const fetchProfile = async () => {
+    try {
+      const response = await AppwriteService.getProfile();
 
-  const { mutate: signOut } = useMutation({
-    mutationFn: () => signOutFn(),
-    onSuccess: () => {
-      window?.location.reload();
-    },
-    // enabled: hasSubscription,
-  });
+      if (!response) {
+        throw new Error("Profile not found");
+      }
 
-  const account = accountData ?? undefined;
-  const avatar = avatarData ?? undefined;
+      console.log("use-account.fetchProfile.success:", response);
+      setProfile(response);
+    } catch (error) {
+      console.log("use-account.fetchProfile.error:", error);
 
-  return { account, avatar, signOut };
-}
+      setProfile(false);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await AppwriteService.signOut();
+      console.log("use-account.signOut.success");
+    } catch (error) {
+      console.log("use-account.signOut.error:", error);
+    } finally {
+      await Promise.all([fetchAccount(), fetchProfile()]);
+    }
+  };
+
+  return { fetchAccount, fetchProfile, signOut };
+};

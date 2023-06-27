@@ -1,10 +1,10 @@
-import type { Profile } from "@/lib/types/types";
+import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteClientService } from "@/lib/clients/appwrite-server";
-import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
+import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { appwriteUrl } from "@/lib/envClient";
 
 const corsHeaders = {
@@ -21,7 +21,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   const { priceId } = params;
 
   if (!priceId) {
-    console.log("stripe.subscription:", "PriceID missing");
+    console.log("api.stripe.subscription:", "PriceID missing");
     return new Response("PriceID missing", {
       status: 400,
       headers: corsHeaders,
@@ -33,7 +33,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    console.log("stripe.subscription:", "JWT token missing");
+    console.log("api.stripe.subscription:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
       headers: corsHeaders,
@@ -41,13 +41,13 @@ export async function GET(request: Request, { params }: { params: { priceId: str
   }
 
   // Get user profile based on JWT
-  const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
+  const { impersonateDatabases } = appwriteImpersonate(token);
+  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
   const profile = profiles[0];
 
   if (!profile) {
-    console.log("stripe.subscription:", "Profile missing");
-    return new Response("Cannot find profile for this token", {
+    console.log("api.stripe.subscription:", "Get current profile failed");
+    return new Response("Get current profile failed", {
       status: 404,
       headers: corsHeaders,
     });
@@ -65,7 +65,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
       return_url: `${appwriteUrl}/profile`,
     });
 
-    console.log("stripe.subscription:", "isSubscribed OK");
+    console.log("api.stripe.subscription:", "User is on paid plan");
     return NextResponse.json(
       { url: session.url },
       {
@@ -94,11 +94,11 @@ export async function GET(request: Request, { params }: { params: { priceId: str
       cancel_url: `${appwriteUrl}/payment/cancel`,
     });
 
-    console.log("stripe.subscription:", "OK");
+    console.log("api.stripe.subscription:", "OK");
     return NextResponse.json({ url: session.url }, { headers: corsHeaders });
   }
 
-  console.log("stripe.subscription:", "Something went wrong");
+  console.log("api.stripe.subscription:", "Something went wrong");
   return new Response("Something went wrong", {
     status: 500,
     headers: corsHeaders,

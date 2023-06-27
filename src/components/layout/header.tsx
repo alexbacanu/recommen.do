@@ -8,13 +8,14 @@ export function Header() {
     <header className="z-10 flex h-20 items-center border-b border-border bg-card text-sm">
       <div className="mx-auto w-full max-w-7xl">
         <div className="flex items-center justify-between gap-y-4 p-4 lg:py-0">
-          <Logo />
-
           <div className="flex items-center">
+            <Logo />
+
+            <Separator orientation="vertical" className="mx-6 hidden sm:block" />
+
             <HeaderNav />
-
-            <Separator orientation="vertical" className="mx-6 hidden h-6 sm:block" />
-
+          </div>
+          <div className="flex items-center">
             <HeaderUser />
           </div>
         </div>

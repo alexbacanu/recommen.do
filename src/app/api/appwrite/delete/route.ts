@@ -1,10 +1,10 @@
-import type { Profile } from "@/lib/types/types";
+import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteClientService, appwriteServerService } from "@/lib/clients/appwrite-server";
-import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
+import { getStripeInstance } from "@/lib/clients/server-stripe";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
@@ -25,7 +25,7 @@ export async function GET() {
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    console.log("stripe.subscription:", "JWT token missing");
+    console.log("api.appwrite.delete:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
       headers: corsHeaders,
@@ -33,26 +33,26 @@ export async function GET() {
   }
 
   // Get current user
-  const { sdkAccount } = appwriteClientService(token);
-  const account = await sdkAccount.get();
+  const { impersonateAccount } = appwriteImpersonate(token);
+  const account = await impersonateAccount.get();
 
   if (!account) {
-    console.log("appwrite:", "Get current account failed");
+    console.log("api.appwrite.delete:", "Get current account failed");
     return new Response("Get current account failed", {
-      status: 500,
+      status: 404,
       headers: corsHeaders,
     });
   }
 
   // Get current profile
-  const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
+  const { impersonateDatabases } = appwriteImpersonate(token);
+  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
   const profile = profiles[0];
 
   if (!profile) {
-    console.log("appwrite:", "Get current profile failed");
+    console.log("api.appwrite.delete:", "Get current profile failed");
     return new Response("Get current profile failed", {
-      status: 500,
+      status: 404,
       headers: corsHeaders,
     });
   }
@@ -64,28 +64,22 @@ export async function GET() {
   }
 
   // Delete profile in database
-  const { sdkServerDatabases } = appwriteServerService();
-  const profilePromise = await sdkServerDatabases.deleteDocument("main", "profile", profile.$id);
+  const { serverDatabases } = appwriteServer();
+  const profilePromise = await serverDatabases.deleteDocument("main", "profile", profile.$id);
 
   if (!profilePromise) {
-    console.log("appwrite:", "Delete appwrite profile failed");
-    // return new Response("Delete appwrite profile failed", {
-    //   status: 500,
-    // });
+    console.log("api.appwrite.delete:", "Delete appwrite profile failed");
   }
 
   // Delete appwrite account
-  const { sdkServerUsers } = appwriteServerService();
-  const accountPromise = await sdkServerUsers.delete(account.$id);
+  const { serverUsers } = appwriteServer();
+  const accountPromise = await serverUsers.delete(account.$id);
 
   if (!accountPromise) {
-    console.log("appwrite:", "Delete appwrite account failed");
-    // return new Response("Delete appwrite account failed", {
-    //   status: 500,
-    // });
+    console.log("api.appwrite.delete:", "Delete appwrite account failed");
   }
 
-  console.log("appwrite:", "Delete account success");
+  console.log("api.appwrite.delete:", "Delete account success");
   return NextResponse.json(
     { status: "OK" },
     {

@@ -1,10 +1,10 @@
-import type { Profile } from "@/lib/types/types";
+import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { appwriteClientService } from "@/lib/clients/appwrite-server";
-import { getStripeInstance } from "@/lib/clients/stripe-server";
+import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
+import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { appwriteUrl } from "@/lib/envClient";
 import { stripeRefillPrice } from "@/lib/envServer";
 
@@ -23,7 +23,7 @@ export async function GET() {
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    console.log("stripe.refill:", "JWT token missing");
+    console.log("api.stripe.refill:", "JWT token missing");
     return new Response("JWT token missing", {
       status: 400,
       headers: corsHeaders,
@@ -31,13 +31,13 @@ export async function GET() {
   }
 
   // Get user profile based on JWT
-  const { sdkDatabases } = appwriteClientService(token);
-  const { documents: profiles } = await sdkDatabases.listDocuments<Profile>("main", "profile");
+  const { impersonateDatabases } = appwriteImpersonate(token);
+  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
   const profile = profiles[0];
 
   if (!profile) {
-    console.log("stripe.refill:", "Profile missing");
-    return new Response("Cannot find profile for this token", {
+    console.log("api.stripe.refill:", "Get current profile failed");
+    return new Response("Get current profile failed", {
       status: 404,
       headers: corsHeaders,
     });
@@ -65,11 +65,11 @@ export async function GET() {
       cancel_url: `${appwriteUrl}/payment/cancel`,
     });
 
-    console.log("stripe.refill:", "URL Created");
+    console.log("api.stripe.refill:", "URL Created");
     return NextResponse.json({ url: session.url }, { headers: corsHeaders });
   }
 
-  console.log("stripe.refill:", "Something went wrong");
+  console.log("api.stripe.refill:", "Something went wrong");
   return new Response("Something went wrong", {
     status: 500,
     headers: corsHeaders,
