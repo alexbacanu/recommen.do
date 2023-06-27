@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import PricingCard from "@/components/frontpage/pricing-card";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
@@ -55,12 +55,11 @@ export function Pricing({ plans }: PricingProps) {
               {profile ? (
                 <Label className="text-sm">Already claimed</Label>
               ) : (
-                <Link
-                  href="/auth/sign-in"
-                  className={buttonVariants({ variant: "outline", className: "whitespace-nowrap text-sm" })}
-                >
-                  Get started
-                </Link>
+                <Button variant="outline" className="whitespace-nowrap text-sm" asChild>
+                  <Link href="/sign-in" aria-label="Get started">
+                    Get started
+                  </Link>
+                </Button>
               )}
             </div>
           </Card>

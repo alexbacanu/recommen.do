@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PaymentErrorPage() {
@@ -37,9 +37,11 @@ export default function PaymentErrorPage() {
             </div>
           </CardContent>
           <CardFooter className="grid grid-cols-1 gap-4">
-            <Link href="/" className={buttonVariants({ variant: "outline" })}>
-              Go to home now
-            </Link>
+            <Button variant="outline" asChild>
+              <Link href="/" aria-label="Go to home now">
+                Go to home now
+              </Link>
+            </Button>
           </CardFooter>
         </Card>
       </div>
