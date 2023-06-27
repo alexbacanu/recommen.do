@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { Icons } from "@/components/ui/icons";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { retryPromise } from "@/lib/helpers/utils";
 import { useAccount } from "@/lib/hooks/use-account";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
 
@@ -33,13 +34,12 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
         const response = await AppwriteService.updateMagicURL(userId, secret);
         console.log("sso-callback.updateMagicURL.success:", response);
 
-        await Promise.all([fetchAccount(), fetchProfile()]);
+        await Promise.all([retryPromise(fetchAccount, 3, 500), retryPromise(fetchProfile, 3, 500)]);
 
         router.push("/profile");
       } catch (error) {
         console.log("sso-callback.updateMagicURL.error:", error);
-      } finally {
-        await Promise.all([fetchAccount(), fetchProfile()]);
+        router.push("/homepage");
       }
     };
 

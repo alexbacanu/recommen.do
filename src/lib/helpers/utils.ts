@@ -20,3 +20,21 @@ export function filterMessage(text: string) {
 
   return result;
 }
+
+export function retryPromise<T>(fn: () => Promise<T>, retries: number, delay: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    fn()
+      .then(resolve)
+      .catch((error) => {
+        if (retries === 1) {
+          reject(error);
+          return;
+        }
+        setTimeout(() => {
+          retryPromise(fn, retries - 1, delay)
+            .then(resolve)
+            .catch(reject);
+        }, delay);
+      });
+  });
+}
