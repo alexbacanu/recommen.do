@@ -6,6 +6,7 @@ import {
   Cherry,
   Citrus,
   Clock,
+  Edit,
   LifeBuoy,
   Loader2,
   LogIn,
@@ -73,6 +74,7 @@ export const Icons = {
 
   spinner: Loader2,
   account: User,
+  edit: Edit,
   login: LogIn,
   logout: LogOut,
   verify: CheckCircle,
