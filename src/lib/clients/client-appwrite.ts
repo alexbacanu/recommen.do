@@ -37,7 +37,7 @@ export const AppwriteService = {
   },
 
   createOauth2: async (provider: string) => {
-    const redirectUrl = window.location.href; //todo: maybe do something here
+    const redirectUrl = `${appwriteUrl}/profile`; //todo: maybe do something here
 
     const response = account.createOAuth2Session(provider, redirectUrl, redirectUrl);
     console.log("client-appwrite.createOauth2:", response);
