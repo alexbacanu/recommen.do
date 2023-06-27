@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 import { Icons } from "@/components/ui/icons";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { retryPromise } from "@/lib/helpers/utils";
 import { useAccount } from "@/lib/hooks/use-account";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
 
@@ -34,12 +33,20 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
         const response = await AppwriteService.updateMagicURL(userId, secret);
         console.log("sso-callback.updateMagicURL.success:", response);
 
-        await Promise.all([retryPromise(fetchAccount, 3, 500), retryPromise(fetchProfile, 3, 500)]);
-
-        router.push("/profile");
+        // TODO: replace setTimeout with a retry function
+        // We wait here for function to execute, which takes about 900ms
+        setTimeout(async () => {
+          try {
+            await Promise.all([fetchAccount(), fetchProfile()]);
+            router.push("/profile");
+          } catch (error) {
+            console.log("sso-callback.fetchAccount.fetchProfile.error:", error);
+            router.push("/homepage");
+          }
+        }, 2000);
       } catch (error) {
         console.log("sso-callback.updateMagicURL.error:", error);
-        router.push("/homepage");
+        router.push("/");
       }
     };
 
