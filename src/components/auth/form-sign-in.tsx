@@ -85,7 +85,8 @@ export function FormSignIn() {
             </FormItem>
           )}
         />
-        <Button type="submit" aria-label="Sign in with Magic URL" disabled={isPending}>
+        <Button aria-label="Sign in with Magic URL" disabled={isPending}>
+          {/* TODO: isPending is not loading */}
           {isPending ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (

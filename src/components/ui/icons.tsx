@@ -16,7 +16,10 @@ import {
   LogIn,
   LogOut,
   Minimize2,
+  Percent,
+  Plus,
   RefreshCw,
+  Settings2,
   Sprout,
   Trash2,
   Twitter,
@@ -102,6 +105,9 @@ export const Icons = {
   plan1: Cherry,
   plan2: Banana,
   plan3: Citrus,
+  manage: Settings2,
+  percent: Percent,
+  subscribe: Plus,
 
   google: (props: LucideProps) => (
     <svg role="img" viewBox="0 0 24 24" {...props}>
