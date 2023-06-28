@@ -115,7 +115,7 @@ export function CardAccount() {
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="icon">
+                  <Button variant="destructive" size="icon" aria-label="Delete account">
                     <Icons.trash className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </AlertDialogTrigger>
@@ -134,6 +134,7 @@ export function CardAccount() {
                     <Button
                       variant="destructive"
                       className="whitespace-nowrap"
+                      aria-label="Yes, delete my account"
                       onClick={() => mutateDeleteAccount()}
                       disabled={isDeleteAccountLoading}
                     >
@@ -154,9 +155,12 @@ export function CardAccount() {
                   </Label>
 
                   <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      {isOpen ? <Icons.collapseUp className="h-4 w-4" /> : <Icons.collapseDown className="h-4 w-4" />}
-                      <span className="sr-only">Toggle</span>
+                    <Button variant="ghost" size="sm" aria-label="Toggle sessions">
+                      {isOpen ? (
+                        <Icons.collapseUp className="h-4 w-4" aria-hidden="true" />
+                      ) : (
+                        <Icons.collapseDown className="h-4 w-4" aria-hidden="true" />
+                      )}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
@@ -182,12 +186,12 @@ export function CardAccount() {
                         <Button
                           variant="ghost"
                           size="icon"
+                          aria-label="Delete session"
                           className="mr-2 h-5 w-5 bg-transparent text-destructive hover:text-destructive"
                           onClick={() => mutateDeleteSession(session.$id)}
                           disabled={isDeleteSessionLoading}
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />
-                          <span className="sr-only">Delete session</span>
                         </Button>
                       )}
                     </div>
@@ -213,12 +217,12 @@ export function CardAccount() {
                         <Button
                           variant="ghost"
                           size="icon"
+                          aria-label="Delete session"
                           className="mr-2 h-5 w-5 bg-transparent text-destructive hover:text-destructive"
                           onClick={() => mutateDeleteSession(session.$id)}
                           disabled={isDeleteSessionLoading}
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />
-                          <span className="sr-only">Delete session</span>
                         </Button>
                       )}
                     </div>
