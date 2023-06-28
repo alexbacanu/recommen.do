@@ -187,7 +187,7 @@ export function CardAccount() {
                           variant="ghost"
                           size="icon"
                           aria-label="Delete session"
-                          className="mr-2 h-5 w-5 bg-transparent text-destructive hover:text-destructive"
+                          className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
                           onClick={() => mutateDeleteSession(session.$id)}
                           disabled={isDeleteSessionLoading}
                         >
@@ -218,7 +218,7 @@ export function CardAccount() {
                           variant="ghost"
                           size="icon"
                           aria-label="Delete session"
-                          className="mr-2 h-5 w-5 bg-transparent text-destructive hover:text-destructive"
+                          className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
                           onClick={() => mutateDeleteSession(session.$id)}
                           disabled={isDeleteSessionLoading}
                         >
