@@ -5,8 +5,7 @@ import { NextResponse } from "next/server";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
-import { appwriteUrl } from "@/lib/envClient";
-import { stripeRefillPrice } from "@/lib/envServer";
+import { appwriteUrl, stripeRefillPrice } from "@/lib/envClient";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",

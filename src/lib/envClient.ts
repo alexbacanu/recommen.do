@@ -9,5 +9,10 @@ export const appwriteUrl = process.env.NEXT_PUBLIC_APPWRITE_URL ?? process.env.P
 export const stripePublishableKey =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? process.env.PLASMO_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
 
+export const stripeRefillPrice = process.env.NEXT_PUBLIC_STRIPE_REFILL_PRICE ?? "";
+export const stripeBasicPlan = process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN ?? "";
+export const stripePremiumPlan = process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PLAN ?? "";
+export const stripeUltimatePlan = process.env.NEXT_PUBLIC_STRIPE_ULTIMATE_PLAN ?? "";
+
 // Google
 export const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? "";

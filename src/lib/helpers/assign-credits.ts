@@ -1,4 +1,4 @@
-import { stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envServer";
+import { stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
 
 const assignCredits = (plan?: string) => {
   const planMap: Record<string, number> = {
