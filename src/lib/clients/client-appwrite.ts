@@ -36,6 +36,13 @@ export const AppwriteService = {
     return documents[0];
   },
 
+  listSessions: async () => {
+    const response = await account.listSessions();
+    console.log("client-appwrite.listSessions:", response);
+
+    return response;
+  },
+
   createOauth2: async (provider: string) => {
     const redirectUrl = `${appwriteUrl}/profile`; //todo: maybe do something here
 
@@ -69,8 +76,8 @@ export const AppwriteService = {
     return jwt;
   },
 
-  signOut: async () => {
-    const response = await account.deleteSession("current");
+  signOut: async (id = "current") => {
+    const response = await account.deleteSession(id);
     console.log("client-appwrite.signOut:", response);
 
     return response;

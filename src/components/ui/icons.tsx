@@ -1,11 +1,15 @@
 import type { Icon as LucideIcon, LucideProps } from "lucide-react";
 
 import {
+  ArrowDownNarrowWide,
+  ArrowUpNarrowWide,
   Banana,
   CheckCircle,
   Cherry,
   Citrus,
   Clock,
+  Coffee,
+  Coins,
   Edit,
   LifeBuoy,
   Loader2,
@@ -13,8 +17,11 @@ import {
   LogOut,
   Minimize2,
   RefreshCw,
+  Sprout,
+  Trash2,
   Twitter,
   User,
+  X,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -78,11 +85,19 @@ export const Icons = {
   login: LogIn,
   logout: LogOut,
   verify: CheckCircle,
+  trash: Trash2,
+  remove: X,
 
   support: LifeBuoy,
   clock: Clock,
   minimize: Minimize2,
   refresh: RefreshCw,
+  coins: Coins,
+  sprout: Sprout,
+  coffee: Coffee,
+
+  collapseDown: ArrowDownNarrowWide,
+  collapseUp: ArrowUpNarrowWide,
 
   plan1: Cherry,
   plan2: Banana,

@@ -7,10 +7,13 @@ import { useEffect } from "react";
 
 import { FormSignIn } from "@/components/auth/form-sign-in";
 import { OAuthSignIn } from "@/components/auth/oauth-sign-in";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardAccount } from "@/components/profile/card-account";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { useAccount } from "@/lib/hooks/use-account";
@@ -27,256 +30,155 @@ export function Dashboard() {
     }
   }, [account, profile]);
 
-  if (account && profile)
-    return (
-      <div className="grid grid-cols-2 gap-8">
-        <Card className="grid gap-4">
-          <CardHeader>
-            <CardTitle className="text-2xl">Account</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="flex items-center justify-between space-x-4">
-              <div className="flex items-center space-x-4">
-                <Avatar>
-                  <AvatarImage src="/avatars/01.png" />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
-                  <p className="text-sm text-muted-foreground">{account.email}</p>
-                </div>
-              </div>
-              <Button variant="outline" aria-label="Change email">
-                <Icons.edit className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Change email</span>
-              </Button>
+  // if (account && profile)
+  return (
+    <div className="grid grid-cols-2 gap-8">
+      <Card>
+        <CardAccount />
+
+        <Separator orientation="horizontal" className="w-full" />
+
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl">Usage</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 pb-4">
+          <Label className="flex flex-col space-y-1">
+            <span>Remaining</span>
+            <span className="font-normal leading-snug text-muted-foreground">5 recommendations remaining</span>
+          </Label>
+          <Label className="flex flex-col space-y-1">
+            <span>Valid until</span>
+            <span className="font-normal leading-snug text-muted-foreground">Fri, 21 Jul 2023</span>
+          </Label>
+        </CardContent>
+        <CardFooter className="grid">
+          <Button onClick={() => signOut()} aria-label="Log out">
+            <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span>Add more recommendations</span>
+          </Button>
+        </CardFooter>
+
+        <Separator orientation="horizontal" className="w-full" />
+
+        <CardHeader className="pb-4">
+          <CardTitle className="flex justify-between text-2xl">
+            <span>Subscription</span>
+            <Badge variant="outline">Inactive</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 pb-4">
+          <Label className="flex flex-col space-y-1">
+            <span>Current plan</span>
+            <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+              <div className="flex items-center">TypeScript</div>
+              <div className="flex items-center">20k</div>
+              <div className="flex items-center">Updated April 2023</div>
             </div>
+          </Label>
+          <Label className="flex flex-col space-y-1">
+            <span>Renewal date</span>
+            <span className="font-normal leading-snug text-muted-foreground">Fri, 21 Jul 2023</span>
+          </Label>
+        </CardContent>
+        <CardFooter className="grid">
+          <Button onClick={() => signOut()} aria-label="Log out">
+            <Icons.sprout className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span>Manage plan</span>
+          </Button>
+        </CardFooter>
 
-            <div className="flex items-center justify-between">
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Cookie settings
-                </Link>
-              </Button>
+        <Separator orientation="horizontal" className="w-full" />
 
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Manage sessions
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Delete account
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-          <CardFooter className="grid">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex justify-between text-2xl">
+            <span>OpenAI API Key</span>
+            <Badge variant="outline">Not detected</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="flex items-center gap-x-2">
+            <Input value="http://example.com/link/to/document" readOnly />
+            <Button variant="destructive" className="shrink-0">
+              Remove
+            </Button>
+          </div>
+        </CardContent>
+        {/* <CardFooter className="grid">
             <Button onClick={() => signOut()} aria-label="Log out">
-              <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>Log out</span>
-            </Button>
-          </CardFooter>
-
-          <Separator orientation="horizontal" className="w-full" />
-
-          <CardHeader>
-            <CardTitle className="text-2xl">Usage</CardTitle>
-          </CardHeader>
-          {/* <CardContent className="grid gap-4">
-            <div className="flex items-center justify-between space-x-4">
-              <div className="flex items-center space-x-4">
-                <Avatar>
-                  <AvatarImage src="/avatars/01.png" />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
-                  <p className="text-sm text-muted-foreground">{account.email}</p>
-                </div>
-              </div>
-              <Button variant="outline" aria-label="Change email">
-                <Icons.edit className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Change email</span>
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Cookie settings
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Manage sessions
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Delete account
-                </Link>
-              </Button>
-            </div>
-          </CardContent> */}
-          <CardFooter className="grid">
-            <Button aria-label="Add 50 more credits">
-              <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>Add 50 more credits</span>
-            </Button>
-          </CardFooter>
-
-          <Separator orientation="horizontal" className="w-full" />
-
-          <CardHeader>
-            <CardTitle className="text-2xl">Subscription</CardTitle>
-          </CardHeader>
-          {/* <CardContent className="grid gap-4">
-            <div className="flex items-center justify-between space-x-4">
-              <div className="flex items-center space-x-4">
-                <Avatar>
-                  <AvatarImage src="/avatars/01.png" />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
-                  <p className="text-sm text-muted-foreground">{account.email}</p>
-                </div>
-              </div>
-              <Button variant="outline" aria-label="Change email">
-                <Icons.edit className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Change email</span>
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Cookie settings
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Manage sessions
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Delete account
-                </Link>
-              </Button>
-            </div>
-          </CardContent> */}
-          <CardFooter className="grid">
-            <Button aria-label="Add 50 more credits">
-              <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
+              <Icons.sprout className="mr-2 h-4 w-4" aria-hidden="true" />
               <span>Manage plan</span>
             </Button>
-          </CardFooter>
+          </CardFooter> */}
 
-          <Separator orientation="horizontal" className="w-full" />
+        <Separator orientation="horizontal" className="w-full" />
 
-          <CardHeader>
-            <CardTitle className="text-2xl">Support</CardTitle>
-          </CardHeader>
-          {/* <CardContent className="grid gap-4">
-            <div className="flex items-center justify-between space-x-4">
-              <div className="flex items-center space-x-4">
-                <Avatar>
-                  <AvatarImage src="/avatars/01.png" />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
-                  <p className="text-sm text-muted-foreground">{account.email}</p>
-                </div>
-              </div>
-              <Button variant="outline" aria-label="Change email">
-                <Icons.edit className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Change email</span>
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Cookie settings
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Manage sessions
-                </Link>
-              </Button>
-
-              <Separator orientation="vertical" className="h-6" />
-
-              <Button variant="link" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Delete account
-                </Link>
-              </Button>
-            </div>
-          </CardContent> */}
-          <CardFooter className="grid">
-            <Button variant="secondary" aria-label="Buy me a coffee">
-              <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>Buy me a coffee</span>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl">Support</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 pb-4">
+          <div className="flex items-center justify-between">
+            <Button variant="link" asChild>
+              <Link href="/sign-in" aria-label="Sign in">
+                Contact us
+              </Link>
             </Button>
-          </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">Sign up</CardTitle>
-            <CardDescription className="text-muted-foreground">Choose your preferred sign up method</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <OAuthSignIn />
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-              </div>
-            </div>
+            <Separator orientation="vertical" className="h-6" />
 
-            <FormSignIn />
-          </CardContent>
-          <CardFooter>
-            <div className="text-sm text-muted-foreground">
-              Already have an account?{" "}
-              <Button variant="link" className="h-auto p-0" asChild>
-                <Link href="/sign-in" aria-label="Sign in">
-                  Sign in
-                </Link>
-              </Button>
+            <Button variant="link" asChild>
+              <Link href="/sign-in" aria-label="Sign in">
+                Use your own OpenAI API key
+              </Link>
+            </Button>
+
+            <Separator orientation="vertical" className="h-6" />
+
+            <Button variant="link" asChild>
+              <Link href="/sign-in" aria-label="Sign in">
+                FAQ
+              </Link>
+            </Button>
+          </div>
+        </CardContent>
+        <CardFooter className="grid">
+          <Button variant="outline" aria-label="Log out">
+            <Icons.coffee className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span>Buy me a coffee</span>
+          </Button>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">Sign up</CardTitle>
+          <CardDescription className="text-muted-foreground">Choose your preferred sign up method</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <OAuthSignIn />
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
             </div>
-          </CardFooter>
-        </Card>
-      </div>
-    );
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            </div>
+          </div>
+
+          <FormSignIn />
+        </CardContent>
+        <CardFooter>
+          <div className="text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Button variant="link" className="h-auto p-0" asChild>
+              <Link href="/sign-in" aria-label="Sign in">
+                Sign in
+              </Link>
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
 
   return null;
 }
