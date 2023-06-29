@@ -143,7 +143,9 @@ export function CardUsage() {
         <CardHeader className="pb-4">
           <CardTitle className="flex justify-between text-2xl">
             <span>Subscription</span>
-            <Badge variant="outline">{profile.stripeStatus ?? "Inactive"}</Badge>
+            <Badge variant="outline" className={cn("capitalize", hasSubscription && "border-lime-400")}>
+              {profile.stripeStatus ?? "Inactive"}
+            </Badge>
           </CardTitle>
         </CardHeader>
         {hasSubscription ? (
@@ -281,6 +283,8 @@ export function CardUsage() {
             </form>
           </Form>
         )}
+
+        <Separator orientation="horizontal" className="w-full" />
       </>
     );
 

@@ -21,6 +21,7 @@ import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
@@ -91,7 +92,7 @@ export function CardAccount() {
 
   if (account && profile)
     return (
-      <div>
+      <>
         <CardHeader className="pb-4">
           <CardTitle className="text-2xl">Account</CardTitle>
         </CardHeader>
@@ -237,7 +238,9 @@ export function CardAccount() {
             <span>Log out</span>
           </Button>
         </CardFooter>
-      </div>
+
+        <Separator orientation="horizontal" className="w-full" />
+      </>
     );
 
   return null;
