@@ -27,7 +27,7 @@ export function Dashboard() {
 
   // if (account && profile)
   return (
-    <div className="grid grid-cols-2 gap-8">
+    <div className="grid lg:grid-cols-2 gap-8">
       <Card>
         <CardAccount />
 

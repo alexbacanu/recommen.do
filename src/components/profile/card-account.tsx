@@ -22,6 +22,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
@@ -116,9 +117,18 @@ export function CardAccount() {
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="icon" aria-label="Delete account">
-                    <Icons.trash className="h-4 w-4" aria-hidden="true" />
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="destructive" size="icon" aria-label="Delete account">
+                          <Icons.trash className="h-4 w-4" aria-hidden="true" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete account</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>

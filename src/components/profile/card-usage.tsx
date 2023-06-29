@@ -195,7 +195,7 @@ export function CardUsage() {
                         <RadioGroup
                           defaultValue={field.value}
                           onValueChange={field.onChange}
-                          className="grid grid-cols-3 gap-4"
+                          className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3"
                         >
                           <label
                             htmlFor="cherry"
