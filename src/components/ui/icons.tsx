@@ -11,6 +11,7 @@ import {
   Coffee,
   Coins,
   Edit,
+  Key,
   LifeBuoy,
   Loader2,
   LogIn,
@@ -98,6 +99,7 @@ export const Icons = {
   coins: Coins,
   sprout: Sprout,
   coffee: Coffee,
+  key: Key,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,
