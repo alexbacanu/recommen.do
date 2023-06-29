@@ -27,7 +27,7 @@ export function CardAPIKey() {
   const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", undefined);
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
-  const extensionDetected = !window?.next;
+  const extensionDetected = window?.next;
 
   const apiKeyDetected = !!userApiKey;
 
@@ -59,7 +59,7 @@ export function CardAPIKey() {
             </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 pb-4">
+        <CardContent className="grid gap-4">
           <Label className="flex flex-col gap-y-2">
             <span>Display</span>
             <div className="flex items-center justify-between">
@@ -76,7 +76,7 @@ export function CardAPIKey() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid gap-4 pb-4">
+              <div className="grid gap-4 pb-8">
                 <FormField
                   control={form.control}
                   name="userApiKey"

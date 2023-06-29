@@ -150,7 +150,7 @@ export function CardUsage() {
         </CardHeader>
         {hasSubscription ? (
           <>
-            <CardContent className="grid gap-4 pb-4">
+            <CardContent className="grid gap-4">
               <Label className="flex flex-col space-y-2">
                 <span>Current plan</span>
                 <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
@@ -185,7 +185,7 @@ export function CardUsage() {
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <CardContent className="grid gap-4 pb-4">
+              <CardContent className="grid gap-4">
                 <FormField
                   control={form.control}
                   name="plan"

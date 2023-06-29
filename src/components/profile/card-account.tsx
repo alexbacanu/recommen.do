@@ -96,7 +96,7 @@ export function CardAccount() {
         <CardHeader className="pb-4">
           <CardTitle className="text-2xl">Account</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 pb-4">
+        <CardContent className="grid gap-4">
           <div className="flex items-center justify-between space-x-4">
             <div className="flex items-center space-x-4">
               {/* <Avatar>
@@ -149,12 +149,12 @@ export function CardAccount() {
 
           <div className="grid">
             <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
-              {data && data.total > 1 && (
-                <div className="flex items-center justify-between">
-                  <Label className="flex flex-col space-y-1">
-                    <span>Sessions</span>
-                  </Label>
+              <div className="flex items-center justify-between">
+                <Label className="flex flex-col space-y-1">
+                  <span>Manage sessions</span>
+                </Label>
 
+                {data && data.total > 1 && (
                   <CollapsibleTrigger asChild>
                     <Button variant="ghost" size="sm" aria-label="Toggle sessions">
                       {isOpen ? (
@@ -164,8 +164,8 @@ export function CardAccount() {
                       )}
                     </Button>
                   </CollapsibleTrigger>
-                </div>
-              )}
+                )}
+              </div>
               {data &&
                 data.sessions
                   .sort((a) => (a.current ? -1 : 1))
