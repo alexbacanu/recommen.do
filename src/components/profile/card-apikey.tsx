@@ -27,7 +27,7 @@ export function CardAPIKey() {
   const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", undefined);
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
-  const extensionDetected = window?.next;
+  const extensionDetected = !window?.next;
 
   const apiKeyDetected = !!userApiKey;
 
