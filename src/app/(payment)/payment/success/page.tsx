@@ -18,8 +18,7 @@ export default function PaymentSuccessPage() {
     }, 2500);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router]);
 
   return (
     <section id="paymentsuccess_page">

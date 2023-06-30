@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import { Icons } from "@/components/ui/icons";
+import { LoadingPage } from "@/components/ui/loading";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
@@ -41,7 +41,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
             router.push("/profile");
           } catch (error) {
             console.log("sso-callback.fetchAccount.fetchProfile.error:", error);
-            router.push("/homepage");
+            router.push("/");
           }
         }, 2000);
       } catch (error) {
@@ -55,14 +55,5 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, secret, router]);
 
-  return (
-    <div
-      role="status"
-      aria-label="Loading"
-      aria-describedby="loading-description"
-      className="flex items-center justify-center"
-    >
-      <Icons.spinner className="h-16 w-16 animate-spin" aria-hidden="true" />
-    </div>
-  );
+  return <LoadingPage />;
 }

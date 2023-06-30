@@ -23,7 +23,6 @@ import { gtagId } from "@/lib/envClient";
 
 export default function IndexPopup() {
   const account = useAtomValue(accountAtom);
-  const extensionDetected = !window?.next;
 
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];

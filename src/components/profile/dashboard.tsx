@@ -2,6 +2,7 @@
 
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import { CardAccount } from "@/components/profile/card-account";
 import { CardAPIKey } from "@/components/profile/card-apikey";
@@ -10,11 +11,18 @@ import { CardLegal } from "@/components/profile/card-legal";
 import { CardSupport } from "@/components/profile/card-support";
 import { CardUsage } from "@/components/profile/card-usage";
 import { Card } from "@/components/ui/card";
+import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom } from "@/lib/atoms/auth";
 
 export function Dashboard() {
   const account = useAtomValue(accountAtom);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!account) {
+      router.push("/sign-in");
+    }
+  }, [account, router]);
 
   if (account)
     return (
@@ -36,5 +44,5 @@ export function Dashboard() {
       </div>
     );
 
-  return <>{router.push("/sign-in")}</>;
+  return <LoadingPage />;
 }
