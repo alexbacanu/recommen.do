@@ -2,7 +2,6 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
@@ -87,9 +86,9 @@ export function CardAccount() {
 
   useEffect(() => {
     if (account === false || profile === false) {
-      redirect("/sign-in"); // replace with window.something
+      window.open("/sign-in", target); // replace with window.something
     }
-  }, [account, profile]);
+  }, [account, profile, target]);
 
   if (account && profile)
     return (

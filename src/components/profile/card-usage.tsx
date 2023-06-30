@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -45,7 +44,6 @@ async function getCheckoutURL(priceId?: string | null) {
 export function CardUsage() {
   const [isPending, startTransition] = useTransition();
   const profile = useAtomValue(profileAtom);
-  const router = useRouter();
 
   const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
@@ -80,21 +78,11 @@ export function CardUsage() {
 
         if (promise) {
           console.log("card-usage.promise:", promise);
-
-          toast({
-            title: "You submitted the following values:",
-            description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(values.plan, null, 2)}</code>
-              </pre>
-            ),
-          });
-
-          router.push(promise.url);
+          // window.open(promise.url, target);
         }
       } catch (error) {
         console.log("card-usage.error:", error);
-
+      } finally {
         toast({
           title: "You submitted the following values:",
           description: (
@@ -193,12 +181,12 @@ export function CardUsage() {
                     <FormItem className="space-y-2">
                       <FormControl>
                         <RadioGroup
-                          defaultValue={field.value}
+                          defaultValue={stripeBasicPlan}
                           onValueChange={field.onChange}
                           className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3"
                         >
-                          <label
-                            htmlFor="cherry"
+                          <Label
+                            htmlFor={stripeBasicPlan}
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeBasicPlan
@@ -207,7 +195,7 @@ export function CardUsage() {
                             )}
                           >
                             <div className="hidden">
-                              <RadioGroupItem id="cherry" value={stripeBasicPlan} />
+                              <RadioGroupItem id={stripeBasicPlan} value={stripeBasicPlan} />
                             </div>
                             <div className="flex flex-col items-center gap-1">
                               <Icons.plan1 className="h-6 w-6" aria-hidden="true" />
@@ -217,10 +205,10 @@ export function CardUsage() {
                               <div className="text-sm text-muted-foreground">50 credits</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$2</Badge>
-                          </label>
+                          </Label>
 
-                          <label
-                            htmlFor="peach"
+                          <Label
+                            htmlFor={stripePremiumPlan}
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripePremiumPlan
@@ -229,7 +217,7 @@ export function CardUsage() {
                             )}
                           >
                             <div className="hidden">
-                              <RadioGroupItem id="peach" value={stripePremiumPlan} />
+                              <RadioGroupItem id={stripePremiumPlan} value={stripePremiumPlan} />
                             </div>
                             <div>
                               <Icons.plan2 className="h-6 w-6" aria-hidden="true" />
@@ -239,10 +227,10 @@ export function CardUsage() {
                               <div className="text-sm text-muted-foreground">200 credits</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$4</Badge>
-                          </label>
+                          </Label>
 
-                          <label
-                            htmlFor="melon"
+                          <Label
+                            htmlFor={stripeUltimatePlan}
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeUltimatePlan
@@ -251,7 +239,7 @@ export function CardUsage() {
                             )}
                           >
                             <div className="hidden">
-                              <RadioGroupItem id="melon" value={stripeUltimatePlan} />
+                              <RadioGroupItem id={stripeUltimatePlan} value={stripeUltimatePlan} />
                             </div>
                             <div className="flex flex-col items-center gap-1">
                               <Icons.plan3 className="h-6 w-6" aria-hidden="true" />
@@ -261,7 +249,7 @@ export function CardUsage() {
                               <div className="text-sm text-muted-foreground">600 credits</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$10</Badge>
-                          </label>
+                          </Label>
                         </RadioGroup>
                       </FormControl>
                       <FormMessage />
