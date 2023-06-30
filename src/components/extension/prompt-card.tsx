@@ -4,9 +4,8 @@ import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest } from "@/lib/validat
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -16,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { toast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { appwriteUrl } from "@/lib/envClient";
 import { cn, filterMessage } from "@/lib/helpers/utils";
 import { useAccount } from "@/lib/hooks/use-account";
 
@@ -39,9 +39,9 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 
 export default function PromptCard({ products, onClose }: PromptCardProps) {
-  const { fetchProfile } = useAccount();
-
   const profile = useAtomValue(profileAtom);
+
+  const { fetchProfile } = useAccount();
 
   const [userApiKey] = useStorage<string | undefined>("userApiKey");
   const [prompt, setPrompt] = useState("");
@@ -58,7 +58,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
       request: request,
     };
 
-    const response = await fetch("/api/openai", {
+    const response = await fetch(`${appwriteUrl}/api/openai`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -161,6 +161,10 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
   const showForm = !isLoading && !isSuccess;
   const showSkeleton = !isSuccess && product.identifier === "none";
 
+  useEffect(() => {
+    console.log(profile);
+  }, [profile]);
+
   return (
     <section id="prompt_card" className="relative m-4 w-full min-w-[700px]">
       <TooltipProvider>
@@ -261,12 +265,10 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="mx-auto h-full w-[144px]" />
                   ) : (
-                    <Image
+                    <img
                       className="mx-auto max-h-[160px] rounded-[12px] object-cover"
                       src={product.image}
                       alt={product.name}
-                      width={144}
-                      height={160}
                     />
                   )}
                 </div>
