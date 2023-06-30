@@ -11,11 +11,13 @@
     "dev:plasmo": "plasmo dev",
     "dev:next": "next dev --port 1947",
     "build": "run-p build:*",
-    "build:plasmo": "plasmo build --zip --target=firefox-mv2",
+    "build:plasmo-firefox": "plasmo build --zip --target=firefox-mv2",
+    "build:plasmo-chrome": "plasmo build --zip",
     "build:next": "next build",
     "lint": "next lint",
     "prettier": "prettier --check .",
-    "fix": "prettier --write . && next lint --fix"
+    "fix": "prettier --write . && next lint --fix",
+    "custom-build": "pnpm fix && rmdir /s /q .next .plasmo build && del /q /s public\\download\\* && pnpm build && move /y build\\firefox-mv2-prod.zip public\\download\\firefox-1.1.0.zip && move /y build\\chrome-mv3-prod.zip public\\download\\chrome-1.1.0.zip"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",
