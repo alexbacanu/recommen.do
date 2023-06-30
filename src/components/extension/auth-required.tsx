@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Illustration from "react:/assets/undraw_secure_login.svg";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -14,6 +15,10 @@ export default function AuthRequiredCard() {
       </div>
 
       <p className="-mt-4 text-base">In order to use the extension you need to login to your account.</p>
+
+      <div className="-mt-2 px-12 opacity-90">
+        <Illustration aria-label="undraw festivities illustration" />
+      </div>
 
       <Button variant="default" asChild>
         <Link href={`${appwriteUrl}/sign-in`} target="_blank" aria-label="Go to login page">
