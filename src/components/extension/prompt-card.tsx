@@ -4,6 +4,8 @@ import type { ChatGPTMessage, OpenAIPayload, OpenAIRequest } from "@/lib/validat
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -259,11 +261,12 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="mx-auto h-full w-[144px]" />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       className="mx-auto max-h-[160px] rounded-[12px] object-cover"
                       src={product.image}
                       alt={product.name}
+                      width={144}
+                      height={160}
                     />
                   )}
                 </div>
@@ -322,7 +325,9 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   ) : (
                     <div className="mx-auto text-center">
                       <Button variant="default" className="w-full" asChild>
-                        <a href={product.link}>See product</a>
+                        <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
+                          See product
+                        </Link>
                       </Button>
                     </div>
                   )}

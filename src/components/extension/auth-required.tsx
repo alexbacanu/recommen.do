@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Illustration from "react:/assets/undraw_festivities.svg";
 
 import { Button } from "@/components/ui/button";
@@ -20,9 +21,9 @@ export default function AuthRequiredCard() {
 
       <div className="grid gap-1 text-sm">
         <Button variant="default" asChild>
-          <a href={`${appwriteUrl}/sign-in`} target="_blank" aria-label="Go to login page">
+          <Link href={`${appwriteUrl}/sign-in`} target="_blank" aria-label="Go to login page">
             Go to login page
-          </a>
+          </Link>
         </Button>
       </div>
 

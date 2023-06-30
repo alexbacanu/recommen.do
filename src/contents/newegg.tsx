@@ -3,6 +3,7 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
 import cssText from "data-text:@/styles/globals.css";
+import Image from "next/image";
 
 import PromptCard from "@/components/extension/prompt-card";
 import { Toaster } from "@/components/ui/toaster";
@@ -78,8 +79,7 @@ export default function NeweggContent() {
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-0.5"
             onClick={() => setPromptStatus((prevState) => !prevState)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
+            <Image src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
           </button>
         )}
       </ReactQueryProvider>

@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
+import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -117,11 +118,11 @@ export function CardUsage() {
         </CardContent>
         <CardFooter className="grid">
           {hasSubscription && (
-            <Button aria-label="Add 50 more credits" asChild>
-              <a href={refillURL} target={target}>
+            <Button asChild>
+              <Link href={refillURL} target={target} aria-label="Add 50 more credits">
                 <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
                 <span>Add 50 more credits</span>
-              </a>
+              </Link>
             </Button>
           )}
         </CardFooter>
@@ -162,11 +163,11 @@ export function CardUsage() {
               </Label>
             </CardContent>
             <CardFooter className="grid">
-              <Button aria-label="Manage subscription" asChild>
-                <a href={subURL} target={target}>
+              <Button asChild>
+                <Link href={subURL} target={target} aria-label="Manage subscription">
                   <Icons.manage className="mr-2 h-4 w-4" aria-hidden="true" />
                   <span>Manage subscription</span>
-                </a>
+                </Link>
               </Button>
             </CardFooter>
           </>
