@@ -67,7 +67,7 @@ export function CardAPIKey() {
   if (extensionDetected)
     return (
       <>
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="flex justify-between text-2xl">
             <span>Settings</span>
             <Badge variant="outline" className={cn("capitalize", apiKeyDetected && "border-lime-400")}>
@@ -92,7 +92,7 @@ export function CardAPIKey() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="grid gap-4 pb-8">
+              <div className="grid gap-4 pb-4">
                 <FormField
                   control={form.control}
                   defaultValue={userApiKey}

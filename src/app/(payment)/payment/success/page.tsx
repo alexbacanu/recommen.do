@@ -27,7 +27,7 @@ export default function PaymentSuccessPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-x-6">
-              <CardTitle className="">Payment success!</CardTitle>
+              <CardTitle>Payment success!</CardTitle>
             </div>
           </CardHeader>
           <CardContent>

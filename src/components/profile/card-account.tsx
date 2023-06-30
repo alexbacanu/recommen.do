@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,10 +22,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
+import { cn } from "@/lib/helpers/utils";
 import { useAccount } from "@/lib/hooks/use-account";
 
 async function deleteAccount() {
@@ -85,6 +86,8 @@ export function CardAccount() {
     enabled: !!profile,
   });
 
+  console.log(data?.sessions);
+
   useEffect(() => {
     if (account === false || profile === false) {
       window.open(`${appwriteUrl}/sign-in`, target); // replace with window.something
@@ -94,22 +97,22 @@ export function CardAccount() {
   if (account && profile)
     return (
       <>
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="text-2xl">Account</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div className="flex items-center justify-between space-x-4">
-            <div className="flex items-center space-x-4">
-              {/* <Avatar>
+          <div className="flex flex-col justify-between gap-4">
+            <div className="flex items-center gap-x-4">
+              <Avatar>
                 <AvatarFallback>{account.name || "U"}</AvatarFallback>
-              </Avatar> */}
+              </Avatar>
               <div>
                 <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
                 <p className="text-sm text-muted-foreground">{account.email}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
               <Button variant="outline" aria-label="Change email">
                 <Icons.edit className="mr-2 h-4 w-4" aria-hidden="true" />
                 <span>Change email</span>
@@ -117,20 +120,10 @@ export function CardAccount() {
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <div>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="destructive" size="icon" aria-label="Delete account">
-                            <Icons.trash className="h-4 w-4" aria-hidden="true" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Delete account</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <Button variant="outline" aria-label="Delete account">
+                    <Icons.trash className="mr-2 h-4 w-4 text-destructive" aria-hidden="true" />
+                    <span>Delete account</span>
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -162,7 +155,7 @@ export function CardAccount() {
           <div className="grid">
             <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="flex flex-col space-y-1">
+                <Label className="flex flex-col gap-y-1">
                   <span>Manage sessions</span>
                 </Label>
 
@@ -185,9 +178,9 @@ export function CardAccount() {
                   .map((session) => (
                     <div
                       key={session.$id}
-                      className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm shadow-sm"
+                      className="flex items-center justify-between rounded-lg border bg-popover p-2 font-mono text-sm"
                     >
-                      <div>
+                      <div className={cn("line-clamp-1", isOpen && "line-clamp-2 leading-7")}>
                         {session.current && (
                           <Badge variant="outline" className="mr-2 border-lime-400">
                             Current
@@ -195,6 +188,7 @@ export function CardAccount() {
                         )}
                         {session.clientName} {session.clientVersion} on {session.osName} {session.osVersion}
                       </div>
+
                       {!session.current && (
                         <Button
                           variant="ghost"
@@ -216,7 +210,7 @@ export function CardAccount() {
                   .map((session) => (
                     <div
                       key={session.$id}
-                      className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm shadow-sm"
+                      className="flex items-center justify-between rounded-lg border bg-popover p-2 font-mono text-sm"
                     >
                       <div>
                         {session.current && (

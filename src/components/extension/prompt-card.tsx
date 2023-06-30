@@ -265,6 +265,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="mx-auto h-full w-[144px]" />
                   ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       className="mx-auto max-h-[160px] rounded-[12px] object-cover"
                       src={product.image}
@@ -277,7 +278,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     {showSkeleton ? (
                       <Skeleton className="h-[32px] w-1/2" />
                     ) : (
-                      <div className={cn("space-y-1 text-[22px] font-semibold text-fuchsia-600 line-clamp-1")}>
+                      <div className={cn("line-clamp-1 space-y-1 text-[22px] font-semibold text-fuchsia-600")}>
                         {product.name}
                       </div>
                     )}

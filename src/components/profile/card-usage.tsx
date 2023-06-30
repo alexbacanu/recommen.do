@@ -99,16 +99,16 @@ export function CardUsage() {
   if (profile)
     return (
       <>
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="text-2xl">Usage</CardTitle>
         </CardHeader>
-        <CardContent className={cn("grid gap-4 pb-0", hasSubscription && "pb-4")}>
-          <Label className="flex flex-col space-y-2">
+        <CardContent className="grid gap-4">
+          <Label className="flex flex-col gap-y-2">
             <span>Remaining</span>
             <span className="font-normal leading-snug text-muted-foreground">{profile.credits} credits remaining</span>
           </Label>
           {!hasSubscription && (
-            <Label className="flex flex-col space-y-2">
+            <Label className="flex flex-col gap-y-2">
               <span>Valid until</span>
               <span className="font-normal leading-snug text-muted-foreground">
                 {new Date(new Date(profile.$createdAt).getTime() + 30 * 24 * 60 * 60 * 1000).toUTCString()}
@@ -116,20 +116,20 @@ export function CardUsage() {
             </Label>
           )}
         </CardContent>
-        <CardFooter className="grid">
-          {hasSubscription && (
+        {hasSubscription && (
+          <CardFooter className="grid">
             <Button asChild>
               <Link href={refillURL} target={target} aria-label="Add 50 more credits">
                 <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
                 <span>Add 50 more credits</span>
               </Link>
             </Button>
-          )}
-        </CardFooter>
+          </CardFooter>
+        )}
 
         <Separator orientation="horizontal" className="w-full" />
 
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="flex justify-between text-2xl">
             <span>Subscription</span>
             <Badge variant="outline" className={cn("capitalize", hasSubscription && "border-lime-400")}>
@@ -140,7 +140,7 @@ export function CardUsage() {
         {hasSubscription ? (
           <>
             <CardContent className="grid gap-4">
-              <Label className="flex flex-col space-y-2">
+              <Label className="flex flex-col gap-y-2">
                 <span>Current plan</span>
                 <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
                   <div className="flex items-center">
@@ -157,7 +157,7 @@ export function CardUsage() {
                   </div>
                 </div>
               </Label>
-              <Label className="flex flex-col space-y-2">
+              <Label className="flex flex-col gap-y-2">
                 <span>Renewal date</span>
                 <span className="font-normal leading-snug text-muted-foreground">Fri, 21 Jul 2023</span>
               </Label>
@@ -184,14 +184,14 @@ export function CardUsage() {
                         <RadioGroup
                           // defaultValue={stripeBasicPlan}
                           onValueChange={field.onChange}
-                          className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3"
+                          className="grid gap-2 sm:grid-cols-3 md:grid-cols-1"
                         >
                           <Label
                             htmlFor={stripeBasicPlan}
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeBasicPlan
-                                ? "text-primary border-primary"
+                                ? "border-primary text-primary"
                                 : "hover:bg-accent hover:text-primary",
                             )}
                           >
@@ -213,7 +213,7 @@ export function CardUsage() {
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripePremiumPlan
-                                ? "text-primary border-primary"
+                                ? "border-primary text-primary"
                                 : "hover:bg-accent hover:text-primary",
                             )}
                           >
@@ -235,7 +235,7 @@ export function CardUsage() {
                             className={cn(
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeUltimatePlan
-                                ? "text-primary border-primary"
+                                ? "border-primary text-primary"
                                 : "hover:bg-accent hover:text-primary",
                             )}
                           >
@@ -273,7 +273,7 @@ export function CardUsage() {
           </Form>
         )}
 
-        <Separator orientation="horizontal" className="w-full" />
+        {/* <Separator orientation="horizontal" className="w-full" /> */}
       </>
     );
 

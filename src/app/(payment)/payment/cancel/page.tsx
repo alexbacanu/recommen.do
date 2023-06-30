@@ -27,7 +27,7 @@ export default function PaymentCancelPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-x-6">
-              <CardTitle className="">Payment cancelled!</CardTitle>
+              <CardTitle>Payment cancelled!</CardTitle>
             </div>
           </CardHeader>
           <CardContent>

@@ -124,6 +124,7 @@ export default function EbayContent() {
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-0.5"
             onClick={() => setPromptStatus((prevState) => !prevState)}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
           </button>
         )}

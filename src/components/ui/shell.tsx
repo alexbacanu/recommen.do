@@ -11,7 +11,7 @@ export function Shell({ children, layout = "default", className, ...props }: She
   return (
     <section
       className={cn(
-        "grid items-center gap-8 py-6 sm:py-8 container lg:content-area",
+        "lg:content-area container grid items-center gap-8 py-6 sm:py-8",
         layout === "default" && "",
         layout === "auth" && "max-w-lg",
         layout === "confirmation" && "max-w-3xl grid-cols-1 sm:grid-cols-2",

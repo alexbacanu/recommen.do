@@ -9,7 +9,9 @@
   "tabWidth": 2,
   "trailingComma": "all",
 
-  "plugins": ["prettier-plugin-tailwindcss", "@ianvs/prettier-plugin-sort-imports"],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+
+  "tailwindFunctions": ["clsx", "cva", "cn"],
 
   "importOrder": [
     "<TYPES>",

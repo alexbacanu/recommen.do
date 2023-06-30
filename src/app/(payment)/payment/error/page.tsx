@@ -27,7 +27,7 @@ export default function PaymentErrorPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-x-6">
-              <CardTitle className="">Payment error!</CardTitle>
+              <CardTitle>Payment error!</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
