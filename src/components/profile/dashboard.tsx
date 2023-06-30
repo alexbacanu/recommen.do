@@ -1,3 +1,4 @@
+import { CardAccount } from "@/components/profile/card-account";
 import { CardAPIKey } from "@/components/profile/card-apikey";
 import { CardHistory } from "@/components/profile/card-history";
 import { CardSupport } from "@/components/profile/card-support";
@@ -8,7 +9,7 @@ export function Dashboard() {
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       <Card>
-        {/* <CardAccount /> */}
+        <CardAccount />
 
         <CardUsage />
 

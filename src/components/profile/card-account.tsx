@@ -116,18 +116,20 @@ export function CardAccount() {
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="destructive" size="icon" aria-label="Delete account">
-                          <Icons.trash className="h-4 w-4" aria-hidden="true" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Delete account</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <div>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="destructive" size="icon" aria-label="Delete account">
+                            <Icons.trash className="h-4 w-4" aria-hidden="true" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete account</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
