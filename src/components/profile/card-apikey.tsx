@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -18,13 +18,17 @@ import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/helpers/utils";
 
 const formSchema = z.object({
-  userApiKey: z.string(),
+  userApiKey: z
+    .string()
+    .regex(/^[a-zA-Z0-9\-_\s]+$/, { message: "Invalid characters!" })
+    .trim()
+    .optional(),
 });
 
 export function CardAPIKey() {
   const [isPending, startTransition] = useTransition();
 
-  const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", undefined);
+  const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", "");
   const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
 
   const extensionDetected = !window?.next;
@@ -38,6 +42,8 @@ export function CardAPIKey() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    if (values?.userApiKey === "") return;
+
     startTransition(async () => {
       try {
         setUserApiKey(values.userApiKey);
@@ -47,6 +53,16 @@ export function CardAPIKey() {
       }
     });
   }
+
+  function onReset() {
+    remove();
+    form.reset();
+  }
+
+  useEffect(() => {
+    console.log("userApiKey:", userApiKey);
+    console.log("userApiKey.type:", typeof userApiKey);
+  }, [userApiKey]);
 
   if (extensionDetected)
     return (
@@ -79,12 +95,13 @@ export function CardAPIKey() {
               <div className="grid gap-4 pb-8">
                 <FormField
                   control={form.control}
+                  defaultValue={userApiKey}
                   name="userApiKey"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
                       <FormLabel>OpenAI API Key</FormLabel>
                       <FormControl>
-                        <Input disabled={apiKeyDetected} {...field} />
+                        <Input className={cn(apiKeyDetected && "hidden")} disabled={apiKeyDetected} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -93,7 +110,7 @@ export function CardAPIKey() {
               </div>
               <div className="grid">
                 {apiKeyDetected ? (
-                  <Button disabled={!apiKeyDetected} type="button" variant="destructive" onClick={() => remove()}>
+                  <Button disabled={!apiKeyDetected} type="button" variant="destructive" onClick={() => onReset()}>
                     Clear key
                   </Button>
                 ) : (
