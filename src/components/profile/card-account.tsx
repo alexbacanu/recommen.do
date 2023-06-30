@@ -24,12 +24,13 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
 
 async function deleteAccount() {
   const jwt = await AppwriteService.createJWT();
 
-  const response = await fetch("/api/appwrite/delete", {
+  const response = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${jwt}`,
@@ -86,7 +87,7 @@ export function CardAccount() {
 
   useEffect(() => {
     if (account === false || profile === false) {
-      window.open("/sign-in", target); // replace with window.something
+      window.open(`${appwriteUrl}/sign-in`, target); // replace with window.something
     }
   }, [account, profile, target]);
 

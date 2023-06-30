@@ -19,7 +19,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
+import { appwriteUrl, stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
 
 const formSchema = z.object({
@@ -29,7 +29,7 @@ const formSchema = z.object({
 async function getCheckoutURL(priceId?: string | null) {
   const jwt = await AppwriteService.createJWT();
 
-  const fetchUrl = priceId ? `/api/stripe/subscription/${priceId}` : "/api/stripe/refill";
+  const fetchUrl = priceId ? `${appwriteUrl}/api/stripe/subscription/${priceId}` : `${appwriteUrl}/api/stripe/refill`;
 
   const response = await fetch(fetchUrl, {
     method: "GET",
