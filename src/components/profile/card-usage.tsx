@@ -79,7 +79,7 @@ export function CardUsage() {
 
         if (promise) {
           console.log("card-usage.promise:", promise);
-          // window.open(promise.url, target);
+          window.open(promise.url, target);
         }
       } catch (error) {
         console.log("card-usage.error:", error);
@@ -182,7 +182,7 @@ export function CardUsage() {
                     <FormItem className="space-y-2">
                       <FormControl>
                         <RadioGroup
-                          defaultValue={stripeBasicPlan}
+                          // defaultValue={stripeBasicPlan}
                           onValueChange={field.onChange}
                           className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3"
                         >
