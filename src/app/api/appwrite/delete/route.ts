@@ -60,12 +60,14 @@ export async function GET() {
   // Delete stripe customer
   if (profile.stripeCustomerId) {
     const stripe = getStripeInstance();
-    await stripe.customers.del(profile.stripeCustomerId);
+    const deletedStripe = await stripe.customers.del(profile.stripeCustomerId);
+    console.log("api.appwrite.delete:", "Delete stripe customer", deletedStripe);
   }
 
   // Delete profile in database
   const { serverDatabases } = appwriteServer();
   const profilePromise = await serverDatabases.deleteDocument("main", "profile", profile.$id);
+  console.log("api.appwrite.delete:", "Delete profile in database", profilePromise);
 
   if (!profilePromise) {
     console.log("api.appwrite.delete:", "Delete appwrite profile failed");
@@ -74,6 +76,7 @@ export async function GET() {
   // Delete appwrite account
   const { serverUsers } = appwriteServer();
   const accountPromise = await serverUsers.delete(account.$id);
+  console.log("api.appwrite.delete:", "Delete account in appwrite", accountPromise);
 
   if (!accountPromise) {
     console.log("api.appwrite.delete:", "Delete appwrite account failed");
