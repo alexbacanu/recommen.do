@@ -16,22 +16,20 @@ export default function VerifyEmailPage({ searchParams }: { searchParams: { emai
   return (
     <Shell layout="confirmation">
       <div className="grid gap-8">
-        <div>
-          <CardTitle className="flex items-center text-2xl tracking-normal">
-            <Icons.verify className="mr-2 h-6 w-6 text-primary" aria-hidden="true" />
-            Verify your email
-          </CardTitle>
+        <CardTitle className="flex items-center text-2xl tracking-normal">
+          <Icons.verify className="mr-2 h-6 w-6 text-primary" aria-hidden="true" />
+          Verify your email
+        </CardTitle>
+
+        <div className="-mt-2 grid gap-1">
+          <p>
+            An email with a verification link has been sent to:{" "}
+            <span className="font-semibold tracking-wide text-primary">{searchParams.email}</span>
+          </p>
+          <p>Please follow the instructions in the email to verify your account.</p>
         </div>
-        <div className="-mt-2 grid gap-4">
-          <div>
-            <p>
-              An email with a verification link has been sent to:{" "}
-              <span className="font-semibold tracking-wide text-primary">{searchParams.email}</span>
-            </p>
-            <p>Please follow the instructions in the email to verify your account.</p>
-          </div>
-        </div>
-        <div className="mt-2 grid gap-4">
+
+        <div className="mt-2 grid">
           <Button variant="default" asChild>
             <Link href="/" aria-label="Return to homepage">
               Return to homepage
@@ -39,15 +37,13 @@ export default function VerifyEmailPage({ searchParams }: { searchParams: { emai
           </Button>
         </div>
       </div>
-      <div>
-        <Image
-          src="/auth/undraw_verified.svg"
-          className="h-auto w-[36rem] object-contain"
-          alt="undraw verified illustration"
-          width={576}
-          height={576}
-        />
-      </div>
+      <Image
+        src="/auth/undraw_verified.svg"
+        className="h-auto w-[36rem] object-contain"
+        alt="undraw verified illustration"
+        width={576}
+        height={576}
+      />
     </Shell>
   );
 }

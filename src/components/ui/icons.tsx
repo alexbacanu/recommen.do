@@ -5,7 +5,9 @@ import {
   ArrowUpNarrowWide,
   Banana,
   CheckCircle,
+  CheckCircle2,
   Cherry,
+  CircleSlash,
   Citrus,
   Clock,
   Coffee,
@@ -26,6 +28,7 @@ import {
   Twitter,
   User,
   X,
+  XCircle,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -91,6 +94,10 @@ export const Icons = {
   verify: CheckCircle,
   trash: Trash2,
   remove: X,
+
+  cancel: CircleSlash,
+  success: CheckCircle2,
+  fail: XCircle,
 
   support: LifeBuoy,
   clock: Clock,
