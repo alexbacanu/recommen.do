@@ -68,7 +68,7 @@ export function CardAccount() {
     mutationKey: ["deleteAccount"],
     mutationFn: deleteAccount,
     onSuccess: () => {
-      window?.open(``, target, "noopener,noreferrer");
+      window?.open(`${appwriteUrl}/`, target, "noopener,noreferrer");
     },
   });
 
