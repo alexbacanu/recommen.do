@@ -39,10 +39,14 @@ export async function POST(request: Request) {
     );
   }
 
+  console.log("webhook triggered");
+
   if (event.type === "checkout.session.completed") {
+    console.log("checkout session is completed");
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (session.mode === "payment" && session.payment_status === "paid") {
+      console.log("user gets refill");
       const { serverDatabases } = appwriteServer();
 
       // Get user profile based on customerId
@@ -62,6 +66,9 @@ export async function POST(request: Request) {
         );
       }
 
+      console.log("current credits:", singleProfile.credits);
+      console.log("new credits:", singleProfile.credits + 50);
+
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: singleProfile.credits + 50,
@@ -70,6 +77,7 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "invoice.payment_succeeded") {
+    console.log("user has subscription created/renewed");
     const session = event.data.object as Stripe.Invoice;
     const { serverDatabases } = appwriteServer();
 
@@ -100,6 +108,14 @@ export async function POST(request: Request) {
     }
 
     if (session.billing_reason === "subscription_create") {
+      console.log("user has subscription created");
+
+      console.log("current credits:", singleProfile.credits);
+      console.log("1.planid:", sessionLines.price?.id);
+      console.log("2.assign credits:", assignCredits(sessionLines.price?.id));
+      console.log("new credits:", singleProfile.credits + assignCredits(sessionLines.price?.id));
+
+      console.log("new credits credits:", singleProfile.credits + 50);
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: singleProfile.credits + assignCredits(sessionLines.price?.id),
@@ -112,6 +128,12 @@ export async function POST(request: Request) {
     }
 
     if (session.billing_reason === "subscription_cycle") {
+      console.log("user has subscription renewed");
+
+      console.log("current credits:", singleProfile.credits);
+      console.log("1.planid:", sessionLines.price?.id);
+      console.log("2.assign credits:", assignCredits(sessionLines.price?.id));
+      console.log("new credits:", assignCredits(sessionLines.price?.id));
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: assignCredits(sessionLines.price?.id),
@@ -170,6 +192,7 @@ export async function POST(request: Request) {
   }
 
   if (event.type === "customer.subscription.deleted") {
+    console.log("user has subscription deleted");
     const session = event.data.object as Stripe.Subscription;
     const { serverDatabases } = appwriteServer();
 
@@ -206,6 +229,9 @@ export async function POST(request: Request) {
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
     if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
+      console.log("current credits:", singleProfile.credits);
+      console.log("new credits: (should be 0, check)");
+
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: 0,
