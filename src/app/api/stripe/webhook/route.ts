@@ -115,7 +115,6 @@ export async function POST(request: Request) {
       console.log("2.assign credits:", assignCredits(sessionLines.price?.id));
       console.log("new credits:", singleProfile.credits + assignCredits(sessionLines.price?.id));
 
-      console.log("new credits credits:", singleProfile.credits + 50);
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         credits: singleProfile.credits + assignCredits(sessionLines.price?.id),

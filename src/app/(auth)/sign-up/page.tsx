@@ -23,6 +23,7 @@ export default function SignUpPage() {
             <CardDescription className="text-muted-foreground">Choose your preferred sign up method</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
+            <TermsAgree />
             <OAuthSignIn />
 
             <div className="relative">
@@ -47,7 +48,6 @@ export default function SignUpPage() {
             </div>
           </CardFooter>
         </Card>
-        <TermsAgree />
       </div>
     </Shell>
   );
