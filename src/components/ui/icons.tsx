@@ -1,6 +1,7 @@
 import type { Icon as LucideIcon, LucideProps } from "lucide-react";
 
 import {
+  AlertCircle,
   ArrowDownNarrowWide,
   ArrowUpNarrowWide,
   Banana,
@@ -107,6 +108,7 @@ export const Icons = {
   sprout: Sprout,
   coffee: Coffee,
   key: Key,
+  alert: AlertCircle,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,
