@@ -19,7 +19,7 @@ export function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!account) {
+    if (account === false) {
       router.push("/sign-in");
     }
   }, [account, router]);

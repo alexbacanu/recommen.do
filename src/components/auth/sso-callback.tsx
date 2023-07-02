@@ -37,8 +37,9 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
         // We wait here for function to execute, which takes about 900ms
         setTimeout(async () => {
           try {
-            await Promise.all([fetchAccount(), fetchProfile()]);
-            router.push("/profile");
+            const response = await Promise.all([fetchAccount(), fetchProfile()]);
+            console.log("sso-callback.fetchAccount.fetchProfile.success:", response);
+            if (response) router.push("/profile");
           } catch (error) {
             console.log("sso-callback.fetchAccount.fetchProfile.error:", error);
             router.push("/");

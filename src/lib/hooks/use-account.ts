@@ -15,10 +15,12 @@ export const useAccount = () => {
       console.log("use-account.fetchAccount.success:", response);
 
       setAccount(response);
+      return response;
     } catch (error) {
       console.log("use-account.fetchAccount.error:", error);
 
       setAccount(false);
+      return false;
     }
   };
 
@@ -32,10 +34,12 @@ export const useAccount = () => {
 
       console.log("use-account.fetchProfile.success:", response);
       setProfile(response);
+      return response;
     } catch (error) {
       console.log("use-account.fetchProfile.error:", error);
 
       setProfile(false);
+      return false;
     }
   };
 
