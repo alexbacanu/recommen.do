@@ -3,7 +3,7 @@
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Icons } from "@/components/ui/icons";
 import { accountAtom } from "@/lib/atoms/auth";
+import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function HeaderUser() {
@@ -27,7 +28,7 @@ export function HeaderUser() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full" aria-label="User dropdown menu">
           <Avatar className="h-8 w-8">
-            {/* <AvatarImage src={avatar?.href} alt={account?.name} /> */}
+            <AvatarImage src={AppwriteService.getAccountInitials(account.name).href} alt={account.name} />
             <AvatarFallback>
               <Icons.account className="h-5 w-5" aria-hidden="true" />
             </AvatarFallback>

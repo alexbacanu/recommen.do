@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -104,10 +104,11 @@ export function CardAccount() {
           <div className="flex flex-col justify-between gap-4">
             <div className="flex items-center gap-x-4">
               <Avatar>
-                <AvatarFallback>{account.name || "U"}</AvatarFallback>
+                <AvatarImage src={AppwriteService.getAccountInitials(account.name).href} alt={account.name} />
+                <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium leading-none">{account.name || "User"}</p>
+                <p className="text-sm font-medium leading-none">{account.name || "Unnamed user"}</p>
                 <p className="text-sm text-muted-foreground">{account.email}</p>
               </div>
             </div>
