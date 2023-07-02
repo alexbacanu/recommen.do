@@ -1,9 +1,12 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { LoadingPage } from "@/components/ui/loading";
+import { toast } from "@/components/ui/use-toast";
+import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
@@ -13,6 +16,7 @@ interface SSOCallbackProps {
 }
 
 export function SSOCallback({ searchParams }: SSOCallbackProps) {
+  const account = useAtomValue(accountAtom);
   const { fetchAccount, fetchProfile } = useAccount();
   const router = useRouter();
 
@@ -26,7 +30,21 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
   useEffect(() => {
     const updateMagicURL = async () => {
       if (!userId || !secret) {
-        return; // TODO: do toast error
+        toast({
+          title: "Error",
+          description: "Invalid user ID or secret.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (account) {
+        toast({
+          title: "Error",
+          description: "You are already signed in!",
+          variant: "destructive",
+        });
+        return;
       }
 
       try {
