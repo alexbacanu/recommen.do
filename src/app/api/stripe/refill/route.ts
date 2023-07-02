@@ -42,6 +42,14 @@ export async function GET() {
     });
   }
 
+  if (profile.credits >= 950) {
+    console.log("api.stripe.refill:", "You have reached your refill limit (max 999 credits)");
+    return new Response("You have reached your refill limit (max 999 credits)", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+
   if (profile.stripeCustomerId) {
     const stripe = getStripeInstance();
 

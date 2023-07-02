@@ -120,12 +120,19 @@ export function CardUsage() {
         </CardContent>
         {hasSubscription && (
           <CardFooter className="grid">
-            <Button asChild>
-              <Link href={refillURL} target={target} aria-label="Add 50 more recommendations">
+            {profile.credits > 950 ? (
+              <Button disabled>
                 <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Add 50 more recommendations</span>
-              </Link>
-            </Button>
+                <span>Refill limit reached</span>
+              </Button>
+            ) : (
+              <Button asChild>
+                <Link href={refillURL} target={target} aria-label="Add 50 more recommendations">
+                  <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
+                  <span>Add 50 more recommendations</span>
+                </Link>
+              </Button>
+            )}
           </CardFooter>
         )}
 
