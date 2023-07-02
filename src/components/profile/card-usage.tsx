@@ -105,7 +105,9 @@ export function CardUsage() {
         <CardContent className="grid gap-4">
           <Label className="flex flex-col gap-y-2">
             <span>Remaining</span>
-            <span className="font-normal leading-snug text-muted-foreground">{profile.credits} credits remaining</span>
+            <span className="font-normal leading-snug text-muted-foreground">
+              {profile.credits} recommendations remaining
+            </span>
           </Label>
           {!hasSubscription && (
             <Label className="flex flex-col gap-y-2">
@@ -119,9 +121,9 @@ export function CardUsage() {
         {hasSubscription && (
           <CardFooter className="grid">
             <Button asChild>
-              <Link href={refillURL} target={target} aria-label="Add 50 more credits">
+              <Link href={refillURL} target={target} aria-label="Add 50 more recommendations">
                 <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Add 50 more credits</span>
+                <span>Add 50 more recommendations</span>
               </Link>
             </Button>
           </CardFooter>
@@ -203,7 +205,7 @@ export function CardUsage() {
                             </div>
                             <div className="grid gap-1">
                               <div className="text-sm font-semibold">Cherry</div>
-                              <div className="text-sm text-muted-foreground">50 credits</div>
+                              <div className="text-sm text-muted-foreground">50 recommendations</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$2</Badge>
                           </Label>
@@ -225,7 +227,7 @@ export function CardUsage() {
                             </div>
                             <div className="grid gap-1">
                               <div className="text-sm font-semibold">Peach</div>
-                              <div className="text-sm text-muted-foreground">200 credits</div>
+                              <div className="text-sm text-muted-foreground">200 recommendations</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$4</Badge>
                           </Label>
@@ -247,7 +249,7 @@ export function CardUsage() {
                             </div>
                             <div className="grid gap-1">
                               <div className="text-sm font-semibold">Melon</div>
-                              <div className="text-sm text-muted-foreground">600 credits</div>
+                              <div className="text-sm text-muted-foreground">600 recommendations</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$10</Badge>
                           </Label>

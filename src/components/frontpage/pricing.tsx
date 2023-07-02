@@ -48,7 +48,7 @@ export function Pricing({ plans }: PricingProps) {
                 Limited offer
               </Badge>
 
-              <Label className="text-center text-base font-normal">10 free credits on account creation</Label>
+              <Label className="text-center text-base font-normal">10 free recommendations on account creation</Label>
             </div>
 
             <div className="flex items-center gap-x-2 md:gap-x-6">
