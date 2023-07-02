@@ -50,7 +50,7 @@ const Toast = React.forwardRef<
         <div className="flex w-20 items-center justify-center">
           <Icons.alert className="h-8 w-8 text-white" aria-hidden="true" />
         </div>
-        <div className="bg-popover p-2">{children}</div>
+        <div className="w-full bg-popover px-4 py-2">{children}</div>
       </>
     </ToastPrimitives.Root>
   );

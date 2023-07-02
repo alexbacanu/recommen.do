@@ -156,10 +156,10 @@ export function CardUsage() {
                     {profile.stripeSubscriptionName === "Cherry plan" && (
                       <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                     )}
-                    {profile.stripeSubscriptionName === "Banana plan" && (
+                    {profile.stripeSubscriptionName === "Grape plan" && (
                       <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                     )}
-                    {profile.stripeSubscriptionName === "Watermelon plan" && (
+                    {profile.stripeSubscriptionName === "Melon plan" && (
                       <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                     )}
                     {profile.stripeSubscriptionName}

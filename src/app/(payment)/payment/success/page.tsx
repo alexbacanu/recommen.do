@@ -19,7 +19,7 @@ export default function PaymentCancelPage() {
 
     const timeout = setTimeout(() => {
       router.replace("/profile");
-    }, 2500);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [router]);
