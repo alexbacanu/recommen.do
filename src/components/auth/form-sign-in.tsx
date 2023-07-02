@@ -16,8 +16,38 @@ import { accountAtom } from "@/lib/atoms/auth";
 import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
+const popularDomains = [
+  "gmail.com",
+  "outlook.com",
+  "hotmail.com",
+  "live.com",
+  "msn.com",
+  "yahoo.com",
+  "ymail.com",
+  "rocketmail.com",
+  "icloud.com",
+  "me.com",
+  "mac.com",
+];
+
 const formSchema = z.object({
-  email: z.string().email(),
+  email: z
+    .string()
+    .email()
+    .refine(
+      (value) => {
+        const parts = value.split("@");
+        if (!parts[0] || !parts[1]) return false;
+
+        const domain = parts[1];
+        // const dotCount = parts[0].split(".").length - 1;
+
+        return popularDomains.includes(domain);
+      },
+      {
+        message: "Invalid email format, use Gmail, Outlook, Yahoo, Apple or Social Logins",
+      },
+    ),
 });
 
 export function FormSignIn() {
