@@ -45,36 +45,39 @@ export default function IndexPopup() {
       <Init />
       <ReactQueryProvider>
         {account ? (
-          <Tabs defaultValue="account" className="h-[600px] w-[380px] overflow-hidden bg-primary-foreground">
-            <TabsContent value="account" className="max-h-[544px] overflow-auto">
-              <div>
-                <CardUsage />
-              </div>
+          <Tabs defaultValue="account" className="min-h-[600px] min-w-[380px] overflow-hidden">
+            <TabsContent
+              value="account"
+              className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
+            >
+              <CardUsage />
             </TabsContent>
 
-            <TabsContent value="history" className="max-h-[544px] overflow-auto">
-              <div>
-                <CardHistory />
-              </div>
+            <TabsContent
+              value="history"
+              className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
+            >
+              <CardHistory />
             </TabsContent>
 
-            <TabsContent value="settings" className="max-h-[544px] overflow-auto">
-              <div>
-                <CardAccount />
-                <CardAPIKey />
-                <CardSupport />
-                <CardLegal />
-              </div>
+            <TabsContent
+              value="settings"
+              className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
+            >
+              <CardAccount />
+              <CardAPIKey />
+              <CardSupport />
+              <CardLegal />
             </TabsContent>
 
-            <TabsList className="fixed bottom-0 grid w-full grid-cols-3 rounded-none border-t border-gray-300 shadow-inner">
+            <TabsList className="fixed bottom-0 top-auto grid w-full grid-cols-3  rounded-none border-t border-gray-300 shadow-inner">
               <TabsTrigger value="account">Account</TabsTrigger>
               <TabsTrigger value="history">History</TabsTrigger>
               <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
           </Tabs>
         ) : (
-          <div className="w-[380px]">
+          <div className="min-w-[380px]">
             <AuthRequiredCard />
           </div>
         )}

@@ -9,7 +9,7 @@ import { appwriteUrl } from "@/lib/envClient";
 
 export default function AuthRequiredCard() {
   return (
-    <Shell layout="confirmation" className="py-8">
+    <Shell layout="unauthorized" className="py-8">
       <div className="grid gap-8">
         <CardTitle className="flex items-center text-2xl tracking-normal">
           <Icons.login className="mr-2 mt-1 h-6 w-6 text-primary" aria-hidden="true" />

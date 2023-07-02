@@ -233,7 +233,7 @@ export function CardUsage() {
                               <Icons.plan2 className="h-6 w-6" aria-hidden="true" />
                             </div>
                             <div className="grid gap-1">
-                              <div className="text-sm font-semibold">Peach</div>
+                              <div className="text-sm font-semibold">Grape</div>
                               <div className="text-sm text-muted-foreground">200 recommendations</div>
                             </div>
                             <Badge className="absolute right-2 top-2">$4</Badge>
