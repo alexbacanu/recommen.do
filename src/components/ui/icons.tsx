@@ -23,6 +23,7 @@ import {
   Percent,
   Plus,
   RefreshCw,
+  Save,
   Settings2,
   Sprout,
   Trash2,
@@ -109,6 +110,7 @@ export const Icons = {
   coffee: Coffee,
   key: Key,
   alert: AlertCircle,
+  save: Save,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,

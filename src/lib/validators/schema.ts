@@ -52,8 +52,8 @@ export type OpenAIStreamPayload = z.infer<typeof OpenAIStreamPayloadValidator>;
 export const SSOCallbackSchema = z.object({
   searchParams: z
     .object({
-      userId: z.string().min(1),
-      secret: z.string().min(1),
+      userId: z.string().optional(),
+      secret: z.string().optional(),
     })
     .optional(),
 });
