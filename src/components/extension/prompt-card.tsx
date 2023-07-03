@@ -213,13 +213,14 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   onChange={(e) => {
                     setPrompt(e.target.value);
                   }}
+                  disabled={!profile}
                   type="text"
                   placeholder={
                     !!userApiKey
                       ? "looking for any specific features?"
                       : profile
                       ? `${profile.credits ?? 0} recommendations available`
-                      : "please login to get recommendations"
+                      : "please sign in to get recommendations"
                   }
                   className="pl-[36px]"
                 />
@@ -247,9 +248,17 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <Button variant="default" type="submit" disabled={isLoading || !profile || !hasRead}>
-                {hasRead ? "Send" : "Generating..."}
-              </Button>
+              {profile ? (
+                <Button variant="default" type="submit" disabled={isLoading || !profile || !hasRead}>
+                  {hasRead ? "Send" : "Generating..."}
+                </Button>
+              ) : (
+                <Button variant="default" asChild>
+                  <Link href={`${appwriteUrl}/sign-in`} aria-label="Go to sign-in page">
+                    Sign in
+                  </Link>
+                </Button>
+              )}
             </form>
           </div>
         </div>
@@ -266,11 +275,13 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Skeleton className="mx-auto h-full w-[144px]" />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      className="mx-auto max-h-[160px] rounded-[12px] object-cover"
-                      src={product.image}
-                      alt={product.name}
-                    />
+                    <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
+                      <img
+                        className="mx-auto max-h-[160px] rounded-[12px] object-cover"
+                        src={product.image}
+                        alt={product.name}
+                      />
+                    </Link>
                   )}
                 </div>
                 <div className="space-y-3 pb-[8px]">
@@ -278,9 +289,13 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     {showSkeleton ? (
                       <Skeleton className="h-[32px] w-1/2" />
                     ) : (
-                      <div className={cn("line-clamp-1 space-y-1 text-[22px] font-semibold text-fuchsia-600")}>
+                      <Link
+                        href={product.link}
+                        aria-label={`Go to product ${product.name} page`}
+                        className={cn("line-clamp-1 space-y-1 text-[22px] font-semibold text-fuchsia-600")}
+                      >
                         {product.name}
-                      </div>
+                      </Link>
                     )}
                   </div>
                   <div className="space-y-1">
