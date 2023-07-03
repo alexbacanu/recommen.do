@@ -44,7 +44,8 @@ const formSchema = z.object({
         return popularDomains.includes(domain);
       },
       {
-        message: "Invalid email format, use Gmail, Outlook, Yahoo, Apple or Social Logins",
+        message:
+          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo, Apple, or the social login options above.",
       },
     ),
 });
