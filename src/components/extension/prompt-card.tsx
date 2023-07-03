@@ -274,8 +274,8 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="mx-auto h-full w-[144px]" />
                   ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         className="mx-auto max-h-[160px] rounded-[12px] object-cover"
                         src={product.image}
