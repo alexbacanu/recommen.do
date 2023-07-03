@@ -8,6 +8,7 @@ import { CardAccount } from "@/components/profile/card-account";
 import { CardAPIKey } from "@/components/profile/card-apikey";
 import { CardHistory } from "@/components/profile/card-history";
 import { CardLegal } from "@/components/profile/card-legal";
+import { CardSessions } from "@/components/profile/card-sessions";
 import { CardSubscription } from "@/components/profile/card-subscription";
 import { CardSupport } from "@/components/profile/card-support";
 import { Card } from "@/components/ui/card";
@@ -30,6 +31,7 @@ export function Dashboard() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         <Card>
           <CardAccount />
+          <CardSessions />
           <CardAPIKey />
           <CardSupport />
           <CardLegal />
