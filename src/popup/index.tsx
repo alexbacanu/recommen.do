@@ -51,6 +51,7 @@ export default function IndexPopup() {
               value="account"
               className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
             >
+              <CardAccount />
               <CardSubscription />
             </TabsContent>
 
@@ -65,9 +66,8 @@ export default function IndexPopup() {
               value="settings"
               className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
             >
-              <CardAccount />
-              <CardSessions />
               <CardAPIKey />
+              <CardSessions />
               <CardSupport />
               <CardLegal />
             </TabsContent>
