@@ -29,7 +29,7 @@ export function CardAPIKey() {
   const [isPending, startTransition] = useTransition();
 
   const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", "");
-  const [promptStatus, setPromptStatus] = useStorage<boolean>("promptStatus", true);
+  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
 
   const extensionDetected = !window?.next;
 
@@ -81,8 +81,8 @@ export function CardAPIKey() {
               </Label>
               <Switch
                 id="show-extension"
-                checked={promptStatus}
-                onClick={() => setPromptStatus((prevState) => !prevState)}
+                checked={!isPromptHidden}
+                onClick={() => setIsPromptHidden((prevState) => !prevState)}
               />
             </div>
           </Label>
