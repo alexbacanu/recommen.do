@@ -60,7 +60,7 @@ const pluginConfig: CookieConsentConfig = {
             'We use cookies to personalise content and to analyse our traffic. We also share information about your use of the website with our analytics partners. You may read more about any purposes or vendors that we use by clicking <a href="#" data-cc="show-preferencesModal">Cookie settings</a>. This preference center is accessible at any time through the <a href="#" data-cc="show-preferencesModal">Cookie settings</a> button located on every page.',
           acceptAllBtn: "Accept",
           showPreferencesBtn: "Cookie settings",
-          footer: `<a href="/en/privacy">Privacy Policy</a>`,
+          footer: `<a href="/privacy">Privacy Policy</a><a href="/cookies">Cookies Policy</a><a href="/terms">Terms and Conditions</a>`,
         },
         preferencesModal: {
           title: "Cookie settings 🍪",
