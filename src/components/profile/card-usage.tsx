@@ -201,7 +201,7 @@ export function CardUsage() {
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeBasicPlan
                                 ? "border-primary text-primary"
-                                : "hover:bg-accent hover:text-primary",
+                                : "hover:border-primary/30 hover:text-primary",
                             )}
                           >
                             <div className="hidden">
@@ -223,7 +223,7 @@ export function CardUsage() {
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripePremiumPlan
                                 ? "border-primary text-primary"
-                                : "hover:bg-accent hover:text-primary",
+                                : "hover:border-primary/30 hover:text-primary",
                             )}
                           >
                             <div className="hidden">
@@ -245,7 +245,7 @@ export function CardUsage() {
                               "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
                               field.value === stripeUltimatePlan
                                 ? "border-primary text-primary"
-                                : "hover:bg-accent hover:text-primary",
+                                : "hover:border-primary/30 hover:text-primary",
                             )}
                           >
                             <div className="hidden">
