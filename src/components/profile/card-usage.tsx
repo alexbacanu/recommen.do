@@ -104,15 +104,13 @@ export function CardUsage() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <Label className="flex flex-col gap-y-2">
-            <span>Remaining</span>
-            <span className="font-normal leading-snug text-muted-foreground">
-              {profile.credits} recommendations remaining
-            </span>
+            <span>Recommendations left</span>
+            <span className="font-normal leading-snug text-muted-foreground">{profile.credits} remaining</span>
           </Label>
           {!hasSubscription && (
             <Label className="flex flex-col gap-y-2">
               <span>Valid until</span>
-              <span className="font-normal leading-snug text-muted-foreground">
+              <span className="line-clamp-1 font-normal leading-snug text-muted-foreground">
                 {new Date(new Date(profile.$createdAt).getTime() + 30 * 24 * 60 * 60 * 1000).toUTCString()}
               </span>
             </Label>

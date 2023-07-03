@@ -11,7 +11,7 @@ export function TermsAgree() {
   const [hasAccepted, setHasAccepted] = useAtom(termsAtom);
 
   return (
-    <div className="-mt-4 flex items-center gap-x-2">
+    <div className="-mt-2 flex items-center gap-x-2 lg:-mt-6">
       <Checkbox id="terms" checked={hasAccepted} onCheckedChange={() => setHasAccepted(!hasAccepted)} />
       <div className="grid gap-2 leading-none">
         <label
