@@ -21,6 +21,7 @@ import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
+import { LoadingPage } from "@/components/ui/loading";
 import { Separator } from "@/components/ui/separator";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
@@ -86,13 +87,11 @@ export function CardAccount() {
     enabled: !!profile,
   });
 
-  console.log(data?.sessions);
-
   useEffect(() => {
-    if (account === false || profile === false) {
-      window.open(`${appwriteUrl}/sign-in`, target); // replace with window.something
+    if (data?.total === 1) {
+      setIsOpen(false);
     }
-  }, [account, profile, target]);
+  }, [data]);
 
   if (account && profile)
     return (
@@ -250,5 +249,5 @@ export function CardAccount() {
       </>
     );
 
-  return null;
+  return <LoadingPage />;
 }

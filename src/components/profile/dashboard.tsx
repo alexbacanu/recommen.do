@@ -12,19 +12,20 @@ import { CardSupport } from "@/components/profile/card-support";
 import { CardUsage } from "@/components/profile/card-usage";
 import { Card } from "@/components/ui/card";
 import { LoadingPage } from "@/components/ui/loading";
-import { accountAtom } from "@/lib/atoms/auth";
+import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 
 export function Dashboard() {
   const account = useAtomValue(accountAtom);
+  const profile = useAtomValue(profileAtom);
   const router = useRouter();
 
   useEffect(() => {
-    if (account === false) {
+    if (account === false || profile === false) {
       router.push("/sign-in");
     }
-  }, [account, router]);
+  }, [account, profile, router]);
 
-  if (account)
+  if (account && profile)
     return (
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-[0.8fr_0.7fr_0.8fr]">
         <Card>
