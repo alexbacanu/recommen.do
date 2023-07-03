@@ -13,6 +13,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Icons } from "@/components/ui/icons";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { cn } from "@/lib/helpers/utils";
 
 interface PricingCardProps {
   plan: StripePlan;
@@ -108,13 +109,23 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
 
           {showSubscribe && (
             <Button variant={index === 1 ? "default" : "secondary"} disabled={isLoading} asChild>
-              <Link href={needsVerification ? "/profile" : checkoutURL}>Subscribe now</Link>
+              <Link
+                href={needsVerification ? "/profile" : checkoutURL}
+                className={cn("transition-opacity duration-300", isLoading && "pointer-events-none opacity-50")}
+              >
+                Subscribe now
+              </Link>
             </Button>
           )}
 
           {showManageSubscription && (
             <Button variant={index === 1 ? "default" : "secondary"} disabled={isLoading} asChild>
-              <Link href={checkoutURL}>Manage subscription</Link>
+              <Link
+                href={checkoutURL}
+                className={cn("transition-opacity duration-300", isLoading && "pointer-events-none opacity-50")}
+              >
+                Manage subscription
+              </Link>
             </Button>
           )}
         </CardFooter>
