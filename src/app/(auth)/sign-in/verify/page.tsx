@@ -18,15 +18,15 @@ export default function VerifyEmailPage({ searchParams }: { searchParams: { emai
       <div className="grid gap-8">
         <CardTitle className="flex items-center text-2xl tracking-normal">
           <Icons.verify className="mr-2 h-6 w-6 text-primary" aria-hidden="true" />
-          Verify your email
+          Check your email
         </CardTitle>
 
         <div className="-mt-2 grid gap-1">
           <p>
-            An email with a verification link has been sent to:{" "}
+            An email with a link has been sent to:{" "}
             <span className="font-semibold tracking-wide text-primary">{searchParams.email}</span>
           </p>
-          <p>Please follow the instructions in the email to verify your account.</p>
+          <p>Please follow the instructions in the email in order to access your account.</p>
         </div>
 
         <div className="mt-2 grid">
