@@ -166,7 +166,9 @@ export function CardUsage() {
               </Label>
               <Label className="flex flex-col gap-y-2">
                 <span>Renewal date</span>
-                <span className="font-normal leading-snug text-muted-foreground">Fri, 21 Jul 2023</span>
+                <span className="font-normal leading-snug text-muted-foreground">
+                  {profile?.stripeCurrentPeriodEnd && new Date(profile?.stripeCurrentPeriodEnd).toUTCString()}
+                </span>
               </Label>
             </CardContent>
             <CardFooter className="grid">
