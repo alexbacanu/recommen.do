@@ -68,11 +68,8 @@ export function CardAPIKey() {
     return (
       <>
         <CardHeader>
-          <CardTitle className="flex justify-between text-2xl">
+          <CardTitle className="text-2xl">
             <span>Settings</span>
-            <Badge variant="outline" className={cn("capitalize", apiKeyDetected && "border-lime-400")}>
-              {apiKeyDetected ? "Active" : "Inactive"}
-            </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -99,7 +96,12 @@ export function CardAPIKey() {
                   name="userApiKey"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
-                      <FormLabel>OpenAI API Key</FormLabel>
+                      <div className="flex items-center gap-x-2">
+                        <FormLabel>OpenAI API Key</FormLabel>
+                        <Badge variant="outline" className={cn("capitalize", apiKeyDetected && "border-lime-400")}>
+                          {apiKeyDetected ? "Active" : "Inactive"}
+                        </Badge>
+                      </div>
                       <FormControl>
                         <Input className={cn(apiKeyDetected && "hidden")} disabled={apiKeyDetected} {...field} />
                       </FormControl>
