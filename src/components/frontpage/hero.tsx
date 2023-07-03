@@ -38,12 +38,12 @@ export function Hero() {
             <div className="mt-8 grid w-full gap-4 md:inline-flex lg:mt-12">
               <Button variant="default" size="lg" disabled={unsupportedBrowser} asChild>
                 {unsupportedBrowser ? (
-                  <a href="/download/firefox-1.1.0.zip" aria-label="Download extension for Firefox">
-                    Download <span className="ml-1 hidden lg:inline-flex">extension for Firefox</span>
+                  <a href="/download/firefox-1.1.0.zip" aria-label={`Download extension for ${browser}`}>
+                    Download <span className="ml-1 hidden lg:inline-flex">extension for {browser}</span>
                   </a>
                 ) : (
-                  <a href="/download/chrome-1.1.0.zip" aria-label="Download extension for Chrome">
-                    Download <span className="ml-1 hidden lg:inline-flex">extension for Chrome</span>
+                  <a href="/download/chrome-1.1.0.zip" aria-label={`Download extension for ${browser}`}>
+                    Download <span className="ml-1 hidden lg:inline-flex">extension for {browser}</span>
                   </a>
                 )}
               </Button>

@@ -102,7 +102,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
         <CardFooter className="grid">
           {showGetStarted && (
             <Button variant={index === 1 ? "default" : "secondary"} asChild>
-              <Link href="/profile">Get started</Link>
+              <Link href="/sign-up">Get started</Link>
             </Button>
           )}
 

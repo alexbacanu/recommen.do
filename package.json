@@ -49,7 +49,7 @@
     "clsx": "^1.2.1",
     "framer-motion": "^10.12.18",
     "jotai": "^2.2.1",
-    "lucide-react": "^0.257.0",
+    "lucide-react": "^0.258.0",
     "next": "^13.4.7",
     "node-appwrite": "^9.0.0",
     "openai-edge": "^1.1.1",

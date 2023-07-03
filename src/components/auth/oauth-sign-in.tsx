@@ -27,7 +27,7 @@ export function OAuthSignIn() {
     if (!hasAccepted) {
       toast({
         title: "Error",
-        description: "Please accept the Terms of Service and Privacy Policy to proceed with sign-in.",
+        description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
         variant: "destructive",
       });
       return;

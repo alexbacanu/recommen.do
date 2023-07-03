@@ -4,7 +4,7 @@ import { SSOCallback } from "@/components/auth/sso-callback";
 import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Sign in",
   description: "Sign in to your account",
 };
 

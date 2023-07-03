@@ -8,7 +8,7 @@ import { Icons } from "@/components/ui/icons";
 import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Sign in",
   description: "Sign in to your account",
 };
 

@@ -70,7 +70,7 @@ export function HeaderUser() {
     <Button variant="outline" asChild>
       <Link href="/sign-in" aria-label="Sign in">
         <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
-        Sign In
+        Sign in
       </Link>
     </Button>
   );

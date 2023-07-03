@@ -41,9 +41,9 @@ export function Pricing({ plans }: PricingProps) {
         <div className="flex flex-col gap-y-10 lg:gap-y-12 xl:gap-y-14">
           <h2 className="heading-accent text-center tracking-tight">Subscription plans</h2>
 
-          <Card className="flex items-center justify-between gap-x-2 p-6 md:gap-x-6">
+          <Card className="flex flex-col items-center justify-between gap-4 p-6 sm:flex-row md:gap-6">
             <div className="flex items-center gap-x-2 md:gap-x-6">
-              <Badge variant="outline" className="rounded-md px-4 py-2 uppercase">
+              <Badge variant="outline" className="hidden rounded-md px-4 py-2 uppercase md:flex">
                 <Icons.clock className="mr-2 h-4 w-4" aria-hidden="true" />
                 Limited offer
               </Badge>
@@ -51,12 +51,14 @@ export function Pricing({ plans }: PricingProps) {
               <Label className="text-center text-base font-normal">10 free recommendations on account creation</Label>
             </div>
 
-            <div className="flex items-center gap-x-2 md:gap-x-6">
+            <div className="grid items-center gap-x-2 md:gap-x-6">
               {profile ? (
-                <Label className="text-sm">Already claimed</Label>
+                <Button variant="secondary" className="whitespace-nowrap text-sm" disabled>
+                  Already claimed
+                </Button>
               ) : (
-                <Button variant="outline" className="whitespace-nowrap text-sm" asChild>
-                  <Link href="/sign-in" aria-label="Get started">
+                <Button variant="secondary" className="whitespace-nowrap text-sm" asChild>
+                  <Link href="/sign-up" aria-label="Get started">
                     Get started
                   </Link>
                 </Button>
