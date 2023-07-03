@@ -18,20 +18,20 @@ export function CardSupport() {
         <CardTitle className="text-2xl">Support</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center justify-between gap-1 md:flex-col md:items-start">
+        <div className="flex items-center justify-evenly gap-2">
           <Button variant="link" className="px-2 py-1" asChild>
             <Link href={`${appwriteUrl}/contact`} target={target} aria-label="Contact us">
               Contact us
             </Link>
           </Button>
 
-          <Separator orientation="vertical" className="h-6 md:hidden" />
+          {/* <Separator orientation="vertical" className="h-6 md:hidden" />
 
           <Button variant="link" className="px-2 py-1" asChild>
             <Link href={`${appwriteUrl}/installation`} target={target} aria-label="Use your own OpenAI API key">
               Use your OpenAI API key
             </Link>
-          </Button>
+          </Button> */}
 
           <Separator orientation="vertical" className="h-6 md:hidden" />
 
