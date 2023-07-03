@@ -4,6 +4,7 @@ import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
 import cssText from "data-text:@/styles/globals.css";
 
+import { Init } from "@/components/_init/init-auth";
 import PromptCard from "@/components/extension/prompt-card";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/lib/providers/react-query";
@@ -116,6 +117,7 @@ export default function EbayContent() {
 
   return (
     <>
+      <Init />
       <ReactQueryProvider>
         {isPromptHidden ? (
           <button
