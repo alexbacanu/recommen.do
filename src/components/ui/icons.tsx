@@ -28,6 +28,7 @@ import {
   Sprout,
   Trash2,
   Twitter,
+  Undo2,
   User,
   X,
   XCircle,
@@ -96,6 +97,7 @@ export const Icons = {
   verify: CheckCircle,
   trash: Trash2,
   remove: X,
+  undo: Undo2,
 
   cancel: CircleSlash,
   success: CheckCircle2,
