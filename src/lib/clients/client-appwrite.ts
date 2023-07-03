@@ -66,6 +66,27 @@ export const AppwriteService = {
     return response;
   },
 
+  updateName: async (newName: string) => {
+    const response = await account.updateName(newName);
+    console.log("client-appwrite.updateName:", response);
+
+    return response;
+  },
+
+  updatePassword: async (newPassword: string, oldPassword?: string) => {
+    const response = await account.updatePassword(newPassword, oldPassword);
+    console.log("client-appwrite.updatePassword:", response);
+
+    return response;
+  },
+
+  updateEmail: async (newEmail: string, currentPassword: string) => {
+    const response = await account.updateEmail(newEmail, currentPassword);
+    console.log("client-appwrite.updateEmail:", response);
+
+    return response;
+  },
+
   createJWT: async () => {
     if (!jwt) {
       const jwtObject = await account.createJWT();

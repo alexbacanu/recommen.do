@@ -59,6 +59,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "server-only": "^0.0.1",
+    "sonner": "^0.5.0",
     "stripe": "^12.11.0",
     "vanilla-cookieconsent": "3.0.0-rc.15",
     "zod": "^3.21.4"

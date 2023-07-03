@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
-import { toast } from "@/components/ui/use-toast";
 import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
@@ -25,11 +24,11 @@ export function OAuthSignIn() {
 
   async function oauthSignIn(provider: string) {
     if (!hasAccepted) {
-      toast({
-        title: "Error",
-        description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
+      //   variant: "destructive",
+      // });
       return;
     }
 

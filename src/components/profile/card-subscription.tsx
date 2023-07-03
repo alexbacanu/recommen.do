@@ -16,7 +16,6 @@ import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl, stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
@@ -50,7 +49,7 @@ export function CardSubscription() {
   const target = extensionDetected ? "_blank" : "_self";
 
   const hasSubscription = profile ? profile.stripeSubscriptionId !== "none" : false;
-  const stripePriceId = profile ? profile?.stripePriceId : null;
+  const stripePriceId = profile ? profile.stripePriceId : null;
 
   const subQuery = useQuery({
     queryKey: ["subscriptonQuery", stripePriceId],
@@ -84,14 +83,14 @@ export function CardSubscription() {
       } catch (error) {
         console.log("card-subscription.error:", error);
       } finally {
-        toast({
-          title: "You submitted the following values:",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{JSON.stringify(values.plan, null, 2)}</code>
-            </pre>
-          ),
-        });
+        // toast({
+        //   title: "You submitted the following values:",
+        //   description: (
+        //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        //       <code className="text-white">{JSON.stringify(values.plan, null, 2)}</code>
+        //     </pre>
+        //   ),
+        // });
       }
     });
   }
@@ -167,7 +166,7 @@ export function CardSubscription() {
               <Label className="flex flex-col gap-y-2">
                 <span>Renewal date</span>
                 <span className="font-normal leading-snug text-muted-foreground">
-                  {profile?.stripeCurrentPeriodEnd && new Date(profile?.stripeCurrentPeriodEnd).toUTCString()}
+                  {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
                 </span>
               </Label>
             </CardContent>

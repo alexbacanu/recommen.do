@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </ReactQueryProvider>
         <CookieButton />
+
         <Toaster />
       </body>
     </html>

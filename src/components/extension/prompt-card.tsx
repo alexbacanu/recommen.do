@@ -12,7 +12,6 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { toast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -117,13 +116,14 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
   };
 
   const handleError = (error: Error | unknown) => {
-    const description = error instanceof Error ? error.message : JSON.stringify(error);
+    console.log(error);
+    // const description = error instanceof Error ? error.message : JSON.stringify(error);
 
-    toast({
-      title: "Error",
-      description,
-      variant: "destructive",
-    });
+    // toast({
+    //   title: "Error",
+    //   description,
+    //   variant: "destructive",
+    // });
   };
 
   const {
@@ -218,7 +218,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     !!userApiKey
                       ? "looking for any specific features?"
                       : profile
-                      ? `${profile?.credits ?? 0} recommendations available`
+                      ? `${profile.credits ?? 0} recommendations available`
                       : "please login to get recommendations"
                   }
                   className="pl-[36px]"

@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import { accountAtom } from "@/lib/atoms/auth";
 import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
@@ -68,20 +67,20 @@ export function FormSignIn() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!hasAccepted) {
-      toast({
-        title: "Error",
-        description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
+      //   variant: "destructive",
+      // });
       return;
     }
 
     if (account) {
-      toast({
-        title: "Error",
-        description: "You are already signed in. Please sign out before signing in again.",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "You are already signed in. Please sign out before signing in again.",
+      //   variant: "destructive",
+      // });
       return;
     }
 
