@@ -42,7 +42,7 @@ async function getCheckoutURL(priceId?: string | null) {
   return checkoutURL;
 }
 
-export function CardUsage() {
+export function CardSubscription() {
   const [isPending, startTransition] = useTransition();
   const profile = useAtomValue(profileAtom);
 
@@ -78,11 +78,11 @@ export function CardUsage() {
         const promise = await getCheckoutURL(values.plan);
 
         if (promise) {
-          console.log("card-usage.promise:", promise);
+          console.log("card-subscription.promise:", promise);
           window.open(promise.url, target);
         }
       } catch (error) {
-        console.log("card-usage.error:", error);
+        console.log("card-subscription.error:", error);
       } finally {
         toast({
           title: "You submitted the following values:",

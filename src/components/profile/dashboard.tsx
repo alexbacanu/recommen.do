@@ -8,8 +8,8 @@ import { CardAccount } from "@/components/profile/card-account";
 import { CardAPIKey } from "@/components/profile/card-apikey";
 import { CardHistory } from "@/components/profile/card-history";
 import { CardLegal } from "@/components/profile/card-legal";
+import { CardSubscription } from "@/components/profile/card-subscription";
 import { CardSupport } from "@/components/profile/card-support";
-import { CardUsage } from "@/components/profile/card-usage";
 import { Card } from "@/components/ui/card";
 import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
@@ -36,7 +36,7 @@ export function Dashboard() {
         </Card>
 
         <Card>
-          <CardUsage />
+          <CardSubscription />
         </Card>
 
         <Card>
