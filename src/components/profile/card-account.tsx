@@ -159,17 +159,15 @@ export function CardAccount() {
                   <span>Manage sessions</span>
                 </Label>
 
-                {data && data.total > 1 && (
-                  <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" aria-label="Toggle sessions">
-                      {isOpen ? (
-                        <Icons.collapseUp className="h-4 w-4" aria-hidden="true" />
-                      ) : (
-                        <Icons.collapseDown className="h-4 w-4" aria-hidden="true" />
-                      )}
-                    </Button>
-                  </CollapsibleTrigger>
-                )}
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm" aria-label="Toggle sessions">
+                    {isOpen ? (
+                      <Icons.collapseUp className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <Icons.collapseDown className="h-4 w-4" aria-hidden="true" />
+                    )}
+                  </Button>
+                </CollapsibleTrigger>
               </div>
               {data &&
                 data.sessions
