@@ -222,7 +222,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                       ? `${profile.credits ?? 0} recommendations available`
                       : "please sign in to get recommendations"
                   }
-                  className="pl-[36px]"
+                  className="h-[36px] px-[12px] py-[4px] pl-[36px] text-[14px]"
                 />
 
                 <TooltipProvider>
@@ -249,11 +249,11 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                 </TooltipProvider>
               </div>
               {profile ? (
-                <Button variant="default" disabled={isLoading || !profile || !hasRead}>
+                <Button variant="default" size="fixed" disabled={isLoading || !profile || !hasRead}>
                   {hasRead ? "Send" : "Generating..."}
                 </Button>
               ) : (
-                <Button variant="default" asChild>
+                <Button variant="default" size="fixed" asChild>
                   <Link href={`${appwriteUrl}/sign-in`} aria-label="Go to sign-in page">
                     Sign in
                   </Link>
@@ -342,7 +342,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                     <Skeleton className="mx-auto h-[40px] w-[144px]" />
                   ) : (
                     <div className="mx-auto text-center">
-                      <Button variant="default" className="w-full" asChild>
+                      <Button variant="default" size="fixed" className="w-full" asChild>
                         <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
                           See product
                         </Link>
@@ -354,7 +354,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   {showSkeleton ? (
                     <Skeleton className="h-[40px] w-[144px]" />
                   ) : (
-                    <Button variant="outline" onClick={() => handleReset()}>
+                    <Button variant="outline" size="fixed" onClick={() => handleReset()}>
                       Return to search
                     </Button>
                   )}
