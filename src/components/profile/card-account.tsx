@@ -14,6 +14,7 @@ import { Icons } from "@/components/ui/icons";
 import { LoadingPage } from "@/components/ui/loading";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
@@ -54,53 +55,88 @@ export function CardAccount() {
             </div>
 
             {isEditing && (
-              <Tabs defaultValue="name">
-                <TabsList className="mb-2 grid w-full grid-cols-4 bg-transparent p-0">
-                  <TabsTrigger
-                    value="name"
-                    className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                  >
-                    Name
-                  </TabsTrigger>
+              <TooltipProvider>
+                <Tabs defaultValue="name">
+                  <TabsList className="mb-2 grid w-full grid-cols-4 bg-transparent p-0">
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TabsTrigger
+                          value="name"
+                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                        >
+                          Name
+                        </TabsTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Change your display name</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                  <TabsTrigger
-                    value="password"
-                    className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                  >
-                    Password
-                  </TabsTrigger>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TabsTrigger
+                          value="password"
+                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                        >
+                          Password
+                        </TabsTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Change your password</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                  <TabsTrigger
-                    value="email"
-                    className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                  >
-                    Email
-                  </TabsTrigger>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TabsTrigger
+                          value="email"
+                          disabled={account.passwordUpdate === ""}
+                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                        >
+                          Email
+                        </TabsTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {account.passwordUpdate === "" ? (
+                          <p>You need to create a password in order to change your email</p>
+                        ) : (
+                          <p>Change your email</p>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
 
-                  <TabsTrigger
-                    value="delete"
-                    className="rounded-none border-b-2 border-transparent text-destructive hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                  >
-                    Delete
-                  </TabsTrigger>
-                </TabsList>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <TabsTrigger
+                          value="delete"
+                          className="rounded-none border-b-2 border-transparent text-destructive hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                        >
+                          Delete
+                        </TabsTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete your account</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TabsList>
 
-                <TabsContent value="name">
-                  <FormAccountName account={account} />
-                </TabsContent>
+                  <TabsContent value="name">
+                    <FormAccountName account={account} />
+                  </TabsContent>
 
-                <TabsContent value="password">
-                  <FormAccountPassword account={account} />
-                </TabsContent>
+                  <TabsContent value="password">
+                    <FormAccountPassword account={account} />
+                  </TabsContent>
 
-                <TabsContent value="email" className="space-y-4">
-                  <FormAccountEmail />
-                </TabsContent>
+                  <TabsContent value="email" className="space-y-4">
+                    <FormAccountEmail />
+                  </TabsContent>
 
-                <TabsContent value="delete">
-                  <FormAccountDelete />
-                </TabsContent>
-              </Tabs>
+                  <TabsContent value="delete">
+                    <FormAccountDelete />
+                  </TabsContent>
+                </Tabs>
+              </TooltipProvider>
             )}
           </div>
         </CardContent>
