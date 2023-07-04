@@ -12,7 +12,6 @@ export const useAccount = () => {
   const fetchAccount = async () => {
     try {
       const response = await AppwriteService.getAccount();
-      console.log("use-account.fetchAccount.success:", response);
 
       setAccount(response);
       return response;
@@ -32,7 +31,6 @@ export const useAccount = () => {
         throw new Error("Profile not found");
       }
 
-      console.log("use-account.fetchProfile.success:", response);
       setProfile(response);
       return response;
     } catch (error) {
@@ -46,7 +44,6 @@ export const useAccount = () => {
   const signOut = async () => {
     try {
       await AppwriteService.signOut();
-      console.log("use-account.signOut.success");
     } catch (error) {
       console.log("use-account.signOut.error:", error);
     } finally {

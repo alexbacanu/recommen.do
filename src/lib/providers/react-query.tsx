@@ -11,7 +11,7 @@ export default function ReactQueryProvider({ children }: { children: React.React
       defaultOptions: {
         queries: {
           // staleTime: 1000 * 60 * 60 * 1, // 1 hour
-          cacheTime: 1000 * 60 * 60 * 1, // 1 hour
+          // cacheTime: 1000 * 60 * 60 * 1, // 1 hour
           // refetchOnMount: false,
           // refetchOnReconnect: false,
           // refetchOnWindowFocus: false,

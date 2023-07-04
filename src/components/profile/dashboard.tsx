@@ -17,9 +17,10 @@ import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 
 export function Dashboard() {
+  const router = useRouter();
+
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
-  const router = useRouter();
 
   useEffect(() => {
     if (account === false || profile === false) {
