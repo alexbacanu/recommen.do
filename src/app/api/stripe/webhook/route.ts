@@ -176,12 +176,12 @@ export async function POST(request: Request) {
     }
 
     const sessionCreated = event.created;
-    const statusLastUpdated = singleProfile.statusLastUpdated
+    const statusLastUpdated = singleProfile.stripeStatusLastUpdated
       ? new Date(singleProfile.statusLastUpdated).getTime() / 1000
       : 0;
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
-    if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
+    if (sessionCreated > statusLastUpdated && singleProfile.stripeStatus !== session.status) {
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
         stripeStatus: session.status,
@@ -222,12 +222,12 @@ export async function POST(request: Request) {
     }
 
     const sessionCreated = event.created;
-    const statusLastUpdated = singleProfile.statusLastUpdated
-      ? new Date(singleProfile.statusLastUpdated).getTime() / 1000
+    const statusLastUpdated = singleProfile.stripeStatusLastUpdated
+      ? new Date(singleProfile.stripeStatusLastUpdated).getTime() / 1000
       : 0;
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
-    if (sessionCreated > statusLastUpdated && singleProfile.status !== session.status) {
+    if (sessionCreated > statusLastUpdated && singleProfile.stripeStatus !== session.status) {
       console.log("current credits:", singleProfile.credits);
       console.log("new credits: (should be 0, check)");
 
