@@ -3,38 +3,32 @@
 import type { StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { cn } from "@/lib/helpers/utils";
+import { appwriteUrl } from "@/lib/envClient";
 
 interface PricingCardProps {
   plan: StripePlan;
   index: number;
 }
 
-async function getCheckoutURL(priceId: string) {
-  const jwt = await AppwriteService.createJWT();
-
-  const response = await fetch(`/api/stripe/subscription/${priceId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${jwt}`,
-    },
-  });
-
-  const checkoutURL: { url: string } = await response.json();
-  return checkoutURL;
-}
+type GetSubscribeURLarams = {
+  priceId: string;
+};
 
 export default function PricingCard({ plan, index }: PricingCardProps) {
+  const router = useRouter();
+
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
 
@@ -42,15 +36,33 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
   const showSubscribe = profile && profile.stripeSubscriptionId === "none";
   const showManageSubscription = profile && profile.stripeSubscriptionId !== "none";
 
-  const needsVerification = account && !account.emailVerification;
+  // 0. Define your mutation.
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationKey: ["getSubscribeURL"],
+    mutationFn: async ({ priceId }: GetSubscribeURLarams) => {
+      const jwt = await AppwriteService.createJWT();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["getCheckoutURL", plan.priceId],
-    queryFn: () => getCheckoutURL(plan.priceId),
-    enabled: !!profile,
+      const response = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      const checkoutUrl: { url: string } = await response.json();
+      return checkoutUrl.url;
+    },
+    onSuccess: (data) => {
+      router.push(data);
+    },
+    onError: async (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+
+      console.error(error);
+    },
   });
-
-  const checkoutURL = data ? data.url : "#";
 
   const zoom: Variants = {
     hidden: { scale: 0.95 },
@@ -108,24 +120,34 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
           )}
 
           {showSubscribe && (
-            <Button variant={index === 1 ? "default" : "secondary"} disabled={isLoading} asChild>
-              <Link
-                href={needsVerification ? "/profile" : checkoutURL}
-                className={cn("transition-opacity duration-300", isLoading && "pointer-events-none opacity-50")}
-              >
-                Subscribe now
-              </Link>
+            <Button
+              variant={index === 1 ? "default" : "secondary"}
+              onClick={() => mutate({ priceId: plan.priceId })}
+              disabled={isLoading || isSuccess}
+              aria-label="Subscribe now"
+            >
+              {isLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : (
+                <Icons.sprout className="mr-2 h-4 w-4" aria-hidden="true" />
+              )}
+              {isSuccess ? "Success" : "Subscribe now"}
             </Button>
           )}
 
           {showManageSubscription && (
-            <Button variant={index === 1 ? "default" : "secondary"} disabled={isLoading} asChild>
-              <Link
-                href={checkoutURL}
-                className={cn("transition-opacity duration-300", isLoading && "pointer-events-none opacity-50")}
-              >
-                Manage subscription
-              </Link>
+            <Button
+              variant={index === 1 ? "default" : "secondary"}
+              onClick={() => mutate({ priceId: plan.priceId })}
+              disabled={isLoading || isSuccess}
+              aria-label="Manage subscription"
+            >
+              {isLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : (
+                <Icons.manage className="mr-2 h-4 w-4" aria-hidden="true" />
+              )}
+              {isSuccess ? "Success" : "Manage subscription"}
             </Button>
           )}
         </CardFooter>
