@@ -83,7 +83,7 @@ export function FormAccountName({ account }: CardAccountProps) {
           name="displayName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Display name</FormLabel>
+              <FormLabel>New name</FormLabel>
               <FormControl>
                 <Input placeholder={account.name} {...field} />
               </FormControl>

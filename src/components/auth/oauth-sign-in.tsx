@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { accountAtom } from "@/lib/atoms/auth";
-import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 const oauthProviders = [
@@ -21,10 +20,14 @@ const oauthProviders = [
   icon: keyof typeof Icons;
 }[];
 
-export function OAuthSignIn() {
+interface OAuthSignInProps {
+  hasAccepted: boolean;
+}
+
+export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
-  const hasAccepted = useAtomValue(termsAtom);
+  // const hasAccepted = useAtomValue(termsAtom);
   const account = useAtomValue(accountAtom);
 
   async function oauthSignIn(provider: string) {

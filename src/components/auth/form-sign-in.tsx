@@ -14,7 +14,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { accountAtom } from "@/lib/atoms/auth";
-import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { popularDomains } from "@/lib/validators/schema";
 
@@ -42,10 +41,14 @@ type createMagicURLParams = {
   email: string;
 };
 
-export function FormSignIn() {
+interface FormSignInProps {
+  hasAccepted: boolean;
+}
+
+export function FormSignIn({ hasAccepted }: FormSignInProps) {
   const router = useRouter();
 
-  const hasAccepted = useAtomValue(termsAtom);
+  // const hasAccepted = useAtomValue(termsAtom);
   const account = useAtomValue(accountAtom);
 
   // 0. Define your mutation.

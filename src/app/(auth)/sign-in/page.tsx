@@ -1,9 +1,7 @@
 import { type Metadata } from "next";
 import Link from "next/link";
 
-import { FormSignIn } from "@/components/auth/form-sign-in";
-import { OAuthSignIn } from "@/components/auth/oauth-sign-in";
-import { TermsAgree } from "@/components/auth/terms-agree";
+import AuthMethods from "@/components/auth/auth-methods";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shell } from "@/components/ui/shell";
@@ -23,19 +21,7 @@ export default function SignInPage() {
             <CardDescription className="text-muted-foreground">Choose your preferred sign in method</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <TermsAgree />
-            <OAuthSignIn />
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-              </div>
-            </div>
-
-            <FormSignIn />
+            <AuthMethods />
           </CardContent>
           <CardFooter>
             <div className="text-sm text-muted-foreground">
