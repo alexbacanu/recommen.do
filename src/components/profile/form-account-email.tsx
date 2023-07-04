@@ -13,14 +13,47 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
+import { popularDomains } from "@/lib/validators/schema";
 
 const formSchema = z.object({
-  newEmail: z.string().email(),
-  confirmNewEmail: z.string().email(),
+  newEmail: z
+    .string()
+    .email()
+    .refine(
+      (value) => {
+        const parts = value.split("@");
+        if (!parts[0] || !parts[1]) return false;
+
+        const domain = parts[1];
+
+        return popularDomains.includes(domain);
+      },
+      {
+        message:
+          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo, Apple, or the social login options above.",
+      },
+    ),
+  confirmNewEmail: z
+    .string()
+    .email()
+    .refine(
+      (value) => {
+        const parts = value.split("@");
+        if (!parts[0] || !parts[1]) return false;
+
+        const domain = parts[1];
+
+        return popularDomains.includes(domain);
+      },
+      {
+        message:
+          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo, Apple, or the social login options above.",
+      },
+    ),
   currentPassword: z.string().min(8),
 });
 
-type UpdatePasswordParams = {
+type UpdateEmailParams = {
   newEmail: string;
   currentPassword: string;
 };
@@ -31,8 +64,8 @@ export function FormAccountEmail() {
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateEmail"],
-    mutationFn: ({ newEmail, currentPassword }: UpdatePasswordParams) =>
-      AppwriteService.updateEmail(newEmail, currentPassword),
+    mutationFn: async ({ newEmail, currentPassword }: UpdateEmailParams) =>
+      await AppwriteService.updateEmail(newEmail, currentPassword),
     onSuccess: () => {
       toast.success("Email successfully updated. You have been logged out.");
       signOut();
@@ -70,7 +103,7 @@ export function FormAccountEmail() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
         <FormField
           control={form.control}
           name="currentPassword"
@@ -117,7 +150,7 @@ export function FormAccountEmail() {
           />
         </div>
 
-        <Button type="submit" disabled={isLoading || isSuccess}>
+        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (

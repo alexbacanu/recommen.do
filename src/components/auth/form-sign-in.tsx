@@ -1,10 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -14,20 +16,7 @@ import { Input } from "@/components/ui/input";
 import { accountAtom } from "@/lib/atoms/auth";
 import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-
-const popularDomains = [
-  "gmail.com",
-  "outlook.com",
-  "hotmail.com",
-  "live.com",
-  "msn.com",
-  "yahoo.com",
-  "ymail.com",
-  "rocketmail.com",
-  "icloud.com",
-  "me.com",
-  "mac.com",
-];
+import { popularDomains } from "@/lib/validators/schema";
 
 const formSchema = z.object({
   email: z
@@ -39,7 +28,6 @@ const formSchema = z.object({
         if (!parts[0] || !parts[1]) return false;
 
         const domain = parts[1];
-        // const dotCount = parts[0].split(".").length - 1;
 
         return popularDomains.includes(domain);
       },
@@ -50,12 +38,34 @@ const formSchema = z.object({
     ),
 });
 
+type createMagicURLParams = {
+  email: string;
+};
+
 export function FormSignIn() {
-  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const hasAccepted = useAtomValue(termsAtom);
   const account = useAtomValue(accountAtom);
+
+  // 0. Define your mutation.
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationKey: ["createMagicURL"],
+    mutationFn: async ({ email }: createMagicURLParams) => await AppwriteService.createMagicURL(email),
+    onSuccess: (data, variables, context) => {
+      console.log("data", data);
+      console.log("variables", variables);
+      console.log("context", context);
+      router.push(`/sign-in/verify?email=${variables.email}`);
+    },
+    onError: async (error) => {
+      if (error instanceof AppwriteException) {
+        toast.error(error.message);
+      }
+
+      console.error(error);
+    },
+  });
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -68,35 +78,20 @@ export function FormSignIn() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!hasAccepted) {
-      // toast({
-      //   title: "Error",
-      //   description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
-      //   variant: "destructive",
-      // });
+      form.setError("email", {
+        message: "You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.",
+      });
       return;
     }
 
     if (account) {
-      // toast({
-      //   title: "Error",
-      //   description: "You are already signed in. Please sign out before signing in again.",
-      //   variant: "destructive",
-      // });
+      form.setError("email", {
+        message: "You are already signed in. Please sign out before signing in again.",
+      });
       return;
     }
 
-    startTransition(async () => {
-      try {
-        const promise = await AppwriteService.createMagicURL(values.email);
-
-        if (promise) {
-          console.log("form-sign-in.promise:", promise);
-          router.push(`/sign-in/verify?email=${values.email}`);
-        }
-      } catch (error) {
-        console.log("form-sign-in.error:", error);
-      }
-    });
+    mutate({ email: values.email });
   }
 
   return (
@@ -115,14 +110,14 @@ export function FormSignIn() {
             </FormItem>
           )}
         />
-        <Button aria-label="Sign in with Magic URL" disabled={isPending}>
-          {/* TODO: isPending is not loading */}
-          {isPending ? (
+
+        <Button disabled={isLoading || isSuccess} aria-label="Sign in with Magic URL">
+          {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          Sign in with Magic URL
+          {isSuccess ? "Success" : "Sign in with Magic URL"}
         </Button>
       </form>
     </Form>

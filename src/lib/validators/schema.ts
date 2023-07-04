@@ -58,3 +58,17 @@ export const SSOCallbackSchema = z.object({
     .optional(),
 });
 export type SSOCallback = z.infer<typeof SSOCallbackSchema>;
+
+export const popularDomains = [
+  "gmail.com",
+  "outlook.com",
+  "hotmail.com",
+  "live.com",
+  "msn.com",
+  "yahoo.com",
+  "ymail.com",
+  "rocketmail.com",
+  "icloud.com",
+  "me.com",
+  "mac.com",
+];

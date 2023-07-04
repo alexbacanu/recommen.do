@@ -31,16 +31,13 @@ type UpdatePasswordParams = {
 };
 
 export function FormAccountPassword({ account }: CardAccountProps) {
-  // const { signOut } = useAccount();
-
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updatePassword"],
-    mutationFn: ({ newPassword, oldPassword }: UpdatePasswordParams) =>
-      AppwriteService.updatePassword(newPassword, oldPassword),
+    mutationFn: async ({ newPassword, oldPassword }: UpdatePasswordParams) =>
+      await AppwriteService.updatePassword(newPassword, oldPassword),
     onSuccess: () => {
       toast.success("Password successfully updated.");
-      // signOut();
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
@@ -82,7 +79,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
         {account.passwordUpdate !== "" && (
           <FormField
             control={form.control}
@@ -130,7 +127,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
             )}
           />
         </div>
-        <Button type="submit" disabled={isLoading || isSuccess}>
+        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (

@@ -34,7 +34,7 @@ export function FormAccountName({ account }: CardAccountProps) {
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateName"],
-    mutationFn: ({ newName }: UpdateNameParams) => AppwriteService.updateName(newName),
+    mutationFn: async ({ newName }: UpdateNameParams) => await AppwriteService.updateName(newName),
     onSuccess: () => {
       toast.success("Name successfully updated.");
       fetchAccount();
@@ -77,7 +77,7 @@ export function FormAccountName({ account }: CardAccountProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
         <FormField
           control={form.control}
           name="displayName"
@@ -92,7 +92,7 @@ export function FormAccountName({ account }: CardAccountProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading || isSuccess}>
+        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (

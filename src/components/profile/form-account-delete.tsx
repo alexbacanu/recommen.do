@@ -29,14 +29,12 @@ export function FormAccountDelete() {
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
 
-      const response = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
+      await fetch(`${appwriteUrl}/api/appwrite/delete`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       });
-      const account = response.json();
-      return account;
     },
     onSuccess: () => {
       toast.success("Account successfully deleted.");

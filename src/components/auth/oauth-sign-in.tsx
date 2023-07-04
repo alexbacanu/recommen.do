@@ -1,10 +1,13 @@
 "use client";
 
+import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { accountAtom } from "@/lib/atoms/auth";
 import { termsAtom } from "@/lib/atoms/legal";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
@@ -19,28 +22,34 @@ const oauthProviders = [
 }[];
 
 export function OAuthSignIn() {
-  const hasAccepted = useAtomValue(termsAtom);
   const [isLoading, setIsLoading] = useState<string | null>(null);
+
+  const hasAccepted = useAtomValue(termsAtom);
+  const account = useAtomValue(accountAtom);
 
   async function oauthSignIn(provider: string) {
     if (!hasAccepted) {
-      // toast({
-      //   title: "Error",
-      //   description: "Please accept the Terms and conditions and Privacy Policy to proceed with sign-in.",
-      //   variant: "destructive",
-      // });
+      toast.error("You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.");
+      return;
+    }
+
+    if (account) {
+      toast.error("You are already signed in. Please sign out before signing in again.");
       return;
     }
 
     try {
       setIsLoading(provider);
-      await AppwriteService.createOauth2(provider);
 
-      console.log("oauth-sign-in.success");
+      await AppwriteService.createOauth2(provider);
     } catch (error) {
       setIsLoading(null);
 
-      console.log("oauth-sign-in.error:", JSON.stringify(error));
+      if (error instanceof AppwriteException) {
+        toast.error(error.message);
+      }
+
+      console.error(error);
     }
   }
 
