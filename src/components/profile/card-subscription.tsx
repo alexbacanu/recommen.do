@@ -1,7 +1,10 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import type Stripe from "stripe";
+
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { FormSubscription } from "@/components/profile/form-subscription";
@@ -61,6 +64,28 @@ export function CardSubscription() {
     },
   });
 
+  const { data } = useQuery({
+    queryKey: ["retrieveSubscriptions"],
+    queryFn: async () => {
+      const jwt = await AppwriteService.createJWT();
+
+      const response = await fetch(`${appwriteUrl}/api/stripe/subscription/retrieve`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      const subscriptionList: Stripe.Plan = await response.json();
+      return subscriptionList;
+    },
+    enabled: !!hasSubscription,
+  });
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   if (profile)
     return (
       <>
@@ -74,30 +99,59 @@ export function CardSubscription() {
         </CardHeader>
         {hasSubscription ? (
           <>
-            <CardContent className="grid gap-4">
-              <Label className="flex flex-col gap-y-2">
-                <span>Current plan</span>
-                <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
-                  <div className="flex items-center">
-                    {profile.stripeSubscriptionName === "Cherry plan" && (
-                      <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                    )}
-                    {profile.stripeSubscriptionName === "Grape plan" && (
-                      <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                    )}
-                    {profile.stripeSubscriptionName === "Melon plan" && (
-                      <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                    )}
-                    {profile.stripeSubscriptionName}
+            <CardContent className="grid grid-cols-2 gap-4">
+              <div className="grid gap-4">
+                <Label className="flex flex-col gap-y-2">
+                  <span>Current plan</span>
+                  <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+                    <div className="flex items-center">
+                      {profile.stripeSubscriptionName === "Cherry plan" && (
+                        <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                      )}
+                      {profile.stripeSubscriptionName === "Grape plan" && (
+                        <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                      )}
+                      {profile.stripeSubscriptionName === "Melon plan" && (
+                        <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                      )}
+                      {profile.stripeSubscriptionName}
+                    </div>
                   </div>
+                </Label>
+                <Label className="flex flex-col gap-y-2">
+                  <span>End date</span>
+                  <span className="font-normal leading-snug text-muted-foreground">
+                    {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toLocaleDateString()}
+                  </span>
+                </Label>
+              </div>
+              {data && (
+                <div className="grid gap-4">
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Next month</span>
+                    <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+                      <div className="flex items-center">
+                        {data.metadata?.name === "Cherry plan" && (
+                          <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {data.metadata?.name === "Grape plan" && (
+                          <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {data.metadata?.name === "Melon plan" && (
+                          <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {data.metadata?.name}
+                      </div>
+                    </div>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Start date</span>
+                    <span className="font-normal leading-snug text-muted-foreground">
+                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toLocaleDateString()}
+                    </span>
+                  </Label>
                 </div>
-              </Label>
-              <Label className="flex flex-col gap-y-2">
-                <span>Renewal date</span>
-                <span className="font-normal leading-snug text-muted-foreground">
-                  {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
-                </span>
-              </Label>
+              )}
             </CardContent>
             <CardFooter className="grid">
               <Button
