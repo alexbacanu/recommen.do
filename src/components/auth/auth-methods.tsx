@@ -23,7 +23,7 @@ export default function AuthMethods({ displayTerms = false }: AuthMethodsProps) 
 
   return (
     <>
-      {displayTerms && (
+      {displayTerms ? (
         <div className="-mt-2 flex items-center gap-x-2 lg:-mt-4">
           <Checkbox id="terms" checked={hasAccepted} onCheckedChange={() => setHasAccepted(!hasAccepted)} />
           <div className="grid gap-2 leading-none">
@@ -31,13 +31,36 @@ export default function AuthMethods({ displayTerms = false }: AuthMethodsProps) 
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              I agree to the{" "}
+              I agree to{" "}
               <Button variant="link" className="h-auto p-0" asChild>
                 <Link href="/terms" aria-label="Terms and conditions">
                   Terms and conditions
                 </Link>
+              </Button>{" "}
+              and{" "}
+              <Button variant="link" className="h-auto p-0" asChild>
+                <Link href="/privacy" aria-label="Privacy Policy">
+                  Privacy Policy
+                </Link>
               </Button>
-              ,{" "}
+              .
+            </label>
+          </div>
+        </div>
+      ) : (
+        <div className="-mt-2 flex items-center gap-x-2 lg:-mt-4">
+          <div className="grid gap-2 leading-none">
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              By continuing, you are setting up an account and agree to our{" "}
+              <Button variant="link" className="h-auto p-0" asChild>
+                <Link href="/terms" aria-label="Terms and conditions">
+                  Terms and conditions
+                </Link>
+              </Button>{" "}
+              and{" "}
               <Button variant="link" className="h-auto p-0" asChild>
                 <Link href="/privacy" aria-label="Privacy Policy">
                   Privacy Policy
