@@ -1,12 +1,15 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
 
@@ -15,9 +18,10 @@ interface SSOCallbackProps {
 }
 
 export function SSOCallback({ searchParams }: SSOCallbackProps) {
+  const router = useRouter();
+
   const account = useAtomValue(accountAtom);
   const { fetchAccount, fetchProfile } = useAccount();
-  const router = useRouter();
 
   const { searchParams: validatedSearchParams } = SSOCallbackSchema.parse({
     searchParams,
@@ -26,52 +30,49 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
   const userId = validatedSearchParams?.userId;
   const secret = validatedSearchParams?.secret;
 
-  useEffect(() => {
-    const updateMagicURL = async () => {
+  // 0. Define your query.
+  const { data: updateMagicURL } = useQuery({
+    queryKey: ["updateMagicURL", userId, secret],
+    queryFn: async () => {
       if (!userId || !secret) {
-        // toast({
-        //   title: "Error",
-        //   description: "Invalid user ID or secret.",
-        //   variant: "destructive",
-        // });
         return;
       }
 
-      if (account) {
-        // toast({
-        //   title: "Error",
-        //   description: "You are already signed in!",
-        //   variant: "destructive",
-        // });
-        return;
-      }
+      return await AppwriteService.updateMagicURL(userId, secret);
+    },
+    enabled: !!userId && !!secret,
+  });
 
-      try {
-        const response = await AppwriteService.updateMagicURL(userId, secret);
-        console.log("sso-callback.updateMagicURL.success:", response);
+  // 0. Define your query.
+  const { data: refreshAccounts } = useQuery({
+    queryKey: ["refreshAccounts"],
+    queryFn: async () => {
+      await fetchAccount();
+      return await fetchProfile();
+    },
+    enabled: !!updateMagicURL,
+    retry: 5,
+  });
 
-        // TODO: replace setTimeout with a retry function
-        // We wait here for function to execute, which takes about 900ms
-        setTimeout(async () => {
-          try {
-            const response = await Promise.all([fetchAccount(), fetchProfile()]);
-            console.log("sso-callback.fetchAccount.fetchProfile.success:", response);
-            if (response) router.push("/profile");
-          } catch (error) {
-            console.log("sso-callback.fetchAccount.fetchProfile.error:", error);
-            router.push("/");
-          }
-        }, 2000);
-      } catch (error) {
-        console.log("sso-callback.updateMagicURL.error:", error);
-        router.push("/");
-      }
-    };
+  useEffect(() => {
+    if (account && refreshAccounts) {
+      toast.success("You are signed in!");
 
-    updateMagicURL();
+      router.push(`${appwriteUrl}/profile`);
+      router.refresh();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, secret, router]);
+      return;
+    }
+
+    if (!userId || !secret) {
+      toast.error("Invalid user ID or secret.");
+
+      router.push(`${appwriteUrl}/`);
+      router.refresh();
+
+      return;
+    }
+  }, [account, refreshAccounts, router, secret, userId]);
 
   return <LoadingPage />;
 }
