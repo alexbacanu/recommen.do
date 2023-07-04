@@ -1,7 +1,5 @@
 "use client";
 
-import type { AppwriteAccount } from "@/lib/types/types";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
@@ -16,52 +14,25 @@ import { Input } from "@/components/ui/input";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 const formSchema = z.object({
-  oldPassword: z.string().optional(),
   password: z.string().min(8),
   confirmPassword: z.string().min(8),
 });
 
 interface CardAccountProps {
-  account: AppwriteAccount;
+  searchParams: {
+    userId: string;
+    secret: string;
+  };
 }
 
-type UpdatePasswordParams = {
-  newPassword: string;
-  oldPassword?: string;
-};
-
-type ForgotPasswordParams = {
-  email: string;
-};
-
-export function FormAccountPassword({ account }: CardAccountProps) {
+export function FormForgot({ searchParams }: CardAccountProps) {
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
-    mutationKey: ["updatePassword"],
-    mutationFn: async ({ newPassword, oldPassword }: UpdatePasswordParams) =>
-      await AppwriteService.updatePassword(newPassword, oldPassword),
+    mutationKey: ["updateRecovery"],
+    mutationFn: async ({ confirmPassword }: { confirmPassword: string }) =>
+      await AppwriteService.updateRecovery(searchParams.userId, searchParams.secret, confirmPassword),
     onSuccess: () => {
       toast.success("Password successfully updated.");
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast.error(error.message);
-      }
-
-      console.error(error);
-    },
-  });
-
-  // 0. Define your mutation.
-  const {
-    mutate: mutateForgot,
-    isLoading: isLoadingForgot,
-    isSuccess: isSuccessForgot,
-  } = useMutation({
-    mutationKey: ["forgotPassword"],
-    mutationFn: async ({ email }: ForgotPasswordParams) => await AppwriteService.createRecovery(email),
-    onSuccess: () => {
-      toast.success("Email with password reset sent.");
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
@@ -76,7 +47,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      oldPassword: "",
       password: "",
       confirmPassword: "",
     },
@@ -84,13 +54,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (account.passwordUpdate !== "" && values.oldPassword === "") {
-      form.setError("oldPassword", {
-        message: "Please enter your current password.",
-      });
-      return;
-    }
-
     if (values?.password !== values?.confirmPassword) {
       form.setError("confirmPassword", {
         message: "The passwords entered do not match.",
@@ -98,43 +61,12 @@ export function FormAccountPassword({ account }: CardAccountProps) {
       return;
     }
 
-    mutate({ newPassword: values.password, oldPassword: values.oldPassword });
+    mutate({ confirmPassword: values.confirmPassword });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-        {account.passwordUpdate !== "" && (
-          <>
-            <FormField
-              control={form.control}
-              name="oldPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel>Password</FormLabel>
-                    <Button
-                      type="button"
-                      onClick={() => mutateForgot({ email: account.email })}
-                      className="h-auto p-0"
-                      variant="link"
-                      disabled={isLoadingForgot || isSuccessForgot}
-                      aria-label="Forgot password?"
-                    >
-                      {isSuccessForgot ? "Success" : "Forgot password?"}
-                    </Button>
-                  </div>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                  {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </>
-        )}
-
         <div className="grid gap-y-2">
           <FormField
             control={form.control}

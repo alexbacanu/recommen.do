@@ -87,6 +87,24 @@ export const AppwriteService = {
     return response;
   },
 
+  createRecovery: async (email: string) => {
+    console.log("--------------------", email);
+    try {
+      const response = await account.createRecovery(email, `${appwriteUrl}/forgot-callback`);
+      console.log("client-appwrite.createRecovery:", response);
+      return response;
+    } catch (error) {
+      console.log("--------------------", error);
+    }
+  },
+
+  updateRecovery: async (userId: string, secret: string, confirmPassword: string) => {
+    const response = await account.updateRecovery(userId, secret, confirmPassword, confirmPassword);
+    console.log("client-appwrite.updateRecovery:", response);
+
+    return response;
+  },
+
   createJWT: async () => {
     if (!jwt) {
       const jwtObject = await account.createJWT();

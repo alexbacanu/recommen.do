@@ -1,6 +1,5 @@
 "use client";
 
-import { type Metadata } from "next";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -8,11 +7,6 @@ import { FormSignIn } from "@/components/auth/form-sign-in";
 import { OAuthSignIn } from "@/components/auth/oauth-sign-in";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-export const metadata: Metadata = {
-  title: "Sign Up",
-  description: "Sign up for an account",
-};
 
 interface AuthMethodsProps {
   displayTerms?: boolean;
