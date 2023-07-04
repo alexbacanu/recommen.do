@@ -11,6 +11,7 @@ import { CardLegal } from "@/components/profile/card-legal";
 import { CardSessions } from "@/components/profile/card-sessions";
 import { CardSubscription } from "@/components/profile/card-subscription";
 import { CardSupport } from "@/components/profile/card-support";
+import { CardUsage } from "@/components/profile/card-usage";
 import { Card } from "@/components/ui/card";
 import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
@@ -38,6 +39,7 @@ export function Dashboard() {
         </Card>
 
         <Card>
+          <CardUsage />
           <CardSubscription />
         </Card>
 

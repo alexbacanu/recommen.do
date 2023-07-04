@@ -18,6 +18,7 @@ import { CardLegal } from "@/components/profile/card-legal";
 import { CardSessions } from "@/components/profile/card-sessions";
 import { CardSubscription } from "@/components/profile/card-subscription";
 import { CardSupport } from "@/components/profile/card-support";
+import { CardUsage } from "@/components/profile/card-usage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster } from "@/components/ui/toaster";
 import { gtagId } from "@/lib/envClient";
@@ -52,6 +53,7 @@ export default function IndexPopup() {
               className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
             >
               <CardAccount />
+              <CardUsage />
               <CardSubscription />
             </TabsContent>
 

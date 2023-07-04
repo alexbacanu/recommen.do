@@ -52,10 +52,7 @@ export function FormSignIn() {
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["createMagicURL"],
     mutationFn: async ({ email }: createMagicURLParams) => await AppwriteService.createMagicURL(email),
-    onSuccess: (data, variables, context) => {
-      console.log("data", data);
-      console.log("variables", variables);
-      console.log("context", context);
+    onSuccess: (_, variables) => {
       router.push(`/sign-in/verify?email=${variables.email}`);
     },
     onError: async (error) => {

@@ -25,7 +25,7 @@ export function FormAccountDelete() {
 
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
-    mutationKey: ["updateName"],
+    mutationKey: ["deleteAccount"],
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
 

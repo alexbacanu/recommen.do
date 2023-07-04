@@ -1,140 +1,68 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import Link from "next/link";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { toast } from "sonner";
 
+import { FormSubscription } from "@/components/profile/form-subscription";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { appwriteUrl, stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
+import { appwriteUrl } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
 
-const formSchema = z.object({
-  plan: z.string(),
-});
-
-async function getCheckoutURL(priceId?: string | null) {
-  const jwt = await AppwriteService.createJWT();
-
-  const fetchUrl = priceId ? `${appwriteUrl}/api/stripe/subscription/${priceId}` : `${appwriteUrl}/api/stripe/refill`;
-
-  const response = await fetch(fetchUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${jwt}`,
-    },
-  });
-
-  const checkoutURL: { url: string } = await response.json();
-  return checkoutURL;
-}
+type GetManageURLParams = {
+  priceId?: string;
+};
 
 export function CardSubscription() {
-  const [isPending, startTransition] = useTransition();
   const profile = useAtomValue(profileAtom);
 
   const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
   const hasSubscription = profile ? profile.stripeSubscriptionId !== "none" : false;
-  const stripePriceId = profile ? profile.stripePriceId : null;
 
-  const subQuery = useQuery({
-    queryKey: ["subscriptonQuery", stripePriceId],
-    queryFn: () => getCheckoutURL(stripePriceId),
-    enabled: hasSubscription,
-  });
-  const subURL = subQuery.data ? subQuery.data.url : "#";
-
-  const refillQuery = useQuery({
-    queryKey: ["refillQuery"],
-    queryFn: () => getCheckoutURL(),
-    enabled: hasSubscription,
-  });
-  const refillURL = refillQuery.data ? refillQuery.data.url : "#";
-
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  });
-
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      try {
-        const promise = await getCheckoutURL(values.plan);
-
-        if (promise) {
-          console.log("card-subscription.promise:", promise);
-          window.open(promise.url, target);
-        }
-      } catch (error) {
-        console.log("card-subscription.error:", error);
-      } finally {
-        // toast({
-        //   title: "You submitted the following values:",
-        //   description: (
-        //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-        //       <code className="text-white">{JSON.stringify(values.plan, null, 2)}</code>
-        //     </pre>
-        //   ),
-        // });
+  // 0. Define your mutation.
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationKey: ["getManageURL"],
+    mutationFn: async ({ priceId }: GetManageURLParams) => {
+      if (!priceId) {
+        toast.error("You don't have an active subscription");
+        return;
       }
-    });
-  }
+
+      const jwt = await AppwriteService.createJWT();
+
+      const response = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      const checkoutUrl: { url: string } = await response.json();
+      return checkoutUrl.url;
+    },
+    onSuccess: (data) => {
+      window.open(data, target);
+    },
+    onError: async (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+
+      console.error(error);
+    },
+  });
 
   if (profile)
     return (
       <>
-        <CardHeader>
-          <CardTitle className="text-2xl">Usage</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <Label className="flex flex-col gap-y-2">
-            <span>Recommendations left</span>
-            <span className="font-normal leading-snug text-muted-foreground">{profile.credits} remaining</span>
-          </Label>
-          {!hasSubscription && (
-            <Label className="flex flex-col gap-y-2">
-              <span>Valid until</span>
-              <span className="line-clamp-1 font-normal leading-snug text-muted-foreground">
-                {new Date(new Date(profile.$createdAt).getTime() + 30 * 24 * 60 * 60 * 1000).toUTCString()}
-              </span>
-            </Label>
-          )}
-        </CardContent>
-        {hasSubscription && (
-          <CardFooter className="grid">
-            {profile.credits > 950 ? (
-              <Button disabled>
-                <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
-                <span>Refill limit reached</span>
-              </Button>
-            ) : (
-              <Button asChild>
-                <Link href={refillURL} target={target} aria-label="Add 50 more recommendations">
-                  <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
-                  <span>Add 50 more recommendations</span>
-                </Link>
-              </Button>
-            )}
-          </CardFooter>
-        )}
-
-        <Separator orientation="horizontal" className="w-full" />
-
         <CardHeader>
           <CardTitle className="flex justify-between text-2xl">
             <span>Subscription</span>
@@ -171,114 +99,22 @@ export function CardSubscription() {
               </Label>
             </CardContent>
             <CardFooter className="grid">
-              <Button asChild>
-                <Link href={subURL} target={target} aria-label="Manage subscription">
+              <Button
+                onClick={() => mutate({ priceId: profile.stripePriceId })}
+                disabled={isLoading || isSuccess}
+                aria-label="Manage subscription"
+              >
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : (
                   <Icons.manage className="mr-2 h-4 w-4" aria-hidden="true" />
-                  <span>Manage subscription</span>
-                </Link>
+                )}
+                {isSuccess ? "Success" : "Manage subscription"}
               </Button>
             </CardFooter>
           </>
         ) : (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <CardContent className="grid gap-4">
-                <FormField
-                  control={form.control}
-                  name="plan"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormControl>
-                        <RadioGroup
-                          // defaultValue={stripeBasicPlan}
-                          onValueChange={field.onChange}
-                          className="grid gap-2 sm:grid-cols-3 md:grid-cols-1"
-                        >
-                          <Label
-                            htmlFor={stripeBasicPlan}
-                            className={cn(
-                              "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
-                              field.value === stripeBasicPlan
-                                ? "border-primary text-primary"
-                                : "hover:border-primary/30 hover:text-primary",
-                            )}
-                          >
-                            <div className="hidden">
-                              <RadioGroupItem id={stripeBasicPlan} value={stripeBasicPlan} />
-                            </div>
-                            <div className="flex flex-col items-center gap-1">
-                              <Icons.plan1 className="h-6 w-6" aria-hidden="true" />
-                            </div>
-                            <div className="grid gap-1">
-                              <div className="text-sm font-semibold">Cherry</div>
-                              <div className="text-sm text-muted-foreground">50 recommendations</div>
-                            </div>
-                            <Badge className="absolute right-2 top-2">$2</Badge>
-                          </Label>
-
-                          <Label
-                            htmlFor={stripePremiumPlan}
-                            className={cn(
-                              "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
-                              field.value === stripePremiumPlan
-                                ? "border-primary text-primary"
-                                : "hover:border-primary/30 hover:text-primary",
-                            )}
-                          >
-                            <div className="hidden">
-                              <RadioGroupItem id={stripePremiumPlan} value={stripePremiumPlan} />
-                            </div>
-                            <div>
-                              <Icons.plan2 className="h-6 w-6" aria-hidden="true" />
-                            </div>
-                            <div className="grid gap-1">
-                              <div className="text-sm font-semibold">Grape</div>
-                              <div className="text-sm text-muted-foreground">200 recommendations</div>
-                            </div>
-                            <Badge className="absolute right-2 top-2">$4</Badge>
-                          </Label>
-
-                          <Label
-                            htmlFor={stripeUltimatePlan}
-                            className={cn(
-                              "group relative flex select-none items-center gap-2 rounded-md border bg-popover p-3",
-                              field.value === stripeUltimatePlan
-                                ? "border-primary text-primary"
-                                : "hover:border-primary/30 hover:text-primary",
-                            )}
-                          >
-                            <div className="hidden">
-                              <RadioGroupItem id={stripeUltimatePlan} value={stripeUltimatePlan} />
-                            </div>
-                            <div className="flex flex-col items-center gap-1">
-                              <Icons.plan3 className="h-6 w-6" aria-hidden="true" />
-                            </div>
-                            <div className="grid gap-1">
-                              <div className="text-sm font-semibold">Melon</div>
-                              <div className="text-sm text-muted-foreground">600 recommendations</div>
-                            </div>
-                            <Badge className="absolute right-2 top-2">$10</Badge>
-                          </Label>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-              <CardFooter className="grid">
-                <Button disabled={isPending}>
-                  {/* TODO: isPending is not loading */}
-                  {isPending ? (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                  ) : (
-                    <Icons.sprout className="mr-2 h-4 w-4" aria-hidden="true" />
-                  )}
-                  Subscribe
-                </Button>
-              </CardFooter>
-            </form>
-          </Form>
+          <FormSubscription />
         )}
 
         {/* <Separator orientation="horizontal" className="w-full" /> */}

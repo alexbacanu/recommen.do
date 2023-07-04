@@ -24,7 +24,7 @@ export type AppwriteProfile = Models.Document & {
 
   stripeSubscriptionId: string | "none";
   stripeSubscriptionName: string | null;
-  stripePriceId: string | null;
+  stripePriceId?: string;
   stripeCurrentPeriodEnd: Date | null;
 
   stripeStatus: string | null;
