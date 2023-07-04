@@ -249,7 +249,11 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                 </TooltipProvider>
               </div>
               {profile ? (
-                <Button variant="default" size="fixed" disabled={isLoading || !profile || !hasRead}>
+                <Button
+                  variant="default"
+                  size="fixed"
+                  disabled={isLoading || !profile || !hasRead || profile.credits === 0}
+                >
                   {hasRead ? "Send" : "Generating..."}
                 </Button>
               ) : (

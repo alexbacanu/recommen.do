@@ -15,7 +15,7 @@ export function Shell({ children, layout = "default", className, ...props }: She
         layout === "default" && "",
         layout === "auth" && "max-w-lg",
         layout === "unauthorized" && "max-w-xl grid-cols-1",
-        layout === "confirmation" && "max-w-3xl grid-cols-1 sm:grid-cols-2",
+        layout === "confirmation" && "max-w-4xl grid-cols-1 sm:grid-cols-2",
         className,
       )}
       {...props}
