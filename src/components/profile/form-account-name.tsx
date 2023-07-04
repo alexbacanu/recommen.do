@@ -35,9 +35,9 @@ export function FormAccountName({ account }: CardAccountProps) {
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateName"],
     mutationFn: async ({ newName }: UpdateNameParams) => await AppwriteService.updateName(newName),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Name successfully updated.");
-      fetchAccount();
+      await fetchAccount();
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {

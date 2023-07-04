@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
+import { LoadingPage } from "@/components/ui/loading";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -121,5 +122,5 @@ export function CardSubscription() {
       </>
     );
 
-  return null;
+  return <LoadingPage />;
 }

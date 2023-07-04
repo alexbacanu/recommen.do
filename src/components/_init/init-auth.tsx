@@ -1,21 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function Init() {
   const { fetchAccount, fetchProfile } = useAccount();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await Promise.all([fetchAccount(), fetchProfile()]);
-    };
+  useQuery({
+    queryKey: ["account"],
+    queryFn: fetchAccount,
+  });
 
-    fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useQuery({
+    queryKey: ["profile"],
+    queryFn: fetchProfile,
+  });
 
   return null;
 }

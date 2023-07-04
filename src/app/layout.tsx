@@ -22,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={cn("subpixel-antialiased", inter.className)}>
       <GoogleAnalytics />
-      <Init />
       <body className="subpixel-antialiased">
         <ReactQueryProvider>
+          <Init />
           <Header />
           <main className="content-area">{children}</main>
           <Footer />

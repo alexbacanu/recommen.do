@@ -68,9 +68,15 @@ dependencies:
   '@tanstack/query-core':
     specifier: ^4.29.19
     version: 4.29.19
+  '@tanstack/query-sync-storage-persister':
+    specifier: ^4.29.19
+    version: 4.29.19
   '@tanstack/react-query':
     specifier: ^4.29.19
     version: 4.29.19(react-dom@18.2.0)(react@18.2.0)
+  '@tanstack/react-query-persist-client':
+    specifier: ^4.29.19
+    version: 4.29.19(@tanstack/react-query@4.29.19)
   '@types/mdx':
     specifier: ^2.0.5
     version: 2.0.5
@@ -3611,6 +3617,18 @@ packages:
   /@tanstack/query-core@4.29.19:
     resolution: {integrity: sha512-uPe1DukeIpIHpQi6UzIgBcXsjjsDaLnc7hF+zLBKnaUlh7jFE/A+P8t4cU4VzKPMFB/C970n/9SxtpO5hmIRgw==}
 
+  /@tanstack/query-persist-client-core@4.29.19:
+    resolution: {integrity: sha512-rr6p3xwEZCz3cEDZsj3QGePf6PG44WxRUGQVcm2JFPZOq9TkG/0i5+hQ3STiHm1Fj6qwCH8xIi62L8kG0zRj/Q==}
+    dependencies:
+      '@tanstack/query-core': 4.29.19
+    dev: false
+
+  /@tanstack/query-sync-storage-persister@4.29.19:
+    resolution: {integrity: sha512-B3wDl3D3YBFTlY2yeXecEh4NEG/8Hr8pqsxnWJijRwBqvOKlqD4bUgk5kl5nbn1mShD2vnQ+yvH900/11X29Zw==}
+    dependencies:
+      '@tanstack/query-persist-client-core': 4.29.19
+    dev: false
+
   /@tanstack/react-query-devtools@4.29.19(@tanstack/react-query@4.29.19)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-rL2xqTPr+7gJvVGwyq8E8CWqqw950N4lZ6ffJeNX0qqymKHxHW1FM6nZaYt7Aufs/bXH0m1L9Sj3kDGQbp0rwg==}
     peerDependencies:
@@ -3625,6 +3643,15 @@ packages:
       superjson: 1.12.4
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: true
+
+  /@tanstack/react-query-persist-client@4.29.19(@tanstack/react-query@4.29.19):
+    resolution: {integrity: sha512-LfcasTosdnI9K66HTP0Rk72Ypza3tCgrcF9bc2qFlKsBleYOYo8bz7/GiiOHj1SQH4GRQlKB+P4+/it+qlJg4g==}
+    peerDependencies:
+      '@tanstack/react-query': 4.29.19
+    dependencies:
+      '@tanstack/query-persist-client-core': 4.29.19
+      '@tanstack/react-query': 4.29.19(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /@tanstack/react-query@4.29.19(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XiTIOHHQ5Cw1WUlHaD4fmVUMhoWjuNJlAeJGq7eM4BraI5z7y8WkZO+NR8PSuRnQGblpuVdjClQbDFtwxTtTUw==}

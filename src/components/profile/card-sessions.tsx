@@ -16,14 +16,8 @@ import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { cn } from "@/lib/helpers/utils";
 import { useAccount } from "@/lib/hooks/use-account";
 
-async function fetchSessions() {
-  const response = await AppwriteService.listSessions();
-  return response;
-}
-
-async function deleteSession(id: string) {
-  const response = await AppwriteService.signOut(id);
-  return response;
+interface DeleteSessionProps {
+  id: string;
 }
 
 export function CardSessions() {
@@ -37,7 +31,7 @@ export function CardSessions() {
 
   const { mutate: mutateDeleteSession, isLoading: isDeleteSessionLoading } = useMutation({
     mutationKey: ["deleteSession"],
-    mutationFn: deleteSession,
+    mutationFn: async ({ id }: DeleteSessionProps) => await AppwriteService.signOut(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["fetchSessions"] });
     },
@@ -45,7 +39,7 @@ export function CardSessions() {
 
   const { data } = useQuery({
     queryKey: ["fetchSessions"],
-    queryFn: () => fetchSessions(),
+    queryFn: async () => await AppwriteService.listSessions(),
     enabled: !!profile,
   });
 
@@ -100,7 +94,7 @@ export function CardSessions() {
                           size="icon"
                           aria-label="Delete session"
                           className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
-                          onClick={() => mutateDeleteSession(session.$id)}
+                          onClick={() => mutateDeleteSession({ id: session.$id })}
                           disabled={isDeleteSessionLoading}
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />
@@ -131,7 +125,7 @@ export function CardSessions() {
                           size="icon"
                           aria-label="Delete session"
                           className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
-                          onClick={() => mutateDeleteSession(session.$id)}
+                          onClick={() => mutateDeleteSession({ id: session.$id })}
                           disabled={isDeleteSessionLoading}
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />

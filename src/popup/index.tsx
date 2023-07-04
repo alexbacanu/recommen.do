@@ -44,8 +44,8 @@ export default function IndexPopup() {
 
   return (
     <>
-      <Init />
       <ReactQueryProvider>
+        <Init />
         {account ? (
           <Tabs defaultValue="account" className="min-h-[600px] min-w-[380px] overflow-hidden">
             <TabsContent
@@ -75,9 +75,15 @@ export default function IndexPopup() {
             </TabsContent>
 
             <TabsList className="fixed bottom-0 top-auto grid w-full grid-cols-3  rounded-none border-t border-gray-300 shadow-inner">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="history">History</TabsTrigger>
-              <TabsTrigger value="settings">Settings</TabsTrigger>
+              <TabsTrigger value="account" className="select-none">
+                Account
+              </TabsTrigger>
+              <TabsTrigger value="history" className="select-none">
+                History
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="select-none">
+                Settings
+              </TabsTrigger>
             </TabsList>
           </Tabs>
         ) : (
