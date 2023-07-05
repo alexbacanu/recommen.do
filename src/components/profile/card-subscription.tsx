@@ -124,25 +124,27 @@ export function CardSubscription() {
                 {profile.stripeStatus ?? "Inactive"}
               </Badge>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      type="button"
-                      size="icon"
-                      onClick={() => refetch()}
-                      disabled={isLoadingSubs}
-                    >
-                      <Icons.refresh className={cn("h-4 w-4", isFetching && "animate-spin")} aria-hidden="true" />
-                      <span className="sr-only">Refresh recommendations</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top">
-                    <p>Refresh</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {hasSubscription && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        type="button"
+                        size="icon"
+                        onClick={() => refetch()}
+                        disabled={isLoadingSubs}
+                      >
+                        <Icons.refresh className={cn("h-4 w-4", isFetching && "animate-spin")} aria-hidden="true" />
+                        <span className="sr-only">Refresh recommendations</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Refresh</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
           </CardTitle>
         </CardHeader>
