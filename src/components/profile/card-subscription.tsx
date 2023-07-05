@@ -3,9 +3,9 @@
 import type Stripe from "stripe";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
-import { toast } from "sonner";
 
 import { FormSubscription } from "@/components/profile/form-subscription";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,8 @@ import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { LoadingPage } from "@/components/ui/loading";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useToast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -24,6 +26,7 @@ type GetManageURLParams = {
 };
 
 export function CardSubscription() {
+  const { toast } = useToast();
   const profile = useAtomValue(profileAtom);
 
   const extensionDetected = !!window && !window?.next;
@@ -36,7 +39,10 @@ export function CardSubscription() {
     mutationKey: ["getManageURL"],
     mutationFn: async ({ priceId }: GetManageURLParams) => {
       if (!priceId) {
-        toast.error("You don't have an active subscription");
+        toast({
+          description: "You don't have an active subscription",
+        });
+        // toast.error("You don't have an active subscription");
         return;
       }
 
@@ -56,15 +62,30 @@ export function CardSubscription() {
       window.open(data, target);
     },
     onError: async (error) => {
+      if (error instanceof AppwriteException) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);
     },
   });
 
-  const { data } = useQuery({
+  const {
+    data,
+    isLoading: isLoadingSubs,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ["retrieveSubscriptions"],
     queryFn: async () => {
       const jwt = await AppwriteService.createJWT();
@@ -80,6 +101,7 @@ export function CardSubscription() {
       return subscriptionList;
     },
     enabled: !!hasSubscription,
+    staleTime: 1000 * 60 * 15, // 15 minutes
     retry: 1,
   });
 
@@ -97,9 +119,31 @@ export function CardSubscription() {
         <CardHeader>
           <CardTitle className="flex justify-between text-2xl">
             <span>Subscription</span>
-            <Badge variant="outline" className={cn("capitalize", hasSubscription && "border-lime-400")}>
-              {profile.stripeStatus ?? "Inactive"}
-            </Badge>
+            <div className="flex items-center">
+              <Badge variant="outline" className={cn("capitalize", hasSubscription && "border-lime-400")}>
+                {profile.stripeStatus ?? "Inactive"}
+              </Badge>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      type="button"
+                      size="icon"
+                      onClick={() => refetch()}
+                      disabled={isLoadingSubs}
+                    >
+                      <Icons.refresh className={cn("h-4 w-4", isFetching && "animate-spin")} aria-hidden="true" />
+                      <span className="sr-only">Refresh recommendations</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">
+                    <p>Refresh</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </CardTitle>
         </CardHeader>
         {hasSubscription ? (
