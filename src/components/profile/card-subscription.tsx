@@ -83,6 +83,10 @@ export function CardSubscription() {
     retry: 1,
   });
 
+  const showSingleMonth = profile && !!data && profile.stripeSubscriptionName === data.metadata?.name;
+  const showCanceledMonth = profile && !!data && !data.id;
+  const showBothMonth = profile && !!data && !!data.id && profile.stripeSubscriptionName !== data.metadata?.name;
+
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -100,36 +104,94 @@ export function CardSubscription() {
         </CardHeader>
         {hasSubscription ? (
           <>
-            <CardContent className="grid grid-cols-2 gap-4">
-              <div className="grid gap-4">
-                <Label className="flex flex-col gap-y-2">
-                  <span>Current plan</span>
-                  <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
-                    <div className="flex items-center">
-                      {profile.stripeSubscriptionName === "Cherry plan" && (
-                        <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                      )}
-                      {profile.stripeSubscriptionName === "Grape plan" && (
-                        <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                      )}
-                      {profile.stripeSubscriptionName === "Melon plan" && (
-                        <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
-                      )}
-                      {profile.stripeSubscriptionName}
-                    </div>
-                  </div>
-                </Label>
-                <Label className="flex flex-col gap-y-2">
-                  <span>End date</span>
-                  <span className="font-normal leading-snug text-muted-foreground">
-                    {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
-                  </span>
-                </Label>
-              </div>
-              {!!data?.id && (
+            <CardContent className="grid gap-4">
+              {showSingleMonth && (
                 <div className="grid gap-4">
                   <Label className="flex flex-col gap-y-2">
-                    <span>Next month</span>
+                    <span>Active now</span>
+                    <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+                      <div className="flex items-center">
+                        {profile.stripeSubscriptionName === "Cherry plan" && (
+                          <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Grape plan" && (
+                          <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Melon plan" && (
+                          <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName}
+                      </div>
+                    </div>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Renewal date</span>
+                    <span className="font-normal leading-snug text-muted-foreground">
+                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
+                    </span>
+                  </Label>
+                </div>
+              )}
+
+              {showCanceledMonth && (
+                <div className="grid gap-4">
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Active now</span>
+                    <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+                      <div className="flex items-center">
+                        {profile.stripeSubscriptionName === "Cherry plan" && (
+                          <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Grape plan" && (
+                          <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Melon plan" && (
+                          <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName}
+                      </div>
+                    </div>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>End date</span>
+                    <span className="font-normal leading-snug text-muted-foreground">
+                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
+                    </span>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Starting next billing cycle</span>
+                    <span className="font-normal leading-snug text-muted-foreground">Subscription cancelled</span>
+                  </Label>
+                </div>
+              )}
+
+              {showBothMonth && (
+                <div className="grid gap-4">
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Active now</span>
+                    <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
+                      <div className="flex items-center">
+                        {profile.stripeSubscriptionName === "Cherry plan" && (
+                          <Icons.plan1 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Grape plan" && (
+                          <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName === "Melon plan" && (
+                          <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
+                        )}
+                        {profile.stripeSubscriptionName}
+                      </div>
+                    </div>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>End date</span>
+                    <span className="font-normal leading-snug text-muted-foreground">
+                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
+                    </span>
+                  </Label>
+                  <Label className="flex flex-col gap-y-2">
+                    <span>Starting next billing cycle</span>
                     <div className="flex gap-x-4 font-normal leading-snug text-muted-foreground">
                       <div className="flex items-center">
                         {data.metadata?.name === "Cherry plan" && (
@@ -144,12 +206,6 @@ export function CardSubscription() {
                         {data.metadata?.name}
                       </div>
                     </div>
-                  </Label>
-                  <Label className="flex flex-col gap-y-2">
-                    <span>Start date</span>
-                    <span className="font-normal leading-snug text-muted-foreground">
-                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
-                    </span>
                   </Label>
                 </div>
               )}
