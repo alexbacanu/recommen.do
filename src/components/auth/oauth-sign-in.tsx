@@ -3,17 +3,17 @@
 import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/use-toast";
 import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 const oauthProviders = [
   { name: "Google", strategy: "google", icon: "google" },
   { name: "Github", strategy: "github", icon: "github" },
-  { name: "Twitter", strategy: "twitter", icon: "twitter" },
+  { name: "Facebook", strategy: "facebook", icon: "facebook" },
 ] satisfies {
   name: string;
   strategy: string;
@@ -25,6 +25,7 @@ interface OAuthSignInProps {
 }
 
 export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
   // const hasAccepted = useAtomValue(termsAtom);
@@ -32,12 +33,19 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
 
   async function oauthSignIn(provider: string) {
     if (!hasAccepted) {
-      toast.error("You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.");
+      toast({
+        description: "You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.",
+      });
+      // toast.error("You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.");
+
       return;
     }
 
     if (account) {
-      toast.error("You are already signed in. Please sign out before signing in again.");
+      toast({
+        description: "You are already signed in. Please sign out before signing in again.",
+      });
+      // toast.error("You are already signed in. Please sign out before signing in again.");
       return;
     }
 
@@ -49,7 +57,17 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
       setIsLoading(null);
 
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

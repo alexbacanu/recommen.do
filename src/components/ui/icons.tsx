@@ -13,6 +13,7 @@ import {
   Coffee,
   Coins,
   Edit,
+  Facebook,
   Grape,
   Key,
   LifeBuoy,
@@ -24,10 +25,10 @@ import {
   Plus,
   RefreshCw,
   Save,
+  Send,
   Settings2,
   Sprout,
   Trash2,
-  Twitter,
   Undo2,
   User,
   X,
@@ -113,6 +114,7 @@ export const Icons = {
   key: Key,
   alert: AlertCircle,
   save: Save,
+  send: Send,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,
@@ -140,5 +142,5 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  twitter: Twitter,
+  facebook: Facebook,
 };

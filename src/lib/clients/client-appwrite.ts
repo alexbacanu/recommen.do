@@ -11,7 +11,6 @@ const account = new Account(client);
 const avatars = new Avatars(client);
 const databases = new Databases(client);
 
-let jwt: string;
 export const AppwriteService = {
   getAccount: async () => {
     const response = await account.get();
@@ -106,13 +105,10 @@ export const AppwriteService = {
   },
 
   createJWT: async () => {
-    if (!jwt) {
-      const jwtObject = await account.createJWT();
-      jwt = jwtObject.jwt;
-    }
-    console.log("client-appwrite.createJWT:", jwt);
+    const jwtObject = await account.createJWT();
+    console.log("client-appwrite.createJWT:", jwtObject.jwt);
 
-    return jwt;
+    return jwtObject.jwt;
   },
 
   signOut: async (id = "current") => {
