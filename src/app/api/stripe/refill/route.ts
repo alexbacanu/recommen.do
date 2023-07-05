@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
-import { appwriteUrl, stripeRefillPrice } from "@/lib/envClient";
+import { appwriteUrl } from "@/lib/envClient";
 
 const corsHeaders = {
   // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
@@ -63,8 +63,20 @@ export async function GET() {
 
       line_items: [
         {
-          price: stripeRefillPrice,
           quantity: 1,
+          price_data: {
+            currency: "usd",
+            unit_amount: 200,
+            product_data: {
+              name: "Add 50 recommendations",
+              description: `These recommendations will expire on: ${
+                profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()
+              }, at the end of your current billing cycle.`,
+              images: [
+                "https://cloud.appwrite.io/v1/storage/buckets/images/files/refill/view?project=6491ab878b30a8638965",
+              ],
+            },
+          },
         },
       ],
 
