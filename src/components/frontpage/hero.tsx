@@ -59,16 +59,16 @@ export function Hero() {
               <Image src="/browsers/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
 
               <Image src="/browsers/Firefox.svg" width={64} height={64} alt="Download extension for Firefox browser" />
-              <Image
+              {/* <Image
                 src="/browsers/Safari.svg"
                 width={64}
                 height={64}
                 alt="Download extension for Safari browser"
                 className="opacity-50"
-              />
+              /> */}
               <Image src="/browsers/Brave.svg" width={64} height={64} alt="Download extension for Brave browser" />
               <Image src="/browsers/Opera.svg" width={64} height={64} alt="Download extension for Opera browser" />
-              <Image src="/browsers/Duck.svg" width={64} height={64} alt="Download extension for DuckDuckGo browser" />
+              {/* <Image src="/browsers/Duck.svg" width={64} height={64} alt="Download extension for DuckDuckGo browser" /> */}
               <Image src="/browsers/Vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
             </div>
           </div>

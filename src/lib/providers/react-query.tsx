@@ -10,8 +10,8 @@ export default function ReactQueryProvider({ children }: { children: React.React
     const client = new QueryClient({
       defaultOptions: {
         queries: {
-          // staleTime: 1000 * 60 * 60 * 1, // 1 hour
-          // cacheTime: 1000 * 60 * 60 * 1, // 1 hour
+          // staleTime: 1000 * 60 * 1, // 1 minute
+          cacheTime: 1000 * 60 * 60 * 1, // 1 hour
           // refetchOnMount: false,
           // refetchOnReconnect: false,
           // refetchOnWindowFocus: false,

@@ -2,6 +2,7 @@ import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
@@ -48,15 +49,29 @@ export async function GET(request: Request) {
   const stripe = getStripeInstance();
 
   if (isSubscribed && profile.stripeCustomerId) {
-    const upcoming = await stripe.invoices.retrieveUpcoming({
-      customer: profile.stripeCustomerId,
-    });
+    try {
+      const upcoming = await stripe.invoices.retrieveUpcoming({
+        customer: profile.stripeCustomerId,
+      });
 
-    const upcomingPlan = upcoming.lines.data[0]?.plan;
+      const upcomingPlan = upcoming.lines.data[0]?.plan;
 
-    return NextResponse.json(upcomingPlan, {
-      headers: corsHeaders,
-    });
+      return NextResponse.json(upcomingPlan, {
+        headers: corsHeaders,
+      });
+    } catch (error) {
+      if (error instanceof Stripe.errors.StripeInvalidRequestError) {
+        return NextResponse.json(error.code, {
+          headers: corsHeaders,
+          status: error.statusCode,
+        });
+      }
+
+      return NextResponse.json(error, {
+        headers: corsHeaders,
+        status: 500,
+      });
+    }
   }
 
   console.log("api.stripe.subscription.retrieve:", "Something went wrong");

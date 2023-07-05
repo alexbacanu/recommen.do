@@ -80,6 +80,7 @@ export function CardSubscription() {
       return subscriptionList;
     },
     enabled: !!hasSubscription,
+    retry: 1,
   });
 
   useEffect(() => {
@@ -121,11 +122,11 @@ export function CardSubscription() {
                 <Label className="flex flex-col gap-y-2">
                   <span>End date</span>
                   <span className="font-normal leading-snug text-muted-foreground">
-                    {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toLocaleDateString()}
+                    {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
                   </span>
                 </Label>
               </div>
-              {data && (
+              {!!data?.id && (
                 <div className="grid gap-4">
                   <Label className="flex flex-col gap-y-2">
                     <span>Next month</span>
@@ -147,7 +148,7 @@ export function CardSubscription() {
                   <Label className="flex flex-col gap-y-2">
                     <span>Start date</span>
                     <span className="font-normal leading-snug text-muted-foreground">
-                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toLocaleDateString()}
+                      {profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()}
                     </span>
                   </Label>
                 </div>
