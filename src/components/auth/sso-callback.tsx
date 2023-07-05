@@ -1,15 +1,13 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 import { LoadingPage } from "@/components/ui/loading";
-import { profileAtom } from "@/lib/atoms/auth";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
+import { useAccount } from "@/lib/hooks/use-account";
 
 interface SSOCallbackProps {
   searchParams: {
@@ -19,31 +17,49 @@ interface SSOCallbackProps {
 }
 
 export function SSOCallback({ searchParams }: SSOCallbackProps) {
-  const router = useRouter();
+  const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { fetchProfile } = useAccount();
 
-  const profile = useAtomValue(profileAtom);
+  const [attempts, setAttempts] = useState(0);
 
   // 0. Define your query.
   const { data: updateMagicURL } = useQuery({
     queryKey: ["updateMagicURL", searchParams.userId, searchParams.secret],
     queryFn: async () => await AppwriteService.updateMagicURL(searchParams.userId, searchParams.secret),
+    retry: 1,
   });
 
   useEffect(() => {
     if (updateMagicURL) {
       queryClient.invalidateQueries(["account", "profile"]);
-      toast.success("You are signed in!");
 
-      if (profile) {
-        window.open(`${appwriteUrl}/profile`);
-        return;
-      }
+      toast({
+        description: "You are signed in!",
+      });
+      // toast.success("You are signed in!");
 
-      window.open(`${appwriteUrl}/`);
-      return;
+      const checkProfile = async () => {
+        const profileData = await fetchProfile();
+
+        if (profileData) {
+          return window.open(`${appwriteUrl}/profile`, "_self");
+        } else {
+          // If no profile found, increment attempts and check again
+          if (attempts < 3) {
+            setAttempts(attempts + 1);
+            const delay = Math.pow(2, attempts) * 1000; // Delay in milliseconds (1, 2, 4 seconds)
+            setTimeout(checkProfile, delay);
+          } else {
+            // No profile found after 3 attempts, redirect to homepage
+            window.open("/", "_self"); // Replace with the actual homepage route
+          }
+        }
+      };
+
+      checkProfile();
     }
-  }, [profile, queryClient, router, updateMagicURL]);
+  }, [updateMagicURL]);
 
   return <LoadingPage />;
 }
