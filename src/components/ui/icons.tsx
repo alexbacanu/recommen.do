@@ -13,6 +13,7 @@ import {
   Coffee,
   Coins,
   Edit,
+  ExternalLink,
   Facebook,
   Grape,
   Key,
@@ -115,6 +116,7 @@ export const Icons = {
   alert: AlertCircle,
   save: Save,
   send: Send,
+  link: ExternalLink,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,

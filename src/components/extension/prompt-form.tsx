@@ -214,7 +214,7 @@ export function PromptForm({ products }: PromptFormProps) {
                 </FormItem>
               )}
             />
-            <Button type="button" size="fixed" onClick={handleReset}>
+            <Button type="button" size="fixed" onClick={handleReset} aria-label="Return to search">
               <Icons.undo className="mr-2 h-4 w-4" aria-hidden="true" />
               Return to search
             </Button>
@@ -238,7 +238,7 @@ export function PromptForm({ products }: PromptFormProps) {
               )}
             />
             <Button asChild>
-              <Link href={`${appwriteUrl}/sign-in`} aria-label="Send">
+              <Link href={`${appwriteUrl}/sign-in`} aria-label="Sign in">
                 <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
                 Sign in
               </Link>
@@ -347,8 +347,9 @@ export function PromptForm({ products }: PromptFormProps) {
                 <Skeleton className="mx-auto h-[40px] w-[144px]" />
               ) : (
                 <div className="mx-auto text-center">
-                  <Button variant="default" size="fixed" className="w-full" asChild>
+                  <Button size="fixed" asChild>
                     <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
+                      <Icons.link className="mr-2 h-4 w-4" aria-hidden="true" />
                       See product
                     </Link>
                   </Button>
@@ -359,7 +360,13 @@ export function PromptForm({ products }: PromptFormProps) {
               {showSkeleton ? (
                 <Skeleton className="h-[40px] w-[144px]" />
               ) : (
-                <Button type="button" variant="outline" size="fixed" onClick={handleReset}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="fixed"
+                  onClick={handleReset}
+                  aria-label="Return to search"
+                >
                   <Icons.undo className="mr-2 h-4 w-4" aria-hidden="true" />
                   Return to search
                 </Button>

@@ -147,7 +147,7 @@ export async function POST(req: Request) {
       const statusCode = statusCodeReg && statusCodeReg[1];
 
       if (statusCode === "401")
-        return new Response("Invalid API key. Please check your API key and try again.", {
+        return new Response("Invalid OpenAI API key. Please check your OpenAI API key and try again.", {
           status: 401,
           headers: corsHeaders,
         });
