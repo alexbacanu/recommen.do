@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -12,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { appwriteUrl } from "@/lib/envClient";
 
 const formSchema = z.object({
   password: z.string().min(8),
@@ -26,6 +28,7 @@ interface CardAccountProps {
 }
 
 export function FormForgot({ searchParams }: CardAccountProps) {
+  const router = useRouter();
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateRecovery"],
@@ -33,6 +36,7 @@ export function FormForgot({ searchParams }: CardAccountProps) {
       await AppwriteService.updateRecovery(searchParams.userId, searchParams.secret, confirmPassword),
     onSuccess: () => {
       toast.success("Password successfully updated.");
+      router.push(`${appwriteUrl}/profile`);
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
