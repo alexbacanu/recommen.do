@@ -6,13 +6,13 @@ import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { popularDomains } from "@/lib/validators/schema";
@@ -46,6 +46,7 @@ interface FormSignInProps {
 }
 
 export function FormSignIn({ hasAccepted }: FormSignInProps) {
+  const { toast } = useToast();
   const router = useRouter();
 
   // const hasAccepted = useAtomValue(termsAtom);
@@ -60,7 +61,17 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

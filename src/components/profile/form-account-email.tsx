@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
@@ -60,6 +60,7 @@ type UpdateEmailParams = {
 };
 
 export function FormAccountEmail() {
+  const { toast } = useToast();
   const { signOut } = useAccount();
 
   const extensionDetected = !!window && !window?.next;
@@ -71,13 +72,26 @@ export function FormAccountEmail() {
     mutationFn: async ({ newEmail, currentPassword }: UpdateEmailParams) =>
       await AppwriteService.updateEmail(newEmail, currentPassword),
     onSuccess: () => {
-      toast.success("Email successfully updated. You have been logged out.");
+      toast({
+        description: "Email successfully updated. You have been logged out.",
+      });
+      // toast.success("Email successfully updated. You have been logged out.");
       signOut();
       window.open(`${appwriteUrl}/email-changed`, target);
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

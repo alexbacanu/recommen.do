@@ -4,15 +4,16 @@ import type { StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
 
 import { useMutation } from "@tanstack/react-query";
+import { AppwriteException } from "appwrite";
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/use-toast";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -27,6 +28,7 @@ type GetSubscribeURLarams = {
 };
 
 export default function PricingCard({ plan, index }: PricingCardProps) {
+  const { toast } = useToast();
   const router = useRouter();
 
   const account = useAtomValue(accountAtom);
@@ -56,8 +58,18 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
       router.push(data);
     },
     onError: async (error) => {
+      if (error instanceof AppwriteException) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

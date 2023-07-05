@@ -5,13 +5,13 @@ import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 
@@ -28,6 +28,7 @@ interface CardAccountProps {
 }
 
 export function FormForgot({ searchParams }: CardAccountProps) {
+  const { toast } = useToast();
   const router = useRouter();
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
@@ -35,12 +36,25 @@ export function FormForgot({ searchParams }: CardAccountProps) {
     mutationFn: async ({ confirmPassword }: { confirmPassword: string }) =>
       await AppwriteService.updateRecovery(searchParams.userId, searchParams.secret, confirmPassword),
     onSuccess: () => {
-      toast.success("Password successfully updated.");
+      toast({
+        description: "Password successfully updated.",
+      });
+      // toast.success("Password successfully updated.");
       router.push(`${appwriteUrl}/profile`);
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

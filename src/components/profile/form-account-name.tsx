@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 
@@ -29,6 +29,7 @@ type UpdateNameParams = {
 };
 
 export function FormAccountName({ account }: CardAccountProps) {
+  const { toast } = useToast();
   const { fetchAccount } = useAccount();
 
   // 0. Define your mutation.
@@ -36,12 +37,25 @@ export function FormAccountName({ account }: CardAccountProps) {
     mutationKey: ["updateName"],
     mutationFn: async ({ newName }: UpdateNameParams) => await AppwriteService.updateName(newName),
     onSuccess: async () => {
-      toast.success("Name successfully updated.");
+      toast({
+        description: "Name successfully updated.",
+      });
+      // toast.success("Name successfully updated.");
       await fetchAccount();
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

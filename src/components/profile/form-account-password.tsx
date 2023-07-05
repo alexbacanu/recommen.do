@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 const formSchema = z.object({
@@ -35,17 +35,32 @@ type ForgotPasswordParams = {
 };
 
 export function FormAccountPassword({ account }: CardAccountProps) {
+  const { toast } = useToast();
+
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updatePassword"],
     mutationFn: async ({ newPassword, oldPassword }: UpdatePasswordParams) =>
       await AppwriteService.updatePassword(newPassword, oldPassword),
     onSuccess: () => {
-      toast.success("Password successfully updated.");
+      toast({
+        description: "Password successfully updated.",
+      });
+      // toast.success("Password successfully updated.");
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);
@@ -61,11 +76,24 @@ export function FormAccountPassword({ account }: CardAccountProps) {
     mutationKey: ["forgotPassword"],
     mutationFn: async ({ email }: ForgotPasswordParams) => await AppwriteService.createRecovery(email),
     onSuccess: () => {
-      toast.success("Email with password reset sent.");
+      toast({
+        description: "Email with password reset sent.",
+      });
+      // toast.success("Email with password reset sent.");
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

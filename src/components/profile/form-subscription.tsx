@@ -2,8 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl, stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
@@ -26,6 +27,8 @@ type GetSubscribeURLarams = {
 };
 
 export function FormSubscription() {
+  const { toast } = useToast();
+
   const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 
@@ -49,8 +52,18 @@ export function FormSubscription() {
       window.open(data, target);
     },
     onError: async (error) => {
+      if (error instanceof AppwriteException) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);

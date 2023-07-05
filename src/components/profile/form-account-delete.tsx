@@ -2,7 +2,6 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
-import { toast } from "sonner";
 
 import {
   AlertDialog,
@@ -16,11 +15,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
 
 export function FormAccountDelete() {
+  const { toast } = useToast();
   const { signOut } = useAccount();
 
   // 0. Define your mutation.
@@ -37,12 +38,25 @@ export function FormAccountDelete() {
       });
     },
     onSuccess: () => {
-      toast.success("Account successfully deleted.");
+      toast({
+        description: "Account successfully deleted.",
+      });
+      // toast.success("Account successfully deleted.");
       signOut();
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
-        toast.error(error.message);
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
+      }
+
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+        });
+        // toast.error(error.message);
       }
 
       console.error(error);
