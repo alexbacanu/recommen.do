@@ -57,7 +57,7 @@ export async function POST(req: Request) {
     }
 
     // Check for user credits
-    if (typeof apiKey === "undefined") {
+    if (apiKey === "") {
       if (profile.credits < 1) {
         return new Response("Insufficient recommendations. You need at least 1 recommendation to proceed.", {
           status: 401,
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
     const stream = OpenAIStream(response, {
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
-        if (typeof apiKey === "undefined" && !stopTesting) {
+        if (apiKey === "" && !stopTesting) {
           // Add the token to the accumulated tokens
           accumulatedTokens.push(token);
 
