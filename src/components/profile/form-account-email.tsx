@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
+import { appwriteUrl } from "@/lib/envClient";
 import { useAccount } from "@/lib/hooks/use-account";
 import { popularDomains } from "@/lib/validators/schema";
 
@@ -61,6 +62,9 @@ type UpdateEmailParams = {
 export function FormAccountEmail() {
   const { signOut } = useAccount();
 
+  const extensionDetected = !!window && !window?.next;
+  const target = extensionDetected ? "_blank" : "_self";
+
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateEmail"],
@@ -69,6 +73,7 @@ export function FormAccountEmail() {
     onSuccess: () => {
       toast.success("Email successfully updated. You have been logged out.");
       signOut();
+      window.open(`${appwriteUrl}/email-changed`, target);
     },
     onError: async (error) => {
       if (error instanceof AppwriteException) {
