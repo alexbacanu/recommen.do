@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -22,7 +22,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [profile, setProfile] = useAtom(profileAtom);
+  const profile = useAtomValue(profileAtom);
 
   // 0. Define your query.
   const { data: updateMagicURL } = useQuery({
@@ -36,13 +36,11 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
       toast.success("You are signed in!");
 
       if (profile) {
-        router.push(`${appwriteUrl}/profile`);
-        router.refresh();
+        window.open(`${appwriteUrl}/profile`);
         return;
       }
 
-      router.push(`${appwriteUrl}/`);
-      router.refresh();
+      window.open(`${appwriteUrl}/`);
       return;
     }
   }, [profile, queryClient, router, updateMagicURL]);

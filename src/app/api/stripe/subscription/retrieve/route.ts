@@ -16,7 +16,7 @@ const corsHeaders = {
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
+export async function GET() {
   // Read JWT from Authorization header
   const authHeader = headers().get("Authorization");
   const token = authHeader?.split(" ")[1];
