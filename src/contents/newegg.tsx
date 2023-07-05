@@ -28,35 +28,29 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 };
 
 const neweggProductData = () => {
-  const productNodes = document.querySelectorAll("div.item-cell");
+  const productElements = document.querySelectorAll("div.item-cell");
   const products = [];
 
-  for (const el of productNodes) {
-    const identifier = el.querySelector("div.item-container");
+  for (const element of productElements) {
+    const identifier = element.querySelector("div.item-container")?.getAttribute("id");
+    const image = element.querySelector("a.item-img img")?.getAttribute("src");
+    const link = element.querySelector("a.item-title")?.getAttribute("href");
+    const name = element.querySelector("a.item-title")?.textContent?.trim();
+    const price = element.querySelector("li.price-current")?.textContent?.trim() || "unknown";
+    const reviews = element.querySelector("span.item-rating-num")?.textContent?.trim() || "0";
+    const stars = element.querySelector("i.rating")?.getAttribute("aria-label")?.trim() || "0";
 
-    if (!identifier) {
-      continue; // skip this element
-    }
-
-    const imageEl = el.querySelector("a.item-img img");
-    const linkEl = el.querySelector("a.item-title");
-    const nameEl = el.querySelector("a.item-title");
-    const priceEl = el.querySelector("li.price-current");
-    const reviewsEl = el.querySelector("span.item-rating-num");
-    const starsEl = el.querySelector("i.rating");
-
-    if (!!identifier) {
-      const product = {
-        identifier: identifier?.getAttribute("id") || "none",
-        image: imageEl?.getAttribute("src") || "none",
-        link: linkEl?.getAttribute("href") || "none",
-        name: nameEl?.textContent?.trim() || "unknown",
-        price: priceEl?.textContent?.trim() || "unknown",
-        reviews: reviewsEl?.textContent?.trim() || "0",
-        stars: starsEl?.getAttribute("aria-label") || "0",
-      };
-
-      products.push(product);
+    // Check if all required fields are present and valid
+    if (identifier && image && link && name) {
+      products.push({
+        identifier,
+        image,
+        link,
+        name,
+        price,
+        reviews,
+        stars,
+      });
     }
   }
 
@@ -68,6 +62,7 @@ export const getShadowHostId = () => "plasmo-inline-newegg";
 export default function NeweggContent() {
   const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
   const products = neweggProductData();
+  console.log(products);
 
   return (
     <>

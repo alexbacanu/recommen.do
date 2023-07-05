@@ -76,34 +76,30 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 };
 
 const ebayProductData = () => {
-  const productNodes = document.querySelectorAll("li.s-item");
+  const productElements = document.querySelectorAll("ul.srp-results > li.s-item");
   const products = [];
 
-  for (const el of productNodes) {
-    const identifier = el.id;
+  for (const element of productElements) {
+    const identifier = element.id;
+    const image = element.querySelector("div.image-treatment img")?.getAttribute("src");
+    const link = element.querySelector("a.s-item__link")?.getAttribute("href");
+    const name = element.querySelector("div.s-item__title span")?.textContent?.trim();
+    const price = element.querySelector("span.s-item__price")?.textContent?.trim() || "unknown";
+    const reviews = "0";
+    const stars = "0";
 
-    if (!identifier) {
-      continue; // skip this element
+    // Check if all required fields are present and valid
+    if (identifier && image && link && name) {
+      products.push({
+        identifier,
+        image,
+        link,
+        name,
+        price,
+        reviews,
+        stars,
+      });
     }
-
-    const imageEl = el.querySelector("div.image-treatment img");
-    const linkEl = el.querySelector("a.s-item__link");
-    const nameEl = el.querySelector("div.s-item__title span");
-    const priceEl = el.querySelector("span.s-item__price");
-    // const reviewsEl = el.querySelector("span.item-rating-num");
-    // const starsEl = el.querySelector("i.rating");
-
-    const product = {
-      identifier: identifier || "none",
-      image: imageEl?.getAttribute("src") || "none",
-      link: linkEl?.getAttribute("href") || "none",
-      name: nameEl?.textContent?.trim() || "unknown",
-      price: priceEl?.textContent?.trim() || "unknown",
-      reviews: "0",
-      stars: "0",
-    };
-
-    products.push(product);
   }
 
   return products;
@@ -114,6 +110,7 @@ export const getShadowHostId = () => "plasmo-inline-ebay";
 export default function EbayContent() {
   const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
   const products = ebayProductData();
+  console.log(products);
 
   return (
     <>

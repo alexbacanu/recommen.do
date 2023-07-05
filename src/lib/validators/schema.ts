@@ -3,8 +3,6 @@ import { z } from "zod";
 // Scraped product
 export const ProductValidator = z.object({
   identifier: z.string(),
-  // image: z.string(),
-  // link: z.string(),
   name: z.string(),
   price: z.string(),
   reviews: z.string(),

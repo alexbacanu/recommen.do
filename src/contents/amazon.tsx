@@ -51,41 +51,32 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 };
 
 const amazonProductData = () => {
-  const currentUrl = window?.location.origin;
+  const currentOrigin = window?.location.origin;
 
-  const productNodes = document.querySelectorAll("div.s-result-item");
+  const productElements = document.querySelectorAll("div.s-result-item");
   const products = [];
 
-  for (const el of productNodes) {
-    const identifier = el.getAttribute("data-asin");
+  for (const element of productElements) {
+    const identifier = element.getAttribute("data-asin");
+    const image = element.querySelector(".s-image")?.getAttribute("src");
+    const link = `${currentOrigin}${element.querySelector(".a-link-normal.s-no-outline")?.getAttribute("href")}`;
+    const name = element.querySelector(".a-color-base.a-text-normal")?.textContent?.trim();
+    const price = element.querySelector("span.a-price > span.a-offscreen")?.textContent?.trim() || "unknown";
+    const reviews = element.querySelector(".a-size-base.s-underline-text")?.textContent?.trim() || "0";
+    const stars = element.querySelector(".a-icon-alt")?.textContent?.trim() || "0";
 
-    if (!identifier) {
-      continue; // skip this element
+    // Check if all required fields are present and valid
+    if (identifier && image && link && name) {
+      products.push({
+        identifier,
+        image,
+        link,
+        name,
+        price,
+        reviews,
+        stars,
+      });
     }
-
-    const imageEl = el.querySelector(".s-image");
-    const linkEl = el.querySelector(".a-link-normal.s-underline-link-text.s-link-style");
-
-    if (linkEl?.getAttribute("href") === "#") {
-      continue; // skip this element
-    }
-
-    const nameEl = el.querySelector(".a-color-base.a-text-normal");
-    const priceEl = el.querySelector(".a-price .a-offscreen");
-    const reviewsEl = el.querySelector(".a-size-base.s-underline-text");
-    const starsEl = el.querySelector(".a-icon-alt");
-
-    const product = {
-      identifier: identifier || "none",
-      image: imageEl?.getAttribute("src") || "none",
-      link: `${currentUrl}/${linkEl?.getAttribute("href")}` || "none",
-      name: nameEl?.textContent?.trim() || "unknown",
-      price: priceEl?.textContent?.trim() || "unknown",
-      reviews: reviewsEl?.textContent?.trim() || "0",
-      stars: starsEl?.textContent?.trim() || "0",
-    };
-
-    products.push(product);
   }
 
   return products;
@@ -96,6 +87,7 @@ export const getShadowHostId = () => "plasmo-inline-amazon";
 export default function AmazonContent() {
   const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
   const products = amazonProductData();
+  console.log(products);
 
   return (
     <>
