@@ -59,6 +59,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
 
       checkProfile();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateMagicURL]);
 
   return <LoadingPage />;

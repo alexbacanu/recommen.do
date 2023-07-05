@@ -28,6 +28,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
 
         <CardHeader className="lg:p-4">
           <CardTitle className="flex items-center gap-4 text-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
             <span>recommen.do</span>
 
