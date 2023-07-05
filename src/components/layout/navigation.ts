@@ -15,6 +15,11 @@ export const navConfig = {
       href: "/installation",
       disabled: false,
     },
+    {
+      title: "FAQ",
+      href: "/faq",
+      disabled: false,
+    },
   ],
   footer: [
     {
