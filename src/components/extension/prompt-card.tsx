@@ -37,7 +37,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
               <span>recommen.do</span>
             </Link>
 
-            {userApiKey && profile && (
+            {!!userApiKey && !!profile && (
               <Badge variant="outline" size="fixed">
                 API Key detected
               </Badge>

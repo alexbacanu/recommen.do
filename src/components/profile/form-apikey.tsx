@@ -21,7 +21,7 @@ const formSchema = z.object({
 });
 
 export function FormAPIKey() {
-  const [userApiKey, setUserApiKey, { remove }] = useStorage<string | undefined>("userApiKey", "");
+  const [userApiKey, setUserApiKey, { remove }] = useStorage<string>("userApiKey", "");
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,6 +33,8 @@ export function FormAPIKey() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!values.userApiKey) return;
+
     setUserApiKey(values.userApiKey);
   }
 
