@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -215,6 +215,10 @@ export function PromptForm({ products }: PromptFormProps) {
   const showForm = !isLoading && !isSuccess;
   const showSkeleton = !isSuccess && product.identifier === "none";
   const withoutCredits = !!profile && profile.credits < 1 && !userApiKey;
+
+  useEffect(() => {
+    handleReset();
+  }, [userApiKey]);
 
   return (
     <>
