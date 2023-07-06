@@ -163,7 +163,7 @@ export function CardSubscription() {
                         {profile.stripeSubscriptionName === "Grape plan" && (
                           <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
-                        {profile.stripeSubscriptionName === "Melon plan" && (
+                        {profile.stripeSubscriptionName === "Pomelo plan" && (
                           <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
                         {profile.stripeSubscriptionName}
@@ -191,7 +191,7 @@ export function CardSubscription() {
                         {profile.stripeSubscriptionName === "Grape plan" && (
                           <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
-                        {profile.stripeSubscriptionName === "Melon plan" && (
+                        {profile.stripeSubscriptionName === "Pomelo plan" && (
                           <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
                         {profile.stripeSubscriptionName}
@@ -223,7 +223,7 @@ export function CardSubscription() {
                         {profile.stripeSubscriptionName === "Grape plan" && (
                           <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
-                        {profile.stripeSubscriptionName === "Melon plan" && (
+                        {profile.stripeSubscriptionName === "Pomelo plan" && (
                           <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
                         {profile.stripeSubscriptionName}
@@ -246,7 +246,7 @@ export function CardSubscription() {
                         {data.metadata?.name === "Grape plan" && (
                           <Icons.plan2 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
-                        {data.metadata?.name === "Melon plan" && (
+                        {data.metadata?.name === "Pomelo plan" && (
                           <Icons.plan3 className="mr-2 h-5 w-5 text-primary" aria-hidden="true" />
                         )}
                         {data.metadata?.name}

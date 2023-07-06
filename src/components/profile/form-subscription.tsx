@@ -165,7 +165,7 @@ export function FormSubscription() {
                         <Icons.plan3 className="h-6 w-6" aria-hidden="true" />
                       </div>
                       <div className="grid gap-1">
-                        <div className="text-sm font-semibold">Melon</div>
+                        <div className="text-sm font-semibold">Pomelo</div>
                         <div className="text-sm text-muted-foreground">600 recommendations</div>
                       </div>
                       <Badge className="absolute right-2 top-2">$10</Badge>
