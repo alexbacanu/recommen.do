@@ -47,7 +47,7 @@ export default function IndexPopup() {
       <ReactQueryProvider>
         <Init />
         {account ? (
-          <Tabs defaultValue="account" className="min-h-[600px] min-w-[380px] overflow-hidden">
+          <Tabs defaultValue="account" className="min-h-[600px] w-[380px] overflow-hidden">
             <TabsContent
               value="account"
               className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
