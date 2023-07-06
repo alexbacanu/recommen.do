@@ -95,7 +95,7 @@ export default function AmazonContent() {
         <Init />
         {isPromptHidden ? (
           <button
-            className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-0.5"
+            className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
             onClick={() => setIsPromptHidden((prevState) => !prevState)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}

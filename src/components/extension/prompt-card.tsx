@@ -22,18 +22,26 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
   const [userApiKey] = useStorage<string>("userApiKey");
 
   return (
-    <div className="grid w-full p-4">
-      <Card className="relative">
+    <div className="grid w-full p-[16px]">
+      <Card className="relative rounded-[12px]">
         <div className="absolute inset-[-0.125px] -z-10 rounded-[12px] bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
 
-        <CardHeader className="lg:p-4">
-          <CardTitle className="flex items-center gap-4 text-2xl">
+        <CardHeader className="gap-y-[6px] rounded-[12px] p-[16px] lg:p-[16px]">
+          <CardTitle className="flex items-center gap-[16px] pl-[8px] text-[24px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
             <span>recommen.do</span>
 
-            {userApiKey && profile && <Badge variant="outline">API Key detected</Badge>}
-            {!userApiKey && profile && <Badge variant="outline">{profile.credits} recommendations remaining</Badge>}
+            {userApiKey && profile && (
+              <Badge variant="outline" size="fixed">
+                API Key detected
+              </Badge>
+            )}
+            {!userApiKey && profile && (
+              <Badge variant="outline" size="fixed">
+                {profile.credits} recommendations remaining
+              </Badge>
+            )}
           </CardTitle>
 
           <MinimizeButton onClose={onClose} />
@@ -41,7 +49,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
 
         {/* <Separator orientation="horizontal" className="w-full" /> */}
 
-        <CardContent className="grid gap-4 lg:p-4 lg:pt-0">
+        <CardContent className="grid gap-[16px] p-[16px] pt-0 lg:p-[16px] lg:pt-0">
           <PromptForm products={products} />
         </CardContent>
       </Card>
@@ -65,7 +73,7 @@ function MinimizeButton({ onClose }: { onClose: () => void }) {
             <span className="sr-only">Minimize prompt card</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="top">
+        <TooltipContent side="top" className="rounded-[10px] px-[12px] py-[6px] text-[12px]">
           <p>Minimize</p>
         </TooltipContent>
       </Tooltip>

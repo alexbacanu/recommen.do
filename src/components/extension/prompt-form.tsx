@@ -86,7 +86,7 @@ export function PromptForm({ products }: PromptFormProps) {
           description: "Failed to retrieve response from the server.",
         });
         // toast.error("Failed to retrieve response from the server.");
-        return;
+        throw new Error("Failed to retrieve response from the server.");
       }
 
       const reader = body.getReader();
@@ -195,7 +195,7 @@ export function PromptForm({ products }: PromptFormProps) {
     <>
       {isError && (
         <Form {...form}>
-          <form className="flex items-center gap-4">
+          <form className="flex items-center gap-[16px]">
             <FormField
               control={form.control}
               name="prompt"
@@ -207,6 +207,7 @@ export function PromptForm({ products }: PromptFormProps) {
                       placeholder={
                         !!userApiKey ? "🙈 There was an error, please check your API key." : "🙈 There was an error."
                       }
+                      className="h-[36px] rounded-[10px] px-[12px] py-[4px] text-[14px]"
                       {...field}
                     />
                   </FormControl>
@@ -215,7 +216,7 @@ export function PromptForm({ products }: PromptFormProps) {
               )}
             />
             <Button type="button" size="fixed" onClick={handleReset} aria-label="Return to search">
-              <Icons.undo className="mr-2 h-4 w-4" aria-hidden="true" />
+              <Icons.undo className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
               Return to search
             </Button>
           </form>
@@ -224,22 +225,27 @@ export function PromptForm({ products }: PromptFormProps) {
 
       {!profile && !isError && (
         <Form {...form}>
-          <form className="flex items-center gap-4">
+          <form className="flex items-center gap-[16px]">
             <FormField
               control={form.control}
               name="prompt"
               render={({ field }) => (
                 <FormItem className="grow">
                   <FormControl>
-                    <Input disabled placeholder="What are you searching for?" {...field} />
+                    <Input
+                      disabled
+                      placeholder="What are you searching for?"
+                      className="h-[36px] rounded-[10px] px-[12px] py-[4px] text-[14px]"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button asChild>
+            <Button size="fixed" asChild>
               <Link href={`${appwriteUrl}/sign-in`} aria-label="Sign in">
-                <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Icons.login className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
                 Sign in
               </Link>
             </Button>
@@ -249,24 +255,28 @@ export function PromptForm({ products }: PromptFormProps) {
 
       {profile && !isError && showForm && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-[16px]">
             <FormField
               control={form.control}
               name="prompt"
               render={({ field }) => (
                 <FormItem className="grow">
                   <FormControl>
-                    <Input placeholder="What are you searching for?" {...field} />
+                    <Input
+                      placeholder="What are you searching for?"
+                      className="h-[36px] rounded-[10px] px-[12px] py-[4px] text-[14px]"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={isLoading || isSuccess || !ready || withoutCredits} aria-label="Send">
+            <Button size="fixed" disabled={isLoading || isSuccess || !ready || withoutCredits} aria-label="Send">
               {isLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                <Icons.spinner className="mr-[8px] h-[16px] w-[16px] animate-spin" aria-hidden="true" />
               ) : (
-                <Icons.send className="mr-2 h-4 w-4" aria-hidden="true" />
+                <Icons.send className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
               )}
               {isSuccess ? "Success" : "Send"}
             </Button>
@@ -341,7 +351,7 @@ export function PromptForm({ products }: PromptFormProps) {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-[144px_1fr] gap-x-4">
+          <div className="grid grid-cols-[144px_1fr] gap-x-[16px]">
             <div className="pt-[8px]">
               {showSkeleton ? (
                 <Skeleton className="mx-auto h-[40px] w-[144px]" />
@@ -349,7 +359,7 @@ export function PromptForm({ products }: PromptFormProps) {
                 <div className="mx-auto text-center">
                   <Button size="fixed" asChild>
                     <Link href={product.link} aria-label={`Go to product ${product.name} page`}>
-                      <Icons.link className="mr-2 h-4 w-4" aria-hidden="true" />
+                      <Icons.link className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
                       See product
                     </Link>
                   </Button>
@@ -367,7 +377,7 @@ export function PromptForm({ products }: PromptFormProps) {
                   onClick={handleReset}
                   aria-label="Return to search"
                 >
-                  <Icons.undo className="mr-2 h-4 w-4" aria-hidden="true" />
+                  <Icons.undo className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
                   Return to search
                 </Button>
               )}
