@@ -55,9 +55,11 @@ export function CardAccount() {
                 </AvatarFallback>
               </Avatar>
 
-              <div className="max-w-[278px]">
-                <p className="truncate text-sm font-medium leading-none">{account.name || "Unnamed user"}</p>
-                <p className="truncate text-sm text-muted-foreground">{account.email}</p>
+              <div className="flex max-w-[264px] flex-col space-y-1">
+                <p className="line-clamp-1 pb-0.5 text-sm  font-medium leading-none">{account.name}</p>
+                <p className="line-clamp-1 pb-0.5 text-xs leading-none text-muted-foreground">
+                  {account.email ?? account.phone}
+                </p>
               </div>
             </div>
 
