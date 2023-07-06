@@ -149,7 +149,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
                       disabled={isLoadingForgot || isSuccessForgot}
                       aria-label="Forgot password?"
                     >
-                      {isSuccessForgot ? "Success" : "Forgot password?"}
+                      {isSuccessForgot ? "Check your email" : "Forgot password?"}
                     </Button>
                   </div>
                   <FormControl>

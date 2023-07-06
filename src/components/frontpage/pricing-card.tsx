@@ -166,7 +166,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
               ) : (
                 <Icons.sprout className="mr-2 h-4 w-4" aria-hidden="true" />
               )}
-              {isSuccess ? "Success" : "Subscribe now"}
+              Subscribe now
             </Button>
           )}
 
@@ -182,7 +182,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
               ) : (
                 <Icons.manage className="mr-2 h-4 w-4" aria-hidden="true" />
               )}
-              {isSuccess ? "Success" : "Manage subscription"}
+              Manage subscription
             </Button>
           )}
         </CardFooter>

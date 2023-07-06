@@ -307,7 +307,7 @@ export function PromptForm({ products }: PromptFormProps) {
               ) : (
                 <Icons.send className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
               )}
-              {isSuccess ? "Success" : "Send"}
+              Send
             </Button>
           </form>
         </Form>

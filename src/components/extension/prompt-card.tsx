@@ -38,9 +38,14 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
               </Badge>
             )}
             {!userApiKey && profile && (
-              <Badge variant="outline" size="fixed">
-                {profile.credits} recommendations remaining
-              </Badge>
+              <>
+                <Badge variant="outline" size="fixed">
+                  {profile.credits === 0 && (
+                    <Icons.alert className="mr-[8px] h-[16px] w-[16px] text-orange-500" aria-hidden="true" />
+                  )}
+                  {profile.credits} recommendations remaining
+                </Badge>
+              </>
             )}
           </CardTitle>
 

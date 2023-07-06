@@ -128,7 +128,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
           ) : (
             <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          {isSuccess ? "Success" : "Sign in with Magic URL"}
+          Sign in with Magic URL
         </Button>
       </form>
     </Form>

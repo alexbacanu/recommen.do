@@ -108,7 +108,7 @@ export function CardUsage() {
                     ) : (
                       <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
                     )}
-                    {isSuccess ? "Success" : "Add 50 more recommendations"}
+                    Add 50 more recommendations
                   </Button>
                 </AlertDialogTrigger>
 
@@ -137,7 +137,7 @@ export function CardUsage() {
                       ) : (
                         <Icons.coins className="mr-2 h-4 w-4" aria-hidden="true" />
                       )}
-                      {isSuccess ? "Success" : "Add 50 more recommendations"}
+                      Add 50 more recommendations
                     </Button>
                   </AlertDialogFooter>
                 </AlertDialogContent>
