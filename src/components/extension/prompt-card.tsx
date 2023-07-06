@@ -3,6 +3,7 @@ import type { ScrapedProduct } from "@/lib/types/types";
 import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
 import { useAtomValue } from "jotai";
+import { browserName } from "react-device-detect";
 
 import { PromptForm } from "@/components/extension/prompt-form";
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +46,12 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                   )}
                   {profile.credits} recommendations remaining
                 </Badge>
+                {browserName === "Brave" && (
+                  <Badge variant="outline" className="border-orange-500 text-orange-500" size="fixed">
+                    <Icons.alert className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
+                    To make the extension work, please disable Brave Shields
+                  </Badge>
+                )}
               </>
             )}
           </CardTitle>

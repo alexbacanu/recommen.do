@@ -38,7 +38,7 @@ export function Pricing({ plans }: PricingProps) {
   return (
     <section id="pricing" className="overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 py-8 lg:py-16">
-        <div className="flex flex-col gap-y-10 lg:gap-y-12 xl:gap-y-14">
+        <div className="flex flex-col gap-y-10 lg:gap-y-12">
           <h2 className="heading-accent text-center tracking-tight">Subscription plans</h2>
 
           <Card className="flex flex-col items-center justify-between gap-4 p-6 sm:flex-row md:gap-6">
