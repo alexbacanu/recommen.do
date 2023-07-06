@@ -3,7 +3,7 @@
 import type { AppwriteAccount } from "@/lib/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,6 +36,7 @@ type ForgotPasswordParams = {
 
 export function FormAccountPassword({ account }: CardAccountProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
@@ -46,6 +47,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
       toast({
         description: "Password successfully updated.",
       });
+      queryClient.invalidateQueries(["account"]);
       // toast.success("Password successfully updated.");
     },
     onError: async (error) => {
