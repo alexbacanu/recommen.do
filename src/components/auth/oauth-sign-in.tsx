@@ -13,7 +13,7 @@ import { AppwriteService } from "@/lib/clients/client-appwrite";
 const oauthProviders = [
   { name: "Google", strategy: "google", icon: "google" },
   { name: "Github", strategy: "github", icon: "github" },
-  { name: "Facebook", strategy: "facebook", icon: "facebook" },
+  // { name: "Facebook", strategy: "facebook", icon: "facebook" },
 ] satisfies {
   name: string;
   strategy: string;
@@ -75,7 +75,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
       {oauthProviders.map((provider) => {
         const Icon = Icons[provider.icon];
 
