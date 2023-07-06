@@ -3,6 +3,7 @@ import type { ScrapedProduct } from "@/lib/types/types";
 import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
 import { useAtomValue } from "jotai";
+import Link from "next/link";
 import { browserName } from "react-device-detect";
 
 import { PromptForm } from "@/components/extension/prompt-form";
@@ -12,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { profileAtom } from "@/lib/atoms/auth";
+import { appwriteUrl } from "@/lib/envClient";
 
 interface PromptCardProps {
   products: ScrapedProduct[];
@@ -28,10 +30,12 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
         <div className="absolute inset-[-0.125px] -z-10 rounded-[12px] bg-gradient-to-r from-rose-500/30 to-cyan-500/30 blur"></div>
 
         <CardHeader className="gap-y-[6px] rounded-[12px] p-[16px] lg:p-[16px]">
-          <CardTitle className="flex items-center gap-[16px] pl-[8px] text-[24px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
-            <span>recommen.do</span>
+          <CardTitle className="flex items-center gap-[16px] text-[24px]">
+            <Link href={appwriteUrl} className="flex items-center gap-[16px] pl-[8px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
+              <span>recommen.do</span>
+            </Link>
 
             {userApiKey && profile && (
               <Badge variant="outline" size="fixed">
