@@ -219,6 +219,7 @@ export function PromptForm({ products }: PromptFormProps) {
 
   useEffect(() => {
     handleReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userApiKey]);
 
   return (

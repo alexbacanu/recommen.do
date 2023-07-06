@@ -29,11 +29,7 @@ export function CardHistory() {
   const hasHistory = !!profile && profile?.history?.length > 0;
 
   // 0. Define your mutation.
-  const {
-    mutate: toggleHistory,
-    isLoading: toggleHistoryLoading,
-    isSuccess: toggleHistorySuccess,
-  } = useMutation({
+  const { mutate: toggleHistory, isLoading: toggleHistoryLoading } = useMutation({
     mutationKey: ["toggleHistory"],
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
