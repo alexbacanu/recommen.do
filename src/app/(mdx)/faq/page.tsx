@@ -9,38 +9,59 @@ export default function FAQPage() {
       <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
         {/* <FAQ /> */}
 
-        <h1 className="text-3xl font-semibold">FAQ</h1>
+        <h1 className="text-3xl font-semibold">Frequently Asked Questions</h1>
 
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>How do I use recommen.do?</AccordionTrigger>
+            <AccordionTrigger>How can I use recommen.do extension?</AccordionTrigger>
             <AccordionContent>
-              Follow our installation and usage guide{" "}
+              To get started with recommen.do, please follow our installation and usage guide. You can find detailed
+              instructions{" "}
               <Link href={`${appwriteUrl}/installation`} className="text-primary">
                 here
               </Link>
-              .
+              . .
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-2">
             <AccordionTrigger>
-              What should I do if I run out of credits before the end of the current billing cycle?
+              What should I do if I exhaust my credits before the end of the current billing cycle?
             </AccordionTrigger>
             <AccordionContent>
-              If you run out of credits before the end of the current billing cycle you can use the &quot;Add 50 more
-              recommendations&quot; option located in the usage section of your profile (either thru the extension or
-              website). This will enable you to purchase 50 credits valid until the end of your current billing cycle.
-              You can also consider upgrading your subscription starting from the next billing cycle - use the
-              &quot;Manage subscription&quot; option to modify your plan.
+              If you run out of credits before the end of the current billing cycle, don&apos;t worry! You can easily
+              add 50 more recommendations by accessing the &quot;Add 50 more recommendations&quot; option in the usage
+              section of your profile. These additional credits will be valid until the end of your current billing
+              cycle. Alternatively, you can consider upgrading your subscription for the upcoming billing cycle. Just
+              head over to the &quot;Manage subscription&quot; option to modify your plan.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-3">
-            <AccordionTrigger>What happens when I delete my account?</AccordionTrigger>
+            <AccordionTrigger>What happens if I delete my account?</AccordionTrigger>
             <AccordionContent>
-              Deleting your account is immediate and irreversible. If you have an active subscription it will be
-              canceled. By deleting your account you agree to forfeit all remaining recommendations.
+              Deleting your account is a permanent action. Please note that by deleting your account, your active
+              subscription will be canceled, and any remaining recommendations will be forfeited.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-4">
+            <AccordionTrigger>Do you offer a free trial?</AccordionTrigger>
+            <AccordionContent>
+              Yes, we provide a free trial period for our service. Upon creating an account, you will receive 10
+              complimentary recommendations to explore the features and functionality of our product. These credits can
+              be used during the trial period, which is 30 days.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-5">
+            <AccordionTrigger>Can I cancel my subscription at any time?</AccordionTrigger>
+            <AccordionContent>
+              Yes, you have the freedom to cancel your subscription at any time. There are no long-term contracts or
+              commitments. Simply navigate to the &quot;Manage subscription&quot; section in your profile to cancel your
+              subscription. If you decide to cancel your subscription, you will still have access to the remaining
+              credits until the end of the billing cycle. This allows you to fully utilize the benefits of the trial
+              period without any interruptions.
             </AccordionContent>
           </AccordionItem>
 
