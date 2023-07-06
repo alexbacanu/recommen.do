@@ -35,7 +35,7 @@ export function CardUsage() {
   const hasSubscription = profile ? profile.stripeSubscriptionId !== "none" : false;
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["getRefillURL"],
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
@@ -102,7 +102,7 @@ export function CardUsage() {
             ) : (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="default" disabled={isLoading || isSuccess} aria-label="Add 50 more recommendations">
+                  <Button variant="default" disabled={isLoading} aria-label="Add 50 more recommendations">
                     {isLoading ? (
                       <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                     ) : (
@@ -129,7 +129,7 @@ export function CardUsage() {
                     <Button
                       variant="default"
                       onClick={() => mutate()}
-                      disabled={isLoading || isSuccess}
+                      disabled={isLoading}
                       aria-label="Add 50 more recommendations"
                     >
                       {isLoading ? (

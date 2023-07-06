@@ -35,7 +35,7 @@ export function CardSubscription() {
   const hasSubscription = profile ? profile.stripeSubscriptionId !== "none" : false;
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["getManageURL"],
     mutationFn: async ({ priceId }: GetManageURLParams) => {
       if (!priceId) {
@@ -101,7 +101,7 @@ export function CardSubscription() {
       return subscriptionList;
     },
     enabled: !!hasSubscription,
-    staleTime: 1000 * 60 * 15, // 15 minutes
+    // staleTime: 1000 * 60 * 15, // 15 minutes
     retry: 1,
   });
 
@@ -259,7 +259,7 @@ export function CardSubscription() {
             <CardFooter className="grid">
               <Button
                 onClick={() => mutate({ priceId: profile.stripePriceId })}
-                disabled={isLoading || isSuccess}
+                disabled={isLoading}
                 aria-label="Manage subscription"
               >
                 {isLoading ? (

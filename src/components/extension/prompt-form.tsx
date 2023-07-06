@@ -303,7 +303,7 @@ export function PromptForm({ products }: PromptFormProps) {
                 </FormItem>
               )}
             />
-            <Button size="fixed" disabled={isLoading || isSuccess || !ready || withoutCredits} aria-label="Send">
+            <Button size="fixed" disabled={isLoading || !ready || withoutCredits} aria-label="Send">
               {isLoading ? (
                 <Icons.spinner className="mr-[8px] h-[16px] w-[16px] animate-spin" aria-hidden="true" />
               ) : (

@@ -25,7 +25,7 @@ export function FormAccountDelete() {
   const { signOut } = useAccount();
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["deleteAccount"],
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
@@ -92,7 +92,7 @@ export function FormAccountDelete() {
             className="whitespace-nowrap"
             aria-label="Yes, delete my account"
             onClick={() => mutate()}
-            disabled={isLoading || isSuccess}
+            disabled={isLoading}
           >
             Yes, delete my account
           </Button>

@@ -53,7 +53,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   const account = useAtomValue(accountAtom);
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["createMagicURL"],
     mutationFn: async ({ email }: createMagicURLParams) => await AppwriteService.createMagicURL(email),
     onSuccess: (_, variables) => {
@@ -122,7 +122,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
           )}
         />
 
-        <Button disabled={isLoading || isSuccess} aria-label="Sign in with Magic URL">
+        <Button disabled={isLoading} aria-label="Sign in with Magic URL">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (

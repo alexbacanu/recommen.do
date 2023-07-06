@@ -40,7 +40,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
   const showManageSubscription = profile && profile.stripeSubscriptionId !== "none";
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["getSubscribeURL"],
     mutationFn: async ({ priceId }: GetSubscribeURLarams) => {
       const jwt = await AppwriteService.createJWT();
@@ -158,7 +158,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
             <Button
               variant={index === 1 ? "default" : "secondary"}
               onClick={() => mutate({ priceId: plan.priceId })}
-              disabled={isLoading || isSuccess}
+              disabled={isLoading}
               aria-label="Subscribe now"
             >
               {isLoading ? (
@@ -174,7 +174,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
             <Button
               variant={index === 1 ? "default" : "secondary"}
               onClick={() => mutate({ priceId: plan.priceId })}
-              disabled={isLoading || isSuccess}
+              disabled={isLoading}
               aria-label="Manage subscription"
             >
               {isLoading ? (

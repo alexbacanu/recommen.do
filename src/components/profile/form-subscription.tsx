@@ -33,7 +33,7 @@ export function FormSubscription() {
   const target = extensionDetected ? "_blank" : "_self";
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["getSubscribeURL"],
     mutationFn: async ({ priceId }: GetSubscribeURLarams) => {
       const jwt = await AppwriteService.createJWT();
@@ -178,7 +178,7 @@ export function FormSubscription() {
           />
         </CardContent>
         <CardFooter className="grid">
-          <Button disabled={isLoading || isSuccess} aria-label="Subscribe">
+          <Button disabled={isLoading} aria-label="Subscribe">
             {isLoading ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
             ) : (
