@@ -2,7 +2,8 @@
 
 import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -25,6 +26,7 @@ interface OAuthSignInProps {
 }
 
 export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
+  const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
@@ -73,6 +75,11 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    router.refresh();
+    setIsLoading(null);
+  }, [router]);
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
