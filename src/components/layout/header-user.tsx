@@ -28,7 +28,12 @@ export function HeaderUser() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full" aria-label="User dropdown menu">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={AppwriteService.getAccountInitials(account.name).href} alt={account.name} />
+            {!!account?.name ? (
+              <AvatarImage src={AppwriteService.getAccountInitials(account?.name).href} alt={account.name} />
+            ) : (
+              <AvatarImage src={AppwriteService.getAccountInitials(account?.email).href} alt={account.email} />
+            )}
+
             <AvatarFallback>
               <Icons.account className="h-5 w-5" aria-hidden="true" />
             </AvatarFallback>

@@ -17,7 +17,7 @@ import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { useAccount } from "@/lib/hooks/use-account";
 
 const formSchema = z.object({
-  displayName: z.string().min(0).max(128),
+  displayName: z.string().min(0).max(128).trim(),
 });
 
 interface CardAccountProps {
