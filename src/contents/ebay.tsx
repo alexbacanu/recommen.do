@@ -108,7 +108,7 @@ const ebayProductData = () => {
 export const getShadowHostId = () => "plasmo-inline-ebay";
 
 export default function EbayContent() {
-  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
+  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus", false);
   const products = ebayProductData();
   console.log(products);
 
@@ -116,7 +116,7 @@ export default function EbayContent() {
     <>
       <ReactQueryProvider>
         <Init />
-        {isPromptHidden ? (
+        {isPromptHidden === true && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
             onClick={() => setIsPromptHidden((prevState) => !prevState)}
@@ -124,9 +124,9 @@ export default function EbayContent() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
           </button>
-        ) : (
-          <PromptCard products={products} onClose={() => setIsPromptHidden(true)} />
         )}
+
+        {isPromptHidden === false && <PromptCard products={products} onClose={() => setIsPromptHidden(true)} />}
       </ReactQueryProvider>
       <Toaster />
     </>
