@@ -81,10 +81,17 @@ export function CardHistory() {
         body: JSON.stringify(index),
       });
     },
-    onSuccess: () => {
-      toast({
-        description: "History successfully deleted.",
-      });
+    onSuccess: (data, variant) => {
+      console.log(data, variant);
+      if (variant.index === "clearHistory") {
+        toast({
+          description: "History successfully deleted.",
+        });
+      } else {
+        toast({
+          description: "Item successfully deleted.",
+        });
+      }
       queryClient.invalidateQueries(["profile"]);
     },
     onError: async (error) => {
