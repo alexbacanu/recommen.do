@@ -28,6 +28,7 @@ import {
   Save,
   Send,
   Settings2,
+  ShoppingCart,
   Sprout,
   Trash2,
   Undo2,
@@ -117,6 +118,7 @@ export const Icons = {
   save: Save,
   send: Send,
   link: ExternalLink,
+  cart: ShoppingCart,
 
   collapseDown: ArrowDownNarrowWide,
   collapseUp: ArrowUpNarrowWide,

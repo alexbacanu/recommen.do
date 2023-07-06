@@ -62,6 +62,30 @@ export function PromptForm({ products }: PromptFormProps) {
   const queryClient = useQueryClient();
 
   // 0. Define your mutation.
+  const { mutate: insertHistory } = useMutation({
+    mutationKey: ["insertHistory"],
+    mutationFn: async ({ product }: { product: ScrapedProduct }) => {
+      const jwt = await AppwriteService.createJWT();
+
+      const response = await fetch(`${appwriteUrl}/api/appwrite/history`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(product),
+      });
+
+      if (response.status !== 200) {
+        toast({
+          description: `Received following response: ${response.status}: ${response.statusText}.`,
+        });
+        throw new Error(response.statusText);
+      }
+    },
+  });
+
+  // 0. Define your mutation.
   const { mutate, isLoading, isSuccess, isError, reset } = useMutation({
     mutationKey: ["getRecommendation"],
     mutationFn: async (request: UpdateNameParams) => {
@@ -131,6 +155,7 @@ export function PromptForm({ products }: PromptFormProps) {
 
         setSelectedProduct(chosenProduct);
         productFound = true;
+        insertHistory({ product: chosenProduct });
         queryClient.invalidateQueries(["profile"]);
       }
     },

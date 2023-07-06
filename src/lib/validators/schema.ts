@@ -1,8 +1,18 @@
 import { z } from "zod";
 
 // Scraped product
-export const ProductValidator = z.object({
+export const LiteProductValidator = z.object({
   identifier: z.string(),
+  name: z.string(),
+  price: z.string(),
+  reviews: z.string(),
+  stars: z.string(),
+});
+
+export const FullProductValidator = z.object({
+  identifier: z.string(),
+  image: z.string(),
+  link: z.string(),
   name: z.string(),
   price: z.string(),
   reviews: z.string(),
@@ -11,7 +21,7 @@ export const ProductValidator = z.object({
 
 // OpenAI
 export const OpenAIRequestValidator = z.object({
-  products: z.array(ProductValidator),
+  products: z.array(LiteProductValidator),
   prompt: z.string().optional(),
 });
 export type OpenAIRequest = z.infer<typeof OpenAIRequestValidator>;

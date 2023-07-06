@@ -29,6 +29,10 @@ export type AppwriteProfile = Models.Document & {
 
   stripeStatus: string | null;
   stripeStatusLastUpdated: Date | null;
+
+  markedForDeletion: Date;
+  termsAgreed: Date;
+  history: string[];
 };
 
 // Stripe
