@@ -17,6 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
+import { cn } from "@/lib/helpers/utils";
 
 interface PricingCardProps {
   plan: StripePlan;
@@ -93,33 +94,55 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
       variants={zoom}
       viewport={{ once: true }}
     >
-      <Card className={index === 1 ? "border-ring" : ""}>
+      <Card className={cn("grid gap-4 p-4 lg:p-0 relative", index === 1 ? "border-ring" : "")}>
+        {index === 0 && (
+          <Icons.plan1
+            className="pointer-events-none absolute h-5/6 w-5/6 translate-x-[32px] text-muted-foreground/[0.03]"
+            strokeWidth={0.25}
+            aria-hidden="true"
+          />
+        )}
+        {index === 1 && (
+          <Icons.plan2
+            className="pointer-events-none absolute h-5/6 w-5/6 translate-x-[32px] text-muted-foreground/[0.03]"
+            strokeWidth={0.25}
+            aria-hidden="true"
+          />
+        )}
+        {index === 2 && (
+          <Icons.plan3
+            className="pointer-events-none absolute h-5/6 w-5/6 translate-x-[32px] text-muted-foreground/[0.03]"
+            strokeWidth={0.25}
+            aria-hidden="true"
+          />
+        )}
+
         <CardHeader>
-          <CardTitle className="text-xl font-normal">
+          <CardTitle className="text-3xl font-light">
             <div className="flex items-center justify-center">
-              {index === 0 && <Icons.plan1 className="mr-2 h-6 w-6" aria-hidden="true" />}
-              {index === 1 && <Icons.plan2 className="mr-2 h-6 w-6" aria-hidden="true" />}
-              {index === 2 && <Icons.plan3 className="mr-2 h-6 w-6" aria-hidden="true" />}
+              {index === 0 && <Icons.plan1 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
+              {index === 1 && <Icons.plan2 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
+              {index === 2 && <Icons.plan3 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
               {plan.name}
             </div>
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="grid grid-cols-2 gap-x-2">
-          <div className="flex items-center justify-center gap-x-1">
-            <span className="text-5xl font-light leading-none tracking-tighter text-foreground/80">
+        <CardContent className="grid gap-8">
+          <div className="grid">
+            <p className="text-center text-4xl font-light leading-none tracking-tighter text-foreground/80">
               {plan.metadata.recommendations}
-            </span>
-            <div className="grid grid-rows-2">
-              <div className="text-right text-sm leading-tight text-muted-foreground">credits</div>
-              <div className="text-right text-sm text-muted-foreground">/month</div>
-            </div>
+            </p>
+            <div className="text-center text-base leading-tight text-muted-foreground">recommendations</div>
           </div>
 
           <div className="flex items-center justify-center gap-x-1">
-            <span className="text-5xl font-light leading-none tracking-tighter text-foreground/80">${plan.price}</span>
+            <span className="text-4xl font-light leading-none tracking-tighter text-foreground/80">
+              <sup className="top-[-14px] text-base">$</sup>
+              {plan.price}
+            </span>
             <div className="grid grid-rows-2">
-              <div className="row-start-2 text-right text-sm text-muted-foreground">/month</div>
+              <div className="row-start-2 text-left text-base leading-tight text-muted-foreground">/month</div>
             </div>
           </div>
         </CardContent>
