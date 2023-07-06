@@ -24,14 +24,18 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
   const [attempts, setAttempts] = useState(0);
 
   // 0. Define your query.
-  const { data: updateMagicURL } = useQuery({
+  const { isSuccess, isError } = useQuery({
     queryKey: ["updateMagicURL", searchParams.userId, searchParams.secret],
     queryFn: async () => await AppwriteService.updateMagicURL(searchParams.userId, searchParams.secret),
     retry: 1,
   });
 
   useEffect(() => {
-    if (updateMagicURL) {
+    if (isError) {
+      window.open("/", "_self");
+    }
+
+    if (isSuccess) {
       queryClient.invalidateQueries(["account", "profile"]);
 
       toast({
@@ -59,8 +63,9 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
 
       checkProfile();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateMagicURL]);
+  }, [isError, isSuccess]);
 
   return <LoadingPage />;
 }

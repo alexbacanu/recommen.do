@@ -3,8 +3,7 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Icons } from "@/components/ui/icons";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { appwriteUrl } from "@/lib/envClient";
 
@@ -42,12 +41,12 @@ export function CardSupport() {
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="grid">
+      {/* <CardFooter className="grid">
         <Button variant="outline" aria-label="Buy me a coffee">
           <Icons.coffee className="mr-2 h-4 w-4" aria-hidden="true" />
           <span>Buy me a coffee</span>
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </>
   );
 }
