@@ -33,6 +33,7 @@ export type AppwriteProfile = Models.Document & {
   markedForDeletion: Date;
   termsAgreed: Date;
   history: string[];
+  saveHistory: boolean;
 };
 
 // Stripe

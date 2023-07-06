@@ -44,8 +44,11 @@ export function CardAccount() {
           <div className="flex flex-col justify-between gap-4">
             <div className="flex items-center gap-x-4">
               <Avatar>
-                <AvatarImage src={AppwriteService.getAccountInitials(account.name).href} alt={account.name} />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarImage
+                  src={AppwriteService.getAccountInitials(account?.name || account?.email).href}
+                  alt={account.name || account.email}
+                />
+                <AvatarFallback>RE</AvatarFallback>
               </Avatar>
 
               <div className="max-w-[278px]">

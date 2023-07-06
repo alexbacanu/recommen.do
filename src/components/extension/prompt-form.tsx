@@ -155,7 +155,8 @@ export function PromptForm({ products }: PromptFormProps) {
 
         setSelectedProduct(chosenProduct);
         productFound = true;
-        insertHistory({ product: chosenProduct });
+
+        !!profile && profile.saveHistory && insertHistory({ product: chosenProduct });
         queryClient.invalidateQueries(["profile"]);
       }
     },
