@@ -40,7 +40,7 @@ export default function FAQPage() {
             <AccordionTrigger>What happens when I delete my account?</AccordionTrigger>
             <AccordionContent>
               Deleting your account is immediate and irreversible. If you have an active subscription it will be
-              canceled. By canceling your account you agree to forfeit all remaining recommendations.
+              canceled. By deleting your account you agree to forfeit all remaining recommendations.
             </AccordionContent>
           </AccordionItem>
 

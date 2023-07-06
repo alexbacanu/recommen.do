@@ -93,7 +93,7 @@ export default function AmazonContent() {
     <>
       <ReactQueryProvider>
         <Init />
-        {isPromptHidden ? (
+        {isPromptHidden === true && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
             onClick={() => setIsPromptHidden((prevState) => !prevState)}
@@ -101,9 +101,9 @@ export default function AmazonContent() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
           </button>
-        ) : (
-          <PromptCard products={products} onClose={() => setIsPromptHidden(true)} />
         )}
+
+        {isPromptHidden === false && <PromptCard products={products} onClose={() => setIsPromptHidden(true)} />}
       </ReactQueryProvider>
       <Toaster />
     </>
