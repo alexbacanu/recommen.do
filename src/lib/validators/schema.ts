@@ -67,6 +67,15 @@ export const SSOCallbackSchema = z.object({
 });
 export type SSOCallback = z.infer<typeof SSOCallbackSchema>;
 
+// Resend
+export const ResendValidator = z.object({
+  name: z.string().min(1).max(128),
+  email: z.string().email(),
+  subject: z.string().min(1).max(128),
+  message: z.string().min(1).max(10000),
+  terms: z.boolean().default(false),
+});
+
 export const popularDomains = [
   "gmail.com",
   "outlook.com",

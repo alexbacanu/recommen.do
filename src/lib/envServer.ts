@@ -11,3 +11,6 @@ export const stripeWebhookKey = process.env.STRIPE_WEBHOOK_KEY ?? "";
 // OpenAI
 export const openaiKey = process.env.OPENAI_API_KEY ?? "";
 export const openaiOrg = process.env.OPENAI_API_ORG ?? "";
+
+// Resend
+export const resendKey = process.env.RESEND_API_KEY ?? "";
