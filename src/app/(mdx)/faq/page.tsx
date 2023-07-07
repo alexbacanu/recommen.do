@@ -60,8 +60,7 @@ export default function FAQPage() {
               Yes, you have the freedom to cancel your subscription at any time. There are no long-term contracts or
               commitments. Simply navigate to the &quot;Manage subscription&quot; section in your profile to cancel your
               subscription. If you decide to cancel your subscription, you will still have access to the remaining
-              credits until the end of the billing cycle. This allows you to fully utilize the benefits of the trial
-              period without any interruptions.
+              credits until the end of the billing cycle.
             </AccordionContent>
           </AccordionItem>
 
