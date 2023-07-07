@@ -85,7 +85,7 @@ const amazonProductData = () => {
 export const getShadowHostId = () => "plasmo-inline-amazon";
 
 export default function AmazonContent() {
-  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus", false);
+  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
   const products = amazonProductData();
   console.log(products);
 

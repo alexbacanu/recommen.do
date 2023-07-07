@@ -60,7 +60,7 @@ const neweggProductData = () => {
 export const getShadowHostId = () => "plasmo-inline-newegg";
 
 export default function NeweggContent() {
-  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus", false);
+  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
   const products = neweggProductData();
   console.log(products);
 
