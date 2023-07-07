@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { popularDomains } from "@/lib/validators/schema";
@@ -45,7 +44,6 @@ interface FormSignInProps {
 }
 
 export function FormSignIn({ hasAccepted }: FormSignInProps) {
-  const { toast } = useToast();
   const router = useRouter();
 
   // const hasAccepted = useAtomValue(termsAtom);

@@ -12,7 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl, stripeBasicPlan, stripePremiumPlan, stripeUltimatePlan } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
@@ -26,8 +25,6 @@ type GetSubscribeURLarams = {
 };
 
 export function FormSubscription() {
-  const { toast } = useToast();
-
   const extensionDetected = !!window && !window?.next;
   const target = extensionDetected ? "_blank" : "_self";
 

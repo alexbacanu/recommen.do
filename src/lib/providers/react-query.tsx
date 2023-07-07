@@ -6,9 +6,11 @@ import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { AppwriteException } from "appwrite";
 import { useState } from "react";
 
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ReactQueryProvider({ children }: { children: React.ReactNode }) {
+  const { toast } = useToast();
+
   const [queryClient] = useState(() => {
     const client = new QueryClient({
       defaultOptions: {

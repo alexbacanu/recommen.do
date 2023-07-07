@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
-import { useToast } from "@/components/ui/use-toast";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -28,7 +27,6 @@ type GetSubscribeURLarams = {
 };
 
 export default function PricingCard({ plan, index }: PricingCardProps) {
-  const { toast } = useToast();
   const router = useRouter();
 
   const account = useAtomValue(accountAtom);

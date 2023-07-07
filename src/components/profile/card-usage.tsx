@@ -19,13 +19,11 @@ import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { LoadingPage } from "@/components/ui/loading";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 
 export function CardUsage() {
-  const { toast } = useToast();
   const profile = useAtomValue(profileAtom);
 
   const extensionDetected = !!window && !window?.next;
