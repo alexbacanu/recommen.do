@@ -139,7 +139,7 @@ export function FormContact() {
           render={({ field }) => (
             <FormItem className="flex items-center gap-x-2 space-y-0">
               <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked as boolean)} />
               </FormControl>
               <FormLabel>
                 I agree with{" "}

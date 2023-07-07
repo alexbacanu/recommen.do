@@ -34,10 +34,11 @@ export async function POST(request: Request) {
       Authorization: `Bearer ${resendKey}`,
     },
     body: JSON.stringify({
-      from: `${name} <${email}>`,
-      to: ["hey@recommen.do"],
-      subject: `Contact Form: ${subject}`,
-      html: message,
+      from: `Contact Form <hey@recommen.do>`,
+      to: "hey@recommen.do",
+      subject: subject,
+      html: `<p><strong>From</strong>: ${name} <${email}></p>
+      <p><strong>Message</strong>: ${message}</p>`,
     }),
   });
 
