@@ -3,7 +3,6 @@
 import type { ScrapedProduct } from "@/lib/types/types";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 
@@ -47,23 +46,6 @@ export function CardHistory() {
       });
       queryClient.invalidateQueries(["profile"]);
     },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
-    },
   });
 
   // 0. Define your mutation.
@@ -93,23 +75,6 @@ export function CardHistory() {
         });
       }
       queryClient.invalidateQueries(["profile"]);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

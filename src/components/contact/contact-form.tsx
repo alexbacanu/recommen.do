@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,21 +32,6 @@ export function FormContact() {
       toast({
         description: "Email sent succesfully.",
       });
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-      }
-
-      console.error(error);
     },
   });
 

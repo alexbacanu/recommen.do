@@ -3,7 +3,10 @@
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
+import { AppwriteException } from "appwrite";
 import { useState } from "react";
+
+import { toast } from "@/components/ui/use-toast";
 
 export default function ReactQueryProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => {
@@ -15,6 +18,25 @@ export default function ReactQueryProvider({ children }: { children: React.React
           // refetchOnMount: false,
           // refetchOnReconnect: false,
           // refetchOnWindowFocus: false,
+        },
+        mutations: {
+          onError: async (error) => {
+            if (error instanceof AppwriteException) {
+              toast({
+                description: error.message,
+                variant: "destructive",
+              });
+            }
+
+            if (error instanceof Error) {
+              toast({
+                description: error.message,
+                variant: "destructive",
+              });
+            }
+
+            console.error(error);
+          },
         },
       },
     });

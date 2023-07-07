@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -50,23 +49,6 @@ export function FormSubscription() {
     },
     onSuccess: (data) => {
       window.open(data, target);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

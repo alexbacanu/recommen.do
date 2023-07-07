@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,23 +40,6 @@ export function FormForgot({ searchParams }: CardAccountProps) {
       });
       // toast.success("Password successfully updated.");
       router.push(`${appwriteUrl}/profile`);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

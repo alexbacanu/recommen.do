@@ -6,7 +6,6 @@ import type { ChatGPTMessage } from "@/lib/validators/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -170,22 +169,7 @@ export function PromptForm({ products }: PromptFormProps) {
       setReady(false);
     },
 
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
+    onSettled: () => {
       setReady(true);
     },
   });

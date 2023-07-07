@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -58,23 +57,6 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
     mutationFn: async ({ email }: createMagicURLParams) => await AppwriteService.createMagicURL(email),
     onSuccess: (_, variables) => {
       router.push(`/sign-in/verify?email=${variables.email}`);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

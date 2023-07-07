@@ -4,7 +4,6 @@ import type { StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
 
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
@@ -57,23 +56,6 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
     },
     onSuccess: (data) => {
       router.push(data);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

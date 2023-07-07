@@ -2,7 +2,6 @@
 
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { useMutation } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 
 import {
@@ -52,23 +51,6 @@ export function CardUsage() {
     },
     onSuccess: (data) => {
       window.open(data, target);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 

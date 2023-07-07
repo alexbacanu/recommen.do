@@ -3,7 +3,6 @@
 import type Stripe from "stripe";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 
@@ -60,23 +59,6 @@ export function CardSubscription() {
     },
     onSuccess: (data) => {
       window.open(data, target);
-    },
-    onError: async (error) => {
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-        });
-        // toast.error(error.message);
-      }
-
-      console.error(error);
     },
   });
 
