@@ -131,17 +131,27 @@ export function CardHistory() {
                 return (
                   <div key={index} className="flex items-center justify-between">
                     <Link href={product.link} target={target}>
-                      <div className="flex items-center">
+                      <div className="flex items-center gap-x-2">
                         <Avatar className="h-10 w-10 rounded-sm">
                           <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
-                          <AvatarFallback>RE</AvatarFallback>
+                          <AvatarFallback></AvatarFallback>
                         </Avatar>
-                        <div className="ml-4 space-y-1">
+
+                        <div className="space-y-0.5">
+                          <p className="line-clamp-1 text-sm font-medium">{product.name}</p>
+                          {!!product.stars && (
+                            <p className="line-clamp-1 text-xs text-muted-foreground">
+                              {product.stars} / {product.reviews} reviews
+                            </p>
+                          )}
+                        </div>
+
+                        {/* <div className="ml-4 space-y-1">
                           <p className="line-clamp-1 pr-2 text-sm font-medium leading-none">{product.name}</p>
                           <p className="text-sm text-muted-foreground">
                             {product.stars} / {product.reviews} reviews
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     </Link>
                     <div className="text-destructive">

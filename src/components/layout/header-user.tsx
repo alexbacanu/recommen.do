@@ -42,11 +42,9 @@ export function HeaderUser() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="line-clamp-1 pb-0.5 text-sm font-medium leading-none">{account.name}</p>
-            <p className="line-clamp-1 pb-0.5 text-xs leading-none text-muted-foreground">
-              {account.email ?? account.phone}
-            </p>
+          <div className="space-y-0.5">
+            <p className="line-clamp-1 text-sm font-medium">{account.name}</p>
+            <p className="line-clamp-1 text-xs text-muted-foreground">{account.email ?? account.phone}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
