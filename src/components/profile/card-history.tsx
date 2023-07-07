@@ -127,7 +127,7 @@ export function CardHistory() {
                 const product: ScrapedProduct = JSON.parse(item);
 
                 return (
-                  <div key={index} className="flex items-center">
+                  <div key={index} className="flex items-center justify-between">
                     <Link href={product.link} target={target}>
                       <div className="flex items-center">
                         <Avatar className="h-10 w-10 rounded-sm">
