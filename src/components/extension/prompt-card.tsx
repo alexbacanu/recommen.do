@@ -78,16 +78,18 @@ function MinimizeButton({ onClose }: { onClose: () => void }) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            type="button"
-            size="icon"
-            onClick={onClose}
-            className="absolute right-0 top-0 z-10 m-[8px] text-muted-foreground/70"
-          >
-            <Icons.minimize className="h-[16px] w-[16px]" aria-hidden="true" />
-            <span className="sr-only">Minimize prompt card</span>
-          </Button>
+          <div>
+            <Button
+              variant="ghost"
+              type="button"
+              size="icon"
+              onClick={onClose}
+              className="absolute right-0 top-0 z-10 m-[8px] text-muted-foreground/70"
+            >
+              <Icons.minimize className="h-[16px] w-[16px]" aria-hidden="true" />
+              <span className="sr-only">Minimize prompt card</span>
+            </Button>
+          </div>
         </TooltipTrigger>
         <TooltipContent side="top" className="rounded-[10px] px-[12px] py-[6px] text-[12px]">
           <p>Minimize</p>

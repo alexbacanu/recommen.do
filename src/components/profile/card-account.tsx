@@ -68,13 +68,15 @@ export function CardAccount() {
                 <Tabs defaultValue="name">
                   <TabsList className="mb-2 grid w-full grid-cols-4 bg-transparent p-0">
                     <Tooltip>
-                      <TooltipTrigger>
-                        <TabsTrigger
-                          value="name"
-                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                        >
-                          Name
-                        </TabsTrigger>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <TabsTrigger
+                            value="name"
+                            className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                          >
+                            Name
+                          </TabsTrigger>
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Change your display name</p>
@@ -82,13 +84,15 @@ export function CardAccount() {
                     </Tooltip>
 
                     <Tooltip>
-                      <TooltipTrigger>
-                        <TabsTrigger
-                          value="password"
-                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                        >
-                          Password
-                        </TabsTrigger>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <TabsTrigger
+                            value="password"
+                            className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                          >
+                            Password
+                          </TabsTrigger>
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Change your password</p>
@@ -96,14 +100,16 @@ export function CardAccount() {
                     </Tooltip>
 
                     <Tooltip>
-                      <TooltipTrigger>
-                        <TabsTrigger
-                          value="email"
-                          disabled={account.passwordUpdate === ""}
-                          className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                        >
-                          Email
-                        </TabsTrigger>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <TabsTrigger
+                            value="email"
+                            disabled={account.passwordUpdate === ""}
+                            className="rounded-none border-b-2 border-transparent hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                          >
+                            Email
+                          </TabsTrigger>
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>
                         {account.passwordUpdate === "" ? (
@@ -115,13 +121,15 @@ export function CardAccount() {
                     </Tooltip>
 
                     <Tooltip>
-                      <TooltipTrigger>
-                        <TabsTrigger
-                          value="delete"
-                          className="rounded-none border-b-2 border-transparent text-destructive hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
-                        >
-                          Delete
-                        </TabsTrigger>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <TabsTrigger
+                            value="delete"
+                            className="rounded-none border-b-2 border-transparent text-destructive hover:border-b-2 hover:border-border data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:shadow-none"
+                          >
+                            Delete
+                          </TabsTrigger>
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Delete your account</p>

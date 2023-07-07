@@ -87,13 +87,15 @@ export function CardHistory() {
 
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
-                  <Switch
-                    id="toggle-history"
-                    disabled={toggleHistoryLoading}
-                    checked={profile.saveHistory}
-                    onClick={() => toggleHistory()}
-                  />
+                <TooltipTrigger asChild>
+                  <div>
+                    <Switch
+                      id="toggle-history"
+                      disabled={toggleHistoryLoading}
+                      checked={profile.saveHistory}
+                      onClick={() => toggleHistory()}
+                    />
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent side="left">
                   {profile.saveHistory ? (
