@@ -1,17 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { resendKey } from "@/lib/envServer";
+import { corsHeaders } from "@/lib/helpers/cors";
 import { ResendValidator } from "@/lib/validators/schema";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
-
-const corsHeaders = {
-  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
 
 export async function POST(request: Request) {
   const body = await request.json();

@@ -6,13 +6,7 @@ import Stripe from "stripe";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
-
-const corsHeaders = {
-  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+import { corsHeaders } from "@/lib/helpers/cors";
 
 export const dynamic = "force-dynamic";
 

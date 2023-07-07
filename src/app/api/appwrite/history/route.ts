@@ -5,14 +5,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
+import { corsHeaders } from "@/lib/helpers/cors";
 import { FullProductValidator } from "@/lib/validators/schema";
-
-const corsHeaders = {
-  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
 
 export const dynamic = "force-dynamic";
 
@@ -54,7 +48,12 @@ export async function GET() {
   });
 
   console.log("api.appwrite.history:", "OK");
-  return NextResponse.json({ status: "OK" });
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: corsHeaders,
+    },
+  );
 }
 
 export async function POST(request: Request) {
@@ -113,7 +112,12 @@ export async function POST(request: Request) {
   });
 
   console.log("api.appwrite.history:", "OK");
-  return NextResponse.json({ status: "OK" });
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: corsHeaders,
+    },
+  );
 }
 
 export async function PUT(request: Request) {
@@ -165,6 +169,11 @@ export async function PUT(request: Request) {
     });
   }
 
-  console.log("api.appwrite.history.put:", "OK");
-  return NextResponse.json({ status: "OK" });
+  console.log("api.appwrite.history:", "OK");
+  return NextResponse.json(
+    { status: "OK" },
+    {
+      headers: corsHeaders,
+    },
+  );
 }

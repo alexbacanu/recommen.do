@@ -10,14 +10,8 @@ import { z } from "zod";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
 import { openaiKey } from "@/lib/envServer";
+import { corsHeaders } from "@/lib/helpers/cors";
 import { OpenAIPayloadValidator } from "@/lib/validators/schema";
-
-const corsHeaders = {
-  // "Access-Control-Allow-Origin": "chrome-extension://cflbkohcinjdejhggkaejcgdkccdedan",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
 
 export async function OPTIONS() {
   return NextResponse.json({ message: "OK" }, { headers: corsHeaders });
