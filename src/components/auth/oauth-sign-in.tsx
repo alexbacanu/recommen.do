@@ -1,7 +1,6 @@
 "use client";
 
 import { useAtomValue } from "jotai";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -25,8 +24,6 @@ interface OAuthSignInProps {
 }
 
 export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
-  const router = useRouter();
-
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
