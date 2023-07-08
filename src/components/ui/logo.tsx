@@ -1,10 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import { Icons } from "@/components/ui/icons";
 
 export default function Logo() {
   return (
     <Link href="/" aria-label="Navigate to homepage">
-      <Image src="/logos/relogo.svg" width={48} height={27} alt="Logo for recommen.do" />
+      <Icons.logo className="h-12 w-12" />
     </Link>
   );
 }

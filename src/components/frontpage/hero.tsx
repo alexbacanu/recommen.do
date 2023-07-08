@@ -27,7 +27,7 @@ export function Hero() {
       >
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14 xl:gap-20">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight md:text-4xl xl:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
               Your <span className="heading-accent">AI-Powered</span> Shopping Companion
             </h1>
 
@@ -35,7 +35,7 @@ export function Hero() {
               Get personalized shopping recommendations with OpenAI GPT
             </p>
 
-            <div className="mt-8 grid w-full gap-4 md:inline-flex lg:mt-12">
+            <div className="mt-8 grid w-full gap-4 lg:inline-flex lg:mt-12">
               <Button variant="default" size="lg" asChild>
                 {isChromium ? (
                   <a href="/download/chrome-1.1.0.zip" aria-label={`Download extension for ${browser}`}>
@@ -54,7 +54,7 @@ export function Hero() {
               </Button>
             </div>
 
-            <div className="[&>*]:browser-accent mt-8 grid grid-cols-4 items-center justify-center gap-6 md:grid-cols-8 lg:mt-12 lg:grid-cols-4 xl:grid-cols-8">
+            <div className="[&>*]:browser-accent mt-8 grid grid-cols-3 items-center justify-center gap-6 md:grid-cols-3 lg:mt-12 lg:grid-cols-3 xl:grid-cols-6">
               <Image src="/browsers/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
               <Image src="/browsers/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
 
