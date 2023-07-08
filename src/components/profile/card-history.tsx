@@ -111,47 +111,50 @@ export function CardHistory() {
         <CardContent className="mb-4 grid max-h-[25rem] gap-4 overflow-y-auto lg:mb-8">
           <div className="flex flex-col gap-y-4">
             {hasHistory ? (
-              profile.history.reverse().map((item, index) => {
-                const product: ScrapedProduct = JSON.parse(item);
+              profile.history
+                .slice(0)
+                .reverse()
+                .map((item, index) => {
+                  const product: ScrapedProduct = JSON.parse(item);
 
-                return (
-                  <div key={index} className="flex items-start justify-between">
-                    <Link href={product.link} target={target}>
-                      <div className="flex items-center gap-x-2">
-                        <Avatar className="h-10 w-10 rounded-sm">
-                          <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
-                          <AvatarFallback>
-                            {product.source ? product.source.slice(0, 2).toUpperCase() : "RE"}
-                          </AvatarFallback>
-                        </Avatar>
+                  return (
+                    <div key={index} className="flex items-start justify-between">
+                      <Link href={product.link} target={target}>
+                        <div className="flex items-center gap-x-2">
+                          <Avatar className="h-10 w-10 rounded-sm">
+                            <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
+                            <AvatarFallback>
+                              {product.source ? product.source.slice(0, 2).toUpperCase() : "RE"}
+                            </AvatarFallback>
+                          </Avatar>
 
-                        <div className="space-y-0.5">
-                          <p className="line-clamp-1 text-sm font-medium">{product.name}</p>
-                          {product.stars !== "0" && (
-                            <p className="line-clamp-1 text-xs text-muted-foreground">
-                              {product.stars} / {product.reviews} reviews
-                            </p>
-                          )}
+                          <div className="space-y-0.5">
+                            <p className="line-clamp-1 text-sm font-medium">{product.name}</p>
+                            {product.stars !== "0" && (
+                              <p className="line-clamp-1 text-xs text-muted-foreground">
+                                {product.stars} / {product.reviews} reviews
+                              </p>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                    <div className="text-destructive">
-                      <Button
-                        disabled={isLoading}
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Delete this entry"
-                        onClick={() => mutate({ index: index })}
-                      >
-                        <Icons.remove className="h-4 w-4" aria-hidden="true" />
-                      </Button>
-                      {/* <Badge variant="outline" className="ml-auto text-base font-medium">
+                      </Link>
+                      <div className="text-destructive">
+                        <Button
+                          disabled={isLoading}
+                          variant="ghost"
+                          size="icon"
+                          aria-label="Delete this entry"
+                          onClick={() => mutate({ index: index })}
+                        >
+                          <Icons.remove className="h-4 w-4" aria-hidden="true" />
+                        </Button>
+                        {/* <Badge variant="outline" className="ml-auto text-base font-medium">
                             {product.price}
                           </Badge> */}
+                      </div>
                     </div>
-                  </div>
-                );
-              })
+                  );
+                })
             ) : (
               <div className="grid gap-16">
                 <div className="text-center text-base">
