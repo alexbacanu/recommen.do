@@ -76,9 +76,9 @@ export function CardSubscription() {
       const subscriptionList: Stripe.Plan = await response.json();
       return subscriptionList;
     },
-    enabled: !!hasSubscription,
+    enabled: hasSubscription,
     // staleTime: 1000 * 60 * 15, // 15 minutes
-    retry: 1,
+    retry: 2,
   });
 
   const showSingleMonth = profile && !!data && profile.stripeSubscriptionName === data.metadata?.name;

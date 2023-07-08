@@ -29,7 +29,8 @@ const formSchema = z.object({
         return popularDomains.includes(domain);
       },
       {
-        message: "This email domain is currently unavailable for sign-up.",
+        message:
+          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo or Apple.",
       },
     ),
   confirmNewEmail: z
@@ -45,7 +46,8 @@ const formSchema = z.object({
         return popularDomains.includes(domain);
       },
       {
-        message: "This email domain is currently unavailable for sign-up.",
+        message:
+          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo or Apple.",
       },
     ),
   currentPassword: z.string().min(8),
