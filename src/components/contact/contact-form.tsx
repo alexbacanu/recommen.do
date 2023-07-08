@@ -86,7 +86,6 @@ export function FormContact() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof ResendValidator>) {
-    console.log("values:", values);
     if (!values.terms) {
       form.setError("terms", {
         message: "You must accept the terms and conditions and privacy policy.",

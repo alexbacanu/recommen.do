@@ -9,10 +9,8 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  console.log(body);
 
   const { name, email, subject, message, terms } = ResendValidator.parse(body);
-  console.log(name, email, subject, message, terms);
 
   if (!terms) {
     return NextResponse.json("You must accept the terms and conditions and privacy policy in order to contact us.", {
