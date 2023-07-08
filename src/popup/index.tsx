@@ -87,7 +87,7 @@ export default function IndexPopup() {
             </TabsList>
           </Tabs>
         ) : (
-          <div className="min-w-[380px]">
+          <div className="w-[380px]">
             <AuthRequiredCard />
           </div>
         )}
