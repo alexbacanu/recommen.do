@@ -4,7 +4,7 @@ import { resendKey } from "@/lib/envServer";
 import { corsHeaders } from "@/lib/helpers/cors";
 import { ResendValidator } from "@/lib/validators/schema";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   console.log(name, email, subject, message, terms);
 
   if (!terms) {
-    return new Response("You must accept the terms and conditions and privacy policy in order to contact us.", {
+    return NextResponse.json("You must accept the terms and conditions and privacy policy in order to contact us.", {
       status: 401,
       headers: corsHeaders,
     });
@@ -36,10 +36,11 @@ export async function POST(request: Request) {
     }),
   });
 
-  if (res.ok) {
-    const data = await res.json();
-    return NextResponse.json(data);
+  const data = await res.json();
+
+  if (res.status !== 200) {
+    return NextResponse.json(data.message, { status: res.status });
   }
 
-  return NextResponse.json(body);
+  return NextResponse.json("api.resend.status: OK");
 }

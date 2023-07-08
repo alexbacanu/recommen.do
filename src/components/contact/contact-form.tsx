@@ -23,10 +23,18 @@ export function FormContact() {
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateEmail"],
     mutationFn: async ({ ...values }: z.infer<typeof ResendValidator>) => {
-      await fetch(`${appwriteUrl}/api/resend`, {
+      const response = await fetch(`${appwriteUrl}/api/resend`, {
         method: "POST",
         body: JSON.stringify({ ...values }),
       });
+
+      const data = await response.json();
+
+      if (response.status !== 200) {
+        throw new Error(data);
+      }
+
+      return response;
     },
     onSuccess: () => {
       toast({
