@@ -50,7 +50,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
                 {profile.credits} recommendations remaining
               </Badge>
             )}
-            {browserName === "Brave" && (
+            {browserName === "Brave" && !profile && (
               <Badge variant="outline" className="border-orange-500 text-orange-500" size="fixed">
                 <Icons.alert className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
                 To make the extension work, please disable Brave Shields
