@@ -181,14 +181,11 @@ export async function POST(request: Request) {
       : 0;
 
     // Webhooks don't come in a specific order, we only want to update the status if it's newer
-    console.log("sessionCreated", sessionCreated);
-    console.log("statusLastUpdated", statusLastUpdated);
-    console.log("sessionCreated > statusLastUpdated", sessionCreated > statusLastUpdated);
-    console.log("session.status", session.status);
+    // TODO: it doesn't really work, if 2 come in the same second, statusLastUpdated will be the same (0)
     if (sessionCreated > statusLastUpdated) {
       // Update profile from stripe event
       await serverDatabases.updateDocument("main", "profile", singleProfile.$id, {
-        stripeStatus: session.status,
+        stripeStatus: "active",
         stripeStatusLastUpdated: new Date(event.created * 1000),
       });
     }
