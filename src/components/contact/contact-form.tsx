@@ -145,7 +145,7 @@ export function FormContact() {
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
-            <Icons.save className="mr-2 h-4 w-4" aria-hidden="true" />
+            <Icons.send className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
           {isSuccess ? "Email sent" : "Send email"}
         </Button>
