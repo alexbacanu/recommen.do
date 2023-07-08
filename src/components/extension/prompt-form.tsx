@@ -44,6 +44,7 @@ const initialProduct = {
   price: "unknown",
   reviews: "0",
   stars: "0",
+  source: "",
 };
 const initialMessage: ChatGPTMessage[] = [
   { role: "system", content: "You are ShopAssistantGPT, an advisor on what to buy given some products" },
