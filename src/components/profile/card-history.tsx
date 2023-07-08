@@ -134,7 +134,7 @@ export function CardHistory() {
                       <div className="flex items-center gap-x-2">
                         <Avatar className="h-10 w-10 rounded-sm">
                           <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
-                          <AvatarFallback></AvatarFallback>
+                          <AvatarFallback>{product.source.slice(0, 2).toUpperCase()}</AvatarFallback>
                         </Avatar>
 
                         <div className="space-y-0.5">

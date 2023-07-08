@@ -9,6 +9,7 @@ export type ScrapedProduct = {
   price: string;
   reviews: string;
   stars: string;
+  source: string;
 };
 
 // Appwrite

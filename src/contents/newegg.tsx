@@ -39,6 +39,7 @@ const neweggProductData = () => {
     const price = element.querySelector("li.price-current")?.textContent?.trim() || "unknown";
     const reviews = element.querySelector("span.item-rating-num")?.textContent?.trim() || "0";
     const stars = element.querySelector("i.rating")?.getAttribute("aria-label")?.trim() || "0";
+    const source = "newegg";
 
     // Check if all required fields are present and valid
     if (identifier && image && link && name) {
@@ -50,6 +51,7 @@ const neweggProductData = () => {
         price,
         reviews,
         stars,
+        source,
       });
     }
   }

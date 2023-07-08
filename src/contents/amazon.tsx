@@ -64,6 +64,7 @@ const amazonProductData = () => {
     const price = element.querySelector("span.a-price > span.a-offscreen")?.textContent?.trim() || "unknown";
     const reviews = element.querySelector(".a-size-base.s-underline-text")?.textContent?.trim() || "0";
     const stars = element.querySelector(".a-icon-alt")?.textContent?.trim() || "0";
+    const source = "amazon";
 
     // Check if all required fields are present and valid
     if (identifier && image && link && name) {
@@ -75,6 +76,7 @@ const amazonProductData = () => {
         price,
         reviews,
         stars,
+        source,
       });
     }
   }

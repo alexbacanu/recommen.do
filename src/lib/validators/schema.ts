@@ -17,6 +17,7 @@ export const FullProductValidator = z.object({
   price: z.string(),
   reviews: z.string(),
   stars: z.string(),
+  source: z.string(),
 });
 
 // OpenAI

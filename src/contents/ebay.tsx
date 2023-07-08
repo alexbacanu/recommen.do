@@ -87,6 +87,7 @@ const ebayProductData = () => {
     const price = element.querySelector("span.s-item__price")?.textContent?.trim() || "unknown";
     const reviews = "0";
     const stars = "0";
+    const source = "ebay";
 
     // Check if all required fields are present and valid
     if (identifier && image && link && name) {
@@ -98,6 +99,7 @@ const ebayProductData = () => {
         price,
         reviews,
         stars,
+        source,
       });
     }
   }
