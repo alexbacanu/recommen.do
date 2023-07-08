@@ -40,6 +40,7 @@ export function CardSubscription() {
       if (!priceId) {
         toast({
           description: "You don't have an active subscription",
+          variant: "destructive",
         });
         // toast.error("You don't have an active subscription");
         return;

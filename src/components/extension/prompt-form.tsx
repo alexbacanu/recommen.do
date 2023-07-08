@@ -78,6 +78,7 @@ export function PromptForm({ products }: PromptFormProps) {
       if (response.status !== 200) {
         toast({
           description: `Received following response: ${response.status}: ${response.statusText}.`,
+          variant: "destructive",
         });
         throw new Error(response.statusText);
       }
@@ -107,6 +108,7 @@ export function PromptForm({ products }: PromptFormProps) {
       if (!body) {
         toast({
           description: "Failed to retrieve response from the server.",
+          variant: "destructive",
         });
         // toast.error("Failed to retrieve response from the server.");
         throw new Error("Failed to retrieve response from the server.");
@@ -128,6 +130,7 @@ export function PromptForm({ products }: PromptFormProps) {
         if (response.status !== 200) {
           toast({
             description: `Received following response: ${response.status}: ${response.statusText}.`,
+            variant: "destructive",
           });
           throw new Error(chunkValue);
           // toast.error(`Failed to retrieve response. Status: ${response.status}`);

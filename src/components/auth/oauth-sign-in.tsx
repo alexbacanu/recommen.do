@@ -37,6 +37,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
     if (!hasAccepted) {
       toast({
         description: "You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.",
+        variant: "destructive",
       });
       // toast.error("You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.");
 
@@ -46,6 +47,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
     if (account) {
       toast({
         description: "You are already signed in. Please sign out before signing in again.",
+        variant: "destructive",
       });
       // toast.error("You are already signed in. Please sign out before signing in again.");
       return;
@@ -57,10 +59,12 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
       await AppwriteService.createOauth2(provider);
     } catch (error) {
       setIsLoading(null);
+      // TODO: this might never happen
 
       if (error instanceof AppwriteException) {
         toast({
           description: error.message,
+          variant: "destructive",
         });
         // toast.error(error.message);
       }
@@ -68,6 +72,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
       if (error instanceof Error) {
         toast({
           description: error.message,
+          variant: "destructive",
         });
         // toast.error(error.message);
       }
