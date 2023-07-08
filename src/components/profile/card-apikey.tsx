@@ -10,8 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 
 export function CardAPIKey() {
-  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus", false);
-
+  const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", (v) => (v === undefined ? true : v));
   const extensionDetected = !!window && !window?.next;
 
   if (extensionDetected)
@@ -32,8 +31,8 @@ export function CardAPIKey() {
               </Label>
               <Switch
                 id="show-extension"
-                checked={!isPromptHidden}
-                onClick={() => setIsPromptHidden((prevState) => !prevState)}
+                checked={isPromptShown}
+                onClick={() => setIsPromptShown((prevState) => !prevState)}
               />
             </div>
           </Label>

@@ -3,6 +3,7 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plas
 import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
 import cssText from "data-text:@/styles/globals.css";
+import { useEffect, useState } from "react";
 
 import { Init } from "@/components/_init/init-auth";
 import PromptCard from "@/components/extension/prompt-card";
@@ -87,27 +88,39 @@ const amazonProductData = () => {
 export const getShadowHostId = () => "plasmo-inline-amazon";
 
 export default function AmazonContent() {
-  const [isPromptHidden, setIsPromptHidden] = useStorage<boolean>("promptStatus");
+  const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const products = amazonProductData();
   console.log(products);
 
   return (
-    <>
+    <div className="w-full">
       <ReactQueryProvider>
         <Init />
-        {isPromptHidden === true && (
+        {!isLoading && isPromptShown === false && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
-            onClick={() => setIsPromptHidden((prevState) => !prevState)}
+            onClick={() => setIsPromptShown(true)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
           </button>
         )}
 
-        {isPromptHidden === false && <PromptCard products={products} onClose={() => setIsPromptHidden(true)} />}
+        {!isLoading && isPromptShown === true && (
+          <PromptCard products={products} onClose={() => setIsPromptShown(false)} />
+        )}
       </ReactQueryProvider>
       <Toaster />
-    </>
+    </div>
   );
 }
