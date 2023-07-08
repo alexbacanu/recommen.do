@@ -13,7 +13,6 @@ import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { LoadingPage } from "@/components/ui/loading";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
@@ -62,12 +61,7 @@ export function CardSubscription() {
     },
   });
 
-  const {
-    data,
-    isLoading: isLoadingSubs,
-    isFetching,
-    refetch,
-  } = useQuery({
+  const { data } = useQuery({
     queryKey: ["retrieveSubscriptions"],
     queryFn: async () => {
       const jwt = await AppwriteService.createJWT();
@@ -106,7 +100,7 @@ export function CardSubscription() {
                 {profile.stripeStatus ?? "Inactive"}
               </Badge>
 
-              {hasSubscription && (
+              {/* {hasSubscription && (
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -119,7 +113,7 @@ export function CardSubscription() {
                           disabled={isLoadingSubs}
                         >
                           <Icons.refresh className={cn("h-4 w-4", isFetching && "animate-spin")} aria-hidden="true" />
-                          <span className="sr-only">Refresh recommendations</span>
+                          <span className="sr-only">Refresh</span>
                         </Button>
                       </div>
                     </TooltipTrigger>
@@ -128,7 +122,7 @@ export function CardSubscription() {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              )}
+              )} */}
             </div>
           </CardTitle>
         </CardHeader>
