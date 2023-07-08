@@ -133,11 +133,7 @@ export function CardHistory() {
                     <Link href={product.link} target={target}>
                       <div className="flex items-center gap-x-2">
                         <Avatar className="h-10 w-10 rounded-sm">
-                          <AvatarImage
-                            src={`${appwriteUrl}/api/images/${encodeURIComponent(product.image)}`}
-                            className="object-contain"
-                            alt="Avatar"
-                          />
+                          <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
                           <AvatarFallback></AvatarFallback>
                         </Avatar>
 
