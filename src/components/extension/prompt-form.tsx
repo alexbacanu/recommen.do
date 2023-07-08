@@ -325,7 +325,7 @@ export function PromptForm({ products }: PromptFormProps) {
                   <Link
                     href={product.link}
                     aria-label={`Go to product ${product.name} page`}
-                    className="line-clamp-1 space-y-1 text-[22px] font-semibold"
+                    className="line-clamp-1 space-y-1 text-[22px] font-semibold leading-tight"
                   >
                     {product.name}
                   </Link>
