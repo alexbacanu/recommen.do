@@ -35,7 +35,7 @@ export function Hero() {
               Get personalized shopping recommendations with OpenAI GPT
             </p>
 
-            <div className="mt-8 grid w-full gap-4 lg:inline-flex lg:mt-12">
+            <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">
               <Button variant="default" size="lg" asChild>
                 {isChromium ? (
                   <a href="/download/chrome-1.1.0.zip" aria-label={`Download extension for ${browser}`}>
