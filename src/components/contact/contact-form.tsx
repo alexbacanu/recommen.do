@@ -121,11 +121,11 @@ export function FormContact() {
           control={form.control}
           name="terms"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-x-2 space-y-0">
+            <FormItem className="mt-2 flex items-center gap-x-2 space-y-0">
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked as boolean)} />
               </FormControl>
-              <FormLabel>
+              <FormLabel className="text-foreground">
                 I agree with{" "}
                 <Link href="/privacy" className="text-primary">
                   Privacy policy
@@ -135,11 +135,13 @@ export function FormContact() {
                   Terms and conditions
                 </Link>
               </FormLabel>
+              <FormMessage className="h-[1rem]" />
+              {/* <FormDescription>You need to agree with our terms before continuing.</FormDescription> */}
             </FormItem>
           )}
         />
 
-        <Button disabled={isLoading || isSuccess} aria-label="Send email">
+        <Button disabled={isLoading || isSuccess} aria-label="Send email" className="mt-4">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
