@@ -38,7 +38,6 @@ export function FormForgot({ searchParams }: CardAccountProps) {
       toast({
         description: "Password successfully updated.",
       });
-      // toast.success("Password successfully updated.");
       router.push(`${appwriteUrl}/profile`);
     },
   });

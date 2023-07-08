@@ -39,7 +39,6 @@ export function FormAccountName({ account }: CardAccountProps) {
       toast({
         description: "Name successfully updated.",
       });
-      // toast.success("Name successfully updated.");
       await fetchAccount();
     },
   });

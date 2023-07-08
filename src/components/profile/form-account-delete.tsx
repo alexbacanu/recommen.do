@@ -40,7 +40,6 @@ export function FormAccountDelete() {
       toast({
         description: "Account successfully deleted.",
       });
-      // toast.success("Account successfully deleted.");
       signOut();
     },
   });

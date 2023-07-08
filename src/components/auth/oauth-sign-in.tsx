@@ -39,7 +39,6 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
         description: "You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.",
         variant: "destructive",
       });
-      // toast.error("You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.");
 
       return;
     }
@@ -49,7 +48,6 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
         description: "You are already signed in. Please sign out before signing in again.",
         variant: "destructive",
       });
-      // toast.error("You are already signed in. Please sign out before signing in again.");
       return;
     }
 
@@ -66,7 +64,6 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
           description: error.message,
           variant: "destructive",
         });
-        // toast.error(error.message);
       }
 
       if (error instanceof Error) {
@@ -74,7 +71,6 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
           description: error.message,
           variant: "destructive",
         });
-        // toast.error(error.message);
       }
 
       console.error(error);

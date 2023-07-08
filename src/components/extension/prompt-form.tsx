@@ -110,7 +110,6 @@ export function PromptForm({ products }: PromptFormProps) {
           description: "Failed to retrieve response from the server.",
           variant: "destructive",
         });
-        // toast.error("Failed to retrieve response from the server.");
         throw new Error("Failed to retrieve response from the server.");
       }
 
@@ -133,7 +132,6 @@ export function PromptForm({ products }: PromptFormProps) {
             variant: "destructive",
           });
           throw new Error(chunkValue);
-          // toast.error(`Failed to retrieve response. Status: ${response.status}`);
         }
 
         lastMessage = lastMessage + chunkValue;

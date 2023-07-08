@@ -74,7 +74,6 @@ export function FormAccountEmail() {
       toast({
         description: "Email successfully updated. You have been logged out.",
       });
-      // toast.success("Email successfully updated. You have been logged out.");
       signOut();
       window.open(`${appwriteUrl}/email-changed`, target);
     },

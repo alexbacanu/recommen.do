@@ -41,7 +41,6 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
       toast({
         description: "You are signed in!",
       });
-      // toast.success("You are signed in!");
 
       const checkProfile = async () => {
         const profileData = await fetchProfile();

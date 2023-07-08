@@ -47,7 +47,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
         description: "Password successfully updated.",
       });
       queryClient.invalidateQueries(["account"]);
-      // toast.success("Password successfully updated.");
     },
   });
 
@@ -63,7 +62,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
       toast({
         description: "Email with password reset sent.",
       });
-      // toast.success("Email with password reset sent.");
     },
   });
 
