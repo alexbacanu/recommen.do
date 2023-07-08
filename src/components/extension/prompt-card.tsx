@@ -1,7 +1,6 @@
 import type { ScrapedProduct } from "@/lib/types/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
-import logo from "data-base64:~assets/icon.png";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { browserName } from "react-device-detect";
@@ -33,7 +32,8 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
           <CardTitle className="flex items-center gap-[16px] text-[24px]">
             <Link href={appwriteUrl} className="flex items-center gap-[16px] pl-[8px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
+              {/* <img src={logo} height={30} width={30} alt="recommen.do logo" className="rounded-full" /> */}
+              <Icons.logo className="mt-0.5 h-7 w-7" />
               <span>recommen.do</span>
             </Link>
 
@@ -43,20 +43,18 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
               </Badge>
             )}
             {!userApiKey && profile && (
-              <>
-                <Badge variant="outline" size="fixed">
-                  {profile.credits === 0 && (
-                    <Icons.alert className="mr-[8px] h-[16px] w-[16px] text-orange-500" aria-hidden="true" />
-                  )}
-                  {profile.credits} recommendations remaining
-                </Badge>
-                {browserName === "Brave" && (
-                  <Badge variant="outline" className="border-orange-500 text-orange-500" size="fixed">
-                    <Icons.alert className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
-                    To make the extension work, please disable Brave Shields
-                  </Badge>
+              <Badge variant="outline" size="fixed">
+                {profile.credits === 0 && (
+                  <Icons.alert className="mr-[8px] h-[16px] w-[16px] text-orange-500" aria-hidden="true" />
                 )}
-              </>
+                {profile.credits} recommendations remaining
+              </Badge>
+            )}
+            {browserName === "Brave" && (
+              <Badge variant="outline" className="border-orange-500 text-orange-500" size="fixed">
+                <Icons.alert className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
+                To make the extension work, please disable Brave Shields
+              </Badge>
             )}
           </CardTitle>
 
