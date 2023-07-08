@@ -64,7 +64,7 @@ export function CardAccount() {
             {isEditing && (
               <TooltipProvider>
                 <Tabs defaultValue="name">
-                  <TabsList className="mb-2 grid w-full grid-cols-4 bg-transparent p-0">
+                  <TabsList className="mb-2 flex w-full justify-between bg-transparent p-0">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div>
