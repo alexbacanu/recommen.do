@@ -80,7 +80,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   useEffect(() => {
     router.refresh();
     setIsLoading(null);
-  }, [router]);
+  }, [router, account]);
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
