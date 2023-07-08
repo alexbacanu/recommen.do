@@ -70,7 +70,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!hasAccepted) {
       form.setError("email", {
-        message: "You must accept the Terms and Conditions and Privacy Policy to proceed with sign-in.",
+        message: "You must accept the Terms and Conditions and Privacy Policy in order to sign in.",
       });
       return;
     }

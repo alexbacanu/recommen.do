@@ -88,7 +88,7 @@ export function FormContact() {
   function onSubmit(values: z.infer<typeof ResendValidator>) {
     if (!values.terms) {
       form.setError("terms", {
-        message: "You must accept the terms and conditions and privacy policy.",
+        message: "You must accept the Terms and Conditions and Privacy Policy in order to contact us.",
       });
       return;
     }
