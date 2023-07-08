@@ -1,6 +1,5 @@
 "use client";
 
-import { AppwriteException } from "appwrite";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,6 +26,7 @@ interface OAuthSignInProps {
 
 export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   const router = useRouter();
+
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
@@ -51,36 +51,17 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
       return;
     }
 
-    try {
-      setIsLoading(provider);
-
-      await AppwriteService.createOauth2(provider);
-    } catch (error) {
-      setIsLoading(null);
-      // TODO: this might never happen
-
-      if (error instanceof AppwriteException) {
-        toast({
-          description: error.message,
-          variant: "destructive",
-        });
-      }
-
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-          variant: "destructive",
-        });
-      }
-
-      console.error(error);
-    }
+    setIsLoading(provider);
+    await AppwriteService.createOauth2(provider);
   }
 
   useEffect(() => {
-    router.refresh();
-    setIsLoading(null);
-  }, [router, account]);
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(null);
+      }, 1500);
+    }
+  }, [isLoading]);
 
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
