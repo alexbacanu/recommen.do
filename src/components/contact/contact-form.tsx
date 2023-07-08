@@ -3,11 +3,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
@@ -17,10 +26,13 @@ import { appwriteUrl } from "@/lib/envClient";
 import { ResendValidator } from "@/lib/validators/schema";
 
 export function FormContact() {
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   // 0. Define your mutation.
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isLoading, isSuccess, isError } = useMutation({
     mutationKey: ["updateEmail"],
     mutationFn: async ({ ...values }: z.infer<typeof ResendValidator>) => {
       const response = await fetch(`${appwriteUrl}/api/resend`, {
@@ -40,6 +52,23 @@ export function FormContact() {
       toast({
         description: "Email sent succesfully.",
       });
+
+      setTitle("Thank you for reaching out!");
+      setMessage("We have received your message and will get in touch as soon as possible!");
+      setOpen(true);
+    },
+    onError: async (error) => {
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+
+      console.error(error);
+      setTitle("Something went wrong");
+      setMessage("Unfortunately, your message was not sent. Please try again later.");
+      setOpen(true);
     },
   });
 
@@ -158,6 +187,20 @@ export function FormContact() {
           {isSuccess ? "Email sent" : "Send email"}
         </Button>
       </form>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{message}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button type="button" onClick={() => setOpen(false)}>
+              {isError ? "I understand" : "Close"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Form>
   );
 }
