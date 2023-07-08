@@ -135,7 +135,7 @@ export function CardHistory() {
                         <Avatar className="h-10 w-10 rounded-sm">
                           <AvatarImage src={product.image} className="object-contain" alt="Avatar" />
                           <AvatarFallback>
-                            {product.source !== "" && product.source.slice(0, 2).toUpperCase()}
+                            {product.source ? product.source.slice(0, 2).toUpperCase() : "RE"}
                           </AvatarFallback>
                         </Avatar>
 
