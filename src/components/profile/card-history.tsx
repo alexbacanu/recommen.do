@@ -109,23 +109,9 @@ export function CardHistory() {
           </CardTitle>
         </CardHeader>
         <CardContent className="mb-4 grid max-h-[25rem] gap-4 overflow-y-auto lg:mb-8">
-          {/* <Label className="flex flex-col gap-y-2">
-            <span>Toggle history</span>
-            <div className="flex items-center justify-between">
-              <Label htmlFor="toggle-history" className="font-normal leading-snug text-muted-foreground">
-                Save history on your account
-              </Label>
-              <Switch
-                id="toggle-history"
-                disabled={toggleHistoryLoading}
-                checked={profile.saveHistory}
-                onClick={() => toggleHistory()}
-              />
-            </div>
-          </Label> */}
           <div className="grid gap-y-4">
             {hasHistory ? (
-              profile.history.map((item, index) => {
+              profile.history.reverse().map((item, index) => {
                 const product: ScrapedProduct = JSON.parse(item);
 
                 return (
@@ -147,13 +133,6 @@ export function CardHistory() {
                             </p>
                           )}
                         </div>
-
-                        {/* <div className="ml-4 space-y-1">
-                          <p className="line-clamp-1 pr-2 text-sm font-medium leading-none">{product.name}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {product.stars} / {product.reviews} reviews
-                          </p>
-                        </div> */}
                       </div>
                     </Link>
                     <div className="text-destructive">
