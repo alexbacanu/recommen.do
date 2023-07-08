@@ -109,13 +109,13 @@ export function CardHistory() {
           </CardTitle>
         </CardHeader>
         <CardContent className="mb-4 grid max-h-[25rem] gap-4 overflow-y-auto lg:mb-8">
-          <div className="grid gap-y-4">
+          <div className="flex flex-col gap-y-4">
             {hasHistory ? (
               profile.history.reverse().map((item, index) => {
                 const product: ScrapedProduct = JSON.parse(item);
 
                 return (
-                  <div key={index} className="flex items-center justify-between">
+                  <div key={index} className="flex items-start justify-between">
                     <Link href={product.link} target={target}>
                       <div className="flex items-center gap-x-2">
                         <Avatar className="h-10 w-10 rounded-sm">
