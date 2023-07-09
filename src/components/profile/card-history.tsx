@@ -1,6 +1,8 @@
 "use client";
 
-import type { ScrapedProduct } from "@/lib/types/types";
+import type { APIResponse } from "@/lib/types/types";
+import type { ActionValidator, FullProductValidator } from "@/lib/validators/apiSchema";
+import type { z } from "zod";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
@@ -33,48 +35,59 @@ export function CardHistory() {
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
 
-      await fetch(`${appwriteUrl}/api/appwrite/history`, {
-        method: "GET",
+      const response = await fetch(`${appwriteUrl}/api/appwrite/history`, {
+        method: "PATCH",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       });
+
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
       toast({
-        description: "History settings changed.",
+        description: data.message,
       });
-      queryClient.invalidateQueries(["profile"]);
+
+      await queryClient.invalidateQueries(["profile"]);
     },
   });
 
   // 0. Define your mutation.
   const { mutate, isLoading } = useMutation({
     mutationKey: ["deleteAccount"],
-    mutationFn: async ({ index }: { index?: number | string }) => {
+    mutationFn: async ({ index }: { index: z.infer<typeof ActionValidator> }) => {
       const jwt = await AppwriteService.createJWT();
 
-      await fetch(`${appwriteUrl}/api/appwrite/history`, {
-        method: "PUT",
+      const response = await fetch(`${appwriteUrl}/api/appwrite/history`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify(index),
       });
-    },
-    onSuccess: (data, variant) => {
-      console.log(data, variant);
-      if (variant.index === "clearHistory") {
-        toast({
-          description: "History successfully deleted.",
-        });
-      } else {
-        toast({
-          description: "Item successfully deleted.",
-        });
+
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
       }
-      queryClient.invalidateQueries(["profile"]);
+
+      return data;
+    },
+    onSuccess: async (data) => {
+      toast({
+        description: data.message,
+      });
+
+      await queryClient.invalidateQueries(["profile"]);
     },
   });
 
@@ -115,7 +128,7 @@ export function CardHistory() {
                 .slice(0)
                 .reverse()
                 .map((item, index) => {
-                  const product: ScrapedProduct = JSON.parse(item);
+                  const product = JSON.parse(item) as z.infer<typeof FullProductValidator>;
 
                   return (
                     <div key={index} className="flex items-start justify-between">
@@ -148,9 +161,6 @@ export function CardHistory() {
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />
                         </Button>
-                        {/* <Badge variant="outline" className="ml-auto text-base font-medium">
-                            {product.price}
-                          </Badge> */}
                       </div>
                     </div>
                   );

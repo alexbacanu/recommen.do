@@ -1,6 +1,7 @@
 "use client";
 
-import type { ScrapedProduct } from "@/lib/types/types";
+import type { APIResponse, ScrapedProduct } from "@/lib/types/types";
+import type { FullProductValidator } from "@/lib/validators/apiSchema";
 import type { ChatGPTMessage } from "@/lib/validators/schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,7 +65,7 @@ export function PromptForm({ products }: PromptFormProps) {
   // 0. Define your mutation.
   const { mutate: insertHistory } = useMutation({
     mutationKey: ["insertHistory"],
-    mutationFn: async ({ product }: { product: ScrapedProduct }) => {
+    mutationFn: async ({ product }: { product: z.infer<typeof FullProductValidator> }) => {
       const jwt = await AppwriteService.createJWT();
 
       const response = await fetch(`${appwriteUrl}/api/appwrite/history`, {
@@ -76,13 +77,13 @@ export function PromptForm({ products }: PromptFormProps) {
         body: JSON.stringify(product),
       });
 
+      const data = (await response.json()) as APIResponse;
+
       if (response.status !== 200) {
-        toast({
-          description: `Received following response: ${response.status}: ${response.statusText}.`,
-          variant: "destructive",
-        });
-        throw new Error(response.statusText);
+        throw new Error(data.message);
       }
+
+      return data;
     },
   });
 
@@ -158,7 +159,7 @@ export function PromptForm({ products }: PromptFormProps) {
         productFound = true;
 
         !!profile && profile.saveHistory && insertHistory({ product: chosenProduct });
-        queryClient.invalidateQueries(["profile"]);
+        await queryClient.invalidateQueries(["profile"]);
       }
     },
 

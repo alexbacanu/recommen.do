@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 // 3. ❌ Input
 // 4. ➖ Secure
 // 5. ➖ Rate limiting
-export async function GET() {
+export async function DELETE() {
   try {
     // 🫴 Get Authorization
     const authHeader = headers().get("Authorization");

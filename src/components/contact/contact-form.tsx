@@ -40,6 +40,9 @@ export function FormContact() {
     mutationFn: async ({ ...values }: z.infer<typeof EmailValidator>) => {
       const response = await fetch(`${appwriteUrl}/api/resend`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ ...values }),
       });
 
@@ -68,10 +71,11 @@ export function FormContact() {
         });
       }
 
-      console.log(error);
       setTitle("Something went wrong");
       setMessage("Unfortunately, your message was not sent. Please try again later.");
       setOpen(true);
+
+      console.log(error);
     },
   });
 

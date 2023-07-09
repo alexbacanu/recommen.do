@@ -1,179 +1,334 @@
 import type { AppwriteProfile } from "@/lib/types/types";
 
+import { AppwriteException } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { AppwriteException as AppwriteExceptionNode } from "node-appwrite";
 import { z } from "zod";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
-import { corsHeaders } from "@/lib/helpers/cors";
-import { FullProductValidator } from "@/lib/validators/schema";
+import { ActionValidator, FullProductValidator } from "@/lib/validators/apiSchema";
 
+// export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-export async function OPTIONS() {
-  return NextResponse.json({ message: "OK" }, { headers: corsHeaders });
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ❌ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
+export async function PATCH() {
+  try {
+    // 🫴 Get Authorization
+    const authHeader = headers().get("Authorization");
+    const token = authHeader?.split(" ")[1];
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
+
+    // 🫴 Get Profile
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
+    const profile = profiles[0];
+
+    if (!profile) {
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    // ☀️ Update Profile with history toggle
+    const { serverDatabases } = appwriteServer();
+    await serverDatabases.updateDocument("main", "profile", profile.$id, {
+      saveHistory: !profile.saveHistory,
+    });
+
+    // ✅ Everything OK
+    return NextResponse.json({
+      message: "History settings changed successfully.",
+    });
+  } catch (error) {
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteExceptionNode) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Toggle history issues on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
+  }
 }
 
-export async function GET() {
-  // Read JWT from Authorization header
-  const authHeader = headers().get("Authorization");
-  const token = authHeader?.split(" ")[1];
-
-  if (!token) {
-    console.log("api.appwrite.history:", "JWT token missing");
-    return new Response("JWT token missing", {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
-
-  // Get current profile
-  const { impersonateDatabases } = appwriteImpersonate(token);
-  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
-  const profile = profiles[0];
-
-  if (!profile) {
-    console.log("api.appwrite.history:", "Get current profile failed");
-    return new Response("Get current profile failed", {
-      status: 404,
-      headers: corsHeaders,
-    });
-  }
-
-  // Update the newly created customer in appwrite
-  const { serverDatabases } = appwriteServer();
-
-  await serverDatabases.updateDocument("main", "profile", profile.$id, {
-    saveHistory: !profile.saveHistory,
-  });
-
-  console.log("api.appwrite.history:", "OK");
-  return NextResponse.json(
-    { status: "OK" },
-    {
-      headers: corsHeaders,
-    },
-  );
-}
-
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ✅ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
 export async function POST(request: Request) {
-  const body = await request.json();
+  try {
+    // 🫴 Get Body
+    const body = (await request.json()) as z.infer<typeof FullProductValidator>;
+    const validatedProduct = FullProductValidator.parse(body); // 3️⃣
 
-  // Read JWT from Authorization header
-  const authHeader = headers().get("Authorization");
-  const token = authHeader?.split(" ")[1];
+    // 🫴 Get Authorization
+    const authHeader = headers().get("Authorization");
+    const token = authHeader?.split(" ")[1];
 
-  if (!token) {
-    console.log("api.appwrite.history:", "JWT token missing");
-    return new Response("JWT token missing", {
-      status: 400,
-      headers: corsHeaders,
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
+
+    // 🫴 Get Profile
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
+    const profile = profiles[0];
+
+    if (!profile) {
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    // 🫴 Get current history
+    const historyArray = Array.isArray(profile.history) ? [...profile.history] : [];
+
+    // ➖ Remove the first item if the array length >= 25
+    if (historyArray.length >= 25) {
+      historyArray.shift();
+    }
+
+    // ➕ Add validated product in history array
+    historyArray.push(JSON.stringify(validatedProduct));
+
+    // ☀️ Update Appwrite Profile
+    const { serverDatabases } = appwriteServer();
+
+    await serverDatabases.updateDocument("main", "profile", profile.$id, {
+      history: historyArray,
     });
-  }
 
-  const validatedProduct = FullProductValidator.parse(body);
-
-  if (!validatedProduct) {
-    console.log("api.appwrite.history:", "Body missing");
-    return new Response("Body missing", {
-      status: 400,
-      headers: corsHeaders,
+    // ✅ Everything OK
+    return NextResponse.json({
+      message: "A new history entry was added successfully.",
     });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: 400, // Bad Request
+        },
+      );
+    }
+
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteExceptionNode) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "History update issues on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
   }
-
-  // Get current profile
-  const { impersonateDatabases } = appwriteImpersonate(token);
-  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
-  const profile = profiles[0];
-
-  if (!profile) {
-    console.log("api.appwrite.history:", "Get current profile failed");
-    return new Response("Get current profile failed", {
-      status: 404,
-      headers: corsHeaders,
-    });
-  }
-
-  // Get the existing history array and add the validated product to it
-  const historyArray = Array.isArray(profile.history) ? profile.history : [];
-
-  // Remove the first item if the array length exceeds 25
-  if (historyArray.length >= 25) {
-    historyArray.shift();
-  }
-
-  historyArray.push(JSON.stringify(validatedProduct));
-
-  // Update the newly created customer in appwrite
-  const { serverDatabases } = appwriteServer();
-
-  await serverDatabases.updateDocument("main", "profile", profile.$id, {
-    history: historyArray,
-  });
-
-  console.log("api.appwrite.history:", "OK");
-  return NextResponse.json(
-    { status: "OK" },
-    {
-      headers: corsHeaders,
-    },
-  );
 }
 
-export async function PUT(request: Request) {
-  const body = await request.json();
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ✅ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
+export async function DELETE(request: Request) {
+  try {
+    // 🫴 Get Body
+    const body = (await request.json()) as z.infer<typeof ActionValidator>;
+    const validatedAction = ActionValidator.parse(body); // 3️⃣
 
-  const bodyValidator = z.union([z.number().int().min(0).max(25).optional(), z.literal("clearHistory")]);
-  const validatedBody = bodyValidator.parse(body);
+    // 🫴 Get Authorization
+    const authHeader = headers().get("Authorization");
+    const token = authHeader?.split(" ")[1];
 
-  // Read JWT from Authorization header
-  const authHeader = headers().get("Authorization");
-  const token = authHeader?.split(" ")[1];
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
 
-  if (!token) {
-    console.log("api.appwrite.history.put:", "JWT token missing");
-    return new Response("JWT token missing", {
-      status: 400,
-      headers: corsHeaders,
-    });
+    // 🫴 Get Profile
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
+    const profile = profiles[0];
+
+    if (!profile) {
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    // 🫴 Get current history
+    const historyArray = Array.isArray(profile.history) ? [...profile.history] : [];
+
+    // ☀️ Update Appwrite Profile
+    const { serverDatabases } = appwriteServer();
+
+    if (validatedAction === "clearHistory") {
+      await serverDatabases.updateDocument("main", "profile", profile.$id, {
+        history: null,
+      });
+
+      return NextResponse.json({
+        message: "History successfully deleted.",
+      });
+    }
+
+    if (typeof validatedAction === "number") {
+      const filteredArray = historyArray.filter((_, index) => index !== validatedAction);
+
+      await serverDatabases.updateDocument("main", "profile", profile.$id, {
+        history: filteredArray,
+      });
+
+      return NextResponse.json({
+        message: "Item successfully deleted.",
+      });
+    }
+
+    // ❌ Everything NOT OK
+    return NextResponse.json(
+      {
+        message: "History action is not valid. Please verify and retry.",
+      },
+      {
+        status: 400, // Bad Request
+      },
+    );
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: 400, // Bad Request
+        },
+      );
+    }
+
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteExceptionNode) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "History delete issues on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
   }
-
-  // Get current profile
-  const { impersonateDatabases } = appwriteImpersonate(token);
-  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
-  const profile = profiles[0];
-
-  if (!profile) {
-    console.log("api.appwrite.history.put:", "Get current profile failed");
-    return new Response("Get current profile failed", {
-      status: 404,
-      headers: corsHeaders,
-    });
-  }
-
-  const fullHistory: string[] = profile.history;
-
-  // Update the newly created customer in appwrite
-  const { serverDatabases } = appwriteServer();
-
-  if (validatedBody === "clearHistory") {
-    await serverDatabases.updateDocument("main", "profile", profile.$id, {
-      history: null,
-    });
-  }
-  if (typeof validatedBody === "number") {
-    const filteredArray = fullHistory.filter((_, index) => index !== validatedBody);
-
-    await serverDatabases.updateDocument("main", "profile", profile.$id, {
-      history: filteredArray,
-    });
-  }
-
-  console.log("api.appwrite.history:", "OK");
-  return NextResponse.json(
-    { status: "OK" },
-    {
-      headers: corsHeaders,
-    },
-  );
 }

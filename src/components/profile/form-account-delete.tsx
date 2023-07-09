@@ -31,8 +31,8 @@ export function FormAccountDelete() {
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
 
-      const response = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
-        method: "GET",
+      const response = await fetch(`${appwriteUrl}/api/appwrite/account`, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
