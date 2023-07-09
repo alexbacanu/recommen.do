@@ -2,75 +2,119 @@ import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { AppwriteException } from "node-appwrite";
+import Stripe from "stripe";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { appwriteUrl } from "@/lib/envClient";
-import { corsHeaders } from "@/lib/helpers/cors";
 
+// export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ❌ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
 export async function GET(request: Request, { params }: { params: { priceId: string } }) {
-  // Get priceId from slug
-  const { priceId } = params;
+  try {
+    // 🫴 Get priceId from slug
+    const { priceId } = params;
 
-  if (!priceId) {
-    console.log("api.stripe.subscription:", "PriceID missing");
-    return new Response("PriceID missing", {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
+    if (!priceId) {
+      return NextResponse.json(
+        {
+          message: "PriceID is missing. Please verify and retry.",
+        },
+        {
+          status: 400, // Unauthorized
+        },
+      );
+    }
 
-  // Read JWT from Authorization header
-  const authHeader = headers().get("Authorization");
-  const token = authHeader?.split(" ")[1];
+    // 🫴 Get Authorization
+    const authHeader = headers().get("Authorization");
+    const token = authHeader?.split(" ")[1];
 
-  if (!token) {
-    console.log("api.stripe.subscription:", "JWT token missing");
-    return new Response("JWT token missing", {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
 
-  // Get user profile based on JWT
-  const { impersonateDatabases } = appwriteImpersonate(token);
-  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
-  const profile = profiles[0];
+    // 🫴 Get Account
+    const { impersonateAccount } = appwriteImpersonate(token);
+    const account = await impersonateAccount.get();
 
-  if (!profile) {
-    console.log("api.stripe.subscription:", "Get current profile failed");
-    return new Response("Get current profile failed", {
-      status: 404,
-      headers: corsHeaders,
-    });
-  }
+    if (!account) {
+      return NextResponse.json(
+        {
+          message: "Account not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
 
-  const isSubscribed = profile.stripeCurrentPeriodEnd
-    ? profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now()
-    : false;
-  const stripe = getStripeInstance();
+    // 🫴 Get Profile
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
+    const profile = profiles[0];
 
-  // User is on paid plan
-  if (isSubscribed && profile.stripeCustomerId) {
-    const session = await stripe.billingPortal.sessions.create({
-      customer: profile.stripeCustomerId,
-      return_url: `${appwriteUrl}/profile`,
-    });
+    if (!profile) {
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please sign out and try again.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
 
-    console.log("api.stripe.subscription:", "User is on paid plan");
-    return NextResponse.json(
-      { url: session.url },
-      {
-        headers: corsHeaders,
-      },
-    );
-  }
+    if (!profile.stripeCustomerId) {
+      return NextResponse.json(
+        {
+          message: "You need to have a Stripe customer id. Please sign out and try again.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
 
-  // User is on free plan
-  // Create Stripe checkout session
-  if (profile.stripeCustomerId) {
+    // 🚦 Check for subscription
+    const isSubscribed = profile.stripeCurrentPeriodEnd
+      ? profile.stripePriceId && new Date(profile.stripeCurrentPeriodEnd).getTime() > Date.now()
+      : false;
+    const stripe = getStripeInstance();
+
+    // 🚦 Check if user is on paid plan
+
+    if (isSubscribed) {
+      const session = await stripe.billingPortal.sessions.create({
+        customer: profile.stripeCustomerId,
+        return_url: `${appwriteUrl}/profile`,
+      });
+
+      return NextResponse.json(
+        {
+          message: "Stripe billing portal session created.",
+          url: session.url,
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
     const session = await stripe.checkout.sessions.create({
       customer: profile.stripeCustomerId,
 
@@ -88,13 +132,43 @@ export async function GET(request: Request, { params }: { params: { priceId: str
       cancel_url: `${appwriteUrl}/payment/cancel`,
     });
 
-    console.log("api.stripe.subscription:", "OK");
-    return NextResponse.json({ url: session.url }, { headers: corsHeaders });
-  }
+    // ✅ Everything OK
+    return NextResponse.json({
+      message: "Stripe checkout session created.",
+      url: session.url,
+    });
+  } catch (error) {
+    if (error instanceof Stripe.errors.StripeError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.statusCode,
+        },
+      );
+    }
 
-  console.log("api.stripe.subscription:", "Something went wrong");
-  return new Response("Something went wrong", {
-    status: 500,
-    headers: corsHeaders,
-  });
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Subscription retrieval issue on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { StripePlan } from "@/lib/types/types";
+import type { APIResponse, StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
 
 import { useMutation } from "@tanstack/react-query";
@@ -49,11 +49,17 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
         },
       });
 
-      const checkoutUrl: { url: string } = await response.json();
-      return checkoutUrl.url;
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
     onSuccess: (data) => {
-      router.push(data);
+      if (!data.url) return;
+      router.push(data.url);
     },
   });
 

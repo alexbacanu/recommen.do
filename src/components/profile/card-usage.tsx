@@ -55,7 +55,8 @@ export function CardUsage() {
       return data;
     },
     onSuccess: (data) => {
-      window.open(data?.url, target);
+      if (!data.url) return;
+      window.open(data.url, target);
     },
   });
 

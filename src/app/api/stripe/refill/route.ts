@@ -122,7 +122,7 @@ export async function GET() {
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "Recommendations refilled successfully.",
+      message: "Stripe checkout session created.",
       url: session.url,
     });
   } catch (error) {
