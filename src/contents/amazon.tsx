@@ -1,4 +1,4 @@
-import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plasmo";
+import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetShadowHostId, PlasmoGetStyle } from "plasmo";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import logo from "data-base64:~assets/icon.png";
@@ -43,12 +43,22 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
-export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const searchResultsContainer = document.querySelector("div.s-result-item[data-index]");
-  if (!searchResultsContainer) {
-    throw new Error("No search results container found");
+// export const getInlineAnchor: PlasmoGetInlineAnchor = () => document.querySelector("div.s-search-results.script[type='product-ui/weblabs']");
+
+export const getInlineAnchor: PlasmoGetInlineAnchor = async () => {
+  const divElement = document.querySelector("div.s-search-results");
+
+  if (!divElement) {
+    throw new Error("div with classname 's-search-results' not found");
   }
-  return searchResultsContainer;
+
+  const scriptTags = divElement.querySelectorAll("div");
+
+  if (!scriptTags[3]) {
+    throw new Error("3rd script tag not found");
+  }
+
+  return scriptTags[3];
 };
 
 const amazonProductData = () => {
@@ -85,7 +95,7 @@ const amazonProductData = () => {
   return products;
 };
 
-export const getShadowHostId = () => "plasmo-inline-amazon";
+export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-amazonX";
 
 export default function AmazonContent() {
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
