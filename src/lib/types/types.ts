@@ -50,6 +50,10 @@ export type ScrapedProduct = {
   stars: string;
   source: string;
 };
+export type ChatGPTMessage = {
+  role: "user" | "system" | "assistant";
+  content: string;
+};
 
 // NextJS
 export type APIResponse = {

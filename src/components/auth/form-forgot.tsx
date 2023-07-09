@@ -65,7 +65,7 @@ export function FormForgot({ searchParams }: CardAccountProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)} className="grid gap-4">
         <div className="grid gap-y-2">
           <FormField
             control={form.control}

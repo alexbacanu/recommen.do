@@ -96,7 +96,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)} className="grid gap-4">
         {account.passwordUpdate !== "" && (
           <>
             <FormField

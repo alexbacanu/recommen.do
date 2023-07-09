@@ -1,100 +1,136 @@
-import type { AppwriteProfile } from "@/lib/types/types";
-import type { ChatGPTMessage } from "@/lib/validators/schema";
+import type { AppwriteProfile, ChatGPTMessage } from "@/lib/types/types";
 
 import { OpenAIStream } from "ai";
-import { Query } from "appwrite";
+import { AppwriteException } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { AppwriteException as AppwriteExceptionNode } from "node-appwrite";
 import { Configuration, OpenAIApi } from "openai-edge";
 import { z } from "zod";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
 import { openaiKey } from "@/lib/envServer";
-import { corsHeaders } from "@/lib/helpers/cors";
-import { OpenAIPayloadValidator } from "@/lib/validators/schema";
-
-export async function OPTIONS() {
-  return NextResponse.json({ message: "OK" }, { headers: corsHeaders });
-}
+import { OpenAIRequestValidator } from "@/lib/validators/apiSchema";
 
 // export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
-export async function POST(req: Request) {
+const cors = {
+  "Access-Control-Allow-Origin": "https://www.amazon.com",
+  "Access-Control-Allow-Methods": "POST",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export function OPTIONS() {
+  return NextResponse.json(
+    {
+      message: "OK",
+    },
+    {
+      headers: cors,
+    },
+  );
+}
+
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ✅ Input
+// 4. ✅ Secure
+// 5. ➖ Rate limiting
+export async function POST(request: Request) {
   try {
-    // Read JWT from Authorization header
+    // 🫴 Get Body
+    const body = (await request.json()) as z.infer<typeof OpenAIRequestValidator>;
+    const { payload, apiKey } = OpenAIRequestValidator.parse(body); // 3️⃣
+
+    // 🫴 Get Authorization
     const authHeader = headers().get("Authorization");
     const token = authHeader?.split(" ")[1];
 
     if (!token) {
-      return new Response("Authentication required. Please login to access this feature.", {
-        status: 401,
-        headers: corsHeaders,
-      });
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+          headers: cors,
+        },
+      );
     }
 
-    // Get request body
-    const body = await req.json();
-    const { apiKey, request } = OpenAIPayloadValidator.parse(body);
-
-    // Get user profile
+    // 🫴 Get Profile
     const { impersonateDatabases } = appwriteImpersonate(token);
-    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile", [
-      Query.limit(1),
-    ]);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
     const profile = profiles[0];
 
     if (!profile) {
-      return new Response("Email verification required. Please verify your email to proceed.", {
-        status: 401,
-        headers: corsHeaders,
-      });
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+          headers: cors,
+        },
+      );
     }
 
-    // Check for user credits
-    if (!apiKey) {
-      if (profile.credits < 1) {
-        return new Response("Insufficient recommendations. You need at least 1 recommendation to proceed.", {
-          status: 401,
-          headers: corsHeaders,
-        });
-      }
+    // ❔ Check for credits
+    if (!apiKey && profile.credits < 1) {
+      return NextResponse.json(
+        {
+          message: "Not enough recommendations. You need at least 1 recommendation.",
+        },
+        {
+          status: 401, // Unauthorized
+          headers: cors,
+        },
+      );
     }
 
-    // Set OpenAI Settings
+    // ⚙️ Configure OpenAI
     const config = new Configuration({
       apiKey: apiKey || openaiKey,
     });
     const openai = new OpenAIApi(config);
-
-    // ChatGPT options
     const messages: ChatGPTMessage[] = [
+      // {
+      //   role: "system",
+      //   content: `
+      //      You will be provided with a list of products, each with an identifier. Your task is to recommend the most suitable product based on the following question: "Which product stands out as the best choice for its intended purpose, based on customer reviews and ratings?"
+      //      Ensure that the recommended products include all relevant information necessary for making a decision - in other words, don't suggest products without important context. Provide the output in JSON format as shown below:
+      //      {"product": "..."}
+      //   `,
+      // },
       {
         role: "system",
-        content: "You are ShopAssistantGPT, an assistant for selecting a single product from a list of products.",
+        content: `You will be provided with a list of products, each with an identifier. Your task is to recommend the top-rated product for a given purpose, considering a wide range of categories similar to what an Amazon product expert might ask: "Which product stands out as the best choice for its intended purpose, based on customer reviews and ratings?"
+
+        ${payload.prompt ? `Make sure the recommended product matches the user inputs: ${payload.prompt}.` : ""}
+
+        Ensure that the recommended product include all relevant information necessary for making a decision - in other words, don't suggest products without important context. Limit your response to around 200 words. Provide the output in JSON format as shown below:
+
+        {"identifier": "...", "reason": "..."}`,
       },
       {
         role: "user",
-        content: `Recommend a product from this list that matches these inputs: '${
-          request.prompt
-        }'. Make sure to format your response as a JSON object with ONLY two subobjects, 'identifier' and 'reason'. The 'reason' subobject should be between 200-300 words. If you can't find a product with the inputs provided, recommend another product from the list. The product list is: ${JSON.stringify(
-          request.products,
-        )}.`,
+        content: JSON.stringify(payload.products),
       },
     ];
-
-    // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo-16k",
+      temperature: 0.2,
       stream: true,
       messages,
     });
 
+    // ➖ Subtract 1 credit on proper response format
     const pattern = /^{\s*"(identifier)/;
 
     const accumulatedTokens: string[] = [];
     let stopTesting = false;
 
-    // Convert the response into a friendly text-stream
     const stream = OpenAIStream(response, {
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
@@ -123,38 +159,82 @@ export async function POST(req: Request) {
       },
     });
 
-    // Respond with the stream
-    return new NextResponse(stream, {
-      status: 200,
-      headers: corsHeaders,
-    });
+    // ✅ Everything OK
+    return new NextResponse(stream, { headers: cors });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(error.message, {
-        status: 422,
-        headers: corsHeaders,
-      });
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: 400, // Bad Request
+          headers: cors,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code,
+          headers: cors,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteExceptionNode) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+          headers: cors,
+        },
+      );
     }
 
     if (error instanceof Error) {
       const statusCodeReg = error.message.match(/Received status code: (\d+)/);
       const statusCode = statusCodeReg && statusCodeReg[1];
 
-      if (statusCode === "401")
-        return new Response("Invalid OpenAI API key. Please check your OpenAI API key and try again.", {
-          status: 401,
-          headers: corsHeaders,
-        });
+      if (statusCode === "401") {
+        return NextResponse.json(
+          {
+            message: "Invalid OpenAI API key. Please check your OpenAI API key and try again.",
+          },
+          {
+            status: 500, // Internal Server Error
+            headers: cors,
+          },
+        );
+      }
 
-      return new Response(error.message, {
-        status: statusCode ? parseInt(statusCode) : 500,
-        headers: corsHeaders,
-      });
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: statusCode ? parseInt(statusCode) : 500,
+          headers: cors,
+        },
+      );
     }
 
-    return new Response("Unable to retrieve response from OpenAI. Please try again later.", {
-      status: 500,
-      headers: corsHeaders,
-    });
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "OpenAI issues on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+        headers: cors,
+      },
+    );
   }
 }

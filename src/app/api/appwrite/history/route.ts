@@ -12,6 +12,23 @@ import { ActionValidator, FullProductValidator } from "@/lib/validators/apiSchem
 // export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
+const cors = {
+  "Access-Control-Allow-Origin": "https://www.amazon.com",
+  "Access-Control-Allow-Methods": "POST",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export function OPTIONS() {
+  return NextResponse.json(
+    {
+      message: "OK",
+    },
+    {
+      headers: cors,
+    },
+  );
+}
+
 // 1. ✅ Auth
 // 2. ❌ Permissions
 // 3. ❌ Input
@@ -99,7 +116,7 @@ export async function PATCH() {
 // 1. ✅ Auth
 // 2. ❌ Permissions
 // 3. ✅ Input
-// 4. ➖ Secure
+// 4. ✅ Secure
 // 5. ➖ Rate limiting
 export async function POST(request: Request) {
   try {
@@ -118,6 +135,7 @@ export async function POST(request: Request) {
         },
         {
           status: 401, // Unauthorized
+          headers: cors,
         },
       );
     }
@@ -134,6 +152,7 @@ export async function POST(request: Request) {
         },
         {
           status: 404, // Not Found
+          headers: cors,
         },
       );
     }
@@ -157,9 +176,14 @@ export async function POST(request: Request) {
     });
 
     // ✅ Everything OK
-    return NextResponse.json({
-      message: "A new history entry was added successfully.",
-    });
+    return NextResponse.json(
+      {
+        message: "A new history entry was added successfully.",
+      },
+      {
+        headers: cors,
+      },
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -168,6 +192,7 @@ export async function POST(request: Request) {
         },
         {
           status: 400, // Bad Request
+          headers: cors,
         },
       );
     }
@@ -179,6 +204,7 @@ export async function POST(request: Request) {
         },
         {
           status: error.code,
+          headers: cors,
         },
       );
     }
@@ -190,6 +216,7 @@ export async function POST(request: Request) {
         },
         {
           status: error.code ? error.code : 500,
+          headers: cors,
         },
       );
     }
@@ -202,6 +229,7 @@ export async function POST(request: Request) {
       },
       {
         status: 500, // Internal Server Error
+        headers: cors,
       },
     );
   }

@@ -18,7 +18,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -52,7 +51,7 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 
 export function PromptForm({ products }: PromptFormProps) {
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const profile = useAtomValue(profileAtom);
   const [userApiKey] = useStorage<string>("userApiKey");
 
@@ -90,7 +89,7 @@ export function PromptForm({ products }: PromptFormProps) {
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess, isError, reset } = useMutation({
     mutationKey: ["getRecommendation"],
-    mutationFn: async (request: UpdateNameParams) => {
+    mutationFn: async (payload: UpdateNameParams) => {
       const jwt = await AppwriteService.createJWT();
 
       const response = await fetch(`${appwriteUrl}/api/openai`, {
@@ -101,18 +100,19 @@ export function PromptForm({ products }: PromptFormProps) {
         },
         body: JSON.stringify({
           apiKey: userApiKey,
-          request: request,
+          payload: payload,
         }),
       });
 
-      const { body } = response;
+      if (response.status !== 200) {
+        const data = (await response.json()) as APIResponse;
 
+        throw new Error(data.message);
+      }
+
+      const { body } = response;
       if (!body) {
-        toast({
-          description: "Failed to retrieve response from the server.",
-          variant: "destructive",
-        });
-        throw new Error("Failed to retrieve response from the server.");
+        throw new Error("Failed to retrieve response. Please try again later.");
       }
 
       const reader = body.getReader();
@@ -128,13 +128,13 @@ export function PromptForm({ products }: PromptFormProps) {
 
         const chunkValue = decoder.decode(value);
 
-        if (response.status !== 200) {
-          toast({
-            description: `Received following response: ${response.status}: ${response.statusText}.`,
-            variant: "destructive",
-          });
-          throw new Error(chunkValue);
-        }
+        // if (response.status !== 200) {
+        //   toast({
+        //     description: `Received following response: ${response.status}: ${response.statusText}.`,
+        //     variant: "destructive",
+        //   });
+        //   throw new Error(chunkValue);
+        // }
 
         lastMessage = lastMessage + chunkValue;
 
@@ -163,7 +163,7 @@ export function PromptForm({ products }: PromptFormProps) {
       }
     },
 
-    onSuccess: async () => {
+    onSuccess: () => {
       setReady(true);
     },
 
@@ -194,7 +194,7 @@ export function PromptForm({ products }: PromptFormProps) {
     reset();
     form.reset();
 
-    queryClient.invalidateQueries(["profile"]);
+    await queryClient.invalidateQueries(["profile"]);
 
     setSelectedProduct(initialProduct);
     setMessages(initialMessage);
@@ -205,7 +205,7 @@ export function PromptForm({ products }: PromptFormProps) {
   const withoutCredits = !!profile && profile.credits < 1 && !userApiKey;
 
   useEffect(() => {
-    handleReset();
+    void handleReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userApiKey]);
 
@@ -233,7 +233,7 @@ export function PromptForm({ products }: PromptFormProps) {
                 </FormItem>
               )}
             />
-            <Button type="button" size="fixed" onClick={handleReset} aria-label="Return to search">
+            <Button type="button" size="fixed" onClick={() => void handleReset()} aria-label="Return to search">
               <Icons.undo className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />
               Return to search
             </Button>
@@ -273,7 +273,10 @@ export function PromptForm({ products }: PromptFormProps) {
 
       {profile && !isError && showForm && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-[16px]">
+          <form
+            onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+            className="flex items-center gap-[16px]"
+          >
             <FormField
               control={form.control}
               name="prompt"
@@ -392,7 +395,7 @@ export function PromptForm({ products }: PromptFormProps) {
                   type="button"
                   variant="outline"
                   size="fixed"
-                  onClick={handleReset}
+                  onClick={() => void handleReset()}
                   aria-label="Return to search"
                 >
                   <Icons.undo className="mr-[8px] h-[16px] w-[16px]" aria-hidden="true" />

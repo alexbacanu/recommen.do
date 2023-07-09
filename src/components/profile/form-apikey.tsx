@@ -40,7 +40,7 @@ export function FormAPIKey() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)} className="grid gap-4">
         <FormField
           control={form.control}
           defaultValue={userApiKey}

@@ -34,6 +34,7 @@ export default function ReactQueryProvider({ children }: { children: React.React
 
             if (error instanceof Error) {
               toast({
+                title: "Error",
                 description: error.message,
                 variant: "destructive",
               });

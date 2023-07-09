@@ -71,7 +71,7 @@ export function FormSubscription() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
         <CardContent className="grid gap-4">
           <FormField
             control={form.control}
