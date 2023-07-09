@@ -1,4 +1,5 @@
 import type { Models } from "appwrite";
+import type Stripe from "stripe";
 
 // Appwrite
 export type AppwriteAccount = Models.User<Models.Preferences>;
@@ -26,13 +27,7 @@ export type AppwriteProfile = Models.Document & {
 };
 
 // Stripe
-export type StripePlan = {
-  priceId: string;
-  name: string;
-  price: number;
-  interval: string | null;
-  currency: string;
-  description: string;
+export type CustomStripePlan = Stripe.Plan & {
   metadata: {
     recommendations: string;
     name: string;
@@ -59,4 +54,5 @@ export type ChatGPTMessage = {
 export type APIResponse = {
   message: string;
   url?: string;
+  plan?: CustomStripePlan;
 };

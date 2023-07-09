@@ -1,10 +1,9 @@
 "use client";
 
-import type Stripe from "stripe";
+import type { APIResponse } from "@/lib/types/types";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { useEffect } from "react";
 
 import { FormSubscription } from "@/components/profile/form-subscription";
 import { Badge } from "@/components/ui/badge";
@@ -73,21 +72,21 @@ export function CardSubscription() {
         },
       });
 
-      const subscriptionList: Stripe.Plan = await response.json();
-      return subscriptionList;
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data.plan;
     },
     enabled: hasSubscription,
-    // staleTime: 1000 * 60 * 15, // 15 minutes
     retry: 2,
   });
 
   const showSingleMonth = profile && !!data && profile.stripeSubscriptionName === data.metadata?.name;
   const showCanceledMonth = profile && !!data && !data.id;
   const showBothMonth = profile && !!data && !!data.id && profile.stripeSubscriptionName !== data.metadata?.name;
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   if (profile)
     return (
@@ -99,30 +98,6 @@ export function CardSubscription() {
               <Badge variant="outline" className={cn("capitalize", hasSubscription && "border-lime-400")}>
                 {profile.stripeStatus ?? "Inactive"}
               </Badge>
-
-              {/* {hasSubscription && (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div>
-                        <Button
-                          variant="ghost"
-                          type="button"
-                          size="icon"
-                          onClick={() => refetch()}
-                          disabled={isLoadingSubs}
-                        >
-                          <Icons.refresh className={cn("h-4 w-4", isFetching && "animate-spin")} aria-hidden="true" />
-                          <span className="sr-only">Refresh</span>
-                        </Button>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="top">
-                      <p>Refresh</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              )} */}
             </div>
           </CardTitle>
         </CardHeader>
