@@ -97,7 +97,6 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     const stripe = getStripeInstance();
 
     // 🚦 Check if user is on paid plan
-
     if (isSubscribed) {
       const session = await stripe.billingPortal.sessions.create({
         customer: profile.stripeCustomerId,

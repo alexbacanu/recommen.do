@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
 // 1. ❌ Auth
 // 2. ✅ Permissions
 // 3. ❌ Input
-// 4. ✅ Secure
+// 4. ➖ Secure
 // 5. ➖ Rate limiting
 export async function POST(request: Request) {
   try {
@@ -38,6 +38,18 @@ export async function POST(request: Request) {
     // 🚦 Verify Signature
     const payload = `${appwriteUrl}/api/stripe/customer${JSON.stringify(body)}`;
     const signature = headers().get("X-Appwrite-Webhook-Signature");
+
+    if (!signature) {
+      return NextResponse.json(
+        {
+          message: "Unauthorized.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
+
     const token = createHmac("sha1", appwriteWebhookKey).update(payload).digest("base64");
 
     if (signature !== token) {
