@@ -65,14 +65,9 @@ export async function POST(request: Request) {
     }
 
     // ✅ Everything OK
-    return NextResponse.json(
-      {
-        message: "Your email was sent successfully.",
-      },
-      {
-        status: res.status,
-      },
-    );
+    return NextResponse.json({
+      message: "Your email was sent successfully.",
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
