@@ -36,11 +36,7 @@ export function CardSubscription() {
     mutationKey: ["getManageURL"],
     mutationFn: async ({ priceId }: GetManageURLParams) => {
       if (!priceId) {
-        toast({
-          description: "You don't have an active subscription",
-          variant: "destructive",
-        });
-        return;
+        throw new Error("You don't have an active subscription");
       }
 
       const jwt = await AppwriteService.createJWT();
@@ -52,11 +48,17 @@ export function CardSubscription() {
         },
       });
 
-      const checkoutUrl: { url: string } = await response.json();
-      return checkoutUrl.url;
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
     onSuccess: (data) => {
-      window.open(data, target);
+      if (!data.url) return;
+      window.open(data.url, target);
     },
   });
 

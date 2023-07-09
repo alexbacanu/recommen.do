@@ -1,5 +1,7 @@
 "use client";
 
+import type { APIResponse } from "@/lib/types/types";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -20,7 +22,7 @@ const formSchema = z.object({
   plan: z.string(),
 });
 
-type GetSubscribeURLarams = {
+type GetFormSubscribeURLarams = {
   priceId: string;
 };
 
@@ -30,8 +32,8 @@ export function FormSubscription() {
 
   // 0. Define your mutation.
   const { mutate, isLoading } = useMutation({
-    mutationKey: ["getSubscribeURL"],
-    mutationFn: async ({ priceId }: GetSubscribeURLarams) => {
+    mutationKey: ["getFormSubscribeURL"],
+    mutationFn: async ({ priceId }: GetFormSubscribeURLarams) => {
       const jwt = await AppwriteService.createJWT();
 
       const response = await fetch(`${appwriteUrl}/api/stripe/subscription/${priceId}`, {
@@ -41,11 +43,17 @@ export function FormSubscription() {
         },
       });
 
-      const checkoutUrl: { url: string } = await response.json();
-      return checkoutUrl.url;
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
     onSuccess: (data) => {
-      window.open(data, target);
+      if (!data.url) return;
+      window.open(data.url, target);
     },
   });
 
