@@ -42,7 +42,7 @@ export const AppwriteService = {
     return response;
   },
 
-  createOauth2: async (provider: string) => {
+  createOauth2: (provider: string) => {
     const redirectUrl = `${appwriteUrl}/profile`; //todo: maybe do something here
 
     const response = account.createOAuth2Session(provider, redirectUrl, redirectUrl);
