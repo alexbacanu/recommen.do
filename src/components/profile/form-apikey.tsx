@@ -2,14 +2,27 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStorage } from "@plasmohq/storage/hook";
+import { useAtomValue } from "jotai";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { profileAtom } from "@/lib/atoms/auth";
+import { appwriteUrl } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
 
 const formSchema = z.object({
@@ -23,6 +36,9 @@ const formSchema = z.object({
 export function FormAPIKey() {
   const [userApiKey, setUserApiKey, { remove }] = useStorage<string>("userApiKey", "");
 
+  const profile = useAtomValue(profileAtom);
+  const hasSubscription = profile ? profile.stripeSubscriptionId !== "none" : false;
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,10 +48,10 @@ export function FormAPIKey() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!values.userApiKey) return;
 
-    setUserApiKey(values.userApiKey);
+    await setUserApiKey(values.userApiKey);
   }
 
   return (
@@ -76,8 +92,36 @@ export function FormAPIKey() {
             <Icons.remove className="mr-2 h-4 w-4" aria-hidden="true" />
             Remove key
           </Button>
+        ) : hasSubscription ? (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button type="button" aria-label="Add key" disabled={!form.watch("userApiKey")}>
+                <Icons.key className="mr-2 h-4 w-4" aria-hidden="true" />
+                Add key
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="gap-8">
+              <DialogHeader className="gap-4 text-left">
+                <DialogTitle>Before you proceed</DialogTitle>
+                <DialogDescription>
+                  We have noticed that you have an active subscription. The recommendations you consume using your
+                  OpenAI API Key are not subtracted from your available recommendations. Having an active subscription
+                  is not mandatory in order to use your own OpenAI API Key.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="grid grid-cols-2 gap-4">
+                <Button onClick={(...args) => void form.handleSubmit(onSubmit)(...args)}>I understand</Button>
+
+                <Button variant="outline" asChild>
+                  <Link href={`${appwriteUrl}/faq`} target="_blank">
+                    Learn more
+                  </Link>
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         ) : (
-          <Button aria-label="Add key">
+          <Button type="submit" aria-label="Add key" disabled={!form.watch("userApiKey")}>
             <Icons.key className="mr-2 h-4 w-4" aria-hidden="true" />
             Add key
           </Button>

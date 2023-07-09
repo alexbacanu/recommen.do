@@ -96,7 +96,9 @@ export function Features() {
               </svg>
               <div className="ml-5 sm:ml-8">
                 <h3 className="text-base font-semibold sm:text-lg">Use Your API Key</h3>
-                <p className="mt-1">You can leverage the power of OpenAI GPT for free with your own OpenAI API key.</p>
+                <p className="mt-1">
+                  You can leverage the power of OpenAI GPT with your own OpenAI API key at no additional cost.
+                </p>
               </div>
             </motion.div>
 

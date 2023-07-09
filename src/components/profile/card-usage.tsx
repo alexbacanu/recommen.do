@@ -69,7 +69,7 @@ export function CardUsage() {
         <CardContent className="grid gap-4">
           <Label className="flex flex-col gap-y-2">
             <span>Recommendations</span>
-            <span className="font-normal leading-snug text-muted-foreground">{profile.credits} remaining</span>
+            <span className="font-normal leading-snug text-muted-foreground">{profile.credits} available</span>
           </Label>
           {!hasSubscription && profile.credits !== 0 && (
             <Label className="flex flex-col gap-y-2">

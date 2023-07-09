@@ -7,38 +7,36 @@ export default function FAQPage() {
   return (
     <section id="faq_page">
       <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
-        {/* <FAQ /> */}
-
         <h1 className="text-3xl font-semibold">Frequently Asked Questions</h1>
 
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>How can I use recommen.do extension?</AccordionTrigger>
+            <AccordionTrigger className="text-left">How can I use recommen.do extension?</AccordionTrigger>
             <AccordionContent>
               To get started with recommen.do, please follow our installation and usage guide. You can find detailed
               instructions{" "}
               <Link href={`${appwriteUrl}/installation`} className="text-primary">
                 here
               </Link>
-              . .
+              .
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-2">
-            <AccordionTrigger>
-              What should I do if I exhaust my credits before the end of the current billing cycle?
+            <AccordionTrigger className="text-left">
+              What should I do if I exhaust my recommendations before the end of the current billing cycle?
             </AccordionTrigger>
             <AccordionContent>
-              If you run out of credits before the end of the current billing cycle, don&apos;t worry! You can easily
-              add 50 more recommendations by accessing the &quot;Add 50 more recommendations&quot; option in the usage
-              section of your profile. These additional credits will be valid until the end of your current billing
-              cycle. Alternatively, you can consider upgrading your subscription for the upcoming billing cycle. Just
-              head over to the &quot;Manage subscription&quot; option to modify your plan.
+              If you run out of recommendations before the end of the current billing cycle, don&apos;t worry! You can
+              easily add 50 more recommendations by accessing the &quot;Add 50 more recommendations&quot; option in the
+              usage section of your profile. These additional recommendations will be valid until the end of your
+              current billing cycle. Alternatively, you can consider upgrading your subscription for the upcoming
+              billing cycle. Just head over to the &quot;Manage subscription&quot; option to modify your plan.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-3">
-            <AccordionTrigger>What happens if I delete my account?</AccordionTrigger>
+            <AccordionTrigger className="text-left">What happens if I delete my account?</AccordionTrigger>
             <AccordionContent>
               Deleting your account is a permanent action. Please note that by deleting your account, your active
               subscription will be canceled, and any remaining recommendations will be forfeited.
@@ -46,21 +44,53 @@ export default function FAQPage() {
           </AccordionItem>
 
           <AccordionItem value="item-4">
-            <AccordionTrigger>Do you offer a free trial?</AccordionTrigger>
+            <AccordionTrigger className="text-left">Do you offer a free trial?</AccordionTrigger>
             <AccordionContent>
               Yes, we provide a free trial period for our service. Upon creating an account, you will receive 10
-              complimentary recommendations to explore the features and functionality of our product. These credits can
-              be used during the trial period, which is 30 days.
+              complimentary recommendations to explore the features and functionality of our product. These
+              recommendations can be used during the trial period, which is 30 days.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-5">
-            <AccordionTrigger>Can I cancel my subscription at any time?</AccordionTrigger>
+            <AccordionTrigger className="text-left">Can I cancel my subscription at any time?</AccordionTrigger>
             <AccordionContent>
               Yes, you have the freedom to cancel your subscription at any time. There are no long-term contracts or
               commitments. Simply navigate to the &quot;Manage subscription&quot; section in your profile to cancel your
               subscription. If you decide to cancel your subscription, you will still have access to the remaining
-              credits until the end of the billing cycle.
+              recommendations until the end of the billing cycle.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-6">
+            <AccordionTrigger className="text-left">
+              What happens if I have a subscription active but I switch to API Key mode?
+            </AccordionTrigger>
+            <AccordionContent>
+              While the OpenAI API Key mode is active, the recommendations you consume are not subtracted from your
+              available recommendations. It is not mandatory to have an active subscription if you choose to use your
+              own OpenAI API Key. If you choose so, you can cancel your subscription at any time using the &quot;Manage
+              subscription&quot; option. Alternatively, you can clear your OpenAI API Key and continue using your
+              remaining recommendations.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-7">
+            <AccordionTrigger className="text-left">Can I use my own OpenAI API Key?</AccordionTrigger>
+            <AccordionContent>
+              If you have an OpenAI API key you can get recommendations without having an active subscription. While the
+              OpenAI API Key mode is active, the recommendations you consume are not subtracted from your available
+              recommendations. Use the &quot;OpenAI Api Key&quot; section from the extension to add or clear your OpenAI
+              API Key.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-8">
+            <AccordionTrigger className="text-left">How are recommendations consumed?</AccordionTrigger>
+            <AccordionContent>
+              One recommendation is consumed every time you ask for a recommendation by clicking &quot;Send&quot; in the
+              AI prompt card. At the end of every billing cycle your remaining recommendations expire and new
+              recommendations are added according to your plan.
             </AccordionContent>
           </AccordionItem>
 

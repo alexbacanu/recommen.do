@@ -72,7 +72,7 @@ export function Hero() {
               <Image src="/browsers/Vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
             </div>
           </div>
-          <div className="lg:w-[60rem]">
+          <div className="lg:w-[58rem]">
             <Image
               className="w-full rounded-xl shadow-xl"
               src="/frontpage/hero-img.png"

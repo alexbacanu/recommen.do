@@ -103,15 +103,10 @@ export async function GET(request: Request, { params }: { params: { priceId: str
         return_url: `${appwriteUrl}/profile`,
       });
 
-      return NextResponse.json(
-        {
-          message: "Stripe billing portal session created.",
-          url: session.url,
-        },
-        {
-          status: 404, // Not Found
-        },
-      );
+      return NextResponse.json({
+        message: "Stripe billing portal session created.",
+        url: session.url,
+      });
     }
 
     const session = await stripe.checkout.sessions.create({
