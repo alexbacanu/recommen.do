@@ -20,6 +20,7 @@ type ResendBody = {
 // 5. ➖ Rate limiting
 export async function POST(request: Request) {
   try {
+    // 🫴 Get Body
     const body = (await request.json()) as z.infer<typeof EmailValidator>;
     const { name, email, subject, message, terms } = EmailValidator.parse(body); // 3️⃣
 
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // 📩 Send Email
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -62,6 +64,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // ✅ Everything OK
     return NextResponse.json(
       {
         message: "Your email was sent successfully.",
@@ -82,6 +85,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // ❌ Everything NOT OK
     console.log(error);
     return NextResponse.json(
       {

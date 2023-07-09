@@ -1,17 +1,5 @@
 import type { Models } from "appwrite";
 
-// OpenAI
-export type ScrapedProduct = {
-  identifier: string;
-  image: string;
-  link: string;
-  name: string;
-  price: string;
-  reviews: string;
-  stars: string;
-  source: string;
-};
-
 // Appwrite
 export type AppwriteAccount = Models.User<Models.Preferences>;
 export type AppwriteProfile = Models.Document & {
@@ -49,4 +37,21 @@ export type StripePlan = {
     recommendations: string;
     name: string;
   };
+};
+
+// OpenAI
+export type ScrapedProduct = {
+  identifier: string;
+  image: string;
+  link: string;
+  name: string;
+  price: string;
+  reviews: string;
+  stars: string;
+  source: string;
+};
+
+// NextJS
+export type APIResponse = {
+  message: string;
 };

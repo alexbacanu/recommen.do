@@ -1,5 +1,7 @@
 "use client";
 
+import type { APIResponse } from "@/lib/types/types";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -24,10 +26,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { appwriteUrl } from "@/lib/envClient";
 import { EmailValidator } from "@/lib/validators/apiSchema";
-
-type APIResponse = {
-  message: string;
-};
 
 export function FormContact() {
   const { toast } = useToast();

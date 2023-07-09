@@ -1,5 +1,7 @@
 "use client";
 
+import type { APIResponse } from "@/lib/types/types";
+
 import { useMutation } from "@tanstack/react-query";
 
 import {
@@ -29,18 +31,27 @@ export function FormAccountDelete() {
     mutationFn: async () => {
       const jwt = await AppwriteService.createJWT();
 
-      await fetch(`${appwriteUrl}/api/appwrite/delete`, {
+      const response = await fetch(`${appwriteUrl}/api/appwrite/delete`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       });
+
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
       toast({
-        description: "Account successfully deleted.",
+        description: data.message,
       });
-      signOut();
+
+      await signOut();
     },
   });
 
