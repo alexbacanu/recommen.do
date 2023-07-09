@@ -26,7 +26,7 @@ export function Dashboard() {
     }
   }, [account, profile, router]);
 
-  if (account && profile)
+  if (account && profile && account.emailVerification)
     return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         <Card>

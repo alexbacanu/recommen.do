@@ -42,11 +42,12 @@ export function FormAccountPassword({ account }: CardAccountProps) {
     mutationKey: ["updatePassword"],
     mutationFn: async ({ newPassword, oldPassword }: UpdatePasswordParams) =>
       await AppwriteService.updatePassword(newPassword, oldPassword),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         description: "Password successfully updated.",
       });
-      queryClient.invalidateQueries(["account"]);
+
+      await queryClient.invalidateQueries(["account"]);
     },
   });
 

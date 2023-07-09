@@ -87,14 +87,10 @@ export const AppwriteService = {
   },
 
   createRecovery: async (email: string) => {
-    console.log("--------------------", email);
-    try {
-      const response = await account.createRecovery(email, `${appwriteUrl}/forgot-callback`);
-      console.log("client-appwrite.createRecovery:", response);
-      return response;
-    } catch (error) {
-      console.log("--------------------", error);
-    }
+    const response = await account.createRecovery(email, `${appwriteUrl}/forgot-callback`);
+    console.log("client-appwrite.createRecovery:", response);
+
+    return response;
   },
 
   updateRecovery: async (userId: string, secret: string, confirmPassword: string) => {
