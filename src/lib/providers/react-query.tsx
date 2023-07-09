@@ -24,7 +24,6 @@ export default function ReactQueryProvider({ children }: { children: React.React
         mutations: {
           onError: (error) => {
             if (error instanceof AppwriteException) {
-              console.log("should be instance of appwrite error");
               toast({
                 title: "Error",
                 description: error.message,

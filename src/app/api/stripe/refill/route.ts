@@ -2,53 +2,93 @@ import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { AppwriteException } from "node-appwrite";
+import Stripe from "stripe";
 
 import { appwriteImpersonate } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
 import { appwriteUrl } from "@/lib/envClient";
-import { corsHeaders } from "@/lib/helpers/cors";
 
+// export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
+// 1. ✅ Auth
+// 2. ❌ Permissions
+// 3. ❌ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
 export async function GET() {
-  // Read JWT from Authorization header
-  const authHeader = headers().get("Authorization");
-  const token = authHeader?.split(" ")[1];
+  try {
+    // 🫴 Get Authorization
+    const authHeader = headers().get("Authorization");
+    const token = authHeader?.split(" ")[1];
 
-  if (!token) {
-    console.log("api.stripe.refill:", "JWT token missing");
-    return new Response("JWT token missing", {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
+    if (!token) {
+      return NextResponse.json(
+        {
+          message: "JWT token missing. Please verify and retry.",
+        },
+        {
+          status: 401, // Unauthorized
+        },
+      );
+    }
 
-  // Get user profile based on JWT
-  const { impersonateDatabases } = appwriteImpersonate(token);
-  const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
-  const profile = profiles[0];
+    // 🫴 Get Account
+    const { impersonateAccount } = appwriteImpersonate(token);
+    const account = await impersonateAccount.get();
 
-  if (!profile) {
-    console.log("api.stripe.refill:", "Get current profile failed");
-    return new Response("Get current profile failed", {
-      status: 404,
-      headers: corsHeaders,
-    });
-  }
+    if (!account) {
+      return NextResponse.json(
+        {
+          message: "Account not found. Please verify your details.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
 
-  if (profile.credits >= 950) {
-    console.log("api.stripe.refill:", "You have reached your refill limit (max 999 credits)");
-    return new Response("You have reached your refill limit (max 999 credits)", {
-      status: 400,
-      headers: corsHeaders,
-    });
-  }
+    // 🫴 Get Profile
+    const { impersonateDatabases } = appwriteImpersonate(token);
+    const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
+    const profile = profiles[0];
 
-  if (profile.stripeCustomerId) {
+    if (!profile) {
+      return NextResponse.json(
+        {
+          message: "Profile not found. Please sign out and try again.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    if (!profile.stripeCustomerId) {
+      return NextResponse.json(
+        {
+          message: "You need to have a Stripe customer id. Please sign out and try again.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    if (profile.credits >= 950) {
+      return NextResponse.json(
+        {
+          message: "You have reached your refill limit (max 999 credits).",
+        },
+        {
+          status: 400, // Unauthorized
+        },
+      );
+    }
+
+    // 🔥 Create Stripe checkout session
     const stripe = getStripeInstance();
-
-    // User needs refill
-    // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       customer: profile.stripeCustomerId,
 
@@ -64,7 +104,9 @@ export async function GET() {
             product_data: {
               name: "Add 50 recommendations",
               description: `These recommendations will expire on: ${
-                profile.stripeCurrentPeriodEnd && new Date(profile.stripeCurrentPeriodEnd).toUTCString()
+                profile.stripeCurrentPeriodEnd
+                  ? new Date(profile.stripeCurrentPeriodEnd).toUTCString() // when subscription expires
+                  : new Date(new Date().setDate(new Date().getDate() + 30)).toUTCString() // 30 days from now on
               }, at the end of your current billing cycle.`,
               images: [
                 "https://cloud.appwrite.io/v1/storage/buckets/images/files/refill/view?project=6491ab878b30a8638965",
@@ -78,13 +120,43 @@ export async function GET() {
       cancel_url: `${appwriteUrl}/payment/cancel`,
     });
 
-    console.log("api.stripe.refill:", "URL Created");
-    return NextResponse.json({ url: session.url }, { headers: corsHeaders });
-  }
+    // ✅ Everything OK
+    return NextResponse.json({
+      message: "Recommendations refilled successfully.",
+      url: session.url,
+    });
+  } catch (error) {
+    if (error instanceof Stripe.errors.StripeError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.statusCode,
+        },
+      );
+    }
 
-  console.log("api.stripe.refill:", "Something went wrong");
-  return new Response("Something went wrong", {
-    status: 500,
-    headers: corsHeaders,
-  });
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
+    // ❌ Everything NOT OK
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Recommendations refill issue on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
+  }
 }

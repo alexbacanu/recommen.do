@@ -1,9 +1,8 @@
 import type { AppwriteProfile } from "@/lib/types/types";
 
-import { AppwriteException } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { AppwriteException as AppwriteExceptionNode } from "node-appwrite";
+import { AppwriteException } from "node-appwrite";
 import { z } from "zod";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
@@ -59,7 +58,7 @@ export async function PATCH() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please verify your details.",
+          message: "Profile not found. Please sign out and try again.",
         },
         {
           status: 404, // Not Found
@@ -79,17 +78,6 @@ export async function PATCH() {
     });
   } catch (error) {
     if (error instanceof AppwriteException) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.code,
-        },
-      );
-    }
-
-    if (error instanceof AppwriteExceptionNode) {
       return NextResponse.json(
         {
           message: error.message,
@@ -148,7 +136,7 @@ export async function POST(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please verify your details.",
+          message: "Profile not found. Please sign out and try again.",
         },
         {
           status: 404, // Not Found
@@ -198,18 +186,6 @@ export async function POST(request: Request) {
     }
 
     if (error instanceof AppwriteException) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.code,
-          headers: cors,
-        },
-      );
-    }
-
-    if (error instanceof AppwriteExceptionNode) {
       return NextResponse.json(
         {
           message: error.message,
@@ -269,7 +245,7 @@ export async function DELETE(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please verify your details.",
+          message: "Profile not found. Please sign out and try again.",
         },
         {
           status: 404, // Not Found
@@ -327,17 +303,6 @@ export async function DELETE(request: Request) {
     }
 
     if (error instanceof AppwriteException) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.code,
-        },
-      );
-    }
-
-    if (error instanceof AppwriteExceptionNode) {
       return NextResponse.json(
         {
           message: error.message,

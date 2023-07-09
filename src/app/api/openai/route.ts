@@ -1,10 +1,9 @@
 import type { AppwriteProfile, ChatGPTMessage } from "@/lib/types/types";
 
 import { OpenAIStream } from "ai";
-import { AppwriteException } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { AppwriteException as AppwriteExceptionNode } from "node-appwrite";
+import { AppwriteException } from "node-appwrite";
 import { Configuration, OpenAIApi } from "openai-edge";
 import { z } from "zod";
 
@@ -67,7 +66,7 @@ export async function POST(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please verify your details.",
+          message: "Profile not found. Please sign out and try again.",
         },
         {
           status: 404, // Not Found
@@ -132,6 +131,7 @@ export async function POST(request: Request) {
     let stopTesting = false;
 
     const stream = OpenAIStream(response, {
+      // TODO: ERRORS INSIDE HERE ARE NOT HANDLED PROPERLY
       // This callback is called for each token in the stream
       onToken: async (token: string) => {
         if (!apiKey && !stopTesting) {
@@ -175,18 +175,6 @@ export async function POST(request: Request) {
     }
 
     if (error instanceof AppwriteException) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.code,
-          headers: cors,
-        },
-      );
-    }
-
-    if (error instanceof AppwriteExceptionNode) {
       return NextResponse.json(
         {
           message: error.message,

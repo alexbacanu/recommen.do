@@ -1,9 +1,8 @@
 import type { AppwriteProfile } from "@/lib/types/types";
 
-import { AppwriteException } from "appwrite";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { AppwriteException as AppwriteExceptionNode } from "node-appwrite";
+import { AppwriteException } from "node-appwrite";
 import Stripe from "stripe";
 
 import { appwriteImpersonate, appwriteServer } from "@/lib/clients/server-appwrite";
@@ -57,7 +56,7 @@ export async function DELETE() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please verify your details.",
+          message: "Profile not found. Please sign out and try again.",
         },
         {
           status: 404, // Not Found
@@ -96,17 +95,6 @@ export async function DELETE() {
     }
 
     if (error instanceof AppwriteException) {
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.code,
-        },
-      );
-    }
-
-    if (error instanceof AppwriteExceptionNode) {
       return NextResponse.json(
         {
           message: error.message,

@@ -58,4 +58,5 @@ export type ChatGPTMessage = {
 // NextJS
 export type APIResponse = {
   message: string;
+  url?: string;
 };

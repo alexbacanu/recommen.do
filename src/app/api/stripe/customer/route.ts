@@ -3,6 +3,8 @@ import type { AppwriteProfile } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { AppwriteException } from "node-appwrite";
+import Stripe from "stripe";
 
 import { appwriteServer } from "@/lib/clients/server-appwrite";
 import { getStripeInstance } from "@/lib/clients/server-stripe";
@@ -67,6 +69,28 @@ export async function POST(request: Request) {
       message: "Stripe customer created successfully.",
     });
   } catch (error) {
+    if (error instanceof Stripe.errors.StripeError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.statusCode,
+        },
+      );
+    }
+
+    if (error instanceof AppwriteException) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: error.code ? error.code : 500,
+        },
+      );
+    }
+
     // ❌ Everything NOT OK
     console.log(error);
     return NextResponse.json(

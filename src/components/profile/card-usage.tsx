@@ -1,5 +1,7 @@
 "use client";
 
+import type { APIResponse } from "@/lib/types/types";
+
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
@@ -44,11 +46,16 @@ export function CardUsage() {
         },
       });
 
-      const checkoutUrl: { url: string } = await response.json();
-      return checkoutUrl.url;
+      const data = (await response.json()) as APIResponse;
+
+      if (response.status !== 200) {
+        throw new Error(data.message);
+      }
+
+      return data;
     },
     onSuccess: (data) => {
-      window.open(data, target);
+      window.open(data?.url, target);
     },
   });
 
