@@ -29,7 +29,6 @@
 
     "paths": {
       "@/*": ["./src/*"],
-      "@/api/*": ["./src/app/api/*"],
       "@/components/*": ["./src/components/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/styles/*": ["./src/styles/*"]
@@ -38,6 +37,8 @@
   "include": [
     ".next/types/**/*.ts",
     ".plasmo/index.d.ts",
+    ".eslintrc.cjs",
+    ".prettierrc.cjs",
     "**/*.cjs",
     "**/*.mjs",
     "**/*.ts",

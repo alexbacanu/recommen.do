@@ -5,7 +5,6 @@ const pluginConfig: CookieConsentConfig = {
     consentModal: {
       layout: "cloud",
       position: "bottom center",
-      flipButtons: false,
     },
     preferencesModal: {
       layout: "box",
