@@ -32,7 +32,7 @@ export function CardAPIKey() {
               <Switch
                 id="show-extension"
                 checked={isPromptShown}
-                onClick={() => setIsPromptShown((prevState) => !prevState)}
+                onClick={() => void setIsPromptShown((prevState) => !prevState)}
               />
             </div>
           </Label>

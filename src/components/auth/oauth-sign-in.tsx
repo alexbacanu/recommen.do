@@ -30,7 +30,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   // const hasAccepted = useAtomValue(termsAtom);
   const account = useAtomValue(accountAtom);
 
-  async function oauthSignIn(provider: string) {
+  function oauthSignIn(provider: string) {
     if (!hasAccepted) {
       toast({
         description: "You must accept the Terms and Conditions and Privacy Policy in order to sign in.",
@@ -49,7 +49,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
     }
 
     setIsLoading(provider);
-    await AppwriteService.createOauth2(provider);
+    AppwriteService.createOauth2(provider);
   }
 
   useEffect(() => {

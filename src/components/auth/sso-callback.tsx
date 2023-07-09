@@ -36,7 +36,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
     }
 
     if (isSuccess) {
-      queryClient.invalidateQueries(["account", "profile"]);
+      void queryClient.invalidateQueries(["account", "profile"]);
 
       toast({
         description: "You are signed in!",
@@ -46,13 +46,13 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
         const profileData = await fetchProfile();
 
         if (profileData) {
-          return window.open(`${appwriteUrl}/profile`, "_self");
+          window.open(`${appwriteUrl}/profile`, "_self");
         } else {
           // If no profile found, increment attempts and check again
           if (attempts < 3) {
             setAttempts(attempts + 1);
             const delay = Math.pow(2, attempts) * 1000; // Delay in milliseconds (1, 2, 4 seconds)
-            setTimeout(checkProfile, delay);
+            void setTimeout(() => void checkProfile(), delay);
           } else {
             // No profile found after 3 attempts, redirect to homepage
             window.open("/", "_self"); // Replace with the actual homepage route
@@ -60,7 +60,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
         }
       };
 
-      checkProfile();
+      void checkProfile();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

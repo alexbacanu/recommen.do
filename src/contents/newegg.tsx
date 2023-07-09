@@ -1,12 +1,12 @@
-import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetStyle } from "plasmo";
+import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetShadowHostId, PlasmoGetStyle } from "plasmo";
 
 import { useStorage } from "@plasmohq/storage/hook";
-import logo from "data-base64:~assets/icon.png";
 import cssText from "data-text:@/styles/globals.css";
 import { useEffect, useState } from "react";
 
 import { Init } from "@/components/_init/init-auth";
 import PromptCard from "@/components/extension/prompt-card";
+import { Icons } from "@/components/ui/icons";
 import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
@@ -21,11 +21,13 @@ export const getStyle: PlasmoGetStyle = () => {
 };
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const searchResultsContainer = document.querySelector("div.list-tools-bar");
-  if (!searchResultsContainer) {
-    throw new Error("No search results container found");
+  const divElement = document.querySelector("div.list-tools-bar");
+
+  if (!divElement) {
+    throw new Error("div with classname 'list-tools-bar' not found");
   }
-  return searchResultsContainer;
+
+  return divElement;
 };
 
 const neweggProductData = () => {
@@ -60,7 +62,7 @@ const neweggProductData = () => {
   return products;
 };
 
-export const getShadowHostId = () => "plasmo-inline-newegg";
+export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-newegg";
 
 export default function NeweggContent() {
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
@@ -84,15 +86,14 @@ export default function NeweggContent() {
         {!isLoading && isPromptShown === false && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
-            onClick={() => setIsPromptShown(true)}
+            onClick={() => void setIsPromptShown(true)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} height={32} width={32} alt="recommen.do logo" className="rounded-full" />
+            <Icons.logo className="h-[32px] w-[32px] rounded-full bg-popover p-[2px]" aria-label="recommen.do logo" />
           </button>
         )}
 
         {!isLoading && isPromptShown === true && (
-          <PromptCard products={products} onClose={() => setIsPromptShown(false)} />
+          <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
         )}
       </ReactQueryProvider>
       <Toaster />

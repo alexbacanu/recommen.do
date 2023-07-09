@@ -159,7 +159,7 @@ export function PromptForm({ products }: PromptFormProps) {
         productFound = true;
 
         !!profile && profile.saveHistory && insertHistory({ product: chosenProduct });
-        await queryClient.invalidateQueries(["profile"]);
+        void queryClient.invalidateQueries(["profile"]);
       }
     },
 
@@ -190,11 +190,11 @@ export function PromptForm({ products }: PromptFormProps) {
     mutate({ products: products, prompt: values.prompt });
   }
 
-  const handleReset = async () => {
+  const handleReset = () => {
     reset();
     form.reset();
 
-    await queryClient.invalidateQueries(["profile"]);
+    void queryClient.invalidateQueries(["profile"]);
 
     setSelectedProduct(initialProduct);
     setMessages(initialMessage);

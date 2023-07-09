@@ -33,7 +33,7 @@ export function CardSessions() {
     mutationKey: ["deleteSession"],
     mutationFn: async ({ id }: DeleteSessionProps) => await AppwriteService.signOut(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["fetchSessions"] });
+      void queryClient.invalidateQueries({ queryKey: ["fetchSessions"] });
     },
   });
 
@@ -139,7 +139,7 @@ export function CardSessions() {
           </CardContent>
 
           <CardFooter className="grid">
-            <Button onClick={() => signOut()} aria-label="Log out">
+            <Button onClick={() => void signOut()} aria-label="Log out">
               <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
               <span>Log out</span>
             </Button>

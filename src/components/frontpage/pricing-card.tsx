@@ -1,7 +1,8 @@
 "use client";
 
-import type { APIResponse, StripePlan } from "@/lib/types/types";
+import type { APIResponse } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
+import type Stripe from "stripe";
 
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -18,7 +19,15 @@ import { appwriteUrl } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
 
 interface PricingCardProps {
-  plan: StripePlan;
+  plan: {
+    productName: string;
+    productDescription: string;
+    productMetadata: Stripe.Metadata;
+    priceId: string;
+    priceAmount: number;
+    priceInterval: Stripe.Price.Recurring.Interval;
+    priceCurrency: string;
+  };
   index: number;
 }
 
@@ -75,7 +84,6 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
 
   return (
     <motion.div
-      key={plan.priceId}
       className={index === 1 ? "order-none col-span-1 md:order-first md:col-span-2 lg:order-none lg:col-span-1" : ""}
       variants={zoom}
       viewport={{ once: true }}
@@ -109,7 +117,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
               {index === 0 && <Icons.plan1 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
               {index === 1 && <Icons.plan2 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
               {index === 2 && <Icons.plan3 className="mr-4 h-8 w-8" strokeWidth={1} aria-hidden="true" />}
-              {plan.name}
+              {plan.productName}
             </div>
           </CardTitle>
         </CardHeader>
@@ -117,7 +125,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
         <CardContent className="grid gap-8">
           <div className="grid">
             <p className="text-center text-4xl font-light leading-none tracking-tighter text-foreground/80">
-              {plan.metadata.recommendations}
+              {plan.productMetadata.recommendations}
             </p>
             <div className="text-center text-base leading-tight text-muted-foreground">recommendations</div>
           </div>
@@ -125,7 +133,7 @@ export default function PricingCard({ plan, index }: PricingCardProps) {
           <div className="flex items-center justify-center gap-x-1">
             <span className="text-4xl font-light leading-none tracking-tighter text-foreground/80">
               <sup className="top-[-14px] text-base">$</sup>
-              {plan.price}
+              {plan.priceAmount}
             </span>
             <div className="grid grid-rows-2">
               <div className="row-start-2 text-left text-base leading-tight text-muted-foreground">/month</div>

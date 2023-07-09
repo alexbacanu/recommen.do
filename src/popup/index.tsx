@@ -27,7 +27,7 @@ export default function IndexPopup() {
   const account = useAtomValue(accountAtom);
 
   useEffect(() => {
-    window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || []; // eslint-disable-line
     window.gtag = function gtag() {
       window.dataLayer.push(arguments); // eslint-disable-line
     };

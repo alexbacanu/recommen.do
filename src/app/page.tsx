@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { StripePlan } from "@/lib/types/types";
-
 import { Features } from "@/components/frontpage/features";
 import { Hero } from "@/components/frontpage/hero";
 import { Pricing } from "@/components/frontpage/pricing";
@@ -15,20 +12,30 @@ async function fetchStripePlans() {
       if (price.type === "recurring") {
         const product = await stripe.products.retrieve(price.product as string);
 
-        return {
-          priceId: price.id,
-          name: product.name,
-          price: price.unit_amount! / 100,
-          interval: price.recurring?.interval,
-          currency: price.currency,
-          description: product.description,
-          metadata: product.metadata,
-        };
+        const productName = product.name;
+        const productDescription = product.description;
+        const productMetadata = product.metadata;
+        const priceId = price.id;
+        const priceAmount = price.unit_amount ? price.unit_amount / 100 : 0;
+        const priceInterval = price.recurring?.interval;
+        const priceCurrency = price.currency;
+
+        if (productDescription && priceInterval) {
+          return {
+            productName,
+            productDescription,
+            productMetadata,
+            priceId,
+            priceAmount,
+            priceInterval,
+            priceCurrency,
+          };
+        }
       }
     }),
   );
 
-  const sortedPlans = plans.sort((a, b) => (a?.price || 0) - (b?.price || 0)) as StripePlan[];
+  const sortedPlans = plans.sort((a, b) => (a?.priceAmount || 0) - (b?.priceAmount || 0));
 
   return sortedPlans;
 }

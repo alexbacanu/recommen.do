@@ -11,12 +11,11 @@ interface Props {
 }
 
 export default function CookieModal(props: Props) {
-  const { run, setLanguage } = props.CookieConsentApi;
+  const { run } = props.CookieConsentApi;
 
   useEffect(() => {
-    run(pluginConfig);
-    setLanguage("en");
-  }, [run, setLanguage]);
+    void run(pluginConfig);
+  }, [run]);
 
   return null;
 }

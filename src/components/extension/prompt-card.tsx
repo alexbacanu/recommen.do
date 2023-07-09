@@ -31,9 +31,7 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
         <CardHeader className="gap-y-[6px] rounded-[12px] p-[16px] lg:p-[16px]">
           <CardTitle className="flex items-center gap-[16px] text-[24px]">
             <Link href={appwriteUrl} className="flex items-center gap-[16px] pl-[8px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              {/* <img src={logo} height={30} width={30} alt="recommen.do logo" className="rounded-full" /> */}
-              <Icons.logo className="mt-0.5 h-7 w-7" />
+              <Icons.logo className="mt-[2px] h-[28px] w-[28px]" aria-label="recommen.do logo" />
               <span>recommen.do</span>
             </Link>
 

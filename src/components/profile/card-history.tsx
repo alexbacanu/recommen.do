@@ -50,12 +50,12 @@ export function CardHistory() {
 
       return data;
     },
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       toast({
         description: data.message,
       });
 
-      await queryClient.invalidateQueries(["profile"]);
+      void queryClient.invalidateQueries(["profile"]);
     },
   });
 
@@ -82,12 +82,12 @@ export function CardHistory() {
 
       return data;
     },
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       toast({
         description: data.message,
       });
 
-      await queryClient.invalidateQueries(["profile"]);
+      void queryClient.invalidateQueries(["profile"]);
     },
   });
 

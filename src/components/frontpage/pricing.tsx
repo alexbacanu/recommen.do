@@ -1,7 +1,7 @@
 "use client";
 
-import type { StripePlan } from "@/lib/types/types";
 import type { Variants } from "framer-motion";
+import type Stripe from "stripe";
 
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
@@ -16,7 +16,18 @@ import { Label } from "@/components/ui/label";
 import { profileAtom } from "@/lib/atoms/auth";
 
 interface PricingProps {
-  plans: StripePlan[];
+  plans: (
+    | {
+        productName: string;
+        productDescription: string;
+        productMetadata: Stripe.Metadata;
+        priceId: string;
+        priceAmount: number;
+        priceInterval: Stripe.Price.Recurring.Interval;
+        priceCurrency: string;
+      }
+    | undefined
+  )[];
 }
 
 export function Pricing({ plans }: PricingProps) {
@@ -73,9 +84,10 @@ export function Pricing({ plans }: PricingProps) {
             viewport={{ once: true }}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12"
           >
-            {plans.map((plan, index) => (
-              <PricingCard key={plan.priceId} plan={plan} index={index} />
-            ))}
+            {plans.map((plan, index) => {
+              if (!plan) return;
+              return <PricingCard key={plan.priceId} plan={plan} index={index} />;
+            })}
           </motion.div>
         </div>
       </div>

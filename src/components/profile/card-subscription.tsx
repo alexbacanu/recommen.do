@@ -12,7 +12,6 @@ import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/
 import { Icons } from "@/components/ui/icons";
 import { Label } from "@/components/ui/label";
 import { LoadingPage } from "@/components/ui/loading";
-import { useToast } from "@/components/ui/use-toast";
 import { profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
@@ -23,7 +22,6 @@ type GetManageURLParams = {
 };
 
 export function CardSubscription() {
-  const { toast } = useToast();
   const profile = useAtomValue(profileAtom);
 
   const extensionDetected = !!window && !window?.next;
