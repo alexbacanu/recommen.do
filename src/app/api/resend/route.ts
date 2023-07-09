@@ -1,49 +1,95 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 import { resendKey } from "@/lib/envServer";
-import { corsHeaders } from "@/lib/helpers/cors";
-import { ResendValidator } from "@/lib/validators/schema";
+import { EmailValidator } from "@/lib/validators/apiSchema";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
+type ResendBody = {
+  status: string;
+  message: string;
+  action: string;
+};
+
+// 1. ❌ Auth
+// 2. ❌ Permissions
+// 3. ✅ Input
+// 4. ➖ Secure
+// 5. ➖ Rate limiting
 export async function POST(request: Request) {
-  // Get body
-  const body = await request.json();
+  try {
+    const body = (await request.json()) as z.infer<typeof EmailValidator>;
+    const { name, email, subject, message, terms } = EmailValidator.parse(body); // 3️⃣
 
-  // Validate body
-  const { name, email, subject, message, terms } = ResendValidator.parse(body);
+    if (!terms) {
+      return NextResponse.json(
+        {
+          message: "Please accept our Terms and Privacy Policy to contact us.",
+        },
+        {
+          status: 403, // Unauthorized
+        },
+      );
+    }
 
-  if (!terms) {
-    return NextResponse.json("You must accept the Terms and Conditions and Privacy Policy in order to contact us.", {
-      status: 401,
-      headers: corsHeaders,
-    });
-  }
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${resendKey}`,
-    },
-    body: JSON.stringify({
-      from: `Contact Form <hey@recommen.do>`,
-      to: "hey@recommen.do",
-      subject: subject,
-      html: `<p><strong>From</strong>: ${name} <${email}></p>
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendKey}`,
+      },
+      body: JSON.stringify({
+        from: `Contact Form <hey@recommen.do>`,
+        to: "hey@recommen.do",
+        subject: subject,
+        html: `<p><strong>From</strong>: ${name} <${email}></p>
       <p><strong>Message</strong>: ${message}</p>`,
-    }),
-  });
+      }),
+    });
 
-  const data = await res.json();
+    if (res.status !== 200) {
+      const data = (await res.json()) as ResendBody;
 
-  if (res.status !== 200) {
-    return NextResponse.json(data.message, { status: res.status, headers: corsHeaders });
+      return NextResponse.json(
+        {
+          message: data.message,
+        },
+        {
+          status: res.status,
+        },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: "Your email was sent successfully.",
+      },
+      {
+        status: res.status,
+      },
+    );
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          message: error.message,
+        },
+        {
+          status: 400, // Bad Request
+        },
+      );
+    }
+
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Email issues on our end. Please try again later.",
+      },
+      {
+        status: 500, // Internal Server Error
+      },
+    );
   }
-
-  return NextResponse.json("api.resend.status: OK", {
-    status: 200,
-    headers: corsHeaders,
-  });
 }

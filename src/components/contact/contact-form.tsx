@@ -23,41 +23,46 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { appwriteUrl } from "@/lib/envClient";
-import { ResendValidator } from "@/lib/validators/schema";
+import { EmailValidator } from "@/lib/validators/apiSchema";
+
+type APIResponse = {
+  message: string;
+};
 
 export function FormContact() {
+  const { toast } = useToast();
+
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
-  const [open, setOpen] = useState(false);
-  const { toast } = useToast();
 
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess, isError } = useMutation({
-    mutationKey: ["updateEmail"],
-    mutationFn: async ({ ...values }: z.infer<typeof ResendValidator>) => {
+    mutationKey: ["contactForm"],
+    mutationFn: async ({ ...values }: z.infer<typeof EmailValidator>) => {
       const response = await fetch(`${appwriteUrl}/api/resend`, {
         method: "POST",
         body: JSON.stringify({ ...values }),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as APIResponse;
 
       if (response.status !== 200) {
-        throw new Error(data);
+        throw new Error(data.message);
       }
 
-      return response;
+      return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
-        description: "Email sent succesfully.",
+        description: data.message,
       });
 
       setTitle("Thank you for reaching out!");
       setMessage("We have received your message and will get in touch as soon as possible!");
       setOpen(true);
     },
-    onError: async (error) => {
+    onError: (error) => {
       if (error instanceof Error) {
         toast({
           description: error.message,
@@ -65,7 +70,7 @@ export function FormContact() {
         });
       }
 
-      console.error(error);
+      console.log(error);
       setTitle("Something went wrong");
       setMessage("Unfortunately, your message was not sent. Please try again later.");
       setOpen(true);
@@ -73,8 +78,8 @@ export function FormContact() {
   });
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ResendValidator>>({
-    resolver: zodResolver(ResendValidator),
+  const form = useForm<z.infer<typeof EmailValidator>>({
+    resolver: zodResolver(EmailValidator),
     defaultValues: {
       name: "",
       email: "",
@@ -85,10 +90,10 @@ export function FormContact() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ResendValidator>) {
+  function onSubmit(values: z.infer<typeof EmailValidator>) {
     if (!values.terms) {
       form.setError("terms", {
-        message: "You must accept the Terms and Conditions and Privacy Policy in order to contact us.",
+        message: "Please accept our Terms and Privacy Policy to contact us.",
       });
       return;
     }
@@ -98,7 +103,7 @@ export function FormContact() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)} className="grid gap-4">
         <div className="grid grid-cols-2 gap-8">
           <FormField
             control={form.control}
@@ -172,12 +177,11 @@ export function FormContact() {
                 </Link>
               </FormLabel>
               <FormMessage className="h-[1rem]" />
-              {/* <FormDescription>You need to agree with our terms before continuing.</FormDescription> */}
             </FormItem>
           )}
         />
 
-        <Button disabled={isLoading || isSuccess} aria-label="Send email" className="mt-4">
+        <Button type="submit" disabled={isLoading || isSuccess} aria-label="Send email" className="mt-4">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
