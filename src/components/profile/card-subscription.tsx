@@ -74,6 +74,10 @@ export function CardSubscription() {
 
       const data = (await response.json()) as APIResponse;
 
+      if (response.status === 404) {
+        return null;
+      }
+
       if (response.status !== 200) {
         throw new Error(data.message);
       }
@@ -81,11 +85,16 @@ export function CardSubscription() {
       return data.plan;
     },
     enabled: hasSubscription,
-    retry: 2,
+
+    retry: 0,
+
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 
+  const showCanceledMonth = profile && !data;
   const showSingleMonth = profile && !!data && profile.stripeSubscriptionName === data.metadata?.name;
-  const showCanceledMonth = profile && !!data && !data.id;
   const showBothMonth = profile && !!data && !!data.id && profile.stripeSubscriptionName !== data.metadata?.name;
 
   if (profile)
