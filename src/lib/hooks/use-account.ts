@@ -17,7 +17,6 @@ export const useAccount = () => {
       setAccount(response);
       return response;
     } catch (error) {
-      await AppwriteService.signOut();
       setAccount(false);
       return false;
     }
@@ -34,7 +33,6 @@ export const useAccount = () => {
       setProfile(response);
       return response;
     } catch (error) {
-      await AppwriteService.signOut();
       setProfile(false);
       return false;
     }

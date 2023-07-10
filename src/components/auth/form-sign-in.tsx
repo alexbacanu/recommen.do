@@ -49,6 +49,9 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
     onSuccess: (_, variables) => {
       router.push(`/sign-in/verify?email=${variables.email}`);
     },
+    onSettled: (data, error) => {
+      if (!!error) router.push("/");
+    },
   });
 
   // 1. Define your form.

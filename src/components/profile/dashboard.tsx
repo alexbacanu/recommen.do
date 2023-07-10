@@ -17,17 +17,12 @@ import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 export function Dashboard() {
-  const [emailSent, setEmailSent] = useState(false);
   const router = useRouter();
+
+  const [emailSent, setEmailSent] = useState(false);
 
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
-
-  useEffect(() => {
-    if (account === false || profile === false) {
-      router.push("/sign-in");
-    }
-  }, [account, profile, router]);
 
   // 0. Define your mutation.
   const { mutate } = useMutation({
@@ -36,9 +31,18 @@ export function Dashboard() {
     onSuccess: (_, variables) => {
       router.push(`/sign-in/verify?email=${variables._email}`);
     },
+    onSettled: (data, error) => {
+      if (!!error) router.push("/");
+    },
     cacheTime: 1000 * 60 * 15,
     retry: 0,
   });
+
+  useEffect(() => {
+    if (account === false && profile === false) {
+      router.push("/sign-in");
+    }
+  }, [account, profile, router]);
 
   if (!!account && !account.emailVerification && !emailSent) {
     mutate({ _email: account.email });

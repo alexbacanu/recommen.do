@@ -12,7 +12,6 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { appwriteUrl } from "@/lib/envClient";
 
 const formSchema = z.object({
   password: z.string().min(8),
@@ -39,7 +38,10 @@ export function FormForgot({ searchParams }: CardAccountProps) {
         description: "Password updated successfully.",
       });
 
-      router.push(`${appwriteUrl}/profile`);
+      router.push("/profile");
+    },
+    onSettled: (data, error) => {
+      if (!!error) router.push("/");
     },
   });
 
