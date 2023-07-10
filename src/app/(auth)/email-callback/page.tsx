@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
 
-import { SSOCallback } from "@/components/auth/sso-callback";
+import { EmailCallback } from "@/components/auth/email-callback";
 import { Shell } from "@/components/ui/shell";
 import { appwriteUrl } from "@/lib/envClient";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
 
-interface SSOCallbackPageProps {
+interface EmailCallbackPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function SSOCallbackPage({ searchParams }: SSOCallbackPageProps) {
+export default function EmailCallbackPage({ searchParams }: EmailCallbackPageProps) {
   const { searchParams: validatedSearchParams } = SSOCallbackSchema.parse({
     searchParams,
   });
@@ -23,7 +23,7 @@ export default function SSOCallbackPage({ searchParams }: SSOCallbackPageProps) 
 
   return (
     <Shell layout="auth">
-      <SSOCallback searchParams={{ userId, secret }} />
+      <EmailCallback searchParams={{ userId, secret }} />
     </Shell>
   );
 }

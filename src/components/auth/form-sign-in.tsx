@@ -33,10 +33,6 @@ const formSchema = z.object({
     ),
 });
 
-type createMagicURLParams = {
-  email: string;
-};
-
 interface FormSignInProps {
   hasAccepted: boolean;
 }
@@ -49,7 +45,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   // 0. Define your mutation.
   const { mutate, isLoading } = useMutation({
     mutationKey: ["createMagicURL"],
-    mutationFn: async ({ email }: createMagicURLParams) => await AppwriteService.createMagicURL(email),
+    mutationFn: async ({ email }: { email: string }) => await AppwriteService.createMagicURL(email),
     onSuccess: (_, variables) => {
       router.push(`/sign-in/verify?email=${variables.email}`);
     },

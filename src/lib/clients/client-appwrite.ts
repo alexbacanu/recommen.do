@@ -88,6 +88,18 @@ export const AppwriteService = {
     return response;
   },
 
+  createVerification: async () => {
+    const response = await account.createVerification(`${appwriteUrl}/email-callback`);
+
+    return response;
+  },
+
+  updateVerification: async (userId: string, secret: string) => {
+    const response = await account.updateVerification(userId, secret);
+
+    return response;
+  },
+
   createJWT: async () => {
     const jwtObject = await account.createJWT();
 

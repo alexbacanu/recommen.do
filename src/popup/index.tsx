@@ -2,7 +2,7 @@ import "https://www.googletagmanager.com/gtag/js?id=$PLASMO_PUBLIC_GTAG_ID";
 
 import { useEffect } from "react";
 
-import { accountAtom } from "@/lib/atoms/auth";
+import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
 import "@/styles/globals.css";
@@ -25,6 +25,7 @@ import { gtagId } from "@/lib/envClient";
 
 export default function IndexPopup() {
   const account = useAtomValue(accountAtom);
+  const profile = useAtomValue(profileAtom);
 
   useEffect(() => {
     window.dataLayer = window.dataLayer || []; // eslint-disable-line
@@ -46,7 +47,13 @@ export default function IndexPopup() {
     <>
       <ReactQueryProvider>
         <Init />
-        {account ? (
+        {/* {account && !account.emailVerification && (
+          <Badge variant="outline" className="border-orange-500 text-orange-500">
+            <Icons.alert className="mr-2 h-3 w-3" aria-hidden="true" />
+            Your email is not verified, you won't be able to login
+          </Badge>
+        )} */}
+        {account && profile && account.emailVerification ? (
           <Tabs defaultValue="account" className="min-h-[600px] w-[380px] overflow-hidden">
             <TabsContent
               value="account"

@@ -4,6 +4,7 @@ import { useAtomValue } from "jotai";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -41,13 +42,25 @@ export function HeaderUser() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
+        {!account.emailVerification && (
+          <>
+            <DropdownMenuLabel className="font-normal">
+              <Badge variant="outline" className="border-orange-500 text-orange-500 w-full">
+                <Icons.alert className="mr-2 h-3 w-3" aria-hidden="true" />
+                Your email is not verified
+              </Badge>
+            </DropdownMenuLabel>
+          </>
+        )}
         <DropdownMenuLabel className="font-normal">
           <div className="space-y-0.5">
             <p className="line-clamp-1 text-sm font-medium">{account.name}</p>
             <p className="line-clamp-1 text-xs text-muted-foreground">{account.email ?? account.phone}</p>
           </div>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/profile" aria-label="Profile">
@@ -55,6 +68,7 @@ export function HeaderUser() {
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
+
           <DropdownMenuItem asChild>
             <Link href="/contact" aria-label="Support">
               <Icons.support className="mr-2 h-4 w-4" aria-hidden="true" />
@@ -62,7 +76,9 @@ export function HeaderUser() {
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem onSelect={() => void signOut()} aria-label="Log out">
           <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
           <span>Log out</span>

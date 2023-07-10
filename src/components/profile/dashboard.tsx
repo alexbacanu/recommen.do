@@ -1,8 +1,9 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { CardAccount } from "@/components/profile/card-account";
 import { CardHistory } from "@/components/profile/card-history";
@@ -13,8 +14,10 @@ import { CardUsage } from "@/components/profile/card-usage";
 import { Card } from "@/components/ui/card";
 import { LoadingPage } from "@/components/ui/loading";
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
+import { AppwriteService } from "@/lib/clients/client-appwrite";
 
 export function Dashboard() {
+  const [emailSent, setEmailSent] = useState(false);
   const router = useRouter();
 
   const account = useAtomValue(accountAtom);
@@ -25,6 +28,23 @@ export function Dashboard() {
       router.push("/sign-in");
     }
   }, [account, profile, router]);
+
+  // 0. Define your mutation.
+  const { mutate } = useMutation({
+    mutationKey: ["createVerification"],
+    mutationFn: async ({ email }: { email: string }) => await AppwriteService.createVerification(),
+    onSuccess: (_, variables) => {
+      router.push(`/sign-in/verify?email=${variables.email}`);
+    },
+    cacheTime: 1000 * 60 * 15,
+    retry: 0,
+  });
+
+  if (!!account && !account.emailVerification && !emailSent) {
+    mutate({ email: account.email });
+    setEmailSent(true);
+    return <LoadingPage />;
+  }
 
   if (account && profile && account.emailVerification)
     return (
