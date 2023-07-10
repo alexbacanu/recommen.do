@@ -49,6 +49,9 @@ export function FormAccountPassword({ account }: CardAccountProps) {
 
       void queryClient.invalidateQueries(["account"]);
     },
+    onSettled: () => {
+      form.reset();
+    },
   });
 
   // 0. Define your mutation.
@@ -63,6 +66,9 @@ export function FormAccountPassword({ account }: CardAccountProps) {
       toast({
         description: "We've sent an email with password reset instructions.",
       });
+    },
+    onSettled: () => {
+      form.reset();
     },
   });
 
