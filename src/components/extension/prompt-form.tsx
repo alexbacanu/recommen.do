@@ -51,7 +51,6 @@ const initialMessage: ChatGPTMessage[] = [
 ];
 
 export function PromptForm({ products }: PromptFormProps) {
-  // const { toast } = useToast();
   const profile = useAtomValue(profileAtom);
   const [userApiKey] = useStorage<string>("userApiKey");
 
@@ -128,13 +127,9 @@ export function PromptForm({ products }: PromptFormProps) {
 
         const chunkValue = decoder.decode(value);
 
-        // if (response.status !== 200) {
-        //   toast({
-        //     description: `Received following response: ${response.status}: ${response.statusText}.`,
-        //     variant: "destructive",
-        //   });
-        //   throw new Error(chunkValue);
-        // }
+        if (response.status !== 200) {
+          throw new Error(chunkValue);
+        }
 
         lastMessage = lastMessage + chunkValue;
 

@@ -25,7 +25,7 @@ export async function DELETE() {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -40,7 +40,7 @@ export async function DELETE() {
     if (!account) {
       return NextResponse.json(
         {
-          message: "Account not found. Please verify your details.",
+          message: "We couldn't find your account. Please check your details and try again.",
         },
         {
           status: 404, // Not Found
@@ -56,7 +56,7 @@ export async function DELETE() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -80,7 +80,7 @@ export async function DELETE() {
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "Your account was deleted successfully.",
+      message: "We've successfully deleted your account.",
     });
   } catch (error) {
     if (error instanceof Stripe.errors.StripeError) {
@@ -109,7 +109,7 @@ export async function DELETE() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Account deletion issues on our end. Please try again later.",
+        message: "We're experiencing issues with account deletion. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

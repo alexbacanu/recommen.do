@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     if (!requestText) {
       return NextResponse.json(
         {
-          message: "Please provide a body.",
+          message: "Request body is required.",
         },
         {
           status: 404, // Not Found
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     if (!signature) {
       return NextResponse.json(
         {
-          message: "Unauthorized.",
+          message: "Signature is required.",
         },
         {
           status: 401, // Unauthorized
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         if (!profile) {
           return NextResponse.json(
             {
-              message: "Profile not found. Please sign out and try again.",
+              message: "We couldn't find your profile. Please log out and retry.",
             },
             {
               status: 404, // Not Found
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "Profile not found. Please sign out and try again.",
+            message: "We couldn't find your profile. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
       if (!sessionLines) {
         return NextResponse.json(
           {
-            message: "Session not found. Please sign out and try again.",
+            message: "We couldn't find your invoice session. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "Profile not found. Please sign out and try again.",
+            message: "We couldn't find your profile. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -167,7 +167,7 @@ export async function POST(request: Request) {
       if (!sessionItems) {
         return NextResponse.json(
           {
-            message: "Session not found. Please sign out and try again.",
+            message: "We couldn't find your invoice session. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -204,7 +204,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "Profile not found. Please sign out and try again.",
+            message: "We couldn't find your profile. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -217,7 +217,7 @@ export async function POST(request: Request) {
       if (!sessionItems) {
         return NextResponse.json(
           {
-            message: "Session not found. Please sign out and try again.",
+            message: "We couldn't find your invoice session. Please log out and retry.",
           },
           {
             status: 404, // Not Found
@@ -279,7 +279,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Server issue on our end. Please try again later.",
+        message: "We're experiencing issues with processing your request. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

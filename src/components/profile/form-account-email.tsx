@@ -29,8 +29,7 @@ const formSchema = z.object({
         return popularDomains.includes(domain);
       },
       {
-        message:
-          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo or Apple.",
+        message: "The domain of the email you entered is not available. Please use Gmail, Outlook, Yahoo or Apple.",
       },
     ),
   confirmNewEmail: z
@@ -46,8 +45,7 @@ const formSchema = z.object({
         return popularDomains.includes(domain);
       },
       {
-        message:
-          "This email domain is currently unavailable for sign-up. Please sign up using Gmail, Outlook, Yahoo or Apple.",
+        message: "The domain of the email you entered is not available. Please use Gmail, Outlook, Yahoo or Apple.",
       },
     ),
   currentPassword: z.string().min(8),
@@ -72,7 +70,7 @@ export function FormAccountEmail() {
       await AppwriteService.updateEmail(newEmail, currentPassword),
     onSuccess: async () => {
       toast({
-        description: "Email successfully updated. You have been logged out.",
+        description: "Email updated successfully. You have been logged out.",
       });
 
       await signOut();
@@ -95,7 +93,7 @@ export function FormAccountEmail() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values?.newEmail !== values?.confirmNewEmail) {
       form.setError("confirmNewEmail", {
-        message: "The emails entered do not match.",
+        message: "The emails do not match.",
       });
       return;
     }

@@ -69,7 +69,7 @@ export function FormSubscription() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values?.plan === "") {
       form.setError("plan", {
-        message: "You need to select a valid plan.",
+        message: "Please select a valid plan.",
       });
       return;
     }

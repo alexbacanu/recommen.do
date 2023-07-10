@@ -1,6 +1,7 @@
 "use client";
 
 import { useSetAtom } from "jotai";
+import { cache } from "react";
 
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
@@ -9,21 +10,19 @@ export const useAccount = () => {
   const setAccount = useSetAtom(accountAtom);
   const setProfile = useSetAtom(profileAtom);
 
-  const fetchAccount = async () => {
+  const fetchAccount = cache(async () => {
     try {
       const response = await AppwriteService.getAccount();
 
       setAccount(response);
       return response;
     } catch (error) {
-      console.log("use-account.fetchAccount.error:", error);
-
       setAccount(false);
       return false;
     }
-  };
+  });
 
-  const fetchProfile = async () => {
+  const fetchProfile = cache(async () => {
     try {
       const response = await AppwriteService.getProfile();
 
@@ -34,12 +33,10 @@ export const useAccount = () => {
       setProfile(response);
       return response;
     } catch (error) {
-      console.log("use-account.fetchProfile.error:", error);
-
       setProfile(false);
       return false;
     }
-  };
+  });
 
   const signOut = async () => {
     try {

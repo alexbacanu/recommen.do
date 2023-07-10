@@ -27,8 +27,8 @@ export default function AuthMethods({ displayTerms = false }: AuthMethodsProps) 
             >
               I agree to{" "}
               <Button variant="link" className="h-auto p-0" asChild>
-                <Link href="/terms" aria-label="Terms and conditions">
-                  Terms and conditions
+                <Link href="/terms" aria-label="Terms and Conditions">
+                  Terms and Conditions
                 </Link>
               </Button>{" "}
               and{" "}
@@ -50,8 +50,8 @@ export default function AuthMethods({ displayTerms = false }: AuthMethodsProps) 
             >
               By continuing, you are setting up an account and agree to our{" "}
               <Button variant="link" className="h-auto p-0" asChild>
-                <Link href="/terms" aria-label="Terms and conditions">
-                  Terms and conditions
+                <Link href="/terms" aria-label="Terms and Conditions">
+                  Terms and Conditions
                 </Link>
               </Button>{" "}
               and{" "}

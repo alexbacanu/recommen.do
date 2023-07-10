@@ -3,7 +3,7 @@
 import type { AppwriteAccount } from "@/lib/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -13,7 +13,6 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
-import { useAccount } from "@/lib/hooks/use-account";
 
 const formSchema = z.object({
   displayName: z.string().min(0).max(128).trim(),
@@ -29,17 +28,18 @@ type UpdateNameParams = {
 
 export function FormAccountName({ account }: CardAccountProps) {
   const { toast } = useToast();
-  const { fetchAccount } = useAccount();
+  const queryClient = useQueryClient();
 
   // 0. Define your mutation.
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationKey: ["updateName"],
     mutationFn: async ({ newName }: UpdateNameParams) => await AppwriteService.updateName(newName),
-    onSuccess: async () => {
+    onSuccess: () => {
       toast({
-        description: "Name successfully updated.",
+        description: "Name updated successfully.",
       });
-      await fetchAccount();
+
+      void queryClient.invalidateQueries(["account"]);
     },
   });
 
@@ -55,14 +55,14 @@ export function FormAccountName({ account }: CardAccountProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values?.displayName === "") {
       form.setError("displayName", {
-        message: "Please provide a display name.",
+        message: "Please provide a name.",
       });
       return;
     }
 
     if (values?.displayName === account.name) {
       form.setError("displayName", {
-        message: "The display name must be different from the current name.",
+        message: "The name must be different from the current name.",
       });
       return;
     }

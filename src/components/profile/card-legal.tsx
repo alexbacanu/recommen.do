@@ -18,20 +18,20 @@ export function CardLegal() {
 
         <CardContent className="grid p-4">
           <Button variant="link" className="p-1" asChild>
-            <Link href={`${appwriteUrl}/terms`} target={target} aria-label="Terms and conditions">
-              Terms and conditions
+            <Link href={`${appwriteUrl}/terms`} target={target} aria-label="Terms and Conditions">
+              Terms and Conditions
             </Link>
           </Button>
 
           <Button variant="link" className="p-1" asChild>
-            <Link href={`${appwriteUrl}/privacy`} target={target} aria-label="Privacy policy">
-              Privacy policy
+            <Link href={`${appwriteUrl}/privacy`} target={target} aria-label="Privacy Policy">
+              Privacy Policy
             </Link>
           </Button>
 
           <Button variant="link" className="p-1" asChild>
-            <Link href={`${appwriteUrl}/cookies`} target={target} aria-label="Cookies policy">
-              Cookies policy
+            <Link href={`${appwriteUrl}/cookies`} target={target} aria-label="Cookies Policy">
+              Cookies Policy
             </Link>
           </Button>
         </CardContent>

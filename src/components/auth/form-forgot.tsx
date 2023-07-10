@@ -36,8 +36,9 @@ export function FormForgot({ searchParams }: CardAccountProps) {
       await AppwriteService.updateRecovery(searchParams.userId, searchParams.secret, confirmPassword),
     onSuccess: () => {
       toast({
-        description: "Password successfully updated.",
+        description: "Password updated successfully.",
       });
+
       router.push(`${appwriteUrl}/profile`);
     },
   });
@@ -55,7 +56,7 @@ export function FormForgot({ searchParams }: CardAccountProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values?.password !== values?.confirmPassword) {
       form.setError("confirmPassword", {
-        message: "The passwords entered do not match.",
+        message: "The passwords do not match.",
       });
       return;
     }

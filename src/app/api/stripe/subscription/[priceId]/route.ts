@@ -40,7 +40,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -55,7 +55,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     if (!account) {
       return NextResponse.json(
         {
-          message: "Account not found. Please verify your details.",
+          message: "We couldn't find your account. Please check your details and try again.",
         },
         {
           status: 404, // Not Found
@@ -71,7 +71,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -82,7 +82,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     if (!profile.stripeCustomerId) {
       return NextResponse.json(
         {
-          message: "You need to have a Stripe customer id. Please sign out and try again.",
+          message: "We couldn't find your Stripe customer id. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -104,7 +104,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
       });
 
       return NextResponse.json({
-        message: "Stripe billing portal session created.",
+        message: "Stripe billing portal session created successfully.",
         url: session.url,
       });
     }
@@ -128,7 +128,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "Stripe checkout session created.",
+      message: "Stripe checkout session created successfully.",
       url: session.url,
     });
   } catch (error) {
@@ -158,7 +158,7 @@ export async function GET(request: Request, { params }: { params: { priceId: str
     console.log(error);
     return NextResponse.json(
       {
-        message: "Subscription retrieval issue on our end. Please try again later.",
+        message: "We're experiencing issues with retrieving your subscription. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

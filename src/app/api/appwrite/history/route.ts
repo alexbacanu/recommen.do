@@ -42,7 +42,7 @@ export async function PATCH() {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -58,7 +58,7 @@ export async function PATCH() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -74,7 +74,7 @@ export async function PATCH() {
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "History settings changed successfully.",
+      message: "History settings have been successfully changed.",
     });
   } catch (error) {
     if (error instanceof AppwriteException) {
@@ -92,7 +92,7 @@ export async function PATCH() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Toggle history issues on our end. Please try again later.",
+        message: "We're experiencing issues with toggling your history. Please try again later.",
       },
       {
         status: 500, // Internal Server Error
@@ -119,7 +119,7 @@ export async function POST(request: Request) {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -166,7 +166,7 @@ export async function POST(request: Request) {
     // ✅ Everything OK
     return NextResponse.json(
       {
-        message: "A new history entry was added successfully.",
+        message: "Successfully added a new entry to your history.",
       },
       {
         headers: cors,
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "History update issues on our end. Please try again later.",
+        message: "We're experiencing issues with updating your history. Please try again later.",
       },
       {
         status: 500, // Internal Server Error
@@ -229,7 +229,7 @@ export async function DELETE(request: Request) {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -245,7 +245,7 @@ export async function DELETE(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -265,7 +265,7 @@ export async function DELETE(request: Request) {
       });
 
       return NextResponse.json({
-        message: "History successfully deleted.",
+        message: "History was deleted successfully.",
       });
     }
 
@@ -277,14 +277,14 @@ export async function DELETE(request: Request) {
       });
 
       return NextResponse.json({
-        message: "Item successfully deleted.",
+        message: "Item was deleted successfully.",
       });
     }
 
     // ❌ Everything NOT OK
     return NextResponse.json(
       {
-        message: "History action is not valid. Please verify and retry.",
+        message: "The action on history is invalid. Please check and try again.",
       },
       {
         status: 400, // Bad Request
@@ -317,7 +317,7 @@ export async function DELETE(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "History delete issues on our end. Please try again later.",
+        message: "We're experiencing issues with deleting your history. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

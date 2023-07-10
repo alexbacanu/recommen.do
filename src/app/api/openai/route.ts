@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     if (!apiKey && profile.credits < 1) {
       return NextResponse.json(
         {
-          message: "Not enough recommendations. You need at least 1 recommendation.",
+          message: "Not enough recommendations - minimum of one is required.",
         },
         {
           status: 401, // Unauthorized
@@ -193,10 +193,10 @@ export async function POST(request: Request) {
       if (statusCode === "401") {
         return NextResponse.json(
           {
-            message: "Invalid OpenAI API key. Please check your OpenAI API key and try again.",
+            message: "The OpenAI API key you entered is invalid. Please ensure it's correct and try again.",
           },
           {
-            status: 500, // Internal Server Error
+            status: 401, // Unauthorized
             headers: cors,
           },
         );
@@ -217,7 +217,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "OpenAI issues on our end. Please try again later.",
+        message: "We're experiencing issues with OpenAI's servers. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

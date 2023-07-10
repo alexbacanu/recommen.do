@@ -26,7 +26,7 @@ export async function GET() {
     if (!token) {
       return NextResponse.json(
         {
-          message: "JWT token missing. Please verify and retry.",
+          message: "The JWT token is missing. Please check and try again.",
         },
         {
           status: 401, // Unauthorized
@@ -41,7 +41,7 @@ export async function GET() {
     if (!account) {
       return NextResponse.json(
         {
-          message: "Account not found. Please verify your details.",
+          message: "We couldn't find your account. Please check your details and try again.",
         },
         {
           status: 404, // Not Found
@@ -57,7 +57,7 @@ export async function GET() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "Profile not found. Please sign out and try again.",
+          message: "We couldn't find your profile. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -68,7 +68,7 @@ export async function GET() {
     if (!profile.stripeCustomerId) {
       return NextResponse.json(
         {
-          message: "You need to have a Stripe customer id. Please sign out and try again.",
+          message: "We couldn't find your Stripe customer id. Please log out and retry.",
         },
         {
           status: 404, // Not Found
@@ -79,10 +79,10 @@ export async function GET() {
     if (profile.credits >= 950) {
       return NextResponse.json(
         {
-          message: "You have reached your refill limit (max 999 credits).",
+          message: "You have reached the maximum limit of recommendations (950 credits).",
         },
         {
-          status: 400, // Unauthorized
+          status: 429, // Unauthorized
         },
       );
     }
@@ -122,7 +122,7 @@ export async function GET() {
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "Stripe checkout session created.",
+      message: "Stripe checkout session created successfully.",
       url: session.url,
     });
   } catch (error) {
@@ -152,7 +152,7 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Recommendations refill issue on our end. Please try again later.",
+        message: "We're experiencing issues with refilling your recommendations. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

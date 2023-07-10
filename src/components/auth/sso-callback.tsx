@@ -39,7 +39,7 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
       void queryClient.invalidateQueries(["account", "profile"]);
 
       toast({
-        description: "You are signed in!",
+        description: "Sign in successful!",
       });
 
       const checkProfile = async () => {

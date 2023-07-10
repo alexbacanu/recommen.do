@@ -33,7 +33,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   function oauthSignIn(provider: string) {
     if (!hasAccepted) {
       toast({
-        description: "You must accept the Terms and Conditions and Privacy Policy in order to sign in.",
+        description: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign-in.",
         variant: "destructive",
       });
 
@@ -42,9 +42,10 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
 
     if (account) {
       toast({
-        description: "You are already signed in. Please sign out before signing in again.",
+        description: "You're currently logged in. Please log out before you try to sign in again.",
         variant: "destructive",
       });
+
       return;
     }
 

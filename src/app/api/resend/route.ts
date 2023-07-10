@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     if (!terms) {
       return NextResponse.json(
         {
-          message: "Please accept our Terms and Privacy Policy to contact us.",
+          message: "To contact us, please agree to our Terms and Conditions and Privacy Policy.",
         },
         {
           status: 403, // Unauthorized
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 
     // ✅ Everything OK
     return NextResponse.json({
-      message: "Your email was sent successfully.",
+      message: "Email sent successfully.",
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Email issues on our end. Please try again later.",
+        message: "We're experiencing issues with Resend's servers. Please try again later.",
       },
       {
         status: 500, // Internal Server Error

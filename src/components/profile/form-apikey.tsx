@@ -28,7 +28,10 @@ import { cn } from "@/lib/helpers/utils";
 const formSchema = z.object({
   userApiKey: z
     .string()
-    .regex(/^[a-zA-Z0-9\-_\s]*$/, { message: "Invalid characters!" })
+    .regex(/^[a-zA-Z0-9\-_\s]*$/, {
+      message:
+        "Your input contains invalid characters. Please use only alphanumeric characters, dashes and underscores.",
+    })
     .trim()
     .optional(),
 });

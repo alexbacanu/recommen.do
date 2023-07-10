@@ -95,7 +95,7 @@ export function FormContact() {
   function onSubmit(values: z.infer<typeof EmailValidator>) {
     if (!values.terms) {
       form.setError("terms", {
-        message: "Please accept our Terms and Privacy Policy to contact us.",
+        message: "To contact us, please agree to our Terms and Conditions and Privacy Policy.",
       });
       return;
     }
@@ -171,11 +171,11 @@ export function FormContact() {
               <FormLabel className="text-foreground">
                 I agree with{" "}
                 <Link href="/privacy" className="text-primary">
-                  Privacy policy
+                  Privacy Policy
                 </Link>{" "}
                 and{" "}
                 <Link href="/terms" className="text-primary">
-                  Terms and conditions
+                  Terms and Conditions
                 </Link>
               </FormLabel>
               <FormMessage className="h-[1rem]" />

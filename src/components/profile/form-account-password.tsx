@@ -44,7 +44,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
       await AppwriteService.updatePassword(newPassword, oldPassword),
     onSuccess: () => {
       toast({
-        description: "Password successfully updated.",
+        description: "Password updated successfully.",
       });
 
       void queryClient.invalidateQueries(["account"]);
@@ -61,7 +61,7 @@ export function FormAccountPassword({ account }: CardAccountProps) {
     mutationFn: async ({ email }: ForgotPasswordParams) => await AppwriteService.createRecovery(email),
     onSuccess: () => {
       toast({
-        description: "Email with password reset sent.",
+        description: "We've sent an email with password reset instructions.",
       });
     },
   });
@@ -80,14 +80,14 @@ export function FormAccountPassword({ account }: CardAccountProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (account.passwordUpdate !== "" && values.oldPassword === "") {
       form.setError("oldPassword", {
-        message: "Please enter your current password.",
+        message: "Enter your current password.",
       });
       return;
     }
 
     if (values?.password !== values?.confirmPassword) {
       form.setError("confirmPassword", {
-        message: "The passwords entered do not match.",
+        message: "The passwords do not match.",
       });
       return;
     }

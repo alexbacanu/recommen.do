@@ -34,7 +34,7 @@ export function CardSubscription() {
     mutationKey: ["getManageURL"],
     mutationFn: async ({ priceId }: GetManageURLParams) => {
       if (!priceId) {
-        throw new Error("You don't have an active subscription");
+        throw new Error("We couldn't find your active subscription. Please log out and retry.");
       }
 
       const jwt = await AppwriteService.createJWT();

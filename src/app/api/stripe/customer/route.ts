@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     if (!body) {
       return NextResponse.json(
         {
-          message: "Please provide a body.",
+          message: "Request body is required.",
         },
         {
           status: 404, // Not Found
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     if (!signature) {
       return NextResponse.json(
         {
-          message: "Unauthorized.",
+          message: "Signature is required.",
         },
         {
           status: 401, // Unauthorized
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     if (signature !== token) {
       return NextResponse.json(
         {
-          message: "Webhook signature is invalid.",
+          message: "Invalid webhook signature.",
         },
         {
           status: 401, // Not Found
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Server issue on our end. Please try again later.",
+        message: "We're experiencing issues with creating a Stripe customer. Please try again later.",
       },
       {
         status: 500, // Internal Server Error
