@@ -12,28 +12,28 @@ import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: [
-    "https://www.amazon.ae/s*",
-    "https://www.amazon.ca/s*",
-    "https://www.amazon.cn/s*",
-    "https://www.amazon.co.jp/s*",
-    "https://www.amazon.co.uk/s*",
-    "https://www.amazon.com.au/s*",
-    "https://www.amazon.com.be/s*",
-    "https://www.amazon.com.br/s*",
-    "https://www.amazon.com.mx/s*",
-    "https://www.amazon.com.tr/s*",
-    "https://www.amazon.com/s*",
-    "https://www.amazon.de/s*",
-    "https://www.amazon.eg/s*",
-    "https://www.amazon.es/s*",
-    "https://www.amazon.fr/s*",
-    "https://www.amazon.in/s*",
-    "https://www.amazon.it/s*",
-    "https://www.amazon.nl/s*",
-    "https://www.amazon.pl/s*",
-    "https://www.amazon.sa/s*",
-    "https://www.amazon.se/s*",
-    "https://www.amazon.sg/s*",
+    "https://www.amazon.ae/*s?k=*",
+    "https://www.amazon.ca/*s?k=*",
+    "https://www.amazon.cn/*s?k=*",
+    "https://www.amazon.co.jp/*s?k=*",
+    "https://www.amazon.co.uk/*s?k=*",
+    "https://www.amazon.com.au/*s?k=*",
+    "https://www.amazon.com.be/*s?k=*",
+    "https://www.amazon.com.br/*s?k=*",
+    "https://www.amazon.com.mx/*s?k=*",
+    "https://www.amazon.com.tr/*s?k=*",
+    "https://www.amazon.com/*s?k=*",
+    "https://www.amazon.de/*s?k=*",
+    "https://www.amazon.eg/*s?k=*",
+    "https://www.amazon.es/*s?k=*",
+    "https://www.amazon.fr/*s?k=*",
+    "https://www.amazon.in/*s?k=*",
+    "https://www.amazon.it/*s?k=*",
+    "https://www.amazon.nl/*s?k=*",
+    "https://www.amazon.pl/*s?k=*",
+    "https://www.amazon.sa/*s?k=*",
+    "https://www.amazon.se/*s?k=*",
+    "https://www.amazon.sg/*s?k=*",
   ],
 };
 
@@ -52,11 +52,24 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
 
   const scriptTags = divElement.querySelectorAll("div");
 
-  if (!scriptTags[3]) {
-    throw new Error("3rd script tag not found");
+  if (scriptTags[3]) {
+    console.log("scriptTags[3] found");
+    return scriptTags[3];
+  }
+  if (scriptTags[2]) {
+    console.log("scriptTags[2] found");
+    return scriptTags[2];
+  }
+  if (scriptTags[1]) {
+    console.log("scriptTags[1] found");
+    return scriptTags[1];
   }
 
-  return scriptTags[3];
+  if (!scriptTags[0]) {
+    throw new Error("scriptTags[0] not found");
+  }
+
+  return scriptTags[0];
 };
 
 const amazonProductData = () => {
