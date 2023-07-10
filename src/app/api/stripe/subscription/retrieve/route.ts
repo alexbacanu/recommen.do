@@ -67,7 +67,7 @@ export async function GET() {
     if (!profile) {
       return NextResponse.json(
         {
-          message: "We couldn't find your profile. Please log out and retry.",
+          message: "We couldn't find your profile. Please sign out and retry.",
         },
         {
           status: 404, // Not Found
@@ -78,7 +78,7 @@ export async function GET() {
     if (!profile.stripeCustomerId) {
       return NextResponse.json(
         {
-          message: "We couldn't find your Stripe customer id. Please log out and retry.",
+          message: "We couldn't find your Stripe customer id. Please sign out and retry.",
         },
         {
           status: 404, // Not Found
@@ -94,7 +94,7 @@ export async function GET() {
     if (!isSubscribed) {
       return NextResponse.json(
         {
-          message: "We couldn't find your subscription. Please log out and retry.",
+          message: "We couldn't find your subscription. Please sign out and retry.",
         },
         {
           status: 401, // Unauthorized
@@ -113,7 +113,7 @@ export async function GET() {
     if (!upcomingPlan) {
       return NextResponse.json(
         {
-          message: "We couldn't find your upcoming subscription. Please log out and retry.",
+          message: "We couldn't find your upcoming subscription. Please sign out and retry.",
         },
         {
           status: 404, // Not Found

@@ -32,7 +32,7 @@ export function Hero() {
             </h1>
 
             <p className="mt-4 text-base lg:mt-6 lg:text-lg">
-              Get personalized shopping recommendations with OpenAI GPT
+              Get personalized shopping recommendations with recommen.do
             </p>
 
             <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">

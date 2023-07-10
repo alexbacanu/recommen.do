@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         if (!profile) {
           return NextResponse.json(
             {
-              message: "We couldn't find your profile. Please log out and retry.",
+              message: "We couldn't find your profile. Please sign out and retry.",
             },
             {
               status: 404, // Not Found
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "We couldn't find your profile. Please log out and retry.",
+            message: "We couldn't find your profile. Please sign out and retry.",
           },
           {
             status: 404, // Not Found
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
       if (!sessionLines) {
         return NextResponse.json(
           {
-            message: "We couldn't find your invoice session. Please log out and retry.",
+            message: "We couldn't find your invoice session. Please sign out and retry.",
           },
           {
             status: 404, // Not Found
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "We couldn't find your profile. Please log out and retry.",
+            message: "We couldn't find your profile. Please sign out and retry.",
           },
           {
             status: 404, // Not Found
@@ -167,7 +167,7 @@ export async function POST(request: Request) {
       if (!sessionItems) {
         return NextResponse.json(
           {
-            message: "We couldn't find your invoice session. Please log out and retry.",
+            message: "We couldn't find your invoice session. Please sign out and retry.",
           },
           {
             status: 404, // Not Found
@@ -204,7 +204,7 @@ export async function POST(request: Request) {
       if (!profile) {
         return NextResponse.json(
           {
-            message: "We couldn't find your profile. Please log out and retry.",
+            message: "We couldn't find your profile. Please sign out and retry.",
           },
           {
             status: 404, // Not Found
@@ -217,7 +217,7 @@ export async function POST(request: Request) {
       if (!sessionItems) {
         return NextResponse.json(
           {
-            message: "We couldn't find your invoice session. Please log out and retry.",
+            message: "We couldn't find your invoice session. Please sign out and retry.",
           },
           {
             status: 404, // Not Found

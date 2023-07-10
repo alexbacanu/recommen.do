@@ -79,9 +79,9 @@ export function HeaderUser() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onSelect={() => void signOut()} aria-label="Log out">
+        <DropdownMenuItem onSelect={() => void signOut()} aria-label="Sign out">
           <Icons.logout className="mr-2 h-4 w-4" aria-hidden="true" />
-          <span>Log out</span>
+          <span>Sign out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

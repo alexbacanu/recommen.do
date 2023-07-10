@@ -42,7 +42,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
 
     if (account) {
       toast({
-        description: "You're currently logged in. Please log out before you try to sign in again.",
+        description: "You're currently logged in. Please sign out before you try to sign in again.",
         variant: "destructive",
       });
 
