@@ -71,13 +71,12 @@ export default function NeweggContent() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 50);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
 
   const products = neweggProductData();
-  console.log(products);
 
   return (
     <div className="w-full">
