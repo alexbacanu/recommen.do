@@ -68,13 +68,14 @@ export function FormAccountEmail() {
     mutationKey: ["updateEmail"],
     mutationFn: async ({ newEmail, currentPassword }: UpdateEmailParams) =>
       await AppwriteService.updateEmail(newEmail, currentPassword),
-    onSuccess: async () => {
+    onSuccess: () => {
       toast({
         description: "Email updated successfully. You have been logged out.",
       });
 
       window.open(`${appwriteUrl}/email-changed`, target);
-
+    },
+    onSettled: async () => {
       await signOut();
     },
   });

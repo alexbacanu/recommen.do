@@ -191,7 +191,7 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
-          message: error.message,
+          message: "We're experiencing some issues. Please try again later.",
         },
         {
           status: 400, // Bad Request
