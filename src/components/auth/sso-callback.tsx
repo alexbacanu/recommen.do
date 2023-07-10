@@ -52,7 +52,8 @@ export function SSOCallback({ searchParams }: SSOCallbackProps) {
           if (attempts < 3) {
             setAttempts(attempts + 1);
             const delay = Math.pow(2, attempts) * 1000; // Delay in milliseconds (1, 2, 4 seconds)
-            void setTimeout(() => void checkProfile(), delay);
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            void setTimeout(checkProfile, delay);
           } else {
             // No profile found after 3 attempts, redirect to homepage
             window.open("/", "_self"); // Replace with the actual homepage route

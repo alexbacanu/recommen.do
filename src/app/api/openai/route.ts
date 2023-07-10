@@ -15,7 +15,7 @@ import { OpenAIRequestValidator } from "@/lib/validators/apiSchema";
 export const dynamic = "force-dynamic";
 
 const cors = {
-  "Access-Control-Allow-Origin": "https://www.amazon.com",
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };

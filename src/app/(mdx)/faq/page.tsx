@@ -23,6 +23,24 @@ export default function FAQPage() {
           </AccordionItem>
 
           <AccordionItem value="item-2">
+            <AccordionTrigger className="text-left">Do you offer a free trial?</AccordionTrigger>
+            <AccordionContent>
+              Yes, we provide a free trial period for our service. Upon creating an account, you will receive 10
+              complimentary recommendations to explore the features and functionality of our product. These
+              recommendations can be used during the trial period, which is 30 days.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-3">
+            <AccordionTrigger className="text-left">How are recommendations consumed?</AccordionTrigger>
+            <AccordionContent>
+              One recommendation is consumed every time you ask for a recommendation by clicking &quot;Send&quot; in the
+              AI prompt card. At the end of every billing cycle your remaining recommendations expire and new
+              recommendations are added according to your plan.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-4">
             <AccordionTrigger className="text-left">
               What should I do if I exhaust my recommendations before the end of the current billing cycle?
             </AccordionTrigger>
@@ -35,34 +53,27 @@ export default function FAQPage() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="text-left">What happens if I delete my account?</AccordionTrigger>
-            <AccordionContent>
-              Deleting your account is a permanent action. Please note that by deleting your account, your active
-              subscription will be canceled, and any remaining recommendations will be forfeited.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-4">
-            <AccordionTrigger className="text-left">Do you offer a free trial?</AccordionTrigger>
-            <AccordionContent>
-              Yes, we provide a free trial period for our service. Upon creating an account, you will receive 10
-              complimentary recommendations to explore the features and functionality of our product. These
-              recommendations can be used during the trial period, which is 30 days.
-            </AccordionContent>
-          </AccordionItem>
-
           <AccordionItem value="item-5">
             <AccordionTrigger className="text-left">Can I cancel my subscription at any time?</AccordionTrigger>
             <AccordionContent>
-              Yes, you have the freedom to cancel your subscription at any time. There are no long-term contracts or
-              commitments. Simply navigate to the &quot;Manage subscription&quot; section in your profile to cancel your
-              subscription. If you decide to cancel your subscription, you will still have access to the remaining
-              recommendations until the end of the billing cycle.
+              Yes, you can cancel your subscription at any time. There are no long-term contracts or commitments. Simply
+              navigate to the &quot;Manage subscription&quot; section in your profile to cancel your subscription. If
+              you decide to cancel your subscription, you will still have access to the remaining recommendations until
+              the end of the billing cycle.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-6">
+            <AccordionTrigger className="text-left">Can I use my own OpenAI API Key?</AccordionTrigger>
+            <AccordionContent>
+              If you have an OpenAI API key you can get recommendations without having an active subscription. While the
+              OpenAI API Key mode is active, the recommendations you consume are not subtracted from your available
+              recommendations. Use the &quot;OpenAI Api Key&quot; section from the extension to add or clear your OpenAI
+              API Key.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-7">
             <AccordionTrigger className="text-left">
               What happens if I have a subscription active but I switch to API Key mode?
             </AccordionTrigger>
@@ -75,53 +86,13 @@ export default function FAQPage() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-7">
-            <AccordionTrigger className="text-left">Can I use my own OpenAI API Key?</AccordionTrigger>
-            <AccordionContent>
-              If you have an OpenAI API key you can get recommendations without having an active subscription. While the
-              OpenAI API Key mode is active, the recommendations you consume are not subtracted from your available
-              recommendations. Use the &quot;OpenAI Api Key&quot; section from the extension to add or clear your OpenAI
-              API Key.
-            </AccordionContent>
-          </AccordionItem>
-
           <AccordionItem value="item-8">
-            <AccordionTrigger className="text-left">How are recommendations consumed?</AccordionTrigger>
+            <AccordionTrigger className="text-left">What happens if I delete my account?</AccordionTrigger>
             <AccordionContent>
-              One recommendation is consumed every time you ask for a recommendation by clicking &quot;Send&quot; in the
-              AI prompt card. At the end of every billing cycle your remaining recommendations expire and new
-              recommendations are added according to your plan.
+              Deleting your account is a permanent action. Please note that by deleting your account, your active
+              subscription will be canceled, and any remaining recommendations will be forfeited.
             </AccordionContent>
           </AccordionItem>
-
-          {/* <AccordionItem value="item-4">
-            <AccordionTrigger>Can I use my own OpenAI API key?</AccordionTrigger>
-            <AccordionContent>
-              If you have an OpenAI API key you can get recommendations without an active subscription. Use the
-              &quot;OpenAI Api Key&quot; section available when logged in the extension to Add or Clear your OpenAI
-              API Key.
-            </AccordionContent>
-          </AccordionItem> */}
-
-          {/* <AccordionItem value="item-5">
-            <AccordionTrigger>How are recommendations consumed?</AccordionTrigger>
-            <AccordionContent>
-              One recommendations is consumed every time you ask for a recommendation. Responses that do not follow a
-              specific format do not consume recommendations. At the end of every billing cycle current available
-              recommendations are destroyd and new recommendations are added according to your plan.
-            </AccordionContent>
-          </AccordionItem> */}
-
-          {/* <AccordionItem value="item-6">
-            <AccordionTrigger>
-              What happens if I switch from a subscription to using my own OpenAI API Key?
-            </AccordionTrigger>
-            <AccordionContent>
-              If you Add your OpenAI API Key to recommen.do extension you will be asked if you would like to cancel your
-              subscription. You can do this anytime from the Subscripon section of your profile. Recommendation used
-              while using an OpenAI API Key are not deducted from your subscription credits.
-            </AccordionContent>
-          </AccordionItem> */}
         </Accordion>
       </div>
     </section>
