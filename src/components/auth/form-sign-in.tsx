@@ -30,7 +30,7 @@ const formSchema = z.object({
       },
       {
         message:
-          "The domain of the email you entered is not available. Please use Gmail, Outlook, Yahoo, Apple, or any of the given social login options instead.",
+          "The domain of the email you entered is not available. Please use Gmail, Outlook, Yahoo, Apple, or any of the given social sign in options instead.",
       },
     ),
 });
@@ -70,7 +70,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!hasAccepted) {
       form.setError("email", {
-        message: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign-in.",
+        message: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign in.",
       });
       return;
     }

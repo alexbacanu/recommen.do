@@ -46,7 +46,7 @@ export default function EmailChangedPage() {
 
         <div className="mt-2 grid">
           <Button variant="default" asChild>
-            <Link href="/sign-in" aria-label="Go to login page">
+            <Link href="/sign-in" aria-label="Go to sign in page">
               Go to sign in page
             </Link>
           </Button>

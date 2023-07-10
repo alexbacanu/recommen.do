@@ -13,11 +13,11 @@ export default function AuthRequiredCard() {
       <div className="grid gap-8">
         <CardTitle className="flex items-center text-2xl tracking-normal">
           <Icons.login className="mr-2 mt-1 h-6 w-6 text-primary" aria-hidden="true" />
-          Login
+          Sign in
         </CardTitle>
 
         <div className="-mt-2 text-base">
-          <p>In order to use the extension you need to login to your account.</p>
+          <p>In order to use the extension you need to sign in to your account.</p>
         </div>
 
         <div className="-mt-2 px-12 opacity-90">
@@ -26,8 +26,8 @@ export default function AuthRequiredCard() {
 
         <div className="mt-2 grid">
           <Button variant="default" asChild>
-            <Link href={`${appwriteUrl}/sign-in`} target="_blank" aria-label="Go to login page">
-              Go to login page
+            <Link href={`${appwriteUrl}/sign-in`} target="_blank" aria-label="Go to sign in page">
+              Go to sign in page
             </Link>
           </Button>
         </div>
