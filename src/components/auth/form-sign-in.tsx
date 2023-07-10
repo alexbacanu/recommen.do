@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { accountAtom } from "@/lib/atoms/auth";
 import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { popularDomains } from "@/lib/validators/schema";
 
@@ -47,7 +45,6 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   const router = useRouter();
 
   // const hasAccepted = useAtomValue(termsAtom);
-  const account = useAtomValue(accountAtom);
 
   // 0. Define your mutation.
   const { mutate, isLoading } = useMutation({
@@ -71,13 +68,6 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
     if (!hasAccepted) {
       form.setError("email", {
         message: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign in.",
-      });
-      return;
-    }
-
-    if (account) {
-      form.setError("email", {
-        message: "You're currently logged in. Please log out before you try to sign in again.",
       });
       return;
     }

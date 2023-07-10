@@ -12,7 +12,7 @@ import { getStripeInstance } from "@/lib/clients/server-stripe";
 export const dynamic = "force-dynamic";
 
 // 1. ✅ Auth
-// 2. ❌ Permissions
+// 2. ✅ Permissions
 // 3. ❌ Input
 // 4. ➖ Secure
 // 5. ➖ Rate limiting
@@ -44,6 +44,17 @@ export async function DELETE() {
         },
         {
           status: 404, // Not Found
+        },
+      );
+    }
+
+    if (!account.emailVerification) {
+      return NextResponse.json(
+        {
+          message: "Your email is not verified. Please verify your email and try again.",
+        },
+        {
+          status: 401, // Not Found
         },
       );
     }

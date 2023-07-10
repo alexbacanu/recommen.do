@@ -58,6 +58,32 @@ export async function POST(request: Request) {
       );
     }
 
+    // 🫴 Get Account
+    const { impersonateAccount } = appwriteImpersonate(token);
+    const account = await impersonateAccount.get();
+
+    if (!account) {
+      return NextResponse.json(
+        {
+          message: "We couldn't find your account. Please check your details and try again.",
+        },
+        {
+          status: 404, // Not Found
+        },
+      );
+    }
+
+    if (!account.emailVerification) {
+      return NextResponse.json(
+        {
+          message: "Your email is not verified. Please verify your email and try again.",
+        },
+        {
+          status: 401, // Not Found
+        },
+      );
+    }
+
     // 🫴 Get Profile
     const { impersonateDatabases } = appwriteImpersonate(token);
     const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");

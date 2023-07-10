@@ -63,6 +63,17 @@ export async function GET(request: Request, { params }: { params: { priceId: str
       );
     }
 
+    if (!account.emailVerification) {
+      return NextResponse.json(
+        {
+          message: "Your email is not verified. Please verify your email and try again.",
+        },
+        {
+          status: 401, // Not Found
+        },
+      );
+    }
+
     // 🫴 Get Profile
     const { impersonateDatabases } = appwriteImpersonate(token);
     const { documents: profiles } = await impersonateDatabases.listDocuments<AppwriteProfile>("main", "profile");
