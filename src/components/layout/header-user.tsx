@@ -45,7 +45,7 @@ export function HeaderUser() {
         {!account.emailVerification && (
           <>
             <DropdownMenuLabel className="font-normal">
-              <Badge variant="outline" className="border-orange-500 text-orange-500 w-full">
+              <Badge variant="outline" className="w-full border-orange-500 text-orange-500">
                 <Icons.alert className="mr-2 h-3 w-3" aria-hidden="true" />
                 Your email is not verified
               </Badge>

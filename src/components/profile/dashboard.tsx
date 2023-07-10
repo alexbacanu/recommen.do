@@ -32,16 +32,16 @@ export function Dashboard() {
   // 0. Define your mutation.
   const { mutate } = useMutation({
     mutationKey: ["createVerification"],
-    mutationFn: async ({ email }: { email: string }) => await AppwriteService.createVerification(),
+    mutationFn: async ({ _email }: { _email: string }) => await AppwriteService.createVerification(),
     onSuccess: (_, variables) => {
-      router.push(`/sign-in/verify?email=${variables.email}`);
+      router.push(`/sign-in/verify?email=${variables._email}`);
     },
     cacheTime: 1000 * 60 * 15,
     retry: 0,
   });
 
   if (!!account && !account.emailVerification && !emailSent) {
-    mutate({ email: account.email });
+    mutate({ _email: account.email });
     setEmailSent(true);
     return <LoadingPage />;
   }
