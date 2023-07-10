@@ -73,9 +73,9 @@ export function FormAccountEmail() {
         description: "Email updated successfully. You have been logged out.",
       });
 
-      await signOut();
-
       window.open(`${appwriteUrl}/email-changed`, target);
+
+      await signOut();
     },
   });
 
