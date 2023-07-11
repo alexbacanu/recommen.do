@@ -1,29 +1,45 @@
-# recommen.do
+![recommen.do Cover](https://github.com/alexbacanu/recommen.do/assets/12121946/41ceee4e-39ae-4151-b4d2-e473048f786d)
 
-Welcome to the recommen.do GitHub repository!
+# 🤖 recommen.do
 
-## Introduction
+Get ChatGPT recommendations directly in your browser.
 
-recommen.do is a web application and browser extension. It aims to simplify the overwhelming task of selecting the right product from a sea of search results on platforms like Amazon, Newegg, and eBay. Leveraging the power of Next.js, Appwrite, OpenAI, and Plasmo, recommen.do acts as your personal shopping advisor, providing tailored recommendations based on your inputs.
+## 🔥 About this project
 
-## Features
+[recommen.do](https://www.recommen.do/) is an open source application built using Next.js 13 and Plasmo. It aims to help you select a product from the search results on platforms like Amazon, Newegg and eBay using OpenAI's Large Language Models.
 
-- **Unified Authentication**: Seamlessly authenticate across the website and extension.
-- **Subscription/Payment Management**: Manage your subscriptions, gain access to premium features with the ability to upgrade, downgrade, or cancel.
-- **Custom API Key Integration**: Utilize your own API key with OpenAI.
+## 🛠️ Tech Stack
 
-## Tech Stack
+- [Next.js](https://nextjs.org/)
+- [Plasmo](https://www.plasmo.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Appwrite](https://appwrite.io/)
 
-- **Next.js**: Front-end framework for building the web application with server-side rendering and improved performance.
-- **Appwrite Cloud**: Handles user authentication, authorization, and database storage.
-- **Plasmo**: Framework used for the browser extension.
-- **Stripe**: Payment processing platform integrated into the application.
-- **Vercel**: Deployment and hosting platform for the web application.
+## 🚀 Running Locally
 
-## Contributing
+1. Install dependencies using pnpm:
+
+```sh
+pnpm install
+```
+
+2. Copy `.env.example` to `.env.local` and update the variables.
+
+```sh
+cp .env.example .env.local
+```
+
+3. Start the development server:
+
+```sh
+pnpm dev
+```
+
+## 🤝 Contributing
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
-## License
+## 📜 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
