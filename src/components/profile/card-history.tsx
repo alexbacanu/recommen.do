@@ -127,11 +127,11 @@ export function CardHistory() {
               profile.history
                 .slice(0)
                 .reverse()
-                .map((item, index) => {
+                .map((item) => {
                   const product = JSON.parse(item) as z.infer<typeof FullProductValidator>;
 
                   return (
-                    <div key={index} className="flex items-start justify-between">
+                    <div key={product.identifier} className="flex items-start justify-between">
                       <Link href={product.link} target={target}>
                         <div className="flex items-center gap-x-2">
                           <Avatar className="h-10 w-10 rounded-sm">
@@ -157,7 +157,7 @@ export function CardHistory() {
                           variant="ghost"
                           size="icon"
                           aria-label="Delete this entry"
-                          onClick={() => mutate({ index: index })}
+                          onClick={() => mutate({ index: product.identifier })}
                         >
                           <Icons.remove className="h-4 w-4" aria-hidden="true" />
                         </Button>

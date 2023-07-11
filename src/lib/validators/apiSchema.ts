@@ -20,7 +20,7 @@ export const FullProductValidator = z.object({
   stars: z.string(),
   source: z.string(),
 });
-export const ActionValidator = z.union([z.number().int().min(0).max(25), z.literal("clearHistory")]);
+export const ActionValidator = z.string();
 
 // api/openai
 export const LiteProductValidator = z.object({

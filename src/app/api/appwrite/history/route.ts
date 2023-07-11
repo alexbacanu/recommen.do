@@ -1,4 +1,4 @@
-import type { AppwriteProfile } from "@/lib/types/types";
+import type { AppwriteProfile, ScrapedProduct } from "@/lib/types/types";
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -269,27 +269,21 @@ export async function DELETE(request: Request) {
       });
     }
 
-    if (typeof validatedAction === "number") {
-      const filteredArray = historyArray.filter((_, index) => index !== validatedAction);
+    // ☀️ Update Appwrite Profile
+    const filteredArray = historyArray.filter((item) => {
+      const parsedItem = JSON.parse(item) as ScrapedProduct;
 
-      await serverDatabases.updateDocument("main", "profile", profile.$id, {
-        history: filteredArray,
-      });
+      return parsedItem.identifier !== validatedAction;
+    });
 
-      return NextResponse.json({
-        message: "Item was deleted successfully.",
-      });
-    }
+    await serverDatabases.updateDocument("main", "profile", profile.$id, {
+      history: filteredArray,
+    });
 
-    // ❌ Everything NOT OK
-    return NextResponse.json(
-      {
-        message: "The action on history is invalid. Please check and try again.",
-      },
-      {
-        status: 400, // Bad Request
-      },
-    );
+    // ✅ Everything OK
+    return NextResponse.json({
+      message: "Item was deleted successfully.",
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
