@@ -1,4 +1,4 @@
-![recommen.do Cover](https://github.com/alexbacanu/recommen.do/assets/12121946/41ceee4e-39ae-4151-b4d2-e473048f786d)
+![recommen.do Cover](assets/cover.png)
 
 # 🤖 recommen.do
 
