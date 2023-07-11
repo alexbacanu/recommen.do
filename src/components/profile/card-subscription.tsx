@@ -17,9 +17,9 @@ import { AppwriteService } from "@/lib/clients/client-appwrite";
 import { appwriteUrl } from "@/lib/envClient";
 import { cn } from "@/lib/helpers/utils";
 
-type GetManageURLParams = {
+interface GetManageURLParams {
   priceId?: string;
-};
+}
 
 export function CardSubscription() {
   const profile = useAtomValue(profileAtom);

@@ -24,14 +24,14 @@ interface CardAccountProps {
   account: AppwriteAccount;
 }
 
-type UpdatePasswordParams = {
+interface UpdatePasswordParams {
   newPassword: string;
   oldPassword?: string;
-};
+}
 
-type ForgotPasswordParams = {
+interface ForgotPasswordParams {
   email: string;
-};
+}
 
 export function FormAccountPassword({ account }: CardAccountProps) {
   const { toast } = useToast();

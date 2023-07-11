@@ -51,10 +51,10 @@ const formSchema = z.object({
   currentPassword: z.string().min(8),
 });
 
-type UpdateEmailParams = {
+interface UpdateEmailParams {
   newEmail: string;
   currentPassword: string;
-};
+}
 
 export function FormAccountEmail() {
   const { toast } = useToast();

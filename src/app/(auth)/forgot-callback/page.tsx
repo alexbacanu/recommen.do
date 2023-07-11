@@ -7,7 +7,7 @@ import { appwriteUrl } from "@/lib/envClient";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
 
 interface ForgotCallbackPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
 export default function ForgotCallbackPage({ searchParams }: ForgotCallbackPageProps) {

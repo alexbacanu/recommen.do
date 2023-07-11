@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 
 export function CardAPIKey() {
-  const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", (v) => (v === undefined ? true : v));
+  const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", (v) => v ?? true);
   const extensionDetected = !!window && !window?.next;
 
   if (extensionDetected)

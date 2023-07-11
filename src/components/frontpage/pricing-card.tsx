@@ -31,9 +31,9 @@ interface PricingCardProps {
   index: number;
 }
 
-type GetSubscribeURLarams = {
+interface GetSubscribeURLarams {
   priceId: string;
-};
+}
 
 export default function PricingCard({ plan, index }: PricingCardProps) {
   const router = useRouter();

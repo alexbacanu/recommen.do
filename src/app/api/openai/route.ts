@@ -116,6 +116,7 @@ export async function POST(request: Request) {
 
     // ⚙️ Configure OpenAI
     const config = new Configuration({
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
       apiKey: apiKey || openaiKey,
     });
     const openai = new OpenAIApi(config);
@@ -214,7 +215,7 @@ export async function POST(request: Request) {
 
     if (error instanceof Error) {
       const statusCodeReg = error.message.match(/Received status code: (\d+)/);
-      const statusCode = statusCodeReg && statusCodeReg[1];
+      const statusCode = statusCodeReg?.[1];
 
       if (statusCode === "401") {
         return NextResponse.json(

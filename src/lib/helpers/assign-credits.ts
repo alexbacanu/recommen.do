@@ -7,7 +7,7 @@ const assignCredits = (plan?: string) => {
     [stripeUltimatePlan]: 600,
   };
 
-  return planMap[plan || ""] || 0;
+  return planMap[plan ?? ""] ?? 0;
 };
 
 export { assignCredits };

@@ -5,7 +5,7 @@ declare namespace NodeJS {
 }
 
 interface Window {
-  dataLayer: Array;
+  dataLayer: unknown[];
   gtag: (a: string, b: unknown, c?: unknown) => void;
   next: unknown;
 }

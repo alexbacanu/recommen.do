@@ -39,9 +39,9 @@ const neweggProductData = () => {
     const image = element.querySelector("a.item-img img")?.getAttribute("src");
     const link = element.querySelector("a.item-title")?.getAttribute("href");
     const name = element.querySelector("a.item-title")?.textContent?.trim();
-    const price = element.querySelector("li.price-current")?.textContent?.trim() || "unknown";
-    const reviews = element.querySelector("span.item-rating-num")?.textContent?.trim() || "0";
-    const stars = element.querySelector("i.rating")?.getAttribute("aria-label")?.trim() || "0";
+    const price = element.querySelector("li.price-current")?.textContent?.trim() ?? "unknown";
+    const reviews = element.querySelector("span.item-rating-num")?.textContent?.trim() ?? "0";
+    const stars = element.querySelector("i.rating")?.getAttribute("aria-label")?.trim() ?? "0";
     const source = "newegg";
 
     // Check if all required fields are present and valid

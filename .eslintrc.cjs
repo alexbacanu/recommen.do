@@ -3,7 +3,8 @@ const config = {
   overrides: [
     {
       extends: [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
         "plugin:@tanstack/eslint-plugin-query/recommended",
         "plugin:tailwindcss/recommended",
         "prettier",
@@ -17,7 +18,7 @@ const config = {
     tsconfigRootDir: __dirname,
   },
   plugins: ["@typescript-eslint"],
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  extends: ["next/core-web-vitals"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "warn",

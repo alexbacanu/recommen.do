@@ -12,7 +12,7 @@ export type AppwriteProfile = Models.Document & {
 
   stripeCustomerId: string | null;
 
-  stripeSubscriptionId: string | "none";
+  stripeSubscriptionId: string;
   stripeSubscriptionName: string | null;
   stripePriceId?: string;
   stripeCurrentPeriodEnd: Date | null;
@@ -35,7 +35,7 @@ export type CustomStripePlan = Stripe.Plan & {
 };
 
 // OpenAI
-export type ScrapedProduct = {
+export interface ScrapedProduct {
   identifier: string;
   image: string;
   link: string;
@@ -44,15 +44,15 @@ export type ScrapedProduct = {
   reviews: string;
   stars: string;
   source: string;
-};
-export type ChatGPTMessage = {
+}
+export interface ChatGPTMessage {
   role: "user" | "system" | "assistant";
   content: string;
-};
+}
 
 // NextJS
-export type APIResponse = {
+export interface APIResponse {
   message: string;
   url?: string;
   plan?: CustomStripePlan;
-};
+}

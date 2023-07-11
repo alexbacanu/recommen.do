@@ -22,9 +22,9 @@ const formSchema = z.object({
   plan: z.string(),
 });
 
-type GetFormSubscribeURLarams = {
+interface GetFormSubscribeURLarams {
   priceId: string;
-};
+}
 
 export function FormSubscription() {
   const extensionDetected = !!window && !window?.next;

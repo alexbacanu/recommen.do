@@ -7,11 +7,11 @@ import { EmailValidator } from "@/lib/validators/apiSchema";
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-type ResendBody = {
+interface ResendBody {
   status: string;
   message: string;
   action: string;
-};
+}
 
 // 1. ❌ Auth
 // 2. ❌ Permissions

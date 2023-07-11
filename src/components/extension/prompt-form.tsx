@@ -31,10 +31,10 @@ interface PromptFormProps {
   products: ScrapedProduct[];
 }
 
-type UpdateNameParams = {
+interface UpdateNameParams {
   products: ScrapedProduct[];
   prompt?: string;
-};
+}
 
 const initialProduct = {
   identifier: "none",
@@ -140,7 +140,7 @@ export function PromptForm({ products }: PromptFormProps) {
 
         const regex = /"identifier":\s*"([^"]+)"/;
         const match = lastMessage.match(regex);
-        if (!match || typeof match[1] === "undefined") {
+        if (typeof match?.[1] === "undefined") {
           continue;
         }
 

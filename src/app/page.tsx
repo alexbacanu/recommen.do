@@ -35,7 +35,7 @@ async function fetchStripePlans() {
     }),
   );
 
-  const sortedPlans = plans.sort((a, b) => (a?.priceAmount || 0) - (b?.priceAmount || 0));
+  const sortedPlans = plans.sort((a, b) => (a?.priceAmount ?? 0) - (b?.priceAmount ?? 0));
 
   return sortedPlans;
 }

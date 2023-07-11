@@ -70,16 +70,47 @@ export function CardSessions() {
 
           <CardContent className="grid gap-4">
             <div className="grid gap-y-2">
-              {data &&
-                data.sessions
+              {data?.sessions
+                .sort((a) => (a.current ? -1 : 1))
+                .slice(0, 1)
+                .map((session) => (
+                  <div
+                    key={session.$id}
+                    className="flex items-center justify-between rounded-lg border bg-popover p-2 font-mono text-sm"
+                  >
+                    <div className={cn("line-clamp-1", isOpen && "line-clamp-2 leading-7")}>
+                      {session.current && (
+                        <Badge variant="outline" className="mr-2 border-lime-400">
+                          Current
+                        </Badge>
+                      )}
+                      {session.clientName} {session.clientVersion} on {session.osName} {session.osVersion}
+                    </div>
+
+                    {!session.current && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="Delete session"
+                        className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
+                        onClick={() => mutateDeleteSession({ id: session.$id })}
+                        disabled={isDeleteSessionLoading}
+                      >
+                        <Icons.remove className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              <CollapsibleContent className="space-y-2">
+                {data?.sessions
                   .sort((a) => (a.current ? -1 : 1))
-                  .slice(0, 1)
+                  .slice(1)
                   .map((session) => (
                     <div
                       key={session.$id}
                       className="flex items-center justify-between rounded-lg border bg-popover p-2 font-mono text-sm"
                     >
-                      <div className={cn("line-clamp-1", isOpen && "line-clamp-2 leading-7")}>
+                      <div>
                         {session.current && (
                           <Badge variant="outline" className="mr-2 border-lime-400">
                             Current
@@ -87,7 +118,6 @@ export function CardSessions() {
                         )}
                         {session.clientName} {session.clientVersion} on {session.osName} {session.osVersion}
                       </div>
-
                       {!session.current && (
                         <Button
                           variant="ghost"
@@ -102,38 +132,6 @@ export function CardSessions() {
                       )}
                     </div>
                   ))}
-              <CollapsibleContent className="space-y-2">
-                {data &&
-                  data.sessions
-                    .sort((a) => (a.current ? -1 : 1))
-                    .slice(1)
-                    .map((session) => (
-                      <div
-                        key={session.$id}
-                        className="flex items-center justify-between rounded-lg border bg-popover p-2 font-mono text-sm"
-                      >
-                        <div>
-                          {session.current && (
-                            <Badge variant="outline" className="mr-2 border-lime-400">
-                              Current
-                            </Badge>
-                          )}
-                          {session.clientName} {session.clientVersion} on {session.osName} {session.osVersion}
-                        </div>
-                        {!session.current && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            aria-label="Delete session"
-                            className="h-5 w-5 bg-transparent text-destructive hover:text-destructive"
-                            onClick={() => mutateDeleteSession({ id: session.$id })}
-                            disabled={isDeleteSessionLoading}
-                          >
-                            <Icons.remove className="h-4 w-4" aria-hidden="true" />
-                          </Button>
-                        )}
-                      </div>
-                    ))}
               </CollapsibleContent>
             </div>
           </CardContent>

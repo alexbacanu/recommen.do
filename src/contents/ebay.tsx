@@ -87,7 +87,7 @@ const ebayProductData = () => {
     const image = element.querySelector("div.image-treatment img")?.getAttribute("src");
     const link = element.querySelector("a.s-item__link")?.getAttribute("href");
     const name = element.querySelector("div.s-item__title span")?.textContent?.trim();
-    const price = element.querySelector("span.s-item__price")?.textContent?.trim() || "unknown";
+    const price = element.querySelector("span.s-item__price")?.textContent?.trim() ?? "unknown";
     const reviews = "0";
     const stars = "0";
     const source = "ebay";

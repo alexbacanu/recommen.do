@@ -22,9 +22,9 @@ interface CardAccountProps {
   account: AppwriteAccount;
 }
 
-type UpdateNameParams = {
+interface UpdateNameParams {
   newName: string;
-};
+}
 
 export function FormAccountName({ account }: CardAccountProps) {
   const { toast } = useToast();
