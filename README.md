@@ -2,7 +2,7 @@
 
 # 🤖 recommen.do
 
-Get ChatGPT recommendations directly in your browser.
+Get 🛍️ shopping recommendations on Amazon, Newegg or Ebay using 🤖 OpenAI.
 
 ## 🔥 About this project
 
