@@ -28,11 +28,11 @@ const formSchema = z.object({
 });
 
 interface PromptFormProps {
-  products: ScrapedProduct[];
+  products: ScrapedProduct[] | undefined;
 }
 
 interface UpdateNameParams {
-  products: ScrapedProduct[];
+  products?: ScrapedProduct[];
   prompt?: string;
 }
 
@@ -52,6 +52,7 @@ const initialMessage: ChatGPTMessage[] = [
 
 export function PromptForm({ products }: PromptFormProps) {
   const profile = useAtomValue(profileAtom);
+
   const [userApiKey] = useStorage<string>("userApiKey");
 
   const [ready, setReady] = useState(true);
@@ -59,6 +60,10 @@ export function PromptForm({ products }: PromptFormProps) {
   const [messages, setMessages] = useState<ChatGPTMessage[]>(initialMessage);
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
   // 0. Define your mutation.
   const { mutate: insertHistory } = useMutation({
@@ -145,7 +150,7 @@ export function PromptForm({ products }: PromptFormProps) {
         }
 
         const identifier = match[1];
-        const chosenProduct = products.find((product) => product.identifier === identifier);
+        const chosenProduct = products?.find((product) => product.identifier === identifier);
         if (typeof chosenProduct === "undefined") {
           continue;
         }

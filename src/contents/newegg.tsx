@@ -2,12 +2,15 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetShadowHostId, Plas
 
 import { useStorage } from "@plasmohq/storage/hook";
 import cssText from "data-text:@/styles/globals.css";
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 
 import { Init } from "@/components/_init/init-auth";
+import NeweggProducts from "@/components/extension/newegg-products";
 import PromptCard from "@/components/extension/prompt-card";
 import { Icons } from "@/components/ui/icons";
 import { Toaster } from "@/components/ui/toaster";
+import { neweggProductsAtom } from "@/lib/atoms/extension";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
@@ -20,51 +23,17 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
+// @ts-expect-error plasmo expects defined
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const divElement = document.querySelector("div.list-tools-bar");
-
-  if (!divElement) {
-    throw new Error("div with classname 'list-tools-bar' not found");
-  }
-
-  return divElement;
-};
-
-const neweggProductData = () => {
-  const productElements = document.querySelectorAll("div.item-cell");
-  const products = [];
-
-  for (const element of productElements) {
-    const identifier = element.querySelector("div.item-container")?.getAttribute("id");
-    const image = element.querySelector("a.item-img img")?.getAttribute("src");
-    const link = element.querySelector("a.item-title")?.getAttribute("href");
-    const name = element.querySelector("a.item-title")?.textContent?.trim();
-    const price = element.querySelector("li.price-current")?.textContent?.trim() ?? "unknown";
-    const reviews = element.querySelector("span.item-rating-num")?.textContent?.trim() ?? "0";
-    const stars = element.querySelector("i.rating")?.getAttribute("aria-label")?.trim() ?? "0";
-    const source = "newegg";
-
-    // Check if all required fields are present and valid
-    if (identifier && image && link && name) {
-      products.push({
-        identifier,
-        image,
-        link,
-        name,
-        price,
-        reviews,
-        stars,
-        source,
-      });
-    }
-  }
-
-  return products;
+  console.log("hello");
+  return document.querySelector("div.list-tools-bar");
 };
 
 export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-newegg";
 
 export default function NeweggContent() {
+  const products = useAtomValue(neweggProductsAtom);
+
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -76,12 +45,11 @@ export default function NeweggContent() {
     return () => clearTimeout(timer);
   }, []);
 
-  const products = neweggProductData();
-
   return (
     <div className="w-full">
       <ReactQueryProvider>
         <Init />
+        <NeweggProducts />
         {!isLoading && isPromptShown === false && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"

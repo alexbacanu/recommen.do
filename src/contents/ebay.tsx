@@ -2,12 +2,15 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetShadowHostId, Plas
 
 import { useStorage } from "@plasmohq/storage/hook";
 import cssText from "data-text:@/styles/globals.css";
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 
 import { Init } from "@/components/_init/init-auth";
+import EbayProducts from "@/components/extension/ebay-products";
 import PromptCard from "@/components/extension/prompt-card";
 import { Icons } from "@/components/ui/icons";
 import { Toaster } from "@/components/ui/toaster";
+import { ebayProductsAtom } from "@/lib/atoms/extension";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
@@ -68,51 +71,16 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
+// @ts-expect-error plasmo expects defined
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const divElement = document.querySelector("div.srp-controls");
-
-  if (!divElement) {
-    throw new Error("div with classname 'srp-controls' not found");
-  }
-
-  return divElement;
-};
-
-const ebayProductData = () => {
-  const productElements = document.querySelectorAll("ul.srp-results > li.s-item");
-  const products = [];
-
-  for (const element of productElements) {
-    const identifier = element.id;
-    const image = element.querySelector("div.image-treatment img")?.getAttribute("src");
-    const link = element.querySelector("a.s-item__link")?.getAttribute("href");
-    const name = element.querySelector("div.s-item__title span")?.textContent?.trim();
-    const price = element.querySelector("span.s-item__price")?.textContent?.trim() ?? "unknown";
-    const reviews = "0";
-    const stars = "0";
-    const source = "ebay";
-
-    // Check if all required fields are present and valid
-    if (identifier && image && link && name) {
-      products.push({
-        identifier,
-        image,
-        link,
-        name,
-        price,
-        reviews,
-        stars,
-        source,
-      });
-    }
-  }
-
-  return products;
+  return document.querySelector("div.srp-controls");
 };
 
 export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-ebay";
 
 export default function EbayContent() {
+  const products = useAtomValue(ebayProductsAtom);
+
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -124,12 +92,11 @@ export default function EbayContent() {
     return () => clearTimeout(timer);
   }, []);
 
-  const products = ebayProductData();
-
   return (
     <div className="w-full">
       <ReactQueryProvider>
         <Init />
+        <EbayProducts />
         {!isLoading && isPromptShown === false && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"

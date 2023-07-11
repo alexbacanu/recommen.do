@@ -2,12 +2,16 @@ import type { PlasmoCSConfig, PlasmoGetInlineAnchor, PlasmoGetShadowHostId, Plas
 
 import { useStorage } from "@plasmohq/storage/hook";
 import cssText from "data-text:@/styles/globals.css";
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { Init } from "@/components/_init/init-auth";
+import AmazonProducts from "@/components/extension/amazon-products";
 import PromptCard from "@/components/extension/prompt-card";
 import { Icons } from "@/components/ui/icons";
 import { Toaster } from "@/components/ui/toaster";
+import { amazonProductsAtom } from "@/lib/atoms/extension";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
@@ -43,72 +47,17 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
+// @ts-expect-error plasmo expects defined
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const divElement = document.querySelector("div.s-search-results");
-
-  if (!divElement) {
-    throw new Error("div with classname 's-search-results' not found");
-  }
-
-  const scriptTags = divElement.querySelectorAll("div");
-
-  if (scriptTags[3]) {
-    console.log("scriptTags[3] found");
-    return scriptTags[3];
-  }
-  if (scriptTags[2]) {
-    console.log("scriptTags[2] found");
-    return scriptTags[2];
-  }
-  if (scriptTags[1]) {
-    console.log("scriptTags[1] found");
-    return scriptTags[1];
-  }
-
-  if (!scriptTags[0]) {
-    throw new Error("scriptTags[0] not found");
-  }
-
-  return scriptTags[0];
-};
-
-const amazonProductData = () => {
-  const currentOrigin = window?.location.origin;
-
-  const productElements = document.querySelectorAll("div.s-result-item");
-  const products = [];
-
-  for (const element of productElements) {
-    const identifier = element.getAttribute("data-asin");
-    const image = element.querySelector(".s-image")?.getAttribute("src");
-    const link = element.querySelector(".a-link-normal.s-no-outline")?.getAttribute("href");
-    const name = element.querySelector(".a-color-base.a-text-normal")?.textContent?.trim();
-    const price = element.querySelector("span.a-price > span.a-offscreen")?.textContent?.trim() ?? "unknown";
-    const reviews = element.querySelector(".a-size-base.s-underline-text")?.textContent?.trim() ?? "0";
-    const stars = element.querySelector(".a-icon-alt")?.textContent?.trim() ?? "0";
-    const source = "amazon";
-
-    // Check if all required fields are present and valid
-    if (identifier && image && link && name) {
-      products.push({
-        identifier,
-        image,
-        link: currentOrigin + link,
-        name,
-        price,
-        reviews,
-        stars,
-        source,
-      });
-    }
-  }
-
-  return products;
+  console.log("hello");
+  return document.querySelector("div.s-search-results > link");
 };
 
 export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-amazon";
 
 export default function AmazonContent() {
+  const products = useAtomValue(amazonProductsAtom);
+
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -120,24 +69,25 @@ export default function AmazonContent() {
     return () => clearTimeout(timer);
   }, []);
 
-  const products = amazonProductData();
-
   return (
     <div className="w-full">
       <ReactQueryProvider>
-        <Init />
-        {!isLoading && isPromptShown === false && (
-          <button
-            className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
-            onClick={() => void setIsPromptShown(true)}
-          >
-            <Icons.logo className="h-[32px] w-[32px] rounded-full bg-popover p-[2px]" aria-label="recommen.do logo" />
-          </button>
-        )}
+        <MemoryRouter>
+          <Init />
+          <AmazonProducts />
+          {!isLoading && isPromptShown === false && (
+            <button
+              className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
+              onClick={() => void setIsPromptShown(true)}
+            >
+              <Icons.logo className="h-[32px] w-[32px] rounded-full bg-popover p-[2px]" aria-label="recommen.do logo" />
+            </button>
+          )}
 
-        {!isLoading && isPromptShown === true && (
-          <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
-        )}
+          {!isLoading && isPromptShown === true && (
+            <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
+          )}
+        </MemoryRouter>
       </ReactQueryProvider>
       <Toaster />
     </div>

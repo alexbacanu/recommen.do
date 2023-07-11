@@ -15,7 +15,7 @@ import { profileAtom } from "@/lib/atoms/auth";
 import { appwriteUrl } from "@/lib/envClient";
 
 interface PromptCardProps {
-  products: ScrapedProduct[];
+  products: ScrapedProduct[] | undefined;
   onClose: () => void;
 }
 
