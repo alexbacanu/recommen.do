@@ -4,7 +4,6 @@ import { useStorage } from "@plasmohq/storage/hook";
 import cssText from "data-text:@/styles/globals.css";
 import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
-import { MemoryRouter } from "react-router-dom";
 
 import { Init } from "@/components/_init/init-auth";
 import AmazonProducts from "@/components/extension/amazon-products";
@@ -79,22 +78,20 @@ export default function AmazonContent() {
   return (
     <div className="w-full">
       <ReactQueryProvider>
-        <MemoryRouter>
-          <Init />
-          <AmazonProducts />
-          {!isLoading && isPromptShown === false && (
-            <button
-              className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
-              onClick={() => void setIsPromptShown(true)}
-            >
-              <Icons.logo className="h-[32px] w-[32px] rounded-full bg-popover p-[2px]" aria-label="recommen.do logo" />
-            </button>
-          )}
+        <Init />
+        <AmazonProducts />
+        {!isLoading && isPromptShown === false && (
+          <button
+            className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
+            onClick={() => void setIsPromptShown(true)}
+          >
+            <Icons.logo className="h-[32px] w-[32px] rounded-full bg-popover p-[2px]" aria-label="recommen.do logo" />
+          </button>
+        )}
 
-          {!isLoading && isPromptShown === true && (
-            <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
-          )}
-        </MemoryRouter>
+        {!isLoading && isPromptShown === true && (
+          <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
+        )}
       </ReactQueryProvider>
       <Toaster />
     </div>

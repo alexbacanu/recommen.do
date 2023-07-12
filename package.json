@@ -61,7 +61,6 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
-    "react-router-dom": "^6.14.1",
     "server-only": "^0.0.1",
     "stripe": "^12.12.0",
     "vanilla-cookieconsent": "^3.0.0-rc.16",
