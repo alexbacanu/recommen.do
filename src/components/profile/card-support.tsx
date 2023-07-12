@@ -3,7 +3,8 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Icons } from "@/components/ui/icons";
 import { Separator } from "@/components/ui/separator";
 import { appwriteUrl } from "@/lib/envClient";
 
@@ -39,14 +40,24 @@ export function CardSupport() {
               FAQ
             </Link>
           </Button>
+
+          <Separator orientation="vertical" className="h-6 md:hidden" />
+
+          <Button variant="link" className="p-1" asChild>
+            <Link href="https://github.com/alexbacanu/recommen.do" target={target} aria-label="Contact us">
+              Github
+            </Link>
+          </Button>
         </div>
       </CardContent>
-      {/* <CardFooter className="grid">
-        <Button variant="outline" aria-label="Buy me a coffee">
-          <Icons.coffee className="mr-2 h-4 w-4" aria-hidden="true" />
-          <span>Buy me a coffee</span>
+      <CardFooter className="grid">
+        <Button variant="outline" asChild>
+          <Link href="https://ko-fi.com/bachi312" aria-label="Buy me a coffee">
+            <Icons.coffee className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span>Buy me a coffee</span>
+          </Link>
         </Button>
-      </CardFooter> */}
+      </CardFooter>
     </>
   );
 }

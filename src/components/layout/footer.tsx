@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { FooterNav } from "@/components/layout/footer-nav";
+import { Icons } from "@/components/ui/icons";
 import Logo from "@/components/ui/logo";
 
 export function Footer() {
@@ -12,8 +15,14 @@ export function Footer() {
 
           <FooterNav />
 
-          <div className="text-center lg:text-right">
+          <div className="flex items-center justify-center gap-4 lg:justify-end">
             <p className="inline-flex text-sm">&copy; {new Date().getFullYear()} recommen.do</p>
+
+            <div>
+              <Link href="https://github.com/alexbacanu/recommen.do" aria-label="Buy me a coffee">
+                <Icons.github className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
