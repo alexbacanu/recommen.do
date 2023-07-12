@@ -67,9 +67,8 @@ export default function FAQPage() {
             <AccordionTrigger className="text-left">Can I use my own OpenAI API Key?</AccordionTrigger>
             <AccordionContent>
               If you have an OpenAI API key you can get recommendations without having an active subscription. While the
-              OpenAI API Key mode is active, the recommendations you consume are not subtracted from your available
-              recommendations. Use the &quot;OpenAI Api Key&quot; section from the extension to add or clear your OpenAI
-              API Key.
+              API Key mode is active, the recommendations you consume are not subtracted from your available
+              recommendations. Use the &quot;OpenAI API Key&quot; section from the extension to add or clear your key.
             </AccordionContent>
           </AccordionItem>
 
@@ -78,10 +77,8 @@ export default function FAQPage() {
               What happens if I have a subscription active but I switch to API Key mode?
             </AccordionTrigger>
             <AccordionContent>
-              While the OpenAI API Key mode is active, the recommendations you consume are not subtracted from your
-              available recommendations. It is not mandatory to have an active subscription if you choose to use your
-              own OpenAI API Key. If you choose so, you can cancel your subscription at any time using the &quot;Manage
-              subscription&quot; option. Alternatively, you can clear your OpenAI API Key and continue using your
+              Using an OpenAI API Key doesn&quot;t deplete your recommendations and doesn&quot;t require a subscription.
+              You can cancel your subscription anytime via &quot;Manage Subscription&quot; or clear your API Key to use
               remaining recommendations.
             </AccordionContent>
           </AccordionItem>
