@@ -49,8 +49,15 @@ export const getStyle: PlasmoGetStyle = () => {
 
 // @ts-expect-error plasmo expects defined
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  console.log("hello");
-  return document.querySelector("div.s-search-results > link");
+  const firstInlineSelector = document.querySelector("div.s-search-results > link");
+
+  // main inline target
+  if (firstInlineSelector) {
+    return firstInlineSelector;
+  }
+
+  // fallback
+  return document.querySelector("div.s-search-results > div[data-asin]");
 };
 
 export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-amazon";
