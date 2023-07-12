@@ -92,7 +92,9 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://www.amazon.*/*",
+      "https://www.newegg.*/*",
+      "https://*.ebay.*/*"
     ],
     "browser_specific_settings": {
       "gecko": {
@@ -101,6 +103,7 @@
       }
     },
     "permissions": [
+      "cookies",
       "storage"
     ],
     "web_accessible_resources": [
