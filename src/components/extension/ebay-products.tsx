@@ -46,7 +46,7 @@ export default function EbayProducts() {
     refetchOnMount: true,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
-    refetchInterval: 500,
+    refetchInterval: 1250,
   });
 
   useEffect(() => {
