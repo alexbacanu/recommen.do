@@ -61,10 +61,6 @@ export function PromptForm({ products }: PromptFormProps) {
 
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
-
   // 0. Define your mutation.
   const { mutate: insertHistory } = useMutation({
     mutationKey: ["insertHistory"],

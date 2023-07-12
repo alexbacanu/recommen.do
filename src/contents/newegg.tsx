@@ -25,7 +25,6 @@ export const getStyle: PlasmoGetStyle = () => {
 
 // @ts-expect-error plasmo expects defined
 export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  console.log("hello");
   return document.querySelector("div.list-tools-bar");
 };
 

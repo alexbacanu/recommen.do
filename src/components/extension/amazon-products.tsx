@@ -56,5 +56,5 @@ export default function AmazonProducts() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  return <div>Hello</div>;
+  return null;
 }
