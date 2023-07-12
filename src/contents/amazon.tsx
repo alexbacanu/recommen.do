@@ -15,28 +15,28 @@ import ReactQueryProvider from "@/lib/providers/react-query";
 
 export const config: PlasmoCSConfig = {
   matches: [
-    "https://www.amazon.ae/*s?k=*",
-    "https://www.amazon.ca/*s?k=*",
-    "https://www.amazon.cn/*s?k=*",
-    "https://www.amazon.co.jp/*s?k=*",
-    "https://www.amazon.co.uk/*s?k=*",
-    "https://www.amazon.com.au/*s?k=*",
-    "https://www.amazon.com.be/*s?k=*",
-    "https://www.amazon.com.br/*s?k=*",
-    "https://www.amazon.com.mx/*s?k=*",
-    "https://www.amazon.com.tr/*s?k=*",
-    "https://www.amazon.com/*s?k=*",
-    "https://www.amazon.de/*s?k=*",
-    "https://www.amazon.eg/*s?k=*",
-    "https://www.amazon.es/*s?k=*",
-    "https://www.amazon.fr/*s?k=*",
-    "https://www.amazon.in/*s?k=*",
-    "https://www.amazon.it/*s?k=*",
-    "https://www.amazon.nl/*s?k=*",
-    "https://www.amazon.pl/*s?k=*",
-    "https://www.amazon.sa/*s?k=*",
-    "https://www.amazon.se/*s?k=*",
-    "https://www.amazon.sg/*s?k=*",
+    "https://www.amazon.ae/*",
+    "https://www.amazon.ca/*",
+    "https://www.amazon.cn/*",
+    "https://www.amazon.co.jp/*",
+    "https://www.amazon.co.uk/*",
+    "https://www.amazon.com.au/*",
+    "https://www.amazon.com.be/*",
+    "https://www.amazon.com.br/*",
+    "https://www.amazon.com.mx/*",
+    "https://www.amazon.com.tr/*",
+    "https://www.amazon.com/*",
+    "https://www.amazon.de/*",
+    "https://www.amazon.eg/*",
+    "https://www.amazon.es/*",
+    "https://www.amazon.fr/*",
+    "https://www.amazon.in/*",
+    "https://www.amazon.it/*",
+    "https://www.amazon.nl/*",
+    "https://www.amazon.pl/*",
+    "https://www.amazon.sa/*",
+    "https://www.amazon.se/*",
+    "https://www.amazon.sg/*",
   ],
 };
 
@@ -56,7 +56,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
   }
 
   // fallback
-  return document.querySelector("div.s-search-results > div[data-asin]");
+  return document.querySelector("div.s-search-results > div[data-cel-widget='search_result_0']");
 };
 
 export const getShadowHostId: PlasmoGetShadowHostId = () => "plasmo-inline-amazon";
