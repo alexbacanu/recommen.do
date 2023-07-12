@@ -102,10 +102,7 @@
       }
     },
     "permissions": [
-      "cookies",
-      "storage",
-      "scripting",
-      "activeTab"
+      "storage"
     ],
     "web_accessible_resources": [
       {
