@@ -13,8 +13,9 @@ Get 🛍️ shopping recommendations on Amazon, Newegg or Ebay using 🤖 OpenAI
 - [Next.js](https://nextjs.org/)
 - [Plasmo](https://www.plasmo.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
 - [Appwrite](https://appwrite.io/)
+- [Zod](https://zod.dev/)
+- [shadcn/ui](https://ui.shadcn.com/)
 
 ## 🚀 Running Locally
 

@@ -1,9 +1,10 @@
 {
-  "name": "recommen.do_saas",
+  "name": "recommen.do",
   "displayName": "recommen.do",
-  "description": "🛍️ Shop smarter and faster with recommen.do, your ultimate shopping companion!",
-  "author": "bachi312",
-  "version": "1.1.0",
+  "description": "Get 🛍️ shopping recommendations on Amazon, Newegg or Ebay using 🤖 OpenAI.",
+  "homepage_url": "https://www.recommen.do",
+  "author": "recommen.do",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "next start",
