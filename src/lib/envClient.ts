@@ -9,8 +9,6 @@ export const appwriteUrl = process.env.NEXT_PUBLIC_APPWRITE_URL ?? process.env.P
 export const stripePublishableKey =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? process.env.PLASMO_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
 
-export const stripeRefillPrice =
-  process.env.NEXT_PUBLIC_STRIPE_REFILL_PRICE ?? process.env.PLASMO_PUBLIC_STRIPE_REFILL_PRICE ?? "";
 export const stripeBasicPlan =
   process.env.NEXT_PUBLIC_STRIPE_BASIC_PLAN ?? process.env.PLASMO_PUBLIC_STRIPE_BASIC_PLAN ?? "";
 export const stripePremiumPlan =
