@@ -75,8 +75,8 @@ export function FormAccountEmail() {
 
       window.open(`${appwriteUrl}/email-changed`, target);
     },
-    onSettled: async () => {
-      await signOut();
+    onSettled: async (data, error) => {
+      if (!!error) await signOut();
     },
   });
 
@@ -151,13 +151,13 @@ export function FormAccountEmail() {
           />
         </div>
 
-        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
+        <Button disabled={isLoading || isSuccess} aria-label="Change email">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <Icons.save className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          {isSuccess ? "Success" : "Save changes"}
+          {isSuccess ? "Success" : "Change email"}
         </Button>
       </form>
     </Form>

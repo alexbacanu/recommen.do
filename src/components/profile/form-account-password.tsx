@@ -165,13 +165,13 @@ export function FormAccountPassword({ account }: CardAccountProps) {
             )}
           />
         </div>
-        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
+        <Button disabled={isLoading || isSuccess} aria-label="Save password">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <Icons.save className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          {isSuccess ? "Success" : "Save changes"}
+          {isSuccess ? "Success" : "Save password"}
         </Button>
       </form>
     </Form>

@@ -87,13 +87,13 @@ export function FormAccountName({ account }: CardAccountProps) {
             </FormItem>
           )}
         />
-        <Button disabled={isLoading || isSuccess} aria-label="Save changes">
+        <Button disabled={isLoading || isSuccess} aria-label="Change name">
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <Icons.save className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          {isSuccess ? "Success" : "Save changes"}
+          {isSuccess ? "Success" : "Change name"}
         </Button>
       </form>
     </Form>
