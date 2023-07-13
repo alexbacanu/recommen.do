@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,8 +39,9 @@ interface FormSignInProps {
 
 export function FormSignIn({ hasAccepted }: FormSignInProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
-  // const hasAccepted = useAtomValue(termsAtom);
+  const pageName = pathname === "/sign-in" ? "Sign in" : "Sign up";
 
   // 0. Define your mutation.
   const { mutate, isLoading } = useMutation({
@@ -66,7 +67,7 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!hasAccepted) {
       form.setError("email", {
-        message: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign in.",
+        message: `Please accept the Terms and Conditions and Privacy Policy to proceed with the ${pageName.toLowerCase()}.`,
       });
       return;
     }
@@ -91,13 +92,13 @@ export function FormSignIn({ hasAccepted }: FormSignInProps) {
           )}
         />
 
-        <Button disabled={isLoading} aria-label="Sign in with Magic URL">
+        <Button disabled={isLoading} aria-label={`${pageName} with Magic URL`}>
           {isLoading ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <Icons.login className="mr-2 h-4 w-4" aria-hidden="true" />
           )}
-          Sign in with Magic URL
+          {pageName} with Magic URL
         </Button>
       </form>
     </Form>
