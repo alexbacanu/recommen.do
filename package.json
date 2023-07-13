@@ -25,6 +25,7 @@
     "cdeploy:fix": "prettier --write . && next lint --fix",
     "cdeploy:clean": "(IF EXIST .next rmdir /s /q .next) && (IF EXIST .plasmo rmdir /s /q .plasmo) && (IF EXIST build rmdir /s /q build) && del /q /s public\\download\\*",
     "cdeploy:build": "pnpm build",
+    "cdeploy:rename": "ren build\\chrome-mv3-prod.zip chrome-1.0.1.zip && ren build\\edge-mv3-prod.zip edge-1.0.1.zip && ren build\\opera-mv3-prod.zip opera-1.0.1.zip && ren build\\brave-mv3-prod.zip brave-1.0.1.zip && ren build\\firefox-mv2-prod.zip firefox-1.0.1.zip",
     "cdeploy:move": "move build\\* public\\download\\"
   },
   "dependencies": {
