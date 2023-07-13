@@ -159,6 +159,27 @@ export async function POST(request: Request) {
     const accumulatedTokens: string[] = [];
     let stopTesting = false;
 
+    if (response.status !== 200) {
+      const errorObject = JSON.parse(await response.text()) as {
+        error: {
+          message: string;
+          type: string;
+          param: string;
+          code: string;
+        };
+      };
+
+      return NextResponse.json(
+        {
+          message: errorObject.error.message,
+        },
+        {
+          status: response.status,
+          headers: cors,
+        },
+      );
+    }
+
     const stream = OpenAIStream(response, {
       // TODO: ERRORS INSIDE HERE ARE NOT HANDLED PROPERLY
       // This callback is called for each token in the stream
