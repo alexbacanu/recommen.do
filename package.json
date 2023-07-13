@@ -4,7 +4,7 @@
   "description": "Get 🛍️ shopping recommendations on Amazon, Newegg or Ebay using 🤖 OpenAI.",
   "homepage_url": "https://www.recommen.do",
   "author": "recommen.do",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "start": "next start",
@@ -18,7 +18,7 @@
     "lint": "next lint",
     "prettier": "prettier --check .",
     "fix": "prettier --write . && next lint --fix",
-    "custom-build": "pnpm fix && rmdir /s /q .next .plasmo build && del /q /s public\\download\\* && pnpm build && move /y build\\firefox-mv2-prod.zip public\\download\\firefox-1.0.0.zip && move /y build\\chrome-mv3-prod.zip public\\download\\chrome-1.0.0.zip"
+    "custom-build": "pnpm fix && rmdir /s /q .next .plasmo build && del /q /s public\\download\\* && pnpm build && move /y build\\firefox-mv2-prod.zip public\\download\\firefox-1.0.1.zip && move /y build\\chrome-mv3-prod.zip public\\download\\chrome-1.0.1.zip"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.1",

@@ -131,19 +131,21 @@ export async function POST(request: Request) {
       // },
       {
         role: "system",
-        content: `You will be provided with a list of products, each with an identifier, name, price, reviews and stars. Your task is to recommend the best product for a given purpose, considering a wide range of categories similar to what an Amazon product expert might ask: "Which product stands out as the best choice for its intended purpose?"
+        content: `You will be provided with a list of products, each with an identifier, name, price, reviews and stars. Your task is to recommend the best product for a given purpose, considering a wide range of categories similar to what an Amazon product expert might ask: "Which product stands out as the best choice for its intended purpose?" You might be asked to recommend a product based on some user inputs.
 
-        ${payload.prompt ? `Make sure the recommended product matches the user inputs: ${payload.prompt}.` : ""}
+        ${payload.prompt ? `Search in name or price this prompt: ${payload.prompt}.` : ""}
 
-        Ensure that the recommended product include all relevant information necessary for making a decision - in other words, don't suggest products without important context. Limit your response to around 180 words. Provide the output in JSON format as shown below:
+        Ensure that the recommended product include all relevant information necessary for making a decision - in other words, don't suggest products without important context. Limit your response to around 220 words. Provide the output in JSON format as shown below:
 
         {"identifier": "...", "reason": "..."}`,
       },
       {
         role: "user",
-        content: JSON.stringify(payload.products),
+        content: `${payload.prompt ? `Search in name or price this prompt: ${payload.prompt}.` : ""}
+        Products: ${JSON.stringify(payload.products)}`,
       },
     ];
+
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo-16k",
       temperature: 0.3,

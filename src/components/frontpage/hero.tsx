@@ -32,25 +32,25 @@ export function Hero() {
     },
     {
       name: "Google Chrome",
-      href: "/download/chrome-1.0.0.zip",
+      href: "/download/chrome-1.0.1.zip",
       ariaLabel: "Download zip for Chrome",
       description: "Download zip for Chrome",
     },
     {
       name: "Microsoft Edge",
-      href: "/download/chrome-1.0.0.zip",
+      href: "/download/chrome-1.0.1.zip",
       ariaLabel: "Download zip for Edge",
       description: "Download zip for Edge",
     },
     {
       name: "Brave",
-      href: "/download/chrome-1.0.0.zip",
+      href: "/download/chrome-1.0.1.zip",
       ariaLabel: "Download zip for Brave",
       description: "Download zip for Brave",
     },
     {
       name: "Opera",
-      href: "/download/chrome-1.0.0.zip",
+      href: "/download/chrome-1.0.1.zip",
       ariaLabel: "Download zip for Opera",
       description: "Download zip for Opera",
     },
@@ -88,7 +88,7 @@ export function Hero() {
                 </Button>
               ) : (
                 <Button variant="default" size="lg" asChild>
-                  <Link href="/download/chrome-1.0.0.zip" aria-label="Download zip for Chrome">
+                  <Link href="/download/chrome-1.0.1.zip" aria-label="Download zip for Chrome">
                     Download zip for Chrome
                   </Link>
                 </Button>
