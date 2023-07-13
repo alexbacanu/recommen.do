@@ -77,7 +77,7 @@ export default function FAQPage() {
               What happens if I have a subscription active but I switch to API Key mode?
             </AccordionTrigger>
             <AccordionContent>
-              Using an OpenAI API Key doesn&quot;t deplete your recommendations and doesn&quot;t require a subscription.
+              Using an OpenAI API Key doesn&apos;t deplete your recommendations and doesn&apos;t require a subscription.
               You can cancel your subscription anytime via &quot;Manage Subscription&quot; or clear your API Key to use
               remaining recommendations.
             </AccordionContent>
