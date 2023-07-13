@@ -72,7 +72,8 @@ export const getStyle: PlasmoGetStyle = () => {
 };
 
 // @ts-expect-error plasmo expects defined
-export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
+export const getInlineAnchor: PlasmoGetInlineAnchor = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return document.querySelector("div.srp-controls");
 };
 

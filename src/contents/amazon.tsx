@@ -47,12 +47,15 @@ export const getStyle: PlasmoGetStyle = () => {
 };
 
 // @ts-expect-error plasmo expects defined
-export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const firstInlineSelector = document.querySelector("div.s-search-results > link");
+export const getInlineAnchor: PlasmoGetInlineAnchor = async () => {
+  const scriptElements = document.querySelector("div.s-search-results > link");
+
+  // await 500 ms, amazon page changes alot in the first seconds
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   // main inline target
-  if (firstInlineSelector) {
-    return firstInlineSelector;
+  if (scriptElements) {
+    return scriptElements;
   }
 
   // fallback
