@@ -52,7 +52,7 @@ export function CardSupport() {
       </CardContent>
       <CardFooter className="grid">
         <Button variant="outline" asChild>
-          <Link href="https://ko-fi.com/bachi312" aria-label="Buy me a coffee">
+          <Link href="https://ko-fi.com/bachi312" aria-label="Buy me a coffee" target="_blank">
             <Icons.coffee className="mr-2 h-4 w-4" aria-hidden="true" />
             <span>Buy me a coffee</span>
           </Link>
