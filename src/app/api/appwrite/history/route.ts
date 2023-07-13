@@ -148,6 +148,38 @@ export async function POST(request: Request) {
     // 🫴 Get current history
     const historyArray = Array.isArray(profile.history) ? [...profile.history] : [];
 
+    // Check if the identifier already exists in the array
+    const identifierExistsIndex = historyArray.findIndex((obj) => {
+      const parsedObject = JSON.parse(obj) as ScrapedProduct;
+
+      return parsedObject.identifier === validatedProduct.identifier;
+    });
+
+    // ☀️ Update Appwrite Profile
+    const { serverDatabases } = appwriteServer();
+
+    if (identifierExistsIndex !== -1) {
+      const existingItem = historyArray[identifierExistsIndex];
+
+      if (existingItem) {
+        historyArray.splice(identifierExistsIndex, 1);
+        historyArray.push(existingItem);
+
+        // ☀️ Update Appwrite Profile
+        await serverDatabases.updateDocument("main", "profile", profile.$id, {
+          history: historyArray,
+        });
+
+        return NextResponse.json(
+          {
+            message: "Item already exists in your history. Moved to the top.",
+          },
+          {
+            headers: cors,
+          },
+        );
+      }
+    }
     // ➖ Remove the first item if the array length >= 25
     if (historyArray.length >= 25) {
       historyArray.shift();
@@ -155,9 +187,6 @@ export async function POST(request: Request) {
 
     // ➕ Add validated product in history array
     historyArray.push(JSON.stringify(validatedProduct));
-
-    // ☀️ Update Appwrite Profile
-    const { serverDatabases } = appwriteServer();
 
     await serverDatabases.updateDocument("main", "profile", profile.$id, {
       history: historyArray,
