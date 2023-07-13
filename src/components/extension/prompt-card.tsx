@@ -1,9 +1,10 @@
 import type { ScrapedProduct } from "@/lib/types/types";
 
 import { useStorage } from "@plasmohq/storage/hook";
+import BrowserDetector from "browser-dtector";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
-import { browserName } from "react-device-detect";
+import { useEffect, useState } from "react";
 
 import { PromptForm } from "@/components/extension/prompt-form";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,16 @@ interface PromptCardProps {
 export default function PromptCard({ products, onClose }: PromptCardProps) {
   const profile = useAtomValue(profileAtom);
   const [userApiKey] = useStorage<string>("userApiKey");
+
+  const [browser, setBrowser] = useState<BrowserDetector>();
+
+  useEffect(() => {
+    const browser = new BrowserDetector(window.navigator.userAgent);
+    setBrowser(browser);
+  }, []);
+
+  const parsedUA = browser?.parseUserAgent();
+  const browserName = parsedUA?.name;
 
   return (
     <div className="grid w-full p-[16px]">
