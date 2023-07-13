@@ -1,20 +1,64 @@
 "use client";
 
+import BrowserDetector from "browser-dtector";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { browserName } from "react-device-detect";
 
 import { Button } from "@/components/ui/button";
 
+interface BrowserDetails {
+  name: string;
+  href: string;
+  ariaLabel: string;
+  description: string;
+}
+
 export function Hero() {
-  const [browser, setBrowser] = useState("");
-  const isChromium = browser !== "Firefox" && browser !== "Safari";
+  const [browser, setBrowser] = useState<BrowserDetector>();
 
   useEffect(() => {
-    setBrowser(browserName);
+    const browser = new BrowserDetector(window.navigator.userAgent);
+    setBrowser(browser);
   }, []);
+
+  const browserDetails: BrowserDetails[] = [
+    {
+      name: "Mozilla Firefox",
+      href: "https://addons.mozilla.org/en-US/firefox/addon/recommen-do/",
+      ariaLabel: "Add extension to Firefox",
+      description: "Add extension to Firefox",
+    },
+    {
+      name: "Google Chrome",
+      href: "/download/chrome-1.0.0.zip",
+      ariaLabel: "Download zip for Chrome",
+      description: "Download zip for Chrome",
+    },
+    {
+      name: "Microsoft Edge",
+      href: "/download/chrome-1.0.0.zip",
+      ariaLabel: "Download zip for Edge",
+      description: "Download zip for Edge",
+    },
+    {
+      name: "Brave",
+      href: "/download/chrome-1.0.0.zip",
+      ariaLabel: "Download zip for Brave",
+      description: "Download zip for Brave",
+    },
+    {
+      name: "Opera",
+      href: "/download/chrome-1.0.0.zip",
+      ariaLabel: "Download zip for Opera",
+      description: "Download zip for Opera",
+    },
+  ];
+
+  const parsedUA = browser?.parseUserAgent();
+  const browserName = parsedUA?.name;
+  const browserInfo = browserDetails.find((browser) => browser.name === browserName);
 
   return (
     <section id="home" className="overflow-hidden">
@@ -36,17 +80,19 @@ export function Hero() {
             </p>
 
             <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">
-              <Button variant="default" size="lg" asChild>
-                {isChromium ? (
-                  <a href="/download/chrome-1.0.0.zip" aria-label={`Download extension for ${browser}`}>
-                    Download <span className="ml-1 hidden lg:inline-flex">extension for {browser}</span>
-                  </a>
-                ) : (
-                  <a href="/download/firefox-1.0.0.zip" aria-label={`Download extension for ${browser}`}>
-                    Download <span className="ml-1 hidden lg:inline-flex">extension for {browser}</span>
-                  </a>
-                )}
-              </Button>
+              {browserInfo ? (
+                <Button variant="default" size="lg" asChild>
+                  <Link href={browserInfo.href} aria-label={browserInfo.ariaLabel}>
+                    {browserInfo.description}
+                  </Link>
+                </Button>
+              ) : (
+                <Button variant="default" size="lg" asChild>
+                  <Link href="/download/chrome-1.0.0.zip" aria-label="Download zip for Chrome">
+                    Download zip for Chrome
+                  </Link>
+                </Button>
+              )}
               <Button variant="outline" size="lg" asChild>
                 <Link href="#pricing" aria-label="View pricing">
                   View pricing
