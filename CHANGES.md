@@ -1,3 +1,10 @@
+# Version 1.0.2
+
+## Changes
+
+- Update name and description
+- ...
+
 # Version 1.0.1
 
 ## Changes
