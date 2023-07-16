@@ -109,7 +109,6 @@
       }
     },
     "permissions": [
-      "cookies",
       "storage"
     ],
     "web_accessible_resources": [
