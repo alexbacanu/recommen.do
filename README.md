@@ -2,7 +2,7 @@
 
 # 🤖 recommen.do
 
-Get 🛍️ shopping recommendations on Amazon, Newegg or Ebay using 🤖 OpenAI.
+🛍️ Get shopping recommendations on Amazon, Newegg or Ebay, powered by OpenAI 🤖.
 
 ## 🔥 About this project
 

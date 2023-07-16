@@ -3,7 +3,8 @@
 ## Changes
 
 - Update name and description
-- ...
+- Removed unused permissions (cookies) from package.json
+- Update dependencies
 
 # Version 1.0.1
 
