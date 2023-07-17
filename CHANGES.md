@@ -1,3 +1,9 @@
+# Version 1.0.3
+
+## Changes
+
+- Fix building for Ubuntu
+
 # Version 1.0.2
 
 ## Changes
