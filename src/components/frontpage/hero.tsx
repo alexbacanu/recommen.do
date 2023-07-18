@@ -81,16 +81,12 @@ export function Hero() {
 
             <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">
               {browserInfo ? (
-                <Button variant="default" size="lg" asChild>
-                  <Link href={browserInfo.href} aria-label={browserInfo.ariaLabel}>
-                    {browserInfo.description}
-                  </Link>
+                <Button variant="default" size="lg" aria-label={browserInfo.ariaLabel} asChild>
+                  <a href={browserInfo.href}>{browserInfo.description}</a>
                 </Button>
               ) : (
-                <Button variant="default" size="lg" asChild>
-                  <Link href="/download/chrome-1.0.3.zip" aria-label="Download zip for Chrome">
-                    Download zip for Chrome
-                  </Link>
+                <Button variant="default" size="lg" aria-label="Download zip for Chrome" asChild>
+                  <a href="/download/chrome-1.0.3.zip">Download zip for Chrome</a>
                 </Button>
               )}
               <Button variant="outline" size="lg" asChild>
@@ -125,6 +121,7 @@ export function Hero() {
               height={1478}
               width={1060}
               alt="Screenshot with recommen.do extension displayed"
+              priority
             />
           </div>
         </div>
