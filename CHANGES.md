@@ -1,3 +1,10 @@
+# WIP: Version 1.0.4
+
+## Changes
+
+- Fix lighthouse errors
+- ...
+
 # Version 1.0.3
 
 ## Changes
