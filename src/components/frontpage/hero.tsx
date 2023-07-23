@@ -32,27 +32,33 @@ export function Hero() {
     },
     {
       name: "Google Chrome",
-      href: "/download/chrome-1.0.3.zip",
-      ariaLabel: "Download zip for Chrome",
-      description: "Download zip for Chrome",
+      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
+      ariaLabel: "Get extension for Chrome",
+      description: "Get extension for Chrome",
     },
     {
       name: "Microsoft Edge",
-      href: "/download/chrome-1.0.3.zip",
-      ariaLabel: "Download zip for Edge",
-      description: "Download zip for Edge",
+      href: "https://microsoftedge.microsoft.com/addons/detail/recommendo/pdahoiahedcdggmdopbgefclpcpeiioc",
+      ariaLabel: "Get extension for Edge",
+      description: "Get extension for Edge",
     },
     {
       name: "Brave",
-      href: "/download/chrome-1.0.3.zip",
-      ariaLabel: "Download zip for Brave",
-      description: "Download zip for Brave",
+      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
+      ariaLabel: "Get extension for Brave",
+      description: "Get extension for Brave",
     },
     {
       name: "Opera",
-      href: "/download/chrome-1.0.3.zip",
-      ariaLabel: "Download zip for Opera",
-      description: "Download zip for Opera",
+      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
+      ariaLabel: "Get extension for Opera",
+      description: "Get extension for Opera",
+    },
+    {
+      name: "Vivaldi",
+      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
+      ariaLabel: "Get extension for Vivaldi",
+      description: "Get extension for Vivaldi",
     },
   ];
 
@@ -82,11 +88,13 @@ export function Hero() {
             <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">
               {browserInfo ? (
                 <Button variant="default" size="lg" aria-label={browserInfo.ariaLabel} asChild>
-                  <a href={browserInfo.href}>{browserInfo.description}</a>
+                  <Link href={browserInfo.href}>{browserInfo.description}</Link>
                 </Button>
               ) : (
-                <Button variant="default" size="lg" aria-label="Download zip for Chrome" asChild>
-                  <a href="/download/chrome-1.0.3.zip">Download zip for Chrome</a>
+                <Button variant="default" size="lg" aria-label="Get extension for Chrome" asChild>
+                  <Link href="https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne">
+                    Get extension for Chrome
+                  </Link>
                 </Button>
               )}
               <Button variant="outline" size="lg" asChild>
