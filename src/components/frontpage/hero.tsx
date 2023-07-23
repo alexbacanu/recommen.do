@@ -105,21 +105,12 @@ export function Hero() {
             </div>
 
             <div className="[&>*]:browser-accent mt-8 grid grid-cols-3 items-center justify-center gap-6 md:grid-cols-3 lg:mt-12 lg:grid-cols-3 xl:grid-cols-6">
-              <Image src="/browsers/Chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
-              <Image src="/browsers/Edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
-
-              <Image src="/browsers/Firefox.svg" width={64} height={64} alt="Download extension for Firefox browser" />
-              {/* <Image
-                src="/browsers/Safari.svg"
-                width={64}
-                height={64}
-                alt="Download extension for Safari browser"
-                className="opacity-50"
-              /> */}
-              <Image src="/browsers/Brave.svg" width={64} height={64} alt="Download extension for Brave browser" />
-              <Image src="/browsers/Opera.svg" width={64} height={64} alt="Download extension for Opera browser" />
-              {/* <Image src="/browsers/Duck.svg" width={64} height={64} alt="Download extension for DuckDuckGo browser" /> */}
-              <Image src="/browsers/Vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
+              <Image src="/browsers/chrome.svg" width={64} height={64} alt="Download extension for Chrome browser" />
+              <Image src="/browsers/edge.svg" width={64} height={64} alt="Download extension for Edge browser" />
+              <Image src="/browsers/firefox.svg" width={64} height={64} alt="Download extension for Firefox browser" />
+              <Image src="/browsers/brave.svg" width={64} height={64} alt="Download extension for Brave browser" />
+              <Image src="/browsers/opera.svg" width={64} height={64} alt="Download extension for Opera browser" />
+              <Image src="/browsers/vivaldi.svg" width={64} height={64} alt="Download extension for Vivaldi browser" />
             </div>
           </div>
           <div className="lg:w-[58rem]">
