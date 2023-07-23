@@ -72,5 +72,8 @@
     "**/.git/subtree-cache/**": true,
     "**/.venv/**": true,
     "**/node_modules/**": true
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }

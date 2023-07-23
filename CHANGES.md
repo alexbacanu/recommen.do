@@ -3,6 +3,7 @@
 ## Changes
 
 - Fix lighthouse errors
+- Change deployment script
 - ...
 
 # Version 1.0.3
