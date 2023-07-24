@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-import DownloadButton from "@/components/layout/header-download";
+import DownloadButton from "@/components/layout/download-button";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
