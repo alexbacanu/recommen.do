@@ -1,9 +1,10 @@
-# WIP: Version 1.0.4
+# Version 1.0.4
 
 ## Changes
 
 - Fix lighthouse errors
-- Change deployment script
+- Removed Google Analytics code from extension
+- Changed deployment script
 - ...
 
 # Version 1.0.3

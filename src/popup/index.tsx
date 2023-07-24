@@ -1,7 +1,3 @@
-import "https://www.googletagmanager.com/gtag/js?id=$PLASMO_PUBLIC_GTAG_ID";
-
-import { useEffect } from "react";
-
 import { accountAtom, profileAtom } from "@/lib/atoms/auth";
 import ReactQueryProvider from "@/lib/providers/react-query";
 
@@ -21,27 +17,10 @@ import { CardSupport } from "@/components/profile/card-support";
 import { CardUsage } from "@/components/profile/card-usage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster } from "@/components/ui/toaster";
-import { gtagId } from "@/lib/envClient";
 
 export default function IndexPopup() {
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
-
-  useEffect(() => {
-    window.dataLayer = window.dataLayer || []; // eslint-disable-line
-    window.gtag = function gtag() {
-      window.dataLayer.push(arguments); // eslint-disable-line
-    };
-    window.gtag("js", new Date());
-    window.gtag("config", gtagId, {
-      page_path: "/popup",
-      debug_mode: true,
-    });
-
-    window.gtag("event", "login", {
-      method: "TEST",
-    });
-  }, []);
 
   return (
     <>
