@@ -70,8 +70,6 @@ export default function PromptCard({ products, onClose }: PromptCardProps) {
           <MinimizeButton onClose={onClose} />
         </CardHeader>
 
-        {/* <Separator orientation="horizontal" className="w-full" /> */}
-
         <CardContent className="grid gap-[16px] p-[16px] pt-0 lg:p-[16px] lg:pt-0">
           <PromptForm products={products} />
         </CardContent>

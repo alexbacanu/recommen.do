@@ -114,7 +114,6 @@ export function FormAccountEmail() {
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
-              {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -130,7 +129,6 @@ export function FormAccountEmail() {
                 <FormControl>
                   <Input type="email" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -144,7 +142,6 @@ export function FormAccountEmail() {
                 <FormControl>
                   <Input type="email" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}

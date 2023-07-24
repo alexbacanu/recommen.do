@@ -6,7 +6,6 @@ export default function ContactPage() {
   return (
     <section id="contact_page">
       <div className="mx-auto flex max-w-7xl flex-col gap-y-8 p-4">
-        {/* <Contact /> */}
         <div className="space-y-2">
           <h1 className="text-3xl font-semibold">Contact</h1>
           <p>

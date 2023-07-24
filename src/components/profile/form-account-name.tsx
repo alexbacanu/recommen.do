@@ -82,7 +82,6 @@ export function FormAccountName({ account }: CardAccountProps) {
               <FormControl>
                 <Input placeholder={account.name} {...field} />
               </FormControl>
-              {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}

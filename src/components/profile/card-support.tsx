@@ -25,14 +25,6 @@ export function CardSupport() {
             </Link>
           </Button>
 
-          {/* <Separator orientation="vertical" className="h-6 md:hidden" />
-
-          <Button variant="link" className="px-2 py-1" asChild>
-            <Link href={`${appwriteUrl}/installation`} target={target} aria-label="Use your own OpenAI API key">
-              Use your OpenAI API key
-            </Link>
-          </Button> */}
-
           <Separator orientation="vertical" className="h-6 md:hidden" />
 
           <Button variant="link" className="p-1" asChild>

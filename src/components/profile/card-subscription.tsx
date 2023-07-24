@@ -236,8 +236,6 @@ export function CardSubscription() {
         ) : (
           <FormSubscription />
         )}
-
-        {/* <Separator orientation="horizontal" className="w-full" /> */}
       </>
     );
 

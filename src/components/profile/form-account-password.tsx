@@ -127,7 +127,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
-                  {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -145,7 +144,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -159,7 +157,6 @@ export function FormAccountPassword({ account }: CardAccountProps) {
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}

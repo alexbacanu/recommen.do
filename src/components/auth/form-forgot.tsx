@@ -79,7 +79,6 @@ export function FormForgot({ searchParams }: CardAccountProps) {
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -93,7 +92,6 @@ export function FormForgot({ searchParams }: CardAccountProps) {
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
-                {/* <FormDescription className="text-xs">This is your public display name.</FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
