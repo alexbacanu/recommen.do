@@ -4,7 +4,7 @@ import { navConfig } from "@/components/layout/navigation";
 
 export function HeaderNav() {
   return (
-    <nav className="flex gap-x-6">
+    <nav className="hidden gap-x-6 sm:flex">
       {navConfig.header.map((item, index) => (
         <Link
           href={item.disabled ? "#" : item.href}

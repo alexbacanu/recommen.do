@@ -6,7 +6,7 @@
 - Removed Google Analytics code from extension
 - Changed deployment script
 - Restore download button on header
-- ...
+- Fixed style on mobile devices
 
 # Version 1.0.3
 

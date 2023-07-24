@@ -19,7 +19,7 @@ export function Footer() {
             <p className="inline-flex text-sm">&copy; {new Date().getFullYear()} recommen.do</p>
 
             <div>
-              <Link href="https://github.com/alexbacanu/recommen.do" aria-label="Buy me a coffee">
+              <Link href="https://github.com/alexbacanu/recommen.do" aria-label="Github link">
                 <Icons.github className="h-5 w-5" />
               </Link>
             </div>
