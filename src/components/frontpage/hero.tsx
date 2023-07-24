@@ -7,13 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-
-interface BrowserDetails {
-  name: string;
-  href: string;
-  ariaLabel: string;
-  description: string;
-}
+import { browserDetails } from "@/lib/config/browser";
 
 export function Hero() {
   const [browser, setBrowser] = useState<BrowserDetector>();
@@ -22,45 +16,6 @@ export function Hero() {
     const browser = new BrowserDetector(window.navigator.userAgent);
     setBrowser(browser);
   }, []);
-
-  const browserDetails: BrowserDetails[] = [
-    {
-      name: "Mozilla Firefox",
-      href: "https://addons.mozilla.org/en-US/firefox/addon/recommen-do/",
-      ariaLabel: "Add extension to Firefox",
-      description: "Add extension to Firefox",
-    },
-    {
-      name: "Google Chrome",
-      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
-      ariaLabel: "Get extension for Chrome",
-      description: "Get extension for Chrome",
-    },
-    {
-      name: "Microsoft Edge",
-      href: "https://microsoftedge.microsoft.com/addons/detail/recommendo/pdahoiahedcdggmdopbgefclpcpeiioc",
-      ariaLabel: "Get extension for Edge",
-      description: "Get extension for Edge",
-    },
-    {
-      name: "Brave",
-      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
-      ariaLabel: "Get extension for Brave",
-      description: "Get extension for Brave",
-    },
-    {
-      name: "Opera",
-      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
-      ariaLabel: "Get extension for Opera",
-      description: "Get extension for Opera",
-    },
-    {
-      name: "Vivaldi",
-      href: "https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne",
-      ariaLabel: "Get extension for Vivaldi",
-      description: "Get extension for Vivaldi",
-    },
-  ];
 
   const parsedUA = browser?.parseUserAgent();
   const browserName = parsedUA?.name;

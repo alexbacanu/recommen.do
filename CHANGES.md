@@ -5,6 +5,7 @@
 - Fix lighthouse errors
 - Removed Google Analytics code from extension
 - Changed deployment script
+- Restore download button on header
 - ...
 
 # Version 1.0.3

@@ -56,3 +56,11 @@ export interface APIResponse {
   url?: string;
   plan?: CustomStripePlan;
 }
+
+export interface BrowserDetails {
+  name: string;
+  short: string;
+  href: string;
+  ariaLabel: string;
+  description: string;
+}

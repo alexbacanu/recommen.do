@@ -1,3 +1,4 @@
+import HeaderDownload from "@/components/layout/header-download";
 import { HeaderNav } from "@/components/layout/header-nav";
 import { HeaderUser } from "@/components/layout/header-user";
 import Logo from "@/components/ui/logo";
@@ -15,7 +16,8 @@ export function Header() {
 
             <HeaderNav />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
+            <HeaderDownload />
             <HeaderUser />
           </div>
         </div>
