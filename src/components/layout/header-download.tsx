@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { browserDetails } from "@/lib/config/browser";
 
-export default function HeaderDownload() {
+export default function DownloadButton({ size = "default" }: { size?: "default" | "lg" }) {
   const [browser, setBrowser] = useState<BrowserDetector>();
 
   useEffect(() => {
@@ -21,30 +21,42 @@ export default function HeaderDownload() {
   const browserInfo = browserDetails.find((browser) => browser.name === browserName);
 
   return (
-    <div className="relative items-center">
+    <div className="relative ml-4 items-center">
       {browserInfo ? (
         <>
           <Image
-            className="absolute -left-4 -top-1 rounded-full bg-white/60 p-1 backdrop-blur-lg"
+            className="absolute -left-4 -top-0.5 rounded-full bg-white/60 p-1 backdrop-blur-lg"
             src={`/browsers/${browserInfo.short}.svg`}
-            width={46}
-            height={46}
+            width={size === "default" ? 46 : 54}
+            height={size === "default" ? 46 : 54}
             alt={`Download extension for ${browserInfo.name} browser`}
           />
-          <Button variant="default" aria-label={browserInfo.ariaLabel} className="pl-9" asChild>
+          <Button
+            variant="default"
+            size={size}
+            aria-label={browserInfo.ariaLabel}
+            className={size === "default" ? "pl-9" : "pl-11"}
+            asChild
+          >
             <Link href={browserInfo.href}>{browserInfo.description}</Link>
           </Button>
         </>
       ) : (
         <>
           <Image
-            className="absolute -left-4 -top-1 rounded-full bg-white/60 p-1 backdrop-blur-lg"
+            className="absolute -left-4 -top-0.5 rounded-full bg-white/60 p-1 backdrop-blur-lg"
             src="/browsers/chrome.svg"
-            width={46}
-            height={46}
+            width={size === "default" ? 46 : 54}
+            height={size === "default" ? 46 : 54}
             alt="Download extension for Google Chrome browser"
           />
-          <Button variant="default" aria-label="Get extension for Chrome" className="pl-9" asChild>
+          <Button
+            variant="default"
+            size={size}
+            aria-label="Get extension for Chrome"
+            className={size === "default" ? "pl-9" : "pl-11"}
+            asChild
+          >
             <Link href="https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne">
               Get extension for Chrome
             </Link>

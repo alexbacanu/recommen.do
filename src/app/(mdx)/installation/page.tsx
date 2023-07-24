@@ -1,4 +1,5 @@
 import InstallationTabs from "@/components/installation/installation-tabs";
+import DownloadButton from "@/components/layout/header-download";
 
 import Installation from "./installation.mdx";
 
@@ -7,7 +8,11 @@ export default function InstallationPage() {
     <section id="installation_page">
       <div className="mx-auto flex max-w-7xl flex-col gap-y-4 p-4">
         <h1 className="text-3xl font-semibold">Extension Usage Instructions</h1>
+
         <h2 className="text-2xl font-semibold">Step 1: Install the Extension</h2>
+
+        <DownloadButton />
+
         <InstallationTabs />
         <Installation />
       </div>

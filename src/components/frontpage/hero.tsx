@@ -1,26 +1,13 @@
 "use client";
 
-import BrowserDetector from "browser-dtector";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
+import DownloadButton from "@/components/layout/header-download";
 import { Button } from "@/components/ui/button";
-import { browserDetails } from "@/lib/config/browser";
 
 export function Hero() {
-  const [browser, setBrowser] = useState<BrowserDetector>();
-
-  useEffect(() => {
-    const browser = new BrowserDetector(window.navigator.userAgent);
-    setBrowser(browser);
-  }, []);
-
-  const parsedUA = browser?.parseUserAgent();
-  const browserName = parsedUA?.name;
-  const browserInfo = browserDetails.find((browser) => browser.name === browserName);
-
   return (
     <section id="home" className="overflow-hidden">
       <motion.div
@@ -41,17 +28,7 @@ export function Hero() {
             </p>
 
             <div className="mt-8 grid w-full gap-4 lg:mt-12 lg:inline-flex">
-              {browserInfo ? (
-                <Button variant="default" size="lg" aria-label={browserInfo.ariaLabel} asChild>
-                  <Link href={browserInfo.href}>{browserInfo.description}</Link>
-                </Button>
-              ) : (
-                <Button variant="default" size="lg" aria-label="Get extension for Chrome" asChild>
-                  <Link href="https://chrome.google.com/webstore/detail/ai-recommendations-for-sh/obfbgdconmhiolihlenkaopigkpeblne">
-                    Get extension for Chrome
-                  </Link>
-                </Button>
-              )}
+              <DownloadButton size="lg" />
               <Button variant="outline" size="lg" asChild>
                 <Link href="#pricing" aria-label="View pricing">
                   View pricing
