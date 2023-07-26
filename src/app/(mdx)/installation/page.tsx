@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,6 +8,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
+
+export const metadata: Metadata = {
+  title: "Installation Guide",
+};
 
 export default function InstallationPage() {
   return (
@@ -99,7 +105,7 @@ export default function InstallationPage() {
                       width={383}
                       height={636}
                       className="mx-auto rounded-lg lg:mx-0"
-                      alt="Screenshot of extension popup on OpenAI API key section"
+                      alt="Instructional image for entering API key in recommen.do settings"
                     />
                   </div>
                   <div>
@@ -125,7 +131,7 @@ export default function InstallationPage() {
                       width={450}
                       height={197}
                       className="mx-auto rounded-lg lg:mx-0"
-                      alt="Screenshot of extension popup on refill recommendations section"
+                      alt="Guide image for refilling recommendations in recommen.do settings"
                     />
                   </div>
                   <div>
@@ -153,7 +159,7 @@ export default function InstallationPage() {
                       width={450}
                       height={267}
                       className="mx-auto rounded-lg lg:mx-0"
-                      alt="Screenshot of extension popup on manage subscription section"
+                      alt="Image tutorial for updating plan in recommen.do account"
                     />
                   </div>
                   <div>

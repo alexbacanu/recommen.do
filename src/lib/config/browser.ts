@@ -1,5 +1,7 @@
 import type { BrowserDetails } from "@/lib/types/types";
 
+import { appwriteUrl } from "@/lib/envClient";
+
 export const browserDetails: BrowserDetails[] = [
   {
     name: "Mozilla Firefox",
@@ -44,3 +46,23 @@ export const browserDetails: BrowserDetails[] = [
     description: "Get extension for Vivaldi",
   },
 ];
+
+export const siteConfig = {
+  name: "recommen.do: AI-Powered Shopping Assistant",
+  url: appwriteUrl,
+  ogImage: `${appwriteUrl}/cover.png`,
+  description:
+    "🛍️Get shopping recommendations on Amazon, Newegg or Ebay, powered by OpenAI🤖. Enhance your online shopping experience with our browser extension",
+  links: {
+    github: "https://github.com/alexbacanu/recommen.do",
+  },
+  keywords: [
+    "OpenAI Product Recommendations",
+    "AI-Powered Browser Extension",
+    "Intelligent Shopping Enhancements for Chrome/Firefox/Edge",
+    "AI-Enabled Shopping on Amazon/Newegg/eBay",
+    "Smart Online Shopping Tool",
+  ],
+};
+
+export type SiteConfig = typeof siteConfig;

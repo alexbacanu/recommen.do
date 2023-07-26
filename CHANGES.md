@@ -3,6 +3,7 @@
 ## Changes
 
 - Add sitemap.xml
+- Update metadata for SEO
 - ...
 
 # Version 1.0.4

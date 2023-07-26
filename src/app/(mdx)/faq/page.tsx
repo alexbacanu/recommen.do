@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
+
 import Link from "next/link";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { appwriteUrl } from "@/lib/envClient";
+
+export const metadata: Metadata = {
+  title: "Frequently Asked Questions",
+};
 
 export default function FAQPage() {
   return (

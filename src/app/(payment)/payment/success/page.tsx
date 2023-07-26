@@ -56,7 +56,7 @@ export default function PaymentCancelPage() {
       <Image
         src="/payment/undraw_order_confirmed.svg"
         className="h-auto w-[36rem] object-contain"
-        alt="undraw verified illustration"
+        alt="Confirmation image for successful payment on recommen.do plans"
         width={576}
         height={576}
       />

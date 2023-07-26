@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
+
 import Privacy from "./privacy.mdx";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+};
 
 export default function PrivacyPage() {
   return (

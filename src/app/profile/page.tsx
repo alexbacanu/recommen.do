@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
+
 import { Dashboard } from "@/components/profile/dashboard";
+
+export const metadata: Metadata = {
+  title: "Your profile",
+};
 
 export default function ProfilePage() {
   return (

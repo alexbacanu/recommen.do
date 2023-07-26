@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
+
 import Terms from "./terms.mdx";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+};
 
 export default function TermsPage() {
   return (

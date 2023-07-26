@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { redirect } from "next/navigation";
 
 import { FormForgot } from "@/components/auth/form-forgot";
@@ -5,6 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Shell } from "@/components/ui/shell";
 import { appwriteUrl } from "@/lib/envClient";
 import { SSOCallbackSchema } from "@/lib/validators/schema";
+
+export const metadata: Metadata = {
+  title: "Forgot Callback",
+};
 
 interface ForgotCallbackPageProps {
   searchParams: Record<string, string | string[] | undefined>;

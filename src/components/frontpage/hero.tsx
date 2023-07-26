@@ -51,7 +51,7 @@ export function Hero() {
               src="/frontpage/hero-img.png"
               height={1478}
               width={1060}
-              alt="Screenshot with recommen.do extension displayed"
+              alt="Screenshot of recommen.do extension working on websites like Amazon"
               priority
             />
           </div>

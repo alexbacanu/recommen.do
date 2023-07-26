@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
+
 import Cookies from "./cookies.mdx";
+
+export const metadata: Metadata = {
+  title: "Cookies Policy",
+};
 
 export default function CookiesPage() {
   return (

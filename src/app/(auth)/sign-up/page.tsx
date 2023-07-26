@@ -8,7 +8,6 @@ import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Sign up for an account",
 };
 
 export default function SignUpPage() {

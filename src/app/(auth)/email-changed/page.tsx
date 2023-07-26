@@ -56,7 +56,7 @@ export default function EmailChangedPage() {
       <Image
         src="/auth/undraw_moving.svg"
         className="h-auto w-[36rem] object-contain"
-        alt="undraw moving illustration"
+        alt="Confirmation image for email changed in recommen.do account"
         width={576}
         height={576}
       />

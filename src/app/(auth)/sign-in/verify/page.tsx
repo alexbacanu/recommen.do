@@ -8,8 +8,7 @@ import { Icons } from "@/components/ui/icons";
 import { Shell } from "@/components/ui/shell";
 
 export const metadata: Metadata = {
-  title: "Verify",
-  description: "Verify your account",
+  title: "Verify account",
 };
 
 export default function VerifyEmailPage({ searchParams }: { searchParams: { email: string } }) {
@@ -40,7 +39,7 @@ export default function VerifyEmailPage({ searchParams }: { searchParams: { emai
       <Image
         src="/auth/undraw_verified.svg"
         className="h-auto w-[36rem] object-contain"
-        alt="undraw verified illustration"
+        alt="Confirmation image for email verification in recommen.do account"
         width={576}
         height={576}
       />

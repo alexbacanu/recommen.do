@@ -56,7 +56,7 @@ export default function PaymentCancelPage() {
       <Image
         src="/payment/undraw_warning.svg"
         className="h-auto w-[36rem] object-contain"
-        alt="undraw verified illustration"
+        alt="Notification image for failed payment on recommen.do plan"
         width={576}
         height={576}
       />
