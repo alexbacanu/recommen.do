@@ -2,6 +2,13 @@
 
 ## Changes
 
+- Add sitemap.xml
+- ...
+
+# Version 1.0.4
+
+## Changes
+
 - Fix lighthouse errors
 - Removed Google Analytics code from extension
 - Changed deployment script

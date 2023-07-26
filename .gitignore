@@ -39,5 +39,6 @@ next-env.d.ts
 # plasmo
 /.plasmo
 
-# TEST
-/src/app/api/appwrite/admin/route.ts
+# sitemap
+/public/sitemap.xml
+/public/robots.txt
