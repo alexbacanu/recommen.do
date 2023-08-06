@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { Icons } from "@/components/ui/icons";
 import { appwriteUrl } from "@/lib/envClient";
 
 import "@/styles/globals.css";
 
+import { DialogTitle } from "@radix-ui/react-dialog";
 import Link from "next/link";
 
 export default function Onboarding() {
@@ -31,71 +33,127 @@ export default function Onboarding() {
 
           <CardContent className="grid gap-4">
             <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">
-              Summary of technical or interaction data collected and processed:
-            </h2>
-
-            <div>
-              <ul className="grid gap-4">
-                <li className="grid gap-2">
-                  <span className="">🔎 When you search for a product on Amazon, eBay, or Newegg, we:</span>
-                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    PROCESS product identifier, image, link, name, price, reviews, stars and source
-                  </code>
-                  <span className="text-xs">
-                    We use this to generate recommendations based on the products you search. Data is stored in memory
-                    only.
-                  </span>
-                </li>
-
-                <li className="grid gap-2">
-                  <span className="">🤖 When generating a product recommendation, we:</span>
-                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    PROCESS product identifier, name, price, reviews and stars
-                  </code>
-                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    UPDATE your account&apos;s history with the recommendation
-                  </code>
-                  <span className="text-xs">
-                    We send the data to{" "}
-                    <Link
-                      className="font-semibold text-primary"
-                      href="https://platform.openai.com/docs/api-reference/chat"
-                    >
-                      OpenAI’s Chat Completion API
-                    </Link>{" "}
-                    and then save the recommendation to your account&apos;s history
-                  </span>
-                </li>
-
-                <li className="grid gap-2">
-                  <span className="">🗝️ When you add your own OpenAI API key, we:</span>
-                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    STORE the API key to localStorage
-                  </code>
-                  <span className="text-xs">
-                    We read your API key from local storage when you add it to your account
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">
               Summary of personally identifying information:
             </h2>
 
             <div>
-              <ul className="grid gap-4">
-                <li className="grid gap-2">
-                  <span className="">⚙️ When you manage your account/subscription:</span>
-                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    UPDATE/DELETE the account information on our database
-                  </code>
-                  <span className="text-xs">
-                    We allow you to modify/delete your account, name, email, password and subscription data through the
-                    extension.
-                  </span>
-                </li>
-              </ul>
+              <div className="grid gap-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">⚙️ With your account</Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>⚙️ With your account</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4">
+                      <span className="">When you manage your account/subscription:</span>
+                      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                        CREATE/UPDATE/DELETE the account information on our database
+                      </code>
+                      <span className="text-xs">
+                        We allow you to create/modify/delete your account, name, email, password and subscription data
+                        through the extension.
+                      </span>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Got it!</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+
+            <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">
+              Summary of technical or interaction data collected:
+            </h2>
+
+            <div>
+              <div className="grid grid-cols-3 gap-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">🔎 When searching</Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>🔎 When searching</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4">
+                      <span className="">When you search for a product on Amazon, eBay, or Newegg, we:</span>
+                      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                        PROCESS product identifier, image, link, name, price, reviews, stars and source
+                      </code>
+                      <span className="text-xs">
+                        We use this to generate recommendations based on the products you search. Data is stored in
+                        memory only.
+                      </span>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Got it!</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">🤖 Before generating</Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>🤖 Before generating</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4">
+                      <span className="">When generating a product recommendation, we:</span>
+                      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                        PROCESS product identifier, name, price, reviews and stars
+                      </code>
+                      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                        UPDATE your account&apos;s history with the recommendation
+                      </code>
+                      <span className="text-xs">
+                        We send the data to{" "}
+                        <Link
+                          className="font-semibold text-primary"
+                          href="https://platform.openai.com/docs/api-reference/chat"
+                        >
+                          OpenAI’s Chat Completion API
+                        </Link>{" "}
+                        and then save the recommendation to your account&apos;s history
+                      </span>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Got it!</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">🗝️ With key</Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>🗝️ With key</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4">
+                      <span className="">When you add your own OpenAI API key, we:</span>
+                      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                        STORE the API key to localStorage
+                      </code>
+                      <span className="text-xs">
+                        We read your API key from local storage when you add it to your account
+                      </span>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Got it!</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
             </div>
 
             <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">That&apos;s it!</h2>
