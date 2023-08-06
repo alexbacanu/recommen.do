@@ -3,7 +3,9 @@ import ReactQueryProvider from "@/lib/providers/react-query";
 
 import "@/styles/globals.css";
 
+import { useStorage } from "@plasmohq/storage/hook";
 import { useAtomValue } from "jotai";
+import Link from "next/link";
 
 import { Init } from "@/components/_init/init-auth";
 import AuthRequiredCard from "@/components/extension/auth-required";
@@ -15,10 +17,15 @@ import { CardSessions } from "@/components/profile/card-sessions";
 import { CardSubscription } from "@/components/profile/card-subscription";
 import { CardSupport } from "@/components/profile/card-support";
 import { CardUsage } from "@/components/profile/card-usage";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function IndexPopup() {
+  const [userAgreed] = useStorage<boolean>("userAgreed");
+
   const account = useAtomValue(accountAtom);
   const profile = useAtomValue(profileAtom);
 
@@ -32,6 +39,30 @@ export default function IndexPopup() {
             Your email is not verified, you won't be able to login
           </Badge>
         )} */}
+        {!userAgreed && (
+          <div className="absolute inset-0 z-10 bg-white/10 backdrop-blur-2xl">
+            <div className="grid gap-4 p-8">
+              <Alert className="flex items-center gap-4">
+                {/* <RocketIcon className="h-4 w-4" /> */}
+                <div>
+                  <Icons.alert className="h-6 w-6" aria-label="alert icon" />
+                </div>
+
+                <div className="">
+                  <AlertTitle className="font-semibold tracking-normal">Additional permissions required!</AlertTitle>
+                  <AlertDescription>
+                    In order to use the extension you need to accept the privacy policy in the next page.
+                  </AlertDescription>
+                </div>
+              </Alert>
+              <Button variant="default" asChild>
+                <Link href="/tabs/onboarding.html" target="_blank" aria-label="Enable recommen.do">
+                  Enable recommen.do
+                </Link>
+              </Button>
+            </div>
+          </div>
+        )}
         {account && profile && account.emailVerification ? (
           <Tabs defaultValue="account" className="min-h-[600px] min-w-[400px] overflow-hidden">
             <TabsContent
@@ -73,7 +104,7 @@ export default function IndexPopup() {
             </TabsList>
           </Tabs>
         ) : (
-          <div className="w-[400px]">
+          <div className="mx-auto w-[400px]">
             <AuthRequiredCard />
           </div>
         )}
