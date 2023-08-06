@@ -33,7 +33,7 @@ export default function IndexPopup() {
           </Badge>
         )} */}
         {account && profile && account.emailVerification ? (
-          <Tabs defaultValue="account" className="min-h-[600px] w-[380px] overflow-hidden">
+          <Tabs defaultValue="account" className="min-h-[600px] min-w-[400px] overflow-hidden">
             <TabsContent
               value="account"
               className="mx-auto max-h-[calc(100vh-56px)] min-h-[544px] max-w-3xl overflow-auto"
@@ -73,7 +73,7 @@ export default function IndexPopup() {
             </TabsList>
           </Tabs>
         ) : (
-          <div className="w-[380px]">
+          <div className="w-[400px]">
             <AuthRequiredCard />
           </div>
         )}
