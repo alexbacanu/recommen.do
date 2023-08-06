@@ -53,7 +53,7 @@ export default function Onboarding() {
                     PROCESS product identifier, name, price, reviews and stars
                   </code>
                   <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                    UPDATE your account's history with the recommendation
+                    UPDATE your account&apos;s history with the recommendation
                   </code>
                   <span className="text-xs">
                     We send the data to{" "}
@@ -63,7 +63,7 @@ export default function Onboarding() {
                     >
                       OpenAI’s Chat Completion API
                     </Link>{" "}
-                    and then save the recommendation to your account's history
+                    and then save the recommendation to your account&apos;s history
                   </span>
                 </li>
 
@@ -98,10 +98,10 @@ export default function Onboarding() {
               </ul>
             </div>
 
-            <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">That's it!</h2>
+            <h2 className="border-b pb-2 text-xl font-semibold tracking-tight transition-colors">That&apos;s it!</h2>
 
             <div>
-              In order to use the extension, you need an account. If you don't have an account, please create one{" "}
+              In order to use the extension, you need an account. If you don&apos;t have an account, please create one{" "}
               <Link
                 className="font-semibold text-primary"
                 href={`${appwriteUrl}/privacy`}

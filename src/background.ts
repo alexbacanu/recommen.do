@@ -3,7 +3,7 @@ import browser from "webextension-polyfill";
 export {};
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+browser.runtime.onInstalled.addListener(async ({ reason }) => {
   // if (temporary) return; // skip during development
   switch (reason) {
     case "install":
