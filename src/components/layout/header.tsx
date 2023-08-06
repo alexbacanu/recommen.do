@@ -8,7 +8,7 @@ export function Header() {
   return (
     <header className="z-10 flex items-center border-b border-border bg-card text-sm lg:h-20">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="flex flex-col items-center justify-between gap-y-4 p-4 lg:flex-row lg:py-0">
+        <div className="flex items-center justify-between gap-y-4 p-4 sm:flex-col lg:flex-row lg:py-0">
           <div className="flex items-center">
             <Logo />
 

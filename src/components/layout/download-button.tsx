@@ -21,7 +21,7 @@ export default function DownloadButton({ size = "default" }: { size?: "default" 
   const browserInfo = browserDetails.find((browser) => browser.name === browserName);
 
   return (
-    <div className="relative ml-4 grid items-center">
+    <div className="relative ml-4 hidden items-center sm:grid">
       {browserInfo ? (
         <>
           <Image
