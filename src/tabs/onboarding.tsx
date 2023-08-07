@@ -2,7 +2,7 @@ import browser from "webextension-polyfill";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { Icons } from "@/components/ui/icons";
 import { appwriteUrl } from "@/lib/envClient";
 
@@ -106,9 +106,6 @@ export default function Onboarding() {
                             data through the extension.
                           </span>
                         </div>
-                        <DialogFooter>
-                          <Button type="submit">Got it!</Button>
-                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
                   </div>
@@ -139,9 +136,6 @@ export default function Onboarding() {
                             in memory only.
                           </span>
                         </div>
-                        <DialogFooter>
-                          <Button type="submit">Got it!</Button>
-                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
 
@@ -173,9 +167,6 @@ export default function Onboarding() {
                             and then save the recommendation to your account&apos;s history
                           </span>
                         </div>
-                        <DialogFooter>
-                          <Button type="submit">Got it!</Button>
-                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
 
@@ -197,9 +188,6 @@ export default function Onboarding() {
                             We read your API key from local storage to generate recommendations
                           </span>
                         </div>
-                        <DialogFooter>
-                          <Button type="submit">Got it!</Button>
-                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
                   </div>
