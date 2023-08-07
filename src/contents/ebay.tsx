@@ -83,6 +83,7 @@ export default function EbayContent() {
   const products = useAtomValue(ebayProductsAtom);
 
   const [isPromptShown, setIsPromptShown] = useStorage<boolean>("promptStatus", true);
+  const [userAgreed] = useStorage<boolean>("userAgreed");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export default function EbayContent() {
       <ReactQueryProvider>
         <Init />
         <EbayProducts />
-        {!isLoading && isPromptShown === false && (
+        {userAgreed && !isLoading && isPromptShown === false && (
           <button
             className="fixed bottom-[14px] right-[14px] rounded-full bg-gradient-to-r from-rose-500/70 to-cyan-500/70 p-[2px]"
             onClick={() => void setIsPromptShown(true)}
@@ -107,7 +108,7 @@ export default function EbayContent() {
           </button>
         )}
 
-        {!isLoading && isPromptShown === true && (
+        {userAgreed && !isLoading && isPromptShown === true && (
           <PromptCard products={products} onClose={() => void setIsPromptShown(false)} />
         )}
       </ReactQueryProvider>
