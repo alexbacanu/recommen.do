@@ -2,7 +2,6 @@
 
 import type { APIResponse } from "@/lib/types/types";
 
-import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
@@ -14,6 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
