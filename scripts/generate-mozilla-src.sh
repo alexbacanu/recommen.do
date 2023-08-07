@@ -22,13 +22,13 @@ cp ./.env.mozilla.local $dest_dir/.env
 cd $dest_dir
 
 # Remove unnecessary directories
-rm -rf ./src/components/_analytics
+rm -rf ./src/components/_analytics ./README.md
 
 # Install packages
-pnpm i
+# pnpm i
 
 # Build plasmo firefox
-pnpm run build:plasmo-firefox
+# pnpm run build:plasmo-firefox
 
 # Compare builds
-diff -y <(unzip -l ./build/firefox-mv2-prod.zip) <(unzip -l ../recommen.do/build/firefox-1.0.5.zip)
+# diff -y <(unzip -l ./build/firefox-mv2-prod.zip) <(unzip -l ../recommen.do/build/firefox-1.0.5.zip)
