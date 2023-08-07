@@ -2,14 +2,13 @@ import browser from "webextension-polyfill";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Icons } from "@/components/ui/icons";
 import { appwriteUrl } from "@/lib/envClient";
 
 import "@/styles/globals.css";
 
 import { useStorage } from "@plasmohq/storage/hook";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import Link from "next/link";
 
 export default function Onboarding() {
@@ -89,19 +88,16 @@ export default function Onboarding() {
                   <div className="grid gap-4">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">⚙️ With your account</Button>
+                        <Button variant="outline">⚙️ When you manage your account or subscription</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>⚙️ With your account</DialogTitle>
-                        </DialogHeader>
                         <div className="grid gap-4">
-                          <span className="">When you manage your account/subscription:</span>
+                          <span className="">When you manage your account or subscription, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             CREATE/UPDATE/DELETE the account information on our database
                           </code>
-                          <span className="text-xs">
+                          <span className="text-sm">
                             We allow you to create/modify/delete your account, name, email, password and subscription
                             data through the extension.
                           </span>
@@ -116,22 +112,19 @@ export default function Onboarding() {
                 </h2>
 
                 <div>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid gap-4">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">🔎 When searching</Button>
+                        <Button variant="outline">🔎 When you search for a product on Amazon, eBay or Newegg</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>🔎 When searching</DialogTitle>
-                        </DialogHeader>
                         <div className="grid gap-4">
-                          <span className="">When you search for a product on Amazon, eBay, or Newegg, we:</span>
+                          <span className="">When you search for a product on Amazon, eBay or Newegg, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             PROCESS product identifier, image, link, name, price, reviews, stars and source
                           </code>
-                          <span className="text-xs">
+                          <span className="text-sm">
                             We use this to generate recommendations based on the products you search for. Data is stored
                             in memory only.
                           </span>
@@ -141,13 +134,10 @@ export default function Onboarding() {
 
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">🤖 Before generating</Button>
+                        <Button variant="outline">🤖 When generating a product recommendation</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>🤖 Before generating</DialogTitle>
-                        </DialogHeader>
                         <div className="grid gap-4">
                           <span className="">When generating a product recommendation, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
@@ -156,7 +146,7 @@ export default function Onboarding() {
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             UPDATE your account&apos;s history with the recommendation
                           </code>
-                          <span className="text-xs">
+                          <span className="text-sm">
                             We send the data to{" "}
                             <Link
                               className="font-semibold text-primary"
@@ -172,19 +162,16 @@ export default function Onboarding() {
 
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline">🗝️ With key</Button>
+                        <Button variant="outline">🗝️ When you add your own OpenAI API key</Button>
                       </DialogTrigger>
 
                       <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>🗝️ With key</DialogTitle>
-                        </DialogHeader>
                         <div className="grid gap-4">
                           <span className="">When you add your own OpenAI API key, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             STORE the API key to localStorage
                           </code>
-                          <span className="text-xs">
+                          <span className="text-sm">
                             We read your API key from local storage to generate recommendations
                           </span>
                         </div>
