@@ -1,10 +1,12 @@
-# Version 1.0.4
+# Version 1.0.5
 
 ## Changes
 
 - Add sitemap.xml
 - Update metadata for SEO
-- ...
+- Add onboarding page
+- Fixed header layout on mobile
+- Update dependencies
 
 # Version 1.0.4
 
