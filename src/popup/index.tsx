@@ -51,7 +51,7 @@ export default function IndexPopup() {
                 <div className="">
                   <AlertTitle className="font-semibold tracking-normal">Additional permissions required!</AlertTitle>
                   <AlertDescription>
-                    In order to use the extension you need to accept the privacy policy in the next page.
+                    To use the extension, you need to accept the privacy policy on the next page.
                   </AlertDescription>
                 </div>
               </Alert>

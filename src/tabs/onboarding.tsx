@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
@@ -15,6 +17,12 @@ export default function Onboarding() {
 
   function handleClose() {
     void window.close();
+  }
+
+  function handleUninstall() {
+    void browser.management.uninstallSelf({
+      showConfirmDialog: true,
+    });
   }
 
   function handleEnable() {
@@ -127,8 +135,8 @@ export default function Onboarding() {
                             PROCESS product identifier, image, link, name, price, reviews, stars and source
                           </code>
                           <span className="text-xs">
-                            We use this to generate recommendations based on the products you search. Data is stored in
-                            memory only.
+                            We use this to generate recommendations based on the products you search for. Data is stored
+                            in memory only.
                           </span>
                         </div>
                         <DialogFooter>
@@ -202,8 +210,7 @@ export default function Onboarding() {
                 </h2>
 
                 <div>
-                  In order to use the extension, you need an account. If you don&apos;t have an account, please create
-                  one{" "}
+                  To use the extension, you need an account. If you don&apos;t have an account, please create one{" "}
                   <Link
                     className="font-semibold text-primary"
                     href={`${appwriteUrl}/sign-up`}
@@ -225,7 +232,7 @@ export default function Onboarding() {
               </CardContent>
 
               <CardFooter className="grid grid-cols-2 gap-4">
-                <Button variant="secondary" className="w-full">
+                <Button variant="secondary" onClick={handleUninstall} className="w-full">
                   Uninstall extension
                 </Button>
                 <Button type="button" variant="default" onClick={handleEnable} className="w-full">
