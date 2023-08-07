@@ -4,7 +4,7 @@
   "description": "🛍️ Get shopping recommendations on Amazon, Newegg or Ebay, powered by OpenAI 🤖.",
   "homepage_url": "https://www.recommen.do",
   "author": "recommen.do",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
     "start": "next start",

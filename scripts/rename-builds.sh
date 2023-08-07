@@ -6,5 +6,5 @@ set -e
 for file in ./build/*-mv*-prod.zip; do
   base=$(basename "$file")
   name="${base%%-*}"
-  mv "$file" "./build/$name-1.0.4.zip"
+  mv "$file" "./build/$name-1.0.5.zip"
 done
