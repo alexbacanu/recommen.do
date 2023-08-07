@@ -9,6 +9,7 @@
 
   body {
     @apply bg-muted text-foreground;
+    font-size: 100%;
   }
 
   #plasmo-shadow-container {

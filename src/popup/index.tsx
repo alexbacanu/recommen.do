@@ -1,12 +1,3 @@
-import { accountAtom, profileAtom } from "@/lib/atoms/auth";
-import ReactQueryProvider from "@/lib/providers/react-query";
-
-import "@/styles/globals.css";
-
-import { useStorage } from "@plasmohq/storage/hook";
-import { useAtomValue } from "jotai";
-import Link from "next/link";
-
 import { Init } from "@/components/_init/init-auth";
 import AuthRequiredCard from "@/components/extension/auth-required";
 import { CardAccount } from "@/components/profile/card-account";
@@ -22,6 +13,14 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster } from "@/components/ui/toaster";
+import { accountAtom, profileAtom } from "@/lib/atoms/auth";
+import ReactQueryProvider from "@/lib/providers/react-query";
+
+import "@/styles/globals.css";
+
+import { useStorage } from "@plasmohq/storage/hook";
+import { useAtomValue } from "jotai";
+import Link from "next/link";
 
 export default function IndexPopup() {
   const [userAgreed] = useStorage<boolean>("userAgreed");
@@ -43,12 +42,11 @@ export default function IndexPopup() {
           <div className="absolute inset-0 z-10 bg-white/10 backdrop-blur-2xl">
             <div className="grid gap-4 p-8">
               <Alert className="flex items-center gap-4">
-                {/* <RocketIcon className="h-4 w-4" /> */}
                 <div>
-                  <Icons.alert className="h-6 w-6" aria-label="alert icon" />
+                  <Icons.alert className="h-6 w-6" />
                 </div>
 
-                <div className="">
+                <div>
                   <AlertTitle className="font-semibold tracking-normal">Additional permissions required!</AlertTitle>
                   <AlertDescription>
                     To use the extension, you need to accept the privacy policy on the next page.

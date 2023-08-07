@@ -1,5 +1,3 @@
-import browser from "webextension-polyfill";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -10,6 +8,7 @@ import "@/styles/globals.css";
 
 import { useStorage } from "@plasmohq/storage/hook";
 import Link from "next/link";
+import browser from "webextension-polyfill";
 
 export default function Onboarding() {
   const [userAgreed, setUserAgreed] = useStorage<boolean>("userAgreed");
@@ -31,11 +30,12 @@ export default function Onboarding() {
   return (
     <div>
       <div className="p-4">
-        <Link href={appwriteUrl} className="mx-auto flex max-w-2xl items-center justify-center gap-4 pb-4">
-          <Icons.logo className="mt-2 h-12 w-12" aria-label="recommen.do logo" />
-
-          <span className="text-4xl">recommen.do</span>
-        </Link>
+        <div className="mx-auto w-fit max-w-2xl pb-4">
+          <Link href={appwriteUrl} className="flex gap-4">
+            <Icons.logo className="h-12 w-12" aria-label="recommen.do logo" />
+            <span className="text-4xl">recommen.do</span>
+          </Link>
+        </div>
 
         <Card className="mx-auto max-w-2xl rounded-2xl shadow-2xl">
           {userAgreed ? (
@@ -93,7 +93,7 @@ export default function Onboarding() {
 
                       <DialogContent className="sm:max-w-[425px]">
                         <div className="grid gap-4">
-                          <span className="">When you manage your account or subscription, we:</span>
+                          <span>When you manage your account or subscription, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             CREATE/UPDATE/DELETE the account information on our database
                           </code>
@@ -120,7 +120,7 @@ export default function Onboarding() {
 
                       <DialogContent className="sm:max-w-[425px]">
                         <div className="grid gap-4">
-                          <span className="">When you search for a product on Amazon, eBay or Newegg, we:</span>
+                          <span>When you search for a product on Amazon, eBay or Newegg, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             PROCESS product identifier, image, link, name, price, reviews, stars and source
                           </code>
@@ -139,7 +139,7 @@ export default function Onboarding() {
 
                       <DialogContent className="sm:max-w-[425px]">
                         <div className="grid gap-4">
-                          <span className="">When generating a product recommendation, we:</span>
+                          <span>When generating a product recommendation, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             PROCESS product identifier, name, price, reviews and stars
                           </code>
@@ -167,7 +167,7 @@ export default function Onboarding() {
 
                       <DialogContent className="sm:max-w-[425px]">
                         <div className="grid gap-4">
-                          <span className="">When you add your own OpenAI API key, we:</span>
+                          <span>When you add your own OpenAI API key, we:</span>
                           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                             STORE the API key to localStorage
                           </code>

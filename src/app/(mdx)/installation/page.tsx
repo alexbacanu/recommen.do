@@ -21,7 +21,7 @@ export default function InstallationPage() {
           <h1 className="text-3xl font-semibold">Get started</h1>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div className="">
+            <div>
               <Card className="relative grid p-4 lg:p-0">
                 <CardHeader>
                   <CardTitle className="text-xl font-light">
@@ -39,7 +39,7 @@ export default function InstallationPage() {
                 </CardFooter>
               </Card>
             </div>
-            <div className="">
+            <div>
               <Card className="relative grid p-4 lg:p-0">
                 <CardHeader>
                   <CardTitle className="text-xl font-light">
@@ -76,13 +76,13 @@ export default function InstallationPage() {
                 </CardHeader>
 
                 <CardFooter className="grid grid-cols-3 gap-2">
-                  <Button variant="ghost" className="" size="lg" asChild>
+                  <Button variant="ghost" size="lg" asChild>
                     <Link href="https://www.amazon.com/s?k=smartphone">Amazon</Link>
                   </Button>
-                  <Button variant="ghost" className="" size="lg" asChild>
+                  <Button variant="ghost" size="lg" asChild>
                     <Link href="https://www.newegg.com/p/pl?d=graphics+card">Newegg</Link>
                   </Button>
-                  <Button variant="ghost" className="" size="lg" asChild>
+                  <Button variant="ghost" size="lg" asChild>
                     <Link href="https://www.ebay.com/sch/i.html?_nkw=laptop">Ebay</Link>
                   </Button>
                 </CardFooter>
