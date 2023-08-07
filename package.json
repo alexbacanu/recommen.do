@@ -24,7 +24,8 @@
     "fullbuild:fix": "prettier --write . && next lint --fix",
     "fullbuild:clean": "rm -rf .next .plasmo build public/download/*",
     "fullbuild:build": "pnpm build",
-    "fullbuild:rename": "./scripts/rename-builds.sh"
+    "fullbuild:rename": "./scripts/rename-builds.sh",
+    "fullbuild:mozilla": "./scripts/generate-mozilla-src.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
