@@ -142,7 +142,7 @@ export function CardHistory() {
                           </Avatar>
 
                           <div className="space-y-0.5">
-                            <p className="line-clamp-1 text-sm font-medium">{product.name}</p>
+                            <p className="line-clamp-1 max-w-[280px] text-sm font-medium">{product.name}</p>
                             {product.stars !== "0" && (
                               <p className="line-clamp-1 text-xs text-muted-foreground">
                                 {product.stars} / {product.reviews} reviews

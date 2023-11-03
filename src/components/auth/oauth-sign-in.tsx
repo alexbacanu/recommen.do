@@ -33,7 +33,7 @@ export function OAuthSignIn({ hasAccepted }: OAuthSignInProps) {
   function oauthSignIn(provider: string) {
     if (!hasAccepted) {
       toast({
-        description: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign in.",
+        description: "Please accept the Terms and Conditions and Privacy Policy to proceed with the sign up.",
         variant: "destructive",
       });
 
