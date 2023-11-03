@@ -61,7 +61,7 @@
     "framer-motion": "^10.15.0",
     "jotai": "^2.3.0",
     "lucide-react": "^0.263.1",
-    "next": "^13.4.13",
+    "next": "^13.5.0",
     "next-sitemap": "^4.1.8",
     "node-appwrite": "^11.0.0",
     "openai-edge": "^1.2.2",
